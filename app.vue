@@ -71,6 +71,19 @@ onMounted(async () => {
       startInteractiveCursor()
     })
     
+    // Initialiser les transitions de page
+    import('~/composables/usePageTransitions').then(({ usePageTransitions }) => {
+      const { animateOnScroll, staggeredAppear } = usePageTransitions()
+      
+      // Animer les sections au scroll
+      setTimeout(() => {
+        animateOnScroll('.section-header', { direction: 'up', stagger: 0.1 })
+        animateOnScroll('.project-card', { direction: 'up', stagger: 0.15 })
+        animateOnScroll('.service-card', { direction: 'scale', stagger: 0.1 })
+        staggeredAppear('.nav-link', { direction: 'down', stagger: 0.05 })
+      }, 100)
+    })
+    
     // Initialiser SEO et accessibilité
     import('~/composables/useSEOAccessibility').then(({ useSEOAccessibility }) => {
       const { setSEOConfig, initAccessibility } = useSEOAccessibility()

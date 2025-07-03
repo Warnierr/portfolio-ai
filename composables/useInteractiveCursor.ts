@@ -6,6 +6,8 @@ interface CursorState {
   currentType: CursorType
   scale: number
   rotation: number
+  magneticStrength: number
+  particlesEnabled: boolean
 }
 
 type CursorType = 
@@ -18,6 +20,8 @@ type CursorType =
   | 'contact'
   | 'loading'
   | 'creative'
+  | 'magnetic'
+  | 'particle'
 
 interface CursorConfig {
   size: number
@@ -25,11 +29,27 @@ interface CursorConfig {
   mixBlendMode: string
   animation: string
   trail: boolean
+  magnetic?: boolean
+  particles?: boolean
+}
+
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  life: number
+  maxLife: number
+  size: number
+  color: string
 }
 
 export const useInteractiveCursor = () => {
   const cursorElement = ref<HTMLElement>()
   const trailElements = ref<HTMLElement[]>([])
+  const particles = ref<Particle[]>([])
+  const particleCanvas = ref<HTMLCanvasElement>()
+  const particleCtx = ref<CanvasRenderingContext2D>()
   
   const cursorState = reactive<CursorState>({
     x: 0,
@@ -38,7 +58,9 @@ export const useInteractiveCursor = () => {
     isHovering: false,
     currentType: 'default',
     scale: 1,
-    rotation: 0
+    rotation: 0,
+    magneticStrength: 0,
+    particlesEnabled: false
   })
 
   // Configuration des différents types de curseur
@@ -55,14 +77,16 @@ export const useInteractiveCursor = () => {
       color: 'rgba(99, 102, 241, 1)',
       mixBlendMode: 'difference',
       animation: 'scale',
-      trail: true
+      trail: true,
+      magnetic: true
     },
     click: {
       size: 60,
       color: 'rgba(16, 185, 129, 0.9)',
       mixBlendMode: 'multiply',
       animation: 'ripple',
-      trail: false
+      trail: false,
+      particles: true
     },
     text: {
       size: 2,
@@ -76,21 +100,26 @@ export const useInteractiveCursor = () => {
       color: 'rgba(168, 85, 247, 0.8)',
       mixBlendMode: 'screen',
       animation: 'rotate',
-      trail: true
+      trail: true,
+      magnetic: true,
+      particles: true
     },
     nina: {
       size: 35,
       color: 'rgba(34, 197, 94, 0.9)',
       mixBlendMode: 'difference',
       animation: 'glow',
-      trail: true
+      trail: true,
+      magnetic: true,
+      particles: true
     },
     contact: {
       size: 45,
       color: 'rgba(239, 68, 68, 0.8)',
       mixBlendMode: 'difference',
       animation: 'heartbeat',
-      trail: false
+      trail: false,
+      magnetic: true
     },
     loading: {
       size: 30,
@@ -104,8 +133,106 @@ export const useInteractiveCursor = () => {
       color: 'linear-gradient(45deg, #667eea, #764ba2)',
       mixBlendMode: 'overlay',
       animation: 'morph',
-      trail: true
+      trail: true,
+      magnetic: true,
+      particles: true
+    },
+    magnetic: {
+      size: 30,
+      color: 'rgba(99, 102, 241, 0.9)',
+      mixBlendMode: 'difference',
+      animation: 'pulse',
+      trail: true,
+      magnetic: true
+    },
+    particle: {
+      size: 25,
+      color: 'rgba(168, 85, 247, 0.8)',
+      mixBlendMode: 'screen',
+      animation: 'glow',
+      trail: false,
+      particles: true
     }
+  }
+
+  // Initialiser le canvas pour les particules
+  const initParticleCanvas = () => {
+    if (!process.client) return
+
+    const canvas = document.createElement('canvas')
+    canvas.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9997;
+    `
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    document.body.appendChild(canvas)
+    particleCanvas.value = canvas
+    particleCtx.value = canvas.getContext('2d') || undefined
+
+    // Redimensionner le canvas
+    window.addEventListener('resize', () => {
+      if (particleCanvas.value) {
+        particleCanvas.value.width = window.innerWidth
+        particleCanvas.value.height = window.innerHeight
+      }
+    })
+
+    // Démarrer l'animation des particules
+    animateParticles()
+  }
+
+  // Créer des particules
+  const createParticles = (x: number, y: number, count = 8) => {
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count
+      const speed = 2 + Math.random() * 3
+      
+      particles.value.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 60,
+        maxLife: 60,
+        size: 2 + Math.random() * 3,
+        color: `hsla(${Math.random() * 60 + 240}, 70%, 60%, 1)`
+      })
+    }
+  }
+
+  // Animer les particules
+  const animateParticles = () => {
+    if (!particleCtx.value || !particleCanvas.value) return
+
+    const ctx = particleCtx.value
+    ctx.clearRect(0, 0, particleCanvas.value.width, particleCanvas.value.height)
+
+    // Mettre à jour et dessiner les particules
+    particles.value = particles.value.filter(particle => {
+      particle.x += particle.vx
+      particle.y += particle.vy
+      particle.life--
+      particle.vx *= 0.98
+      particle.vy *= 0.98
+
+      const alpha = particle.life / particle.maxLife
+      ctx.globalAlpha = alpha
+      ctx.fillStyle = particle.color
+      ctx.beginPath()
+      ctx.arc(particle.x, particle.y, particle.size * alpha, 0, Math.PI * 2)
+      ctx.fill()
+
+      return particle.life > 0
+    })
+
+    requestAnimationFrame(animateParticles)
   }
 
   // Initialiser le curseur
@@ -157,26 +284,70 @@ export const useInteractiveCursor = () => {
       trailElements.value.push(trail)
     }
 
+    // Initialiser le canvas des particules
+    initParticleCanvas()
+
     // Masquer le curseur par défaut
     document.body.style.cursor = 'none'
   }
 
+  // Effet magnétique
+  const applyMagneticEffect = (element: Element, x: number, y: number) => {
+    const rect = element.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    
+    const distance = Math.sqrt(
+      Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2)
+    )
+    
+    const maxDistance = 100
+    if (distance < maxDistance) {
+      const strength = (maxDistance - distance) / maxDistance
+      const pullX = (centerX - x) * strength * 0.3
+      const pullY = (centerY - y) * strength * 0.3
+      
+      return {
+        x: x + pullX,
+        y: y + pullY,
+        strength
+      }
+    }
+    
+    return { x, y, strength: 0 }
+  }
+
   // Mettre à jour la position du curseur
   const updateCursorPosition = (x: number, y: number) => {
-    cursorState.x = x
-    cursorState.y = y
+    let finalX = x
+    let finalY = y
+    
+    // Appliquer l'effet magnétique si activé
+    const config = cursorConfigs[cursorState.currentType]
+    if (config.magnetic && cursorState.isHovering) {
+      const hoveredElement = document.elementFromPoint(x, y)
+      if (hoveredElement) {
+        const magneticResult = applyMagneticEffect(hoveredElement, x, y)
+        finalX = magneticResult.x
+        finalY = magneticResult.y
+        cursorState.magneticStrength = magneticResult.strength
+      }
+    }
+
+    cursorState.x = finalX
+    cursorState.y = finalY
 
     if (cursorElement.value) {
-      cursorElement.value.style.left = `${x}px`
-      cursorElement.value.style.top = `${y}px`
+      cursorElement.value.style.left = `${finalX}px`
+      cursorElement.value.style.top = `${finalY}px`
     }
 
     // Mettre à jour la traînée avec un délai
-    if (cursorConfigs[cursorState.currentType].trail) {
+    if (config.trail) {
       trailElements.value.forEach((trail, index) => {
         setTimeout(() => {
-          trail.style.left = `${x}px`
-          trail.style.top = `${y}px`
+          trail.style.left = `${finalX}px`
+          trail.style.top = `${finalY}px`
           trail.style.opacity = '1'
         }, index * 50)
       })
@@ -193,6 +364,9 @@ export const useInteractiveCursor = () => {
 
     cursorState.currentType = type
     const config = cursorConfigs[type]
+
+    // Activer/désactiver les particules
+    cursorState.particlesEnabled = config.particles || false
 
     if (cursorElement.value) {
       const cursor = cursorElement.value
@@ -233,9 +407,14 @@ export const useInteractiveCursor = () => {
     cursorState.isVisible = false
   }
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: MouseEvent) => {
     setCursorType('click')
     cursorState.scale = 0.8
+    
+    // Créer des particules au clic
+    if (cursorState.particlesEnabled) {
+      createParticles(e.clientX, e.clientY, 12)
+    }
     
     setTimeout(() => {
       cursorState.scale = 1
@@ -245,19 +424,38 @@ export const useInteractiveCursor = () => {
 
   // Détecter le type d'élément survolé
   const detectElementType = (element: Element): CursorType => {
-    // Nina AI
-    if (element.closest('.nina-ai-agent') || element.closest('[data-nina]')) {
+    // Nina AI Widget (priorité haute)
+    if (element.closest('.nina-ai-widget') || 
+        element.closest('.nina-widget-trigger') ||
+        element.closest('.nina-widget-container') ||
+        element.closest('[data-nina]')) {
       return 'nina'
     }
 
     // Projets
-    if (element.closest('.project-card') || element.closest('[data-project]')) {
+    if (element.closest('.project-card') || 
+        element.closest('[data-project]') ||
+        element.closest('.project-image') ||
+        element.matches('.project-card, .project-card *')) {
       return 'project'
     }
 
     // Contact
-    if (element.closest('.contact-section') || element.closest('[data-contact]')) {
+    if (element.closest('.contact-section') || 
+        element.closest('[data-contact]') ||
+        element.closest('.contact-form') ||
+        element.matches('.contact-section *, .contact-form *')) {
       return 'contact'
+    }
+
+    // Services avec effet magnétique
+    if (element.closest('.service-card') || element.closest('[data-service]')) {
+      return 'magnetic'
+    }
+
+    // Éléments créatifs avec particules
+    if (element.matches('canvas, svg, .creative-element, [data-creative]')) {
+      return 'creative'
     }
 
     // Texte sélectionnable
@@ -270,11 +468,6 @@ export const useInteractiveCursor = () => {
       return 'hover'
     }
 
-    // Éléments créatifs (canvas, svg, etc.)
-    if (element.matches('canvas, svg, .creative-element')) {
-      return 'creative'
-    }
-
     return 'default'
   }
 
@@ -285,6 +478,11 @@ export const useInteractiveCursor = () => {
     const newType = detectElementType(target)
     setCursorType(newType)
     cursorState.isHovering = newType !== 'default'
+
+    // Créer des particules sur les éléments spéciaux
+    if (cursorState.particlesEnabled && Math.random() > 0.95) {
+      createParticles(e.clientX, e.clientY, 3)
+    }
   }
 
   // Ajouter les styles CSS pour les animations
@@ -423,6 +621,10 @@ export const useInteractiveCursor = () => {
       cursorElement.value.remove()
     }
     
+    if (particleCanvas.value) {
+      particleCanvas.value.remove()
+    }
+    
     trailElements.value.forEach(trail => trail.remove())
     trailElements.value = []
 
@@ -447,6 +649,13 @@ export const useInteractiveCursor = () => {
     setCursorType(loading ? 'loading' : 'default')
   }
 
+  // Nouvelle méthode pour créer des particules manuellement
+  const triggerParticles = (x?: number, y?: number) => {
+    const posX = x || cursorState.x
+    const posY = y || cursorState.y
+    createParticles(posX, posY, 8)
+  }
+
   return {
     cursorState: readonly(cursorState),
     setCursorType,
@@ -454,6 +663,7 @@ export const useInteractiveCursor = () => {
     stopInteractiveCursor,
     showCursor,
     hideCursor,
-    setCursorLoading
+    setCursorLoading,
+    triggerParticles
   }
 } 
