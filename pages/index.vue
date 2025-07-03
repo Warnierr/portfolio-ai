@@ -12,6 +12,9 @@
     <!-- Section Services -->
     <ServicesSection />
     
+    <!-- Section Témoignages -->
+    <TestimonialsSection />
+    
     <!-- Section Roadmap -->
     <RoadmapSection />
     
