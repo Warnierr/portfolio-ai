@@ -72,3 +72,36 @@ business-strategy/
 private-notes/
 fiscal-strategy/
 *.private.md
+
+# Nina AI - Éléments confidentiels
+private/nina-prompts/
+private/nina-data/
+private/nina-algorithms/
+private/nina-config/
+*.nina.private.js
+*.nina.private.ts
+nina-secrets.json
+nina-prompts.md
+nina-training-data/
+nina-performance-metrics/
+
+# API Keys et configurations sensibles Nina
+.env.nina
+.env.nina.local
+nina-api-keys.json
+nina-model-config.json
+nina-orchestration-secrets.js
+
+# Données d'apprentissage et logs Nina
+nina-conversations/
+nina-learning-logs/
+nina-user-data/
+nina-analytics/
+nina-feedback-data/
+
+# Propriété intellectuelle Nina AI
+nina-algorithms-core/
+nina-ip-protected/
+nina-proprietary/
+*.nina.algorithm.js
+*.nina.secret.ts
