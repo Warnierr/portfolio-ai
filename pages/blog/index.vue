@@ -1,854 +1,749 @@
 <template>
-  <div class="blog-page">
-    <!-- Hero du blog -->
+  <div class="blog-home">
+    <!-- Hero Section -->
     <section class="blog-hero">
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">
-            Blog <span class="text-gradient">Technique</span>
+            <span class="gradient-text">Blog Personnel</span>
+            <br>
+            Raouf WARNIER & Nina AI
           </h1>
           <p class="hero-description">
-            Explorez mes réflexions sur l'IA, le développement et les technologies émergentes.
-            Partage d'expériences, tutoriels et analyses techniques.
+            Découvrez deux univers complémentaires : les réflexions personnelles de Raouf 
+            et les analyses générées par Nina AI, mon agent intelligent autonome.
           </p>
-          
-          <!-- Barre de recherche -->
-          <div class="search-bar">
-            <div class="search-input-wrapper">
-              <Icon name="mdi:magnify" class="search-icon" />
-              <input 
-                v-model="searchQuery"
-                type="text" 
-                placeholder="Rechercher un article, une technologie..."
-                class="search-input"
-                @input="setSearchQuery(searchQuery)"
-              />
-              <button 
-                v-if="searchQuery" 
-                @click="clearSearch"
-                class="clear-btn"
-              >
-                <Icon name="mdi:close" />
-              </button>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">{{ totalArticles }}</span>
+              <span class="stat-label">Articles publiés</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">{{ totalReads }}</span>
+              <span class="stat-label">Lectures totales</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">{{ monthlyGrowth }}%</span>
+              <span class="stat-label">Croissance mensuelle</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Filtres et navigation -->
-    <section class="blog-filters">
+    <!-- Sections du blog -->
+    <section class="blog-sections">
       <div class="container">
-        <div class="filters-wrapper">
-          <!-- Filtres par catégorie -->
-          <div class="category-filters">
-            <button 
-              class="filter-btn"
-              :class="{ active: !selectedCategory }"
-              @click="setSelectedCategory(null)"
-            >
-              <Icon name="mdi:all-inclusive" />
-              Tous les articles
-            </button>
-            <button 
-              v-for="category in categories" 
-              :key="category.id"
-              class="filter-btn"
-              :class="{ active: selectedCategory === category.id }"
-              :style="{ '--category-color': category.color }"
-              @click="setSelectedCategory(category.id)"
-            >
-              <Icon :name="category.icon" />
-              {{ category.name }}
-            </button>
-          </div>
-
-          <!-- Statistiques -->
-          <div class="results-info">
-            <span class="results-count">
-              {{ filteredPosts.length }} article{{ filteredPosts.length > 1 ? 's' : '' }}
-              <span v-if="selectedCategory || searchQuery">trouvé{{ filteredPosts.length > 1 ? 's' : '' }}</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Liste des articles -->
-    <section class="blog-content">
-      <div class="container">
-        <div class="blog-layout">
-          <!-- Articles principaux -->
-          <div class="articles-main">
-            <div v-if="filteredPosts.length === 0" class="no-results">
-              <Icon name="mdi:file-search-outline" />
-              <h3>Aucun article trouvé</h3>
-              <p>Essayez de modifier vos critères de recherche ou explorez toutes les catégories.</p>
-              <button @click="clearFilters" class="btn btn-primary">
-                Voir tous les articles
-              </button>
-            </div>
-
-            <div v-else class="articles-grid">
-              <article 
-                v-for="post in filteredPosts" 
-                :key="post.id"
-                class="blog-article"
-                @click="navigateToPost(post)"
-              >
-                <div class="article-image">
-                  <img 
-                    v-if="post.image" 
-                    :src="post.image" 
-                    :alt="post.title"
-                    @error="handleImageError"
-                  />
-                  <div v-else class="image-placeholder">
-                    <Icon :name="post.category.icon" />
-                  </div>
-                  
-                  <div class="article-overlay">
-                    <div class="category-badge" :style="{ backgroundColor: post.category.color }">
-                      <Icon :name="post.category.icon" />
-                      {{ post.category.name }}
-                    </div>
-                    <div v-if="post.featured" class="featured-badge">
-                      <Icon name="mdi:star" />
-                      En vedette
-                    </div>
-                  </div>
+        <div class="sections-grid">
+          <!-- Section Raouf -->
+          <div class="section-card raouf-section">
+            <div class="section-header">
+              <div class="author-avatar">
+                <Icon name="mdi:account-circle" size="60" />
+              </div>
+              <div class="author-info">
+                <h2 class="author-name">Raouf WARNIER</h2>
+                <p class="author-role">Développeur Full-Stack</p>
+                <div class="author-stats">
+                  <span class="stat-item">
+                    <Icon name="mdi:post" />
+                    {{ raoufStats.articles }} articles
+                  </span>
+                  <span class="stat-item">
+                    <Icon name="mdi:eye" />
+                    {{ raoufStats.views.toLocaleString() }} vues
+                  </span>
                 </div>
-                
-                <div class="article-content">
-                  <div class="article-meta">
-                    <span class="publish-date">{{ formatDate(post.publishedAt) }}</span>
-                    <span class="read-time">
-                      <Icon name="mdi:clock-outline" />
-                      {{ post.readTime }} min
-                    </span>
-                  </div>
-                  
-                  <h2 class="article-title">{{ post.title }}</h2>
-                  <p class="article-excerpt">{{ post.excerpt }}</p>
-                  
-                  <div class="article-tags">
-                    <span 
-                      v-for="tag in post.tags.slice(0, 4)" 
-                      :key="tag"
-                      class="tag"
-                    >
-                      {{ tag }}
-                    </span>
-                  </div>
-                  
-                  <div class="article-footer">
-                    <div class="author-info">
-                      <div class="author-avatar">
-                        <Icon name="mdi:account-circle" />
-                      </div>
-                      <div class="author-details">
-                        <span class="author-name">{{ post.author.name }}</span>
-                        <span class="author-role">{{ post.author.role }}</span>
-                      </div>
-                    </div>
-                    
-                    <button class="read-btn">
-                      Lire l'article
-                      <Icon name="mdi:arrow-right" />
-                    </button>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <!-- Sidebar -->
-          <aside class="blog-sidebar">
-            <!-- Catégories populaires -->
-            <div class="sidebar-widget">
-              <h3 class="widget-title">Catégories</h3>
-              <div class="categories-list">
-                <button 
-                  v-for="category in categories" 
-                  :key="category.id"
-                  class="category-item"
-                  :class="{ active: selectedCategory === category.id }"
-                  @click="setSelectedCategory(category.id)"
-                >
-                  <div class="category-icon" :style="{ backgroundColor: category.color }">
-                    <Icon :name="category.icon" />
-                  </div>
-                  <div class="category-details">
-                    <span class="category-name">{{ category.name }}</span>
-                    <span class="posts-count">{{ postsByCategory[category.id]?.length || 0 }} articles</span>
-                  </div>
-                </button>
               </div>
             </div>
-
-            <!-- Articles populaires -->
-            <div class="sidebar-widget">
-              <h3 class="widget-title">Articles populaires</h3>
-              <div class="popular-posts">
-                <article 
-                  v-for="post in featuredPosts.slice(0, 3)" 
-                  :key="post.id"
-                  class="popular-post"
-                  @click="navigateToPost(post)"
-                >
-                  <div class="post-icon" :style="{ backgroundColor: post.category.color }">
-                    <Icon :name="post.category.icon" />
-                  </div>
-                  <div class="post-info">
-                    <h4 class="post-title">{{ post.title }}</h4>
-                    <div class="post-meta">
-                      <span class="post-date">{{ formatDate(post.publishedAt) }}</span>
-                      <span class="post-time">{{ post.readTime }} min</span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <!-- Newsletter -->
-            <div class="sidebar-widget newsletter-widget">
-              <h3 class="widget-title">Newsletter Tech</h3>
-              <p class="newsletter-description">
-                Recevez mes derniers articles et découvertes technologiques directement dans votre boîte mail.
+            
+            <div class="section-content">
+              <p class="section-description">
+                Mes réflexions personnelles sur le développement web, l'architecture logicielle, 
+                et l'innovation technologique. Retours d'expérience, tutoriels et analyses approfondies.
               </p>
-              <form class="newsletter-form" @submit.prevent="subscribeNewsletter">
-                <input 
-                  v-model="newsletterEmail"
-                  type="email" 
-                  placeholder="votre@email.com"
-                  class="newsletter-input"
-                  required
-                />
-                <button type="submit" class="newsletter-btn">
-                  <Icon name="mdi:send" />
-                  S'abonner
-                </button>
-              </form>
+              
+              <div class="section-topics">
+                <span class="topic">Vue.js & Nuxt</span>
+                <span class="topic">Architecture</span>
+                <span class="topic">TypeScript</span>
+                <span class="topic">Performance</span>
+                <span class="topic">Accessibilité</span>
+              </div>
+
+              <div class="recent-articles">
+                <h4>Articles récents</h4>
+                <div class="articles-list">
+                  <article 
+                    v-for="article in raoufRecentArticles" 
+                    :key="article.id"
+                    class="article-preview"
+                    @click="navigateTo(`/blog/raouf/${article.id}`)"
+                  >
+                    <h5 class="article-title">{{ article.title }}</h5>
+                    <div class="article-meta">
+                      <span class="date">{{ formatDate(article.date) }}</span>
+                      <span class="read-time">{{ article.readTime }} min</span>
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+              <div class="section-actions">
+                <NuxtLink to="/blog/raouf" class="section-btn primary">
+                  <Icon name="mdi:account" />
+                  Voir tous les articles
+                </NuxtLink>
+              </div>
             </div>
-          </aside>
+          </div>
+
+          <!-- Section Nina AI -->
+          <div class="section-card nina-section">
+            <div class="section-header">
+              <div class="author-avatar nina-avatar">
+                <Icon name="mdi:robot" size="60" />
+                <div class="ai-indicator">
+                  <span class="ai-dot"></span>
+                </div>
+              </div>
+              <div class="author-info">
+                <h2 class="author-name">Nina AI</h2>
+                <p class="author-role">Agent IA Autonome</p>
+                <div class="author-stats">
+                  <span class="stat-item">
+                    <Icon name="mdi:robot" />
+                    {{ ninaStats.articles }} articles générés
+                  </span>
+                  <span class="stat-item">
+                    <Icon name="mdi:star" />
+                    {{ ninaStats.averageQuality }}% qualité
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="section-content">
+              <p class="section-description">
+                Contenu généré par intelligence artificielle avec validation automatique. 
+                Analyses techniques, tendances IA, et réflexions sur l'avenir de la technologie.
+              </p>
+              
+              <div class="section-topics">
+                <span class="topic ai-topic">IA Générative</span>
+                <span class="topic ai-topic">Machine Learning</span>
+                <span class="topic ai-topic">Tendances Tech</span>
+                <span class="topic ai-topic">Innovation</span>
+                <span class="topic ai-topic">Éthique IA</span>
+              </div>
+
+              <div class="recent-articles">
+                <h4>Dernières générations</h4>
+                <div class="articles-list">
+                  <article 
+                    v-for="article in ninaRecentArticles" 
+                    :key="article.id"
+                    class="article-preview nina-preview"
+                    @click="navigateTo(`/blog/nina/${article.id}`)"
+                  >
+                    <h5 class="article-title">{{ article.title }}</h5>
+                    <div class="article-meta">
+                      <span class="generation-badge">
+                        <Icon name="mdi:robot" size="12" />
+                        Généré par IA
+                      </span>
+                      <span class="quality-score">{{ article.qualityScore }}%</span>
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+              <div class="section-actions">
+                <NuxtLink to="/blog/nina" class="section-btn secondary">
+                  <Icon name="mdi:robot" />
+                  Voir les articles IA
+                </NuxtLink>
+                <button @click="openGenerationModal" class="section-btn outline">
+                  <Icon name="mdi:plus" />
+                  Générer un article
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Comparaison des approches -->
+    <section class="comparison-section">
+      <div class="container">
+        <h2 class="section-title">Deux Approches Complémentaires</h2>
+        <div class="comparison-grid">
+          <div class="comparison-item">
+            <div class="comparison-header">
+              <Icon name="mdi:account" size="40" />
+              <h3>Raouf - Humain</h3>
+            </div>
+            <ul class="comparison-list">
+              <li>✨ Expérience personnelle</li>
+              <li>🎯 Retours d'expérience réels</li>
+              <li>💡 Créativité et intuition</li>
+              <li>🔍 Analyse contextuelle</li>
+              <li>❤️ Passion et émotion</li>
+            </ul>
+          </div>
+          
+          <div class="comparison-item">
+            <div class="comparison-header">
+              <Icon name="mdi:robot" size="40" />
+              <h3>Nina - IA</h3>
+            </div>
+            <ul class="comparison-list">
+              <li>⚡ Génération rapide</li>
+              <li>📊 Analyse de données massives</li>
+              <li>🎯 Objectivité et précision</li>
+              <li>🔄 Mise à jour continue</li>
+              <li>🌐 Perspective globale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-content">
+          <h2>Restez informé</h2>
+          <p>Recevez les derniers articles de Raouf et Nina directement dans votre boîte mail</p>
+          <form @submit.prevent="subscribeNewsletter" class="newsletter-form">
+            <input 
+              v-model="email" 
+              type="email" 
+              placeholder="Votre adresse email"
+              class="newsletter-input"
+              required
+            />
+            <button type="submit" class="newsletter-btn">
+              S'abonner
+              <Icon name="mdi:send" />
+            </button>
+          </form>
+          <div class="newsletter-features">
+            <span class="feature">📧 Pas de spam</span>
+            <span class="feature">🎯 Contenu de qualité</span>
+            <span class="feature">⚡ Désabonnement facile</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de génération -->
+    <div v-if="showGenerationModal" class="modal-overlay" @click="closeGenerationModal">
+      <div class="modal-content" @click.stop>
+        <div class="modal-header">
+          <h3>Générer un article avec Nina AI</h3>
+          <button @click="closeGenerationModal" class="close-btn">
+            <Icon name="mdi:close" />
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Vous allez être redirigé vers le dashboard Nina AI pour créer un nouvel article.</p>
+          <div class="modal-actions">
+            <button @click="closeGenerationModal" class="cancel-btn">
+              Annuler
+            </button>
+            <NuxtLink to="/nina-dashboard" class="generate-btn" @click="closeGenerationModal">
+              <Icon name="mdi:robot" />
+              Accéder au dashboard
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useBlog } from '~/composables/useBlog'
-
-// Métadonnées SEO
+// Métadonnées
 useHead({
-  title: 'Blog Technique - Articles sur l\'IA et le Développement',
+  title: 'Blog - Raouf WARNIER & Nina AI',
   meta: [
-    {
-      name: 'description',
-      content: 'Découvrez mes articles techniques sur l\'intelligence artificielle, le développement web, la data engineering et les technologies émergentes.'
-    },
-    {
-      property: 'og:title',
-      content: 'Blog Technique - Raouf'
-    },
-    {
-      property: 'og:description',
-      content: 'Articles techniques sur l\'IA, le développement et les technologies modernes.'
-    }
+    { name: 'description', content: 'Blog personnel de Raouf WARNIER et articles générés par Nina AI. Découvrez deux perspectives complémentaires sur le développement web et l\'IA.' },
+    { name: 'keywords', content: 'blog, Raouf WARNIER, Nina AI, développement web, IA générative, articles techniques' }
   ]
 })
 
-// Composables
-const { 
-  filteredPosts, 
-  featuredPosts,
-  categories, 
-  postsByCategory,
-  selectedCategory,
-  searchQuery,
-  setSelectedCategory,
-  setSearchQuery,
-  formatDate 
-} = useBlog()
+// État réactif
+const email = ref('')
+const showGenerationModal = ref(false)
 
-// État local
-const newsletterEmail = ref('')
+// Statistiques
+const totalArticles = ref(42)
+const totalReads = ref(15600)
+const monthlyGrowth = ref(23)
+
+const raoufStats = ref({
+  articles: 28,
+  views: 12400
+})
+
+const ninaStats = ref({
+  articles: 14,
+  averageQuality: 91
+})
+
+// Articles récents
+const raoufRecentArticles = ref([
+  {
+    id: 1,
+    title: 'Architecture Moderne avec Nuxt 3 et TypeScript',
+    date: new Date('2024-12-15'),
+    readTime: 8
+  },
+  {
+    id: 2,
+    title: 'L\'IA Générative au Service du Développement',
+    date: new Date('2024-12-10'),
+    readTime: 12
+  },
+  {
+    id: 3,
+    title: 'Optimisation des Performances avec GSAP',
+    date: new Date('2024-12-05'),
+    readTime: 10
+  }
+])
+
+const ninaRecentArticles = ref([
+  {
+    id: 1,
+    title: 'L\'Avenir de l\'IA Générative en 2025',
+    qualityScore: 94
+  },
+  {
+    id: 2,
+    title: 'Optimisation des Modèles de Langage',
+    qualityScore: 96
+  },
+  {
+    id: 3,
+    title: 'Éthique et IA Autonome',
+    qualityScore: 88
+  }
+])
 
 // Méthodes
-const navigateToPost = (post: any) => {
-  console.log('Naviguer vers:', post.slug)
-  // await navigateTo(`/blog/${post.slug}`)
-}
-
-const clearSearch = () => {
-  searchQuery.value = ''
-  setSearchQuery('')
-}
-
-const clearFilters = () => {
-  setSelectedCategory(null)
-  setSearchQuery('')
-}
-
-const handleImageError = (event: Event) => {
-  const target = event.target as HTMLImageElement
-  target.style.display = 'none'
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date)
 }
 
 const subscribeNewsletter = () => {
-  if (newsletterEmail.value) {
-    console.log('Abonnement newsletter:', newsletterEmail.value)
-    // Logique d'abonnement newsletter
-    newsletterEmail.value = ''
+  if (email.value) {
+    // Logique d'abonnement
+    console.log('Abonnement newsletter:', email.value)
+    email.value = ''
   }
+}
+
+const openGenerationModal = () => {
+  showGenerationModal.value = true
+}
+
+const closeGenerationModal = () => {
+  showGenerationModal.value = false
 }
 </script>
 
 <style scoped>
-.blog-page {
+.blog-home {
   min-height: 100vh;
-  padding-top: 80px; /* Compensation navbar */
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Hero du blog */
+/* Hero Section */
 .blog-hero {
-  padding: var(--space-20) 0;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
-  border-bottom: 1px solid var(--border-primary);
-}
-
-.hero-content {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  padding: var(--space-24) 0;
+  color: white;
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
   margin-bottom: var(--space-6);
-  font-family: var(--font-heading);
+  line-height: 1.1;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #fff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-description {
-  font-size: var(--text-lg);
-  color: var(--text-secondary);
+  font-size: var(--text-xl);
   line-height: 1.6;
-  margin-bottom: var(--space-10);
+  max-width: 600px;
+  margin: 0 auto var(--space-12);
+  opacity: 0.9;
 }
 
-.search-bar {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.search-input-wrapper {
-  position: relative;
+.hero-stats {
   display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: var(--space-4);
-  color: var(--text-secondary);
-  font-size: 20px;
-  z-index: 2;
-}
-
-.search-input {
-  width: 100%;
-  padding: var(--space-4) var(--space-12) var(--space-4) var(--space-12);
-  border: 2px solid var(--border-primary);
-  border-radius: var(--radius-full);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: var(--text-base);
-  transition: all var(--transition-base);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.clear-btn {
-  position: absolute;
-  right: var(--space-4);
-  width: 24px;
-  height: 24px;
-  border: none;
-  background: var(--color-gray-400);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-base);
-}
-
-.clear-btn:hover {
-  background: var(--color-gray-600);
-}
-
-/* Filtres */
-.blog-filters {
-  padding: var(--space-8) 0;
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-primary);
-  position: sticky;
-  top: 80px;
-  z-index: 100;
-}
-
-.filters-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-6);
-}
-
-.category-filters {
-  display: flex;
-  gap: var(--space-3);
+  gap: var(--space-12);
   flex-wrap: wrap;
 }
 
-.filter-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-full);
-  background: var(--bg-primary);
-  color: var(--text-secondary);
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.stat-label {
   font-size: var(--text-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-base);
+  opacity: 0.8;
 }
 
-.filter-btn:hover,
-.filter-btn.active {
-  background: var(--category-color, var(--accent-primary));
-  color: white;
-  border-color: var(--category-color, var(--accent-primary));
+/* Sections */
+.blog-sections {
+  padding: var(--space-20) 0;
 }
 
-.results-info {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-}
-
-/* Contenu du blog */
-.blog-content {
-  padding: var(--space-16) 0;
-}
-
-.blog-layout {
+.sections-grid {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: var(--space-12);
 }
 
-.articles-main {
-  min-width: 0;
-}
-
-.no-results {
-  text-align: center;
-  padding: var(--space-20);
-  color: var(--text-secondary);
-}
-
-.no-results svg {
-  font-size: 64px;
-  margin-bottom: var(--space-6);
-  opacity: 0.5;
-}
-
-.no-results h3 {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-4);
-  color: var(--text-primary);
-}
-
-.articles-grid {
-  display: grid;
-  gap: var(--space-8);
-}
-
-.blog-article {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: var(--space-6);
+.section-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: all var(--transition-base);
-  cursor: pointer;
 }
 
-.blog-article:hover {
-  transform: translateY(-3px);
+.section-card:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
+}
+
+.raouf-section {
   border-color: var(--accent-primary);
 }
 
-.article-image {
+.nina-section {
+  border-color: #667eea;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.author-avatar {
   position: relative;
-  height: 200px;
-  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.article-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-base);
+.nina-avatar {
+  color: #667eea;
 }
 
-.blog-article:hover .article-image img {
-  transform: scale(1.05);
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--gradient-primary);
+.ai-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  background: #10b981;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 48px;
 }
 
-.article-overlay {
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-3);
-  right: var(--space-3);
+.ai-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.author-name {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.author-role {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.author-stats {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
 }
 
-.category-badge,
-.featured-badge {
+.stat-item {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: white;
+  color: var(--text-secondary);
 }
 
-.featured-badge {
-  background: var(--color-yellow-500);
-}
-
-.article-content {
+.section-content {
   padding: var(--space-6);
+}
+
+.section-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-6);
+}
+
+.section-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.topic {
+  background: var(--bg-primary);
+  color: var(--accent-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.ai-topic {
+  color: #667eea;
+}
+
+.recent-articles h4 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.articles-list {
   display: flex;
   flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.article-preview {
+  padding: var(--space-4);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.article-preview:hover {
+  background: var(--bg-tertiary);
+}
+
+.nina-preview {
+  border-left: 3px solid #667eea;
+}
+
+.article-title {
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: var(--space-2);
+  line-height: 1.4;
 }
 
 .article-meta {
   display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
+  align-items: center;
+  gap: var(--space-3);
   font-size: var(--text-sm);
   color: var(--text-secondary);
 }
 
-.read-time {
+.generation-badge {
   display: flex;
   align-items: center;
   gap: var(--space-1);
+  color: #667eea;
+  font-weight: 500;
 }
 
-.article-title {
-  font-size: var(--text-xl);
+.quality-score {
+  background: #10b981;
+  color: white;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--space-3);
-  line-height: 1.4;
 }
 
-.article-excerpt {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-4);
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.article-tags {
+.section-actions {
   display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-6);
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
-.tag {
-  padding: var(--space-1) var(--space-3);
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  color: var(--accent-primary);
-}
-
-.article-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-}
-
-.author-info {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.author-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-}
-
-.author-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.author-name {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.author-role {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
-}
-
-.read-btn {
+.section-btn {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.section-btn.primary {
   background: var(--accent-primary);
   color: white;
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-base);
 }
 
-.read-btn:hover {
-  background: var(--accent-secondary);
-  transform: translateX(5px);
+.section-btn.secondary {
+  background: #667eea;
+  color: white;
 }
 
-/* Sidebar */
-.blog-sidebar {
-  display: flex;
-  flex-direction: column;
+.section-btn.outline {
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+}
+
+.section-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Comparaison */
+.comparison-section {
+  padding: var(--space-20) 0;
+  background: var(--bg-secondary);
+}
+
+.section-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-8);
 }
 
-.sidebar-widget {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+.comparison-item {
+  background: var(--bg-primary);
+  padding: var(--space-8);
   border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  text-align: center;
 }
 
-.widget-title {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--space-6);
-}
-
-.categories-list {
+.comparison-header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-}
-
-.category-item {
-  display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border: 1px solid transparent;
-  border-radius: var(--radius-lg);
-  background: transparent;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  text-align: left;
-}
-
-.category-item:hover,
-.category-item.active {
-  background: var(--bg-primary);
-  border-color: var(--border-primary);
-}
-
-.category-item .category-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 14px;
-}
-
-.category-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.category-name {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.posts-count {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
-}
-
-.popular-posts {
-  display: flex;
-  flex-direction: column;
   gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
-.popular-post {
-  display: flex;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  transition: all var(--transition-base);
+.comparison-header h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
 }
 
-.popular-post:hover {
-  background: var(--bg-primary);
+.comparison-list {
+  list-style: none;
+  padding: 0;
 }
 
-.post-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.post-info {
-  min-width: 0;
-}
-
-.post-title {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: var(--space-2);
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.post-meta {
-  display: flex;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
+.comparison-list li {
+  padding: var(--space-2) 0;
+  font-size: var(--text-base);
   color: var(--text-secondary);
 }
 
-.newsletter-widget {
-  background: var(--gradient-primary);
-  color: white;
-  border: none;
+/* Newsletter */
+.newsletter-section {
+  padding: var(--space-20) 0;
+  background: var(--bg-primary);
 }
 
-.newsletter-widget .widget-title {
-  color: white;
+.newsletter-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.newsletter-description {
-  font-size: var(--text-sm);
-  line-height: 1.5;
-  margin-bottom: var(--space-6);
-  opacity: 0.9;
+.newsletter-content h2 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.newsletter-content p {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
 }
 
 .newsletter-form {
   display: flex;
-  flex-direction: column;
   gap: var(--space-3);
+  margin-bottom: var(--space-6);
 }
 
 .newsletter-input {
-  padding: var(--space-3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex: 1;
+  padding: var(--space-4);
+  border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: var(--text-sm);
-}
-
-.newsletter-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.newsletter-input:focus {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.4);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .newsletter-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3);
-  background: white;
-  color: var(--accent-primary);
-  border: none;
+  padding: var(--space-4) var(--space-6);
+  background: var(--accent-primary);
+  color: white;
   border-radius: var(--radius-lg);
   font-weight: 500;
   cursor: pointer;
@@ -856,45 +751,119 @@ const subscribeNewsletter = () => {
 }
 
 .newsletter-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  background: var(--accent-secondary);
+}
+
+.newsletter-features {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.feature {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.close-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: var(--space-6);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-6);
+}
+
+.cancel-btn {
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.generate-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: #667eea;
+  color: white;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .blog-layout {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-  
-  .blog-sidebar {
-    order: -1;
-  }
-}
-
 @media (max-width: 768px) {
-  .blog-article {
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .sections-grid {
     grid-template-columns: 1fr;
   }
-  
-  .article-image {
-    height: 150px;
-  }
-  
-  .filters-wrapper {
+
+  .newsletter-form {
     flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-4);
   }
-  
-  .category-filters {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: var(--space-2);
+
+  .newsletter-features {
+    flex-direction: column;
+    gap: var(--space-2);
   }
-  
-  .filter-btn {
-    flex-shrink: 0;
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .author-stats {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .section-actions {
+    flex-direction: column;
   }
 }
 </style> 

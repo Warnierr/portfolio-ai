@@ -12,6 +12,7 @@
         <li><NuxtLink to="/#about" class="nav-link" @click="scrollToSection('about')">À propos</NuxtLink></li>
         <li><NuxtLink to="/#projects" class="nav-link" @click="scrollToSection('projects')">Projets</NuxtLink></li>
         <li><NuxtLink to="/#services" class="nav-link" @click="scrollToSection('services')">Services</NuxtLink></li>
+        <li><NuxtLink to="/blog" class="nav-link" :class="{ active: $route.path.startsWith('/blog') }">Blog</NuxtLink></li>
         <li><NuxtLink to="/#contact" class="nav-link" @click="scrollToSection('contact')">Contact</NuxtLink></li>
       </ul>
 
@@ -49,6 +50,7 @@
           <li><NuxtLink to="/#about" class="mobile-nav-link" @click="scrollToSection('about'); closeMobileMenu()">À propos</NuxtLink></li>
           <li><NuxtLink to="/#projects" class="mobile-nav-link" @click="scrollToSection('projects'); closeMobileMenu()">Projets</NuxtLink></li>
           <li><NuxtLink to="/#services" class="mobile-nav-link" @click="scrollToSection('services'); closeMobileMenu()">Services</NuxtLink></li>
+          <li><NuxtLink to="/blog" class="mobile-nav-link" @click="closeMobileMenu">Blog</NuxtLink></li>
           <li><NuxtLink to="/#contact" class="mobile-nav-link" @click="scrollToSection('contact'); closeMobileMenu()">Contact</NuxtLink></li>
         </ul>
         
