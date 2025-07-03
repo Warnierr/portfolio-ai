@@ -65,3 +65,10 @@ firebase.json
 # Analytics and tracking
 google-analytics.json
 gtag-config.js
+
+# Fichiers privés - Stratégie business
+PRIVATE_STRATEGY.md
+business-strategy/
+private-notes/
+fiscal-strategy/
+*.private.md
