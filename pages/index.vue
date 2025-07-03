@@ -15,6 +15,9 @@
     <!-- Section Roadmap -->
     <RoadmapSection />
     
+    <!-- Hub Networking -->
+    <NetworkingHub />
+    
     <!-- Section Contact -->
     <ContactSection />
     

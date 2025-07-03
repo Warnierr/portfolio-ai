@@ -167,6 +167,15 @@ export const useNinaAI = () => {
     if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('joindre')) {
       return 'contact'
     }
+    if (lowerMessage.includes('networking') || lowerMessage.includes('réseau') || lowerMessage.includes('collaboration') || lowerMessage.includes('partenariat')) {
+      return 'networking'
+    }
+    if (lowerMessage.includes('consultation') || lowerMessage.includes('mentoring') || lowerMessage.includes('conseil')) {
+      return 'consultation'
+    }
+    if (lowerMessage.includes('speaking') || lowerMessage.includes('conférence') || lowerMessage.includes('présentation')) {
+      return 'speaking'
+    }
     if (lowerMessage.includes('service') || lowerMessage.includes('prix') || lowerMessage.includes('tarif')) {
       return 'services'
     }
@@ -209,6 +218,21 @@ export const useNinaAI = () => {
       case 'contact':
         response = generateContactResponse(message)
         actions = ['contact-form', 'download-cv']
+        break
+        
+      case 'networking':
+        response = generateNetworkingResponse(message)
+        actions = ['open-networking-hub', 'book-consultation', 'open-calendar']
+        break
+        
+      case 'consultation':
+        response = generateConsultationResponse(message)
+        actions = ['book-consultation', 'open-calendar', 'download-cv']
+        break
+        
+      case 'speaking':
+        response = generateSpeakingResponse(message)
+        actions = ['propose-speaking', 'view-expertise', 'contact-form']
         break
         
       case 'services':
@@ -290,6 +314,49 @@ export const useNinaAI = () => {
            `🐙 GitHub : ${contact.github}\n` +
            `📍 Localisation : ${contact.location}\n\n` +
            `${contact.availability} ! Il sera ravi d'échanger sur vos projets IA. 🤝`
+  }
+
+  const generateNetworkingResponse = (message: string): string => {
+    return `🤝 **Networking avec Raouf** :\n\n` +
+           `Raouf est très actif dans l'écosystème IA français ! Il propose plusieurs types d'interactions :\n\n` +
+           `🔥 **Consultation gratuite** (45 min) - Analysons ensemble vos besoins IA\n` +
+           `🏢 **Collaboration projet** - Partenariats techniques innovants\n` +
+           `🎓 **Mentoring** - Accompagnement personnalisé développeurs/entrepreneurs\n` +
+           `🎤 **Speaking** - Interventions sur l'IA conversationnelle et Nina AI\n` +
+           `💡 **Advisory** - Conseil stratégique pour startups IA\n\n` +
+           `Rejoignez son réseau professionnel et découvrons ensemble comment l'IA peut transformer vos projets ! 🚀`
+  }
+
+  const generateConsultationResponse = (message: string): string => {
+    return `💡 **Consultation IA avec Raouf** :\n\n` +
+           `🆓 **Consultation découverte GRATUITE** (45 min)\n\n` +
+           `Ce que vous obtiendrez :\n` +
+           `✅ Analyse de vos besoins IA spécifiques\n` +
+           `✅ Recommandations techniques personnalisées\n` +
+           `✅ Roadmap d'implémentation claire\n` +
+           `✅ Évaluation ROI et faisabilité\n\n` +
+           `Parfait pour :\n` +
+           `• Entrepreneurs voulant intégrer l'IA\n` +
+           `• CTOs évaluant les opportunités IA\n` +
+           `• Équipes cherchant expertise technique\n\n` +
+           `Réservez votre créneau maintenant ! 📅`
+  }
+
+  const generateSpeakingResponse = (message: string): string => {
+    return `🎤 **Raouf Speaker IA** :\n\n` +
+           `Raouf intervient régulièrement sur :\n\n` +
+           `🔥 **Sujets d'expertise** :\n` +
+           `• IA Conversationnelle et Agents Intelligents\n` +
+           `• Nina AI : Retour d'expérience concret\n` +
+           `• Intégration IA en entreprise\n` +
+           `• Futur de l'interaction Human-AI\n` +
+           `• Innovation tech et écosystème français\n\n` +
+           `📊 **Formats** :\n` +
+           `• Keynotes (30-60 min)\n` +
+           `• Workshops techniques (2-4h)\n` +
+           `• Tables rondes et panels\n` +
+           `• Conférences corporate\n\n` +
+           `Contactez-le pour enrichir votre événement avec une expertise IA de pointe ! 🌟`
   }
   
   const generateServicesResponse = (message: string): string => {
