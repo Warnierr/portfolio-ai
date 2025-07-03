@@ -18,6 +18,9 @@
     <!-- Section Blog -->
     <BlogSection />
     
+    <!-- Section Nina Profile -->
+    <NinaProfile />
+    
     <!-- Section Roadmap -->
     <RoadmapSection />
     
