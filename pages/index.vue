@@ -15,6 +15,9 @@
     <!-- Section Témoignages -->
     <TestimonialsSection />
     
+    <!-- Section Blog -->
+    <BlogSection />
+    
     <!-- Section Roadmap -->
     <RoadmapSection />
     
