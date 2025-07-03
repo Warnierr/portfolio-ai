@@ -6,18 +6,36 @@
     <a href="#contact" class="skip-link">Aller au contact</a>
 
     <!-- Préloader -->
-    <div v-if="isLoading" class="preloader">
-      <div class="preloader-logo">Portfolio</div>
-    </div>
+    <Transition name="preloader" appear>
+      <div v-if="isLoading" class="preloader">
+        <div class="preloader-content">
+          <div class="preloader-logo">
+            <span class="logo-text">Portfolio</span>
+            <div class="logo-subtitle">Raouf WARNIER</div>
+          </div>
+          <div class="preloader-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
-    <!-- Le curseur interactif est géré par le composable -->
+    <!-- Curseur interactif -->
+    <InteractiveCursor />
+
+    <!-- Transitions de page -->
+    <div class="page-transition-overlay" ref="pageTransitionOverlay"></div>
 
     <!-- Navigation -->
     <Navigation id="navigation" />
 
-    <!-- Contenu principal -->
-    <main id="main-content">
-      <NuxtPage />
+    <!-- Contenu principal avec transitions -->
+    <main id="main-content" class="main-content">
+      <Transition name="page" mode="out-in" appear>
+        <NuxtPage />
+      </Transition>
     </main>
 
     <!-- Footer -->
@@ -33,6 +51,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { gsap } from 'gsap'
 
 // Métadonnées
 useHead({
@@ -48,13 +67,55 @@ useHead({
   ]
 })
 
+// Refs
+const pageTransitionOverlay = ref<HTMLElement>()
+
 // État du préloader
 const isLoading = ref(true)
 
+// Transitions de page
+const animatePageTransition = async (direction: 'in' | 'out' = 'in') => {
+  if (!pageTransitionOverlay.value) return
+
+  if (direction === 'out') {
+    // Animation de sortie
+    gsap.set(pageTransitionOverlay.value, { 
+      scaleX: 0, 
+      transformOrigin: 'left center',
+      backgroundColor: '#6366f1'
+    })
+    
+    await gsap.to(pageTransitionOverlay.value, {
+      scaleX: 1,
+      duration: 0.6,
+      ease: 'power2.inOut'
+    })
+  } else {
+    // Animation d'entrée
+    gsap.set(pageTransitionOverlay.value, { 
+      scaleX: 1, 
+      transformOrigin: 'right center',
+      backgroundColor: '#6366f1'
+    })
+    
+    await gsap.to(pageTransitionOverlay.value, {
+      scaleX: 0,
+      duration: 0.6,
+      ease: 'power2.inOut',
+      delay: 0.2
+    })
+  }
+}
+
 onMounted(async () => {
-  // Simulation du chargement
+  // Animation du préloader
   setTimeout(() => {
     isLoading.value = false
+    
+    // Animation d'entrée de la page
+    setTimeout(() => {
+      animatePageTransition('in')
+    }, 100)
   }, 2000)
 
   // Initialiser les composables côté client
@@ -65,10 +126,10 @@ onMounted(async () => {
       startPerformanceMonitoring()
     })
     
-    // Démarrer le curseur interactif
-    import('~/composables/useInteractiveCursor').then(({ useInteractiveCursor }) => {
-      const { startInteractiveCursor } = useInteractiveCursor()
-      startInteractiveCursor()
+    // Démarrer l'optimisation des performances
+    import('~/composables/usePerformanceOptimization').then(({ usePerformanceOptimization }) => {
+      const { initPerformanceOptimization } = usePerformanceOptimization()
+      initPerformanceOptimization()
     })
     
     // Initialiser les transitions de page
@@ -89,6 +150,19 @@ onMounted(async () => {
       const { setSEOConfig, initAccessibility } = useSEOAccessibility()
       setSEOConfig({}) // Utilise la config par défaut
       initAccessibility()
+    })
+
+    // Gestion des transitions de navigation
+    const router = useRouter()
+    router.beforeEach(async (to, from, next) => {
+      if (from.path !== to.path) {
+        await animatePageTransition('out')
+      }
+      next()
+    })
+
+    router.afterEach(async () => {
+      await animatePageTransition('in')
     })
   }
 })
@@ -181,13 +255,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.app {
+#app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.main {
+.main-content {
   flex: 1;
 }
 
@@ -198,104 +272,196 @@ body {
   padding: 0 var(--space-6);
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 var(--space-4);
-  }
+/* Préloader amélioré */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
 }
 
-.text-gradient {
+.preloader-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.preloader-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.logo-text {
+  font-size: var(--text-4xl);
+  font-weight: 700;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: logo-pulse 2s ease-in-out infinite;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+.logo-subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
   font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.preloader-spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.spinner-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  animation-delay: -0.33s;
+  border-top-color: var(--accent-secondary);
+}
+
+.spinner-ring:nth-child(3) {
+  animation-delay: -0.66s;
+  border-top-color: #10b981;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Transitions du préloader */
+.preloader-enter-active {
+  transition: all 0.8s ease;
+}
+
+.preloader-leave-active {
+  transition: all 0.8s ease;
+}
+
+.preloader-enter-from {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.preloader-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+/* Overlay de transition de page */
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-primary);
+  z-index: 9999;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* Transitions de page */
+.page-enter-active {
+  transition: all 0.6s ease;
+}
+
+.page-leave-active {
+  transition: all 0.4s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Skip links pour l'accessibilité */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 8px;
   text-decoration: none;
-  cursor: pointer;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+  z-index: 10001;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Amélioration des interactions */
+button, a, input, select, textarea {
   transition: all 0.2s ease;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  color: white;
-}
-
-.btn-primary:hover {
+button:hover, a:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
-.btn-secondary {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-primary);
+button:active, a:active {
+  transform: translateY(0);
 }
 
-.btn-secondary:hover {
-  background: var(--bg-primary);
-  border-color: var(--accent-primary);
+/* Optimisations pour les animations */
+.will-change-transform {
+  will-change: transform;
 }
 
-/* Animations globales */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-4);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .logo-text {
+    font-size: var(--text-3xl);
   }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+  
+  .preloader-spinner {
+    width: 40px;
+    height: 40px;
   }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* Scrollbar personnalisée */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-secondary);
-  border-radius: var(--radius-md);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
-}
-
-/* Focus visible */
-*:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
 }
 </style>
