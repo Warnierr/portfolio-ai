@@ -15,8 +15,14 @@
         <li><NuxtLink to="/#contact" class="nav-link" @click="scrollToSection('contact')">Contact</NuxtLink></li>
       </ul>
 
-      <!-- CTA Button -->
-      <div class="hidden md:block">
+      <!-- Liens sociaux + CTA -->
+      <div class="nav-actions hidden md:flex">
+        <SocialLinks 
+          variant="header" 
+          :show-title="false" 
+          :show-labels="false" 
+          :show-stats="false"
+        />
         <NuxtLink to="/#contact" class="btn btn-primary" @click="scrollToSection('contact')">
           Travaillons ensemble
         </NuxtLink>
@@ -45,6 +51,16 @@
           <li><NuxtLink to="/#services" class="mobile-nav-link" @click="scrollToSection('services'); closeMobileMenu()">Services</NuxtLink></li>
           <li><NuxtLink to="/#contact" class="mobile-nav-link" @click="scrollToSection('contact'); closeMobileMenu()">Contact</NuxtLink></li>
         </ul>
+        
+        <!-- Liens sociaux mobile -->
+        <div class="mobile-social">
+          <SocialLinks 
+            variant="inline" 
+            :show-title="false" 
+            :show-labels="false" 
+            :show-stats="false"
+          />
+        </div>
         
         <div class="mobile-cta">
           <NuxtLink to="/#contact" class="btn btn-primary" @click="scrollToSection('contact'); closeMobileMenu()">
@@ -160,6 +176,21 @@ onUnmounted(() => {
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
+}
+
+/* Actions navigation */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Liens sociaux mobile */
+.mobile-social {
+  padding: var(--space-4) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: var(--space-4) 0;
 }
 
 /* Burger menu */

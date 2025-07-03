@@ -5,9 +5,12 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "start": "node scripts/start-dev.js",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test:features": "node scripts/test-features.js",
+    "test": "npm run test:features"
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",

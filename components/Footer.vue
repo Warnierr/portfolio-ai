@@ -34,35 +34,12 @@
           </ul>
         </div>
 
-        <!-- Liens sociaux -->
-        <div class="footer-social">
-          <h4 class="footer-title">Suivez-moi</h4>
-          <div class="social-links">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-              <Icon name="mdi:github" size="24" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-              <Icon name="mdi:linkedin" size="24" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
-              <Icon name="mdi:twitter" size="24" />
-            </a>
-            <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Dribbble">
-              <Icon name="mdi:dribbble" size="24" />
-            </a>
-            <a href="mailto:contact@portfolio.com" class="social-link" aria-label="Email">
-              <Icon name="mdi:email" size="24" />
-            </a>
-          </div>
-          
-          <!-- Lien vers la boutique -->
-          <div class="footer-shop">
-            <a href="https://ma-boutique.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-              <Icon name="mdi:shopping" size="20" />
-              Ma Boutique E-commerce
-            </a>
-          </div>
-        </div>
+
+      </div>
+
+      <!-- Liens sociaux avancés -->
+      <div class="footer-social-section">
+        <SocialLinks variant="footer" />
       </div>
 
       <!-- Séparateur -->
@@ -154,6 +131,14 @@ const scrollToSection = (sectionId: string) => {
 .footer-link:hover {
   color: var(--color-primary);
   transform: translateX(5px);
+}
+
+.footer-social-section {
+  margin: var(--space-16) 0;
+  padding: var(--space-8);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .social-links {

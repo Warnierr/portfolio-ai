@@ -236,7 +236,7 @@ onMounted(() => {
   if (!$gsap) return
 
   // Animation d'entrée au scroll
-  $gsap.from(sectionHeader.value, {
+  $gsap.gsap.from(sectionHeader.value, {
     y: 50,
     opacity: 0,
     duration: 1,
@@ -247,7 +247,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from(aboutStory.value, {
+  $gsap.gsap.from(aboutStory.value, {
     y: 50,
     opacity: 0,
     duration: 1,
@@ -259,7 +259,7 @@ onMounted(() => {
   })
 
   // Animation des barres de compétences
-  $gsap.from('.skill-item', {
+  $gsap.gsap.from('.skill-item', {
     y: 30,
     opacity: 0,
     duration: 0.8,
@@ -272,7 +272,7 @@ onMounted(() => {
   })
 
   // Animation des cartes de valeurs
-  $gsap.from('.value-card', {
+  $gsap.gsap.from('.value-card', {
     y: 50,
     opacity: 0,
     duration: 0.8,
@@ -284,7 +284,7 @@ onMounted(() => {
   })
 
   // Animation des centres d'intérêt
-  $gsap.from('.interest-item', {
+  $gsap.gsap.from('.interest-item', {
     x: -30,
     opacity: 0,
     duration: 0.6,
@@ -302,7 +302,7 @@ function animateSkillBars() {
 
   document.querySelectorAll('.skill-progress').forEach(bar => {
     const width = bar.getAttribute('data-width')
-    $gsap.to(bar, {
+    $gsap.gsap.to(bar, {
       width: `${width}%`,
       duration: 1.5,
       ease: 'power2.out',

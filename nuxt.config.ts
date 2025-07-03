@@ -20,6 +20,20 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/']
+    },
+    // Configuration pour nodemailer
+    experimental: {
+      wasm: true
+    }
+  },
+
+  // Configuration pour les dépendances externes
+  vite: {
+    define: {
+      global: 'globalThis'
+    },
+    optimizeDeps: {
+      include: ['nodemailer']
     }
   },
 

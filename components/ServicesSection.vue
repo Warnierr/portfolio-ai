@@ -284,7 +284,7 @@ const startHoverAnimation = (event: MouseEvent) => {
   if (!$gsap) return
 
   const card = event.currentTarget as HTMLElement
-  $gsap.to(card, {
+  $gsap.gsap.to(card, {
     y: -10,
     duration: 0.3,
     ease: 'power2.out'
@@ -296,7 +296,7 @@ const endHoverAnimation = (event: MouseEvent) => {
   if (!$gsap) return
 
   const card = event.currentTarget as HTMLElement
-  $gsap.to(card, {
+  $gsap.gsap.to(card, {
     y: 0,
     duration: 0.3,
     ease: 'power2.out'
@@ -308,7 +308,7 @@ onMounted(() => {
   if (!$gsap) return
 
   // Animations d'entrée
-  $gsap.from(sectionHeader.value, {
+  $gsap.gsap.from(sectionHeader.value, {
     y: 50,
     opacity: 0,
     duration: 1,
@@ -318,7 +318,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.service-card', {
+  $gsap.gsap.from('.service-card', {
     y: 50,
     opacity: 0,
     duration: 0.8,
@@ -329,7 +329,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.process-step', {
+  $gsap.gsap.from('.process-step', {
     x: -50,
     opacity: 0,
     duration: 0.8,
@@ -340,7 +340,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.result-card', {
+  $gsap.gsap.from('.result-card', {
     y: 50,
     opacity: 0,
     duration: 0.8,
@@ -351,7 +351,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from(ctaSection.value, {
+  $gsap.gsap.from(ctaSection.value, {
     y: 50,
     opacity: 0,
     duration: 1,

@@ -12,8 +12,22 @@
     <!-- Section Services -->
     <ServicesSection />
     
+    <!-- Section Roadmap -->
+    <RoadmapSection />
+    
     <!-- Section Contact -->
     <ContactSection />
+    
+    <!-- Section Liens Sociaux (optionnelle avant footer) -->
+    <section class="social-section">
+      <div class="container">
+        <SocialLinks 
+          variant="inline" 
+          title="Connectons-nous !" 
+          subtitle="Rejoignez-moi sur ces plateformes pour suivre mes derniers projets et découvertes en IA"
+        />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -45,5 +59,18 @@ useHead({
 <style scoped>
 .homepage {
   min-height: 100vh;
+}
+
+.social-section {
+  padding: var(--space-32) 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .social-section {
+    padding: var(--space-20) 0;
+  }
 }
 </style> 

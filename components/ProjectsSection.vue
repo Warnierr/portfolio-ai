@@ -33,6 +33,7 @@
           :key="project.id"
           :class="['project-card', `category-${project.category}`]"
           @click="openProjectModal(project)"
+          data-project
         >
           <div class="project-image">
             <div class="project-overlay">
@@ -303,7 +304,7 @@ const animateProjectsGrid = () => {
   const { $gsap } = useNuxtApp()
   if (!$gsap) return
 
-  $gsap.from('.project-card', {
+  $gsap.gsap.from('.project-card', {
     y: 50,
     opacity: 0,
     duration: 0.6,
@@ -317,7 +318,7 @@ onMounted(() => {
   if (!$gsap) return
 
   // Animation d'entrée
-  $gsap.from(sectionHeader.value, {
+  $gsap.gsap.from(sectionHeader.value, {
     y: 50,
     opacity: 0,
     duration: 1,
@@ -327,7 +328,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.filter-btn', {
+  $gsap.gsap.from('.filter-btn', {
     y: 30,
     opacity: 0,
     duration: 0.6,
@@ -338,7 +339,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.project-card', {
+  $gsap.gsap.from('.project-card', {
     y: 50,
     opacity: 0,
     duration: 0.8,
@@ -349,7 +350,7 @@ onMounted(() => {
     }
   })
 
-  $gsap.from('.stat-card', {
+  $gsap.gsap.from('.stat-card', {
     y: 50,
     opacity: 0,
     duration: 0.8,

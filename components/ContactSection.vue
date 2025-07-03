@@ -1,5 +1,5 @@
 <template>
-  <section id="contact" class="contact-section">
+  <section id="contact" class="contact-section" data-contact>
     <div class="container">
       <!-- En-tête de section -->
       <div class="section-header" ref="sectionHeader">
@@ -87,6 +87,18 @@
               <span v-else>Envoi en cours...</span>
             </button>
           </form>
+
+          <!-- Notification -->
+          <Transition name="notification">
+            <div v-if="notification.show" class="notification" :class="notification.type">
+              <div class="notification-content">
+                <span class="notification-message">{{ notification.message }}</span>
+                <button @click="closeNotification" class="notification-close">
+                  <Icon name="mdi:close" />
+                </button>
+              </div>
+            </div>
+          </Transition>
         </div>
 
         <!-- Informations de contact -->
@@ -256,31 +268,83 @@ const form = reactive({
   message: ''
 })
 
+// État pour les notifications
+const notification = reactive({
+  show: false,
+  type: 'success' as 'success' | 'error',
+  message: ''
+})
+
 // Soumission du formulaire
 const submitForm = async () => {
   isSubmitting.value = true
   
   try {
-    // Simulation d'envoi (à remplacer par votre API)
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // Utiliser l'API de fallback en développement si nodemailer n'est pas disponible
+    const apiEndpoint = process.dev ? '/api/contact-fallback' : '/api/contact'
     
-    // Réinitialiser le formulaire
-    Object.assign(form, {
-      name: '',
-      email: '',
-      company: '',
-      subject: '',
-      message: ''
+    const response = await $fetch<{ success: boolean; message: string }>(apiEndpoint, {
+      method: 'POST',
+      body: {
+        name: form.name,
+        email: form.email,
+        company: form.company,
+        subject: form.subject,
+        message: form.message
+      }
     })
     
-    // Notification de succès (à implémenter)
-    console.log('Message envoyé avec succès!')
+    if (response.success) {
+      // Réinitialiser le formulaire
+      Object.assign(form, {
+        name: '',
+        email: '',
+        company: '',
+        subject: '',
+        message: ''
+      })
+      
+      // Notification de succès
+      showNotification('success', '✅ Message envoyé avec succès ! Je vous répondrai sous 24h.')
+      
+      // Animation de succès
+      const { $gsap } = useNuxtApp()
+      if ($gsap) {
+        $gsap.gsap.to('.contact-form', {
+          scale: 1.02,
+          duration: 0.3,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.inOut'
+        })
+      }
+    }
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erreur lors de l\'envoi:', error)
+    
+    const errorMessage = error.data?.statusMessage || 'Erreur lors de l\'envoi du message. Veuillez réessayer.'
+    showNotification('error', `❌ ${errorMessage}`)
+    
   } finally {
     isSubmitting.value = false
   }
+}
+
+// Gestion des notifications
+const showNotification = (type: 'success' | 'error', message: string) => {
+  notification.type = type
+  notification.message = message
+  notification.show = true
+  
+  // Masquer automatiquement après 5 secondes
+  setTimeout(() => {
+    notification.show = false
+  }, 5000)
+}
+
+const closeNotification = () => {
+  notification.show = false
 }
 
 onMounted(() => {
@@ -660,6 +724,81 @@ onMounted(() => {
 .faq-item p {
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+/* Notification */
+.notification {
+  position: relative;
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.notification.success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #065f46;
+}
+
+.notification.error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #991b1b;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.notification-message {
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+}
+
+.notification-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+.notification-enter-active,
+.notification-leave-active {
+  transition: all 0.3s ease;
+}
+
+.notification-enter-from {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.notification-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive */
