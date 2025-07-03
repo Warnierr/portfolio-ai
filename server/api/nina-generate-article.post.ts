@@ -5,18 +5,18 @@ export default defineEventHandler(async (event) => {
     // Validation des données d'entrée
     const { topic, category, style, targetLength, audience, keywords, priority } = body
     
-    if (!topic || !category || !style) {
+    if (!topic || !style) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Paramètres manquants: topic, category et style sont requis'
+        statusMessage: 'Paramètres manquants: topic et style sont requis'
       })
     }
 
     // Validation des valeurs
-    const validStyles = ['technical', 'philosophical', 'personal', 'analytical']
-    const validLengths = ['short', 'medium', 'long']
-    const validAudiences = ['general', 'technical', 'academic', 'business']
-    const validPriorities = ['low', 'medium', 'high']
+    const validStyles = ['technique', 'philosophique', 'personnel', 'analytique']
+    const validLengths = ['court', 'moyen', 'long']
+    const validAudiences = ['general', 'technique', 'academique', 'business']
+    const validPriorities = ['basse', 'normale', 'haute']
 
     if (!validStyles.includes(style)) {
       throw createError({
@@ -49,12 +49,12 @@ export default defineEventHandler(async (event) => {
     // Création de la requête de génération
     const generationRequest = {
       topic: topic.trim(),
-      category: category.trim(),
-      style: style as 'technical' | 'philosophical' | 'personal' | 'analytical',
-      targetLength: (targetLength || 'medium') as 'short' | 'medium' | 'long',
-      audience: (audience || 'general') as 'general' | 'technical' | 'academic' | 'business',
+      category: category?.trim() || 'general',
+      style: style as 'technique' | 'philosophique' | 'personnel' | 'analytique',
+      targetLength: (targetLength || 'moyen') as 'court' | 'moyen' | 'long',
+      audience: (audience || 'general') as 'general' | 'technique' | 'academique' | 'business',
       keywords: Array.isArray(keywords) ? keywords : (keywords ? [keywords] : []),
-      priority: (priority || 'medium') as 'low' | 'medium' | 'high',
+      priority: (priority || 'normale') as 'basse' | 'normale' | 'haute',
       context: body.context || undefined,
       scheduledFor: body.scheduledFor ? new Date(body.scheduledFor) : undefined
     }
@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
 
     return response
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erreur lors de la requête de génération:', error)
     
     if (error.statusCode) {
@@ -129,10 +129,10 @@ function calculateEstimatedTime(request: any): number {
   
   // Ajustement selon la longueur
   switch (request.targetLength) {
-    case 'short':
+    case 'court':
       baseTime += 2
       break
-    case 'medium':
+    case 'moyen':
       baseTime += 5
       break
     case 'long':
@@ -142,16 +142,16 @@ function calculateEstimatedTime(request: any): number {
   
   // Ajustement selon le style
   switch (request.style) {
-    case 'technical':
+    case 'technique':
       baseTime += 8 // Plus de recherche technique
       break
-    case 'philosophical':
+    case 'philosophique':
       baseTime += 6 // Réflexion approfondie
       break
-    case 'analytical':
+    case 'analytique':
       baseTime += 7 // Analyse détaillée
       break
-    case 'personal':
+    case 'personnel':
       baseTime += 3 // Plus direct
       break
   }
@@ -175,10 +175,10 @@ function calculateCostEstimate(request: any): number {
   
   // Coût selon la longueur
   switch (request.targetLength) {
-    case 'short':
+    case 'court':
       baseCost += 0.02
       break
-    case 'medium':
+    case 'moyen':
       baseCost += 0.05
       break
     case 'long':
@@ -188,26 +188,26 @@ function calculateCostEstimate(request: any): number {
   
   // Coût selon la complexité du style
   switch (request.style) {
-    case 'technical':
+    case 'technique':
       baseCost += 0.08
       break
-    case 'philosophical':
+    case 'philosophique':
       baseCost += 0.06
       break
-    case 'analytical':
+    case 'analytique':
       baseCost += 0.07
       break
-    case 'personal':
+    case 'personnel':
       baseCost += 0.03
       break
   }
   
   // Coût selon l'audience (plus technique = plus cher)
   switch (request.audience) {
-    case 'academic':
+    case 'academique':
       baseCost += 0.05
       break
-    case 'technical':
+    case 'technique':
       baseCost += 0.04
       break
     case 'business':
@@ -224,11 +224,11 @@ function calculateCostEstimate(request: any): number {
 function getQueuePosition(priority: string): number {
   // Simulation de position dans la queue
   switch (priority) {
-    case 'high':
+    case 'haute':
       return Math.floor(Math.random() * 2) + 1 // 1-2
-    case 'medium':
+    case 'normale':
       return Math.floor(Math.random() * 3) + 2 // 2-4
-    case 'low':
+    case 'basse':
       return Math.floor(Math.random() * 5) + 3 // 3-7
     default:
       return 3
@@ -296,9 +296,9 @@ function simulateGenerationProcess(requestId: string, request: any) {
 
 function getWordCountForLength(length: string): number {
   switch (length) {
-    case 'short':
+    case 'court':
       return 400 + Math.floor(Math.random() * 300) // 400-700 mots
-    case 'medium':
+    case 'moyen':
       return 800 + Math.floor(Math.random() * 500) // 800-1300 mots
     case 'long':
       return 1500 + Math.floor(Math.random() * 800) // 1500-2300 mots

@@ -1,11 +1,11 @@
 <template>
-  <section id="blog" class="blog-section">
+  <section class="blog-section">
     <div class="container">
       <!-- En-tête de section -->
       <div class="section-header" ref="sectionHeader">
-        <span class="section-badge">Blog Technique</span>
+        <span class="section-badge">Blog</span>
         <h2 class="section-title">
-          Mes derniers
+          Mes derniers 
           <span class="text-gradient">articles</span>
         </h2>
         <p class="section-description">
@@ -15,10 +15,10 @@
       </div>
 
       <!-- Statistiques du blog -->
-      <div class="blog-stats" ref="blogStats">
+      <div class="blog-stats" ref="blogStatsRef">
         <div class="stat-item">
           <div class="stat-number">{{ blogStats.totalPosts }}</div>
-          <div class="stat-label">Articles publiés</div>
+          <div class="stat-label">Articles</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">{{ blogStats.totalCategories }}</div>
@@ -26,68 +26,40 @@
         </div>
         <div class="stat-item">
           <div class="stat-number">{{ blogStats.averageReadTime }}</div>
-          <div class="stat-label">Min de lecture</div>
+          <div class="stat-label">Min lecture</div>
         </div>
       </div>
 
       <!-- Articles en vedette -->
-      <div class="featured-posts" ref="featuredPosts">
+      <div class="featured-posts" ref="featuredPostsRef">
         <h3>Articles en vedette</h3>
         <div class="featured-grid">
           <article 
-            v-for="post in featuredPosts" 
+            v-for="post in blogFeaturedPosts" 
             :key="post.id"
             class="featured-article"
             @click="navigateToPost(post)"
           >
-            <div class="article-image">
-              <img 
-                v-if="post.image" 
-                :src="post.image" 
-                :alt="post.title"
-                @error="handleImageError"
-              />
-              <div v-else class="image-placeholder">
-                <Icon :name="post.category.icon" />
-              </div>
-              <div class="article-overlay">
-                <div class="category-badge" :style="{ backgroundColor: post.category.color }">
-                  <Icon :name="post.category.icon" />
-                  {{ post.category.name }}
-                </div>
-              </div>
+            <div class="article-image" v-if="post.image">
+              <img :src="post.image" :alt="post.title" @error="handleImageError">
             </div>
-            
             <div class="article-content">
               <div class="article-meta">
-                <span class="publish-date">{{ formatDate(post.publishedAt) }}</span>
+                <span class="category" :style="{ color: post.category.color }">
+                  <Icon :name="post.category.icon" />
+                  {{ post.category.name }}
+                </span>
                 <span class="read-time">{{ post.readTime }} min</span>
               </div>
-              
               <h4 class="article-title">{{ post.title }}</h4>
               <p class="article-excerpt">{{ post.excerpt }}</p>
-              
-              <div class="article-tags">
-                <span 
-                  v-for="tag in post.tags.slice(0, 3)" 
-                  :key="tag"
-                  class="tag"
-                >
-                  {{ tag }}
-                </span>
-              </div>
-              
               <div class="article-footer">
-                <div class="author-info">
-                  <div class="author-avatar">
-                    <Icon name="mdi:account-circle" />
-                  </div>
-                  <span class="author-name">{{ post.author.name }}</span>
+                <span class="publish-date">{{ formatDate(post.publishedAt) }}</span>
+                <div class="article-tags">
+                  <span v-for="tag in post.tags.slice(0, 3)" :key="tag" class="tag">
+                    {{ tag }}
+                  </span>
                 </div>
-                <button class="read-more-btn">
-                  Lire l'article
-                  <Icon name="mdi:arrow-right" />
-                </button>
               </div>
             </div>
           </article>
@@ -95,82 +67,64 @@
       </div>
 
       <!-- Articles récents -->
-      <div class="recent-posts" ref="recentPosts">
+      <div class="recent-posts" ref="recentPostsRef">
         <h3>Articles récents</h3>
         <div class="recent-grid">
           <article 
-            v-for="post in recentPosts" 
+            v-for="post in blogRecentPosts" 
             :key="post.id"
             class="recent-article"
             @click="navigateToPost(post)"
           >
-            <div class="article-icon" :style="{ backgroundColor: post.category.color }">
-              <Icon :name="post.category.icon" />
-            </div>
-            
-            <div class="article-info">
+            <div class="article-content">
               <div class="article-meta">
-                <span class="category">{{ post.category.name }}</span>
-                <span class="date">{{ formatDate(post.publishedAt) }}</span>
+                <span class="category" :style="{ color: post.category.color }">
+                  <Icon :name="post.category.icon" />
+                  {{ post.category.name }}
+                </span>
+                <span class="read-time">{{ post.readTime }} min</span>
               </div>
-              <h5 class="article-title">{{ post.title }}</h5>
+              <h4 class="article-title">{{ post.title }}</h4>
               <p class="article-excerpt">{{ post.excerpt }}</p>
-              
-              <div class="article-stats">
-                <span class="read-time">
-                  <Icon name="mdi:clock-outline" />
-                  {{ post.readTime }} min
-                </span>
-                <span class="tags-count">
-                  <Icon name="mdi:tag-outline" />
-                  {{ post.tags.length }} tags
-                </span>
+              <div class="article-footer">
+                <span class="publish-date">{{ formatDate(post.publishedAt) }}</span>
               </div>
             </div>
-            
-            <button class="article-btn">
-              <Icon name="mdi:arrow-right" />
-            </button>
           </article>
         </div>
       </div>
 
       <!-- Catégories -->
-      <div class="blog-categories" ref="blogCategories">
+      <div class="categories-section" ref="categoriesRef">
         <h3>Explorez par catégorie</h3>
         <div class="categories-grid">
           <div 
             v-for="category in categories" 
             :key="category.id"
             class="category-card"
-            :style="{ '--category-color': category.color }"
             @click="navigateToCategory(category)"
+            :style="{ '--category-color': category.color }"
           >
             <div class="category-icon">
               <Icon :name="category.icon" />
             </div>
-            <div class="category-info">
-              <h4 class="category-name">{{ category.name }}</h4>
-              <p class="category-description">{{ category.description }}</p>
-              <span class="posts-count">
-                {{ postsByCategory[category.id]?.length || 0 }} articles
-              </span>
+            <h4 class="category-name">{{ category.name }}</h4>
+            <p class="category-description">{{ category.description }}</p>
+            <div class="category-count">
+              {{ postsByCategory[category.id]?.length || 0 }} articles
             </div>
           </div>
         </div>
       </div>
 
-      <!-- CTA vers le blog complet -->
-      <div class="blog-cta" ref="blogCta">
-        <div class="cta-content">
-          <h3>Envie de découvrir plus d'articles ?</h3>
-          <p>Explorez tous mes articles techniques et mes réflexions sur le blog complet.</p>
-          <NuxtLink to="/blog" class="cta-button">
-            <Icon name="mdi:book-open" />
-            Découvrir le blog
-            <Icon name="mdi:arrow-right" />
-          </NuxtLink>
-        </div>
+      <!-- CTA -->
+      <div class="blog-cta" ref="blogCtaRef">
+        <h3>Envie d'en savoir plus ?</h3>
+        <p>Découvrez tous mes articles et restez informé des dernières tendances tech.</p>
+        <NuxtLink to="/blog" class="cta-button">
+          Voir tous les articles
+          <Icon name="mdi:arrow-right" />
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -183,25 +137,24 @@ import { usePageTransitions } from '~/composables/usePageTransitions'
 
 // Composables
 const { 
-  featuredPosts, 
-  recentPosts, 
+  featuredPosts: blogFeaturedPosts, 
+  recentPosts: blogRecentPosts, 
   categories, 
   postsByCategory, 
-  blogStats, 
+  blogStats,
   formatDate 
 } = useBlog()
 
 // Refs pour animations
 const sectionHeader = ref()
-const blogStats = ref()
-const featuredPosts = ref()
-const recentPosts = ref()
-const blogCategories = ref()
-const blogCta = ref()
+const blogStatsRef = ref()
+const featuredPostsRef = ref()
+const recentPostsRef = ref()
+const categoriesRef = ref()
+const blogCtaRef = ref()
 
 // Navigation
 const navigateToPost = (post: any) => {
-  // Pour l'instant, on peut juste logger ou naviguer vers une page de détail
   console.log('Naviguer vers:', post.slug)
   // await navigateTo(`/blog/${post.slug}`)
 }
@@ -241,11 +194,10 @@ onMounted(() => {
     duration: 0.8,
     stagger: 0.1,
     scrollTrigger: {
-      trigger: blogStats.value,
+      trigger: blogStatsRef.value,
       start: 'top 80%',
       onEnter: () => {
-        // Animer les compteurs
-        animateCounter('.stat-number', blogStats.totalPosts)
+        animateCounter('.stat-number', blogStats.value.totalPosts)
       }
     }
   })
@@ -272,12 +224,12 @@ onMounted(() => {
   })
 
   // Animation du CTA
-  $gsap.gsap.from(blogCta.value, {
+  $gsap.gsap.from(blogCtaRef.value, {
     scale: 0.9,
     opacity: 0,
     duration: 1,
     scrollTrigger: {
-      trigger: blogCta.value,
+      trigger: blogCtaRef.value,
       start: 'top 80%'
     }
   })
@@ -389,7 +341,6 @@ onMounted(() => {
 }
 
 .article-image {
-  position: relative;
   height: 200px;
   overflow: hidden;
 }
@@ -398,39 +349,6 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-base);
-}
-
-.featured-article:hover .article-image img {
-  transform: scale(1.05);
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--gradient-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 48px;
-}
-
-.article-overlay {
-  position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
-}
-
-.category-badge {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: white;
 }
 
 .article-content {
@@ -442,42 +360,32 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--space-4);
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.read-time {
   font-size: var(--text-sm);
   color: var(--text-secondary);
 }
 
 .article-title {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: 600;
-  color: var(--text-primary);
   margin-bottom: var(--space-3);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .article-excerpt {
-  font-size: var(--text-sm);
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-4);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.article-tags {
-  display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-}
-
-.tag {
-  padding: var(--space-1) var(--space-3);
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  color: var(--accent-primary);
 }
 
 .article-footer {
@@ -486,47 +394,22 @@ onMounted(() => {
   align-items: center;
 }
 
-.author-info {
+.publish-date {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.article-tags {
   display: flex;
-  align-items: center;
   gap: var(--space-2);
 }
 
-.author-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--gradient-primary);
-  color: white;
-}
-
-.author-name {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.read-more-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  background: var(--accent-primary);
-  color: white;
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-base);
-}
-
-.read-more-btn:hover {
-  background: var(--accent-secondary);
-  transform: translateX(5px);
+.tag {
+  padding: var(--space-1) var(--space-2);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
 }
 
 /* Articles récents */
@@ -543,108 +426,31 @@ onMounted(() => {
 
 .recent-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: var(--space-6);
 }
 
 .recent-article {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-6);
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
+  padding: var(--space-6);
   transition: all var(--transition-base);
   cursor: pointer;
 }
 
 .recent-article:hover {
-  transform: translateX(5px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   border-color: var(--accent-primary);
 }
 
-.article-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-.article-info {
-  flex: 1;
-}
-
-.article-info .article-meta {
-  display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-2);
-}
-
-.category {
-  font-weight: 500;
-  color: var(--accent-primary);
-}
-
-.date {
-  color: var(--text-secondary);
-}
-
-.article-info .article-title {
-  font-size: var(--text-base);
-  margin-bottom: var(--space-2);
-}
-
-.article-info .article-excerpt {
-  margin-bottom: var(--space-3);
-  -webkit-line-clamp: 1;
-}
-
-.article-stats {
-  display: flex;
-  gap: var(--space-4);
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
-}
-
-.article-stats span {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.article-btn {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--border-primary);
-  border-radius: 50%;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  flex-shrink: 0;
-}
-
-.recent-article:hover .article-btn {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
-  color: white;
-}
-
 /* Catégories */
-.blog-categories {
+.categories-section {
   margin-bottom: var(--space-20);
 }
 
-.blog-categories h3 {
+.categories-section h3 {
   font-size: var(--text-2xl);
   font-weight: 600;
   margin-bottom: var(--space-8);
@@ -653,20 +459,20 @@ onMounted(() => {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-6);
 }
 
 .category-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-6);
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
   transition: all var(--transition-base);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .category-card:hover {
@@ -675,105 +481,96 @@ onMounted(() => {
   border-color: var(--category-color);
 }
 
-.category-icon {
-  width: 50px;
-  height: 50px;
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
   background: var(--category-color);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 20px;
-  flex-shrink: 0;
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.category-card:hover::before {
+  transform: scaleX(1);
+}
+
+.category-icon {
+  font-size: 2rem;
+  color: var(--category-color);
+  margin-bottom: var(--space-4);
 }
 
 .category-name {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   font-weight: 600;
-  color: var(--text-primary);
   margin-bottom: var(--space-2);
 }
 
 .category-description {
-  font-size: var(--text-sm);
   color: var(--text-secondary);
-  margin-bottom: var(--space-2);
-  line-height: 1.4;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
 }
 
-.posts-count {
-  font-size: var(--text-xs);
+.category-count {
+  font-size: var(--text-sm);
   color: var(--category-color);
   font-weight: 500;
 }
 
-/* CTA Blog */
+/* CTA */
 .blog-cta {
   text-align: center;
-  padding: var(--space-12);
-  background: var(--gradient-primary);
-  border-radius: var(--radius-2xl);
-  color: white;
+  padding: var(--space-16);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-primary);
 }
 
-.cta-content h3 {
+.blog-cta h3 {
   font-size: var(--text-2xl);
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: var(--space-4);
 }
 
-.cta-content p {
-  font-size: var(--text-lg);
+.blog-cta p {
+  color: var(--text-secondary);
   margin-bottom: var(--space-8);
-  opacity: 0.9;
 }
 
 .cta-button {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   padding: var(--space-4) var(--space-8);
-  background: white;
-  color: var(--accent-primary);
-  border-radius: var(--radius-lg);
-  font-weight: 600;
+  background: var(--accent-primary);
+  color: white;
   text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
   transition: all var(--transition-base);
 }
 
 .cta-button:hover {
+  background: var(--accent-secondary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .featured-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .blog-stats {
     flex-direction: column;
     gap: var(--space-6);
   }
   
-  .recent-article {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .article-info .article-meta {
-    justify-content: center;
-  }
-  
+  .featured-grid,
+  .recent-grid,
   .categories-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .category-card {
-    flex-direction: column;
-    text-align: center;
   }
 }
 </style> 

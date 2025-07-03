@@ -278,7 +278,9 @@
               "Raouf m'a aidé à implémenter Nina AI dans notre startup. Résultat : +40% d'engagement client !"
             </div>
             <div class="story-author">
-              <img src="/testimonial-1.jpg" alt="Sarah M." class="author-avatar">
+              <div class="author-avatar">
+                <Icon name="mdi:account-circle" size="48" />
+              </div>
               <div class="author-info">
                 <span class="author-name">Sarah M.</span>
                 <span class="author-role">CEO, TechStartup</span>
@@ -291,7 +293,9 @@
               "Sa conférence sur l'IA conversationnelle a inspiré toute notre équipe. Vision claire et expertise solide."
             </div>
             <div class="story-author">
-              <img src="/testimonial-2.jpg" alt="Marc L." class="author-avatar">
+              <div class="author-avatar">
+                <Icon name="mdi:account-circle" size="48" />
+              </div>
               <div class="author-info">
                 <span class="author-name">Marc L.</span>
                 <span class="author-role">CTO, Scale-up</span>
@@ -304,7 +308,9 @@
               "Le mentoring avec Raouf m'a permis de décrocher mon poste d'AI Engineer. Merci pour l'accompagnement !"
             </div>
             <div class="story-author">
-              <img src="/testimonial-3.jpg" alt="Alex R." class="author-avatar">
+              <div class="author-avatar">
+                <Icon name="mdi:account-circle" size="48" />
+              </div>
               <div class="author-info">
                 <span class="author-name">Alex R.</span>
                 <span class="author-role">AI Engineer</span>

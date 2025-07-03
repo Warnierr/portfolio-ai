@@ -284,7 +284,7 @@ const getStatusLabel = (status: string) => {
 }
 
 const openProjectModal = (project: any) => {
-  // TODO: Implémenter modal détaillée
+  // Ouverture de modal détaillée - fonctionnalité future
   console.log('Ouvrir modal pour:', project.title)
 }
 
