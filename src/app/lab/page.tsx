@@ -1,28 +1,6 @@
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
-
-const labExperiments = [
-  {
-    title: "Agent d’autodocumentation",
-    status: "En cours",
-    detail: "Scan des repos + Obsidian pour générer fiches projets, changelogs et pages `/projets/[slug]`.",
-  },
-  {
-    title: "Tests RAG multi-modal",
-    status: "Beta",
-    detail: "Fusion d’images/process + texte pour enrichir le knowledge graph des automations NAS.",
-  },
-  {
-    title: "Séquenceur d’agents Nomah",
-    status: "R&D",
-    detail: "Planner qui décide quel agent lancer (exploration, reasoning, action) selon les signaux métier.",
-  },
-  {
-    title: "Firewall narratif Anomalie",
-    status: "Prototype",
-    detail: "Filtre linguistique qui garde la cohérence du lore généré par les agents créatifs.",
-  },
-];
+import { labExperiments } from "@/data/lab";
 
 const roadmap = [
   { label: "Q1", items: ["Release agent d’autodoc", "Nouvelle version du chat RAG public"] },
@@ -58,6 +36,14 @@ export default function LabPage() {
               </div>
               <h3 className="mt-3 text-xl font-semibold text-white">{experiment.title}</h3>
               <p>{experiment.detail}</p>
+              <div className="mt-3 grid gap-2 rounded-xl border border-white/5 bg-white/5 p-3 text-xs text-zinc-300">
+                <div>
+                  <span className="text-emerald-200">Prochaine étape :</span> {experiment.next}
+                </div>
+                <div>
+                  <span className="text-emerald-200">Bénéfice :</span> {experiment.value}
+                </div>
+              </div>
             </div>
           ))}
         </div>

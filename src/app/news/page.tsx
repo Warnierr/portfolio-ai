@@ -1,9 +1,32 @@
+import { headers } from "next/headers";
+
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
 import NewsFeed from "@/components/NewsFeed";
-import { newsFeed } from "@/data/news";
+import { newsFeed as staticNewsFeed, type NewsEntry } from "@/data/news";
 
-export default function NewsPage() {
+async function fetchNewsEntries(): Promise<NewsEntry[]> {
+  const headersList = await headers();
+  const host = headersList.get("host");
+  if (!host) return staticNewsFeed;
+
+  const protocol = host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https";
+  const url = `${protocol}://${host}/api/news`;
+
+  try {
+    const response = await fetch(url, { next: { revalidate: 300 } });
+    if (!response.ok) return staticNewsFeed;
+
+    const data = (await response.json()) as { entries?: NewsEntry[] };
+    return data.entries ?? staticNewsFeed;
+  } catch {
+    return staticNewsFeed;
+  }
+}
+
+export default async function NewsPage() {
+  const entries = await fetchNewsEntries();
+
   return (
     <PageContainer className="gap-8">
       <section className="glass-panel p-8 md:p-12">
@@ -19,7 +42,7 @@ export default function NewsPage() {
       </section>
 
       <section className="glass-panel p-6 md:p-10">
-        <NewsFeed entries={newsFeed} />
+        <NewsFeed entries={entries} />
       </section>
     </PageContainer>
   );

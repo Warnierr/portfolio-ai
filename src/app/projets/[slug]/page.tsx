@@ -51,6 +51,32 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       <section className="glass-panel p-8 md:p-12">
         <SectionTitle eyebrow="Impact" title="Résultats & preuves" />
         <p className="text-zinc-300">{project.impact}</p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-emerald-200">Décisions clés</p>
+            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-zinc-200">
+              {(project.decisions ?? []).map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-amber-200">Risques maîtrisés</p>
+            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-zinc-200">
+              {(project.risks ?? []).map((r) => (
+                <li key={r}>{r}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+            <p className="text-xs uppercase tracking-[0.2em] text-blue-200">À explorer</p>
+            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-zinc-200">
+              {(project.exploreNext ?? []).map((x) => (
+                <li key={x}>{x}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section className="glass-panel p-8 md:p-12">

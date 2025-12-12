@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence, type MotionProps } from "framer-motion";
 
 import type { NewsEntry } from "@/data/news";
 
@@ -24,31 +25,42 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
             key={filter}
             type="button"
             onClick={() => setActiveFilter(filter)}
-            className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] transition ${
+            className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] transition-all duration-300 ${
               activeFilter === filter
-                ? "border-white bg-white/10 text-white"
-                : "border-white/20 text-zinc-400 hover:text-white"
+                ? "border-white bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                : "border-white/20 text-zinc-400 hover:text-white hover:border-white/40"
             }`}
           >
             {filter}
           </button>
         ))}
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
-        {filteredEntries.map((entry) => (
-          <div
-            key={`${entry.title}-${entry.date}`}
-            className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-zinc-200"
-          >
-            <div className="flex items-center justify-between text-xs text-zinc-400">
-              <span>{entry.date}</span>
-              <span>{entry.tag}</span>
-            </div>
-            <p className="mt-3 text-lg font-semibold text-white">{entry.title}</p>
-            <p>{entry.content}</p>
-          </div>
-        ))}
-      </div>
+      <motion.div layout className="grid gap-4 md:grid-cols-3">
+        <AnimatePresence mode="popLayout">
+          {filteredEntries.map((entry, index) => (
+            <motion.div
+              key={`${entry.title}-${entry.date}`}
+              layout
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -8 }}
+              transition={{
+                duration: 0.35,
+                delay: index * 0.05,
+                layout: { duration: 0.3 },
+              }}
+              className="glass-card p-5 text-sm text-zinc-200"
+            >
+              <div className="flex items-center justify-between text-xs text-zinc-400">
+                <span>{entry.date}</span>
+                <span>{entry.tag}</span>
+              </div>
+              <p className="mt-3 text-lg font-semibold text-white">{entry.title}</p>
+              <p>{entry.content}</p>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

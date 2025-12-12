@@ -35,5 +35,33 @@ export const newsFeed: NewsEntry[] = [
     date: "02 déc.",
     category: "Veille",
   },
+  {
+    title: "Budget AI – planner coût/risque",
+    content: "Ajout d’un planner avant actions automatiques (virements/alertes) et journal d’explicabilité.",
+    tag: "#BudgetAI",
+    date: "01 déc.",
+    category: "Avancement",
+  },
+  {
+    title: "Ecrituria – critique IA",
+    content: "Agent critique inséré entre le créatif et la publication pour garder la cohérence du lore.",
+    tag: "#Ecrituria",
+    date: "29 nov.",
+    category: "Avancement",
+  },
+  {
+    title: "Runbook NAS/Proxmox",
+    content: "Test de runbook de panne : restauration snapshot validée en <6 minutes, alertes Telegram OK.",
+    tag: "#Infra",
+    date: "27 nov.",
+    category: "Avancement",
+  },
+  {
+    title: "CI/CD durcie",
+    content: "Diff-schema + Jest + lint bloquants avant déploiement data, logs centralisés sur Grafana/Loki.",
+    tag: "#DevOps",
+    date: "25 nov.",
+    category: "Avancement",
+  },
 ];
 

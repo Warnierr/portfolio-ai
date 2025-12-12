@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, type MotionProps } from "framer-motion";
 
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
@@ -19,36 +19,48 @@ const entryCards = [
     description: "Vision, architecture, automatisation : tout est pensé comme un organisme vivant.",
     tag: "Méthodo",
     href: "/ecosystemes",
+    audience: "Dirigeants, PM, CTO",
+    why: "Clarifier comment je conçois un système de bout en bout.",
   },
   {
     title: "Cas d’usage / Projets",
     description: "Nomah AI, Anomalie 2084, Second Brain… des études de cas détaillées.",
     tag: "Études de cas",
     href: "/projets",
+    audience: "CTO, équipes produit/data",
+    why: "Voir ce que je livre réellement, stack et architecture.",
   },
   {
     title: "Laboratoire & R&D",
     description: "Scripts, tests d’agents, prototypes. Là où je pousse les limites.",
     tag: "R&D",
     href: "/lab",
+    audience: "Tech/innovation",
+    why: "Comprendre comment j’expérimente avant de livrer.",
   },
   {
     title: "Stack & Infra",
     description: "Radar IA/Data, infrastructure Proxmox/NAS, design systèmes et outils.",
     tag: "Stack",
     href: "/stack",
+    audience: "CTO, SRE, DevOps",
+    why: "Valider mes fondations techniques (IA + infra).",
   },
   {
     title: "News par agent",
     description: "Journal vivant généré automatiquement depuis Obsidian + Git.",
     tag: "Flux intelligent",
     href: "/news",
+    audience: "Curieux, recruteurs",
+    why: "Suivre mes avancées, sans dossier PDF figé.",
   },
   {
     title: "Collaborer",
     description: "Contact, calendrier, snapshot recruteur, accès à l’agent de présentation.",
     tag: "Collaboration",
     href: "/contact",
+    audience: "Recruteurs, partenaires",
+    why: "Accéder vite aux coordonnées et au résumé.",
   },
 ];
 
@@ -59,7 +71,7 @@ const signals = newsFeed.slice(0, 3).map((entry) => ({
   href: "/news",
 }));
 
-const fadeUp = {
+const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.3 },
@@ -146,17 +158,27 @@ export default function LandingPage() {
           subtitle="Chaque page explore en profondeur un pan de l’écosystème IA."
         />
         <div className="grid gap-5 md:grid-cols-2">
-          {entryCards.map((card) => (
-            <Link
+          {entryCards.map((card, index) => (
+            <motion.div
               key={card.title}
-              href={card.href}
-              className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
             >
-              <div className="text-xs uppercase tracking-[0.3em] text-zinc-400">{card.tag}</div>
-              <p className="text-2xl font-semibold text-white">{card.title}</p>
-              <p className="text-sm text-zinc-300">{card.description}</p>
-              <span className="text-sm text-emerald-200">Explorer →</span>
-            </Link>
+              <Link
+                href={card.href}
+                className="glass-card flex h-full flex-col gap-3 p-6"
+              >
+                <div className="text-xs uppercase tracking-[0.3em] text-zinc-400">{card.tag}</div>
+                <p className="text-2xl font-semibold text-white">{card.title}</p>
+                <p className="text-sm text-zinc-300">{card.description}</p>
+                <p className="text-xs text-zinc-400">
+                  Pour : {card.audience} • Pourquoi : {card.why}
+                </p>
+                <span className="mt-auto text-sm text-emerald-200">Explorer →</span>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -168,19 +190,26 @@ export default function LandingPage() {
           subtitle="Dernières entrées du flux automatisé. Voir tout sur /news."
         />
         <div className="grid gap-4 md:grid-cols-3">
-          {signals.map((item) => (
-            <Link
+          {signals.map((item, index) => (
+            <motion.div
               key={item.title}
-              href={item.href}
-              className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-zinc-200 transition hover:bg-white/10"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.45, delay: index * 0.1, ease: "easeOut" }}
             >
-              <div className="flex items-center justify-between text-xs text-zinc-400">
-                <span>{item.tag}</span>
-                <span>Agent News</span>
-              </div>
-              <p className="mt-3 text-lg font-semibold text-white">{item.title}</p>
-              <p>{item.detail}</p>
-            </Link>
+              <Link
+                href={item.href}
+                className="glass-card block p-5 text-sm text-zinc-200"
+              >
+                <div className="flex items-center justify-between text-xs text-zinc-400">
+                  <span>{item.tag}</span>
+                  <span>Agent News</span>
+                </div>
+                <p className="mt-3 text-lg font-semibold text-white">{item.title}</p>
+                <p>{item.detail}</p>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>

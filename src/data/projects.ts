@@ -9,6 +9,9 @@ export type Project = {
   impact: string;
   lessons: string[];
   links?: { label: string; href: string }[];
+  decisions?: string[];
+  risks?: string[];
+  exploreNext?: string[];
 };
 
 export const projects: Project[] = [
@@ -25,6 +28,21 @@ export const projects: Project[] = [
       "Toujours stocker les explications de l’agent pour audit ultérieur.",
       "Le budget est un écosystème : prévoir des hooks vers NAS, Notion, e-mail.",
     ],
+    decisions: [
+      "Planner coût/risque avant d’appeler un modèle.",
+      "Journal d’explicabilité stocké dans Supabase pour audit.",
+      "Séparation lecture bancaire / actions automatiques par rôles d’agent.",
+    ],
+    risks: [
+      "Confidentialité des données sensibles.",
+      "Dérive d’actions automatiques sans garde-fous.",
+      "Alignement des prévisions avec la réalité bancaire.",
+    ],
+    exploreNext: [
+      "Brancher alertes Telegram + email.",
+      "Ajouter un simulateur de cashflow multi-comptes.",
+      "Exporter en PDF signable pour le comptable.",
+    ],
   },
   {
     name: "Ecrituria",
@@ -38,6 +56,21 @@ export const projects: Project[] = [
     lessons: [
       "Séparer les rôles (créatif vs critique) pour maintenir la qualité.",
       "Le graph de connaissances est la charpente : il doit être versionné comme du code.",
+    ],
+    decisions: [
+      "Deux agents : créatif et critique, orchestrés par un planner.",
+      "Knowledge graph versionné pour garder la cohérence du lore.",
+      "Pipeline multi-modal (texte + visuel) avec validation humaine légère.",
+    ],
+    risks: [
+      "Incohérences de lore si le graph n’est pas mis à jour.",
+      "Coûts d’inférence sur les passages longs.",
+      "Dérive stylistique sans critique explicite.",
+    ],
+    exploreNext: [
+      "Génération de planches visuelles cohérentes (moodboards).",
+      "Synthèse audio des chapitres pour validation rapide.",
+      "Portail public de lecture avec mode RAG « questions sur le lore ».",
     ],
   },
   {

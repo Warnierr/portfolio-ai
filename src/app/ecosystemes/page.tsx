@@ -62,6 +62,15 @@ export default function EcosystemesPage() {
             </ul>
           </div>
         </div>
+        <div className="mt-8 rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-zinc-200">
+          <p className="text-xs uppercase tracking-[0.3em] text-emerald-200">Architecture en 3 blocs</p>
+          <p className="mt-2">
+            <span className="font-semibold text-white">Data</span> (ingestion, qualité, stockage) →{" "}
+            <span className="font-semibold text-white">IA</span> (agents, RAG, orchestrateur) →{" "}
+            <span className="font-semibold text-white">Infra</span> (NAS/Proxmox, CI/CD, observabilité). Chaque couche est
+            testée et observable avant d’être reliée aux autres.
+          </p>
+        </div>
       </section>
 
       <section className="glass-panel p-8 md:p-12">
