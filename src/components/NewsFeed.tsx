@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence, type MotionProps } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import type { NewsEntry } from "@/data/news";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -22,7 +22,7 @@ const pageVariants = {
   },
 };
 
-const pageTransition = {
+const pageTransition: Transition = {
   type: "spring",
   stiffness: 260,
   damping: 26,
