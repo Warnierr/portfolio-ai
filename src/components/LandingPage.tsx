@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, type MotionProps } from "framer-motion";
 
 import PageContainer from "@/components/PageContainer";
+import StickyCTA from "@/components/StickyCtA";
 import { caseStudies } from "@/data/projects";
 
 const fadeUp: MotionProps = {
@@ -29,6 +30,7 @@ export default function LandingPage() {
     .concat(caseStudies.filter((p) => p.type === "produit").slice(0, 1));
 
   return (
+    <>
     <PageContainer className="gap-16">
       {/* Hero */}
       <motion.section className="glass-panel p-8 md:p-12" {...fadeUp}>
@@ -276,5 +278,9 @@ export default function LandingPage() {
         </Link>
       </motion.section>
     </PageContainer>
+
+    {/* CTA sticky */}
+    <StickyCTA text="Diagnostic gratuit →" href="/contact" />
+    </>
   );
 }
