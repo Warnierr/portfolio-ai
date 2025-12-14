@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 });
 
 // Navigation V1 (6 liens)
-const navItems = [
+type NavItem = {
+  label: string;
+  href: string;
+  badge?: string;
+};
+
+const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
   { label: "Méthode", href: "/methode" },
   { label: "News", href: "/news", badge: "Nouveau" },
