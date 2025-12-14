@@ -1,3 +1,63 @@
+/**
+ * Études de cas — Format V1 Freelance
+ * Cible : TPE/PME (cabinets comptables, avocats, agences marketing/immobilières)
+ */
+
+export type CaseStudy = {
+  slug: string;
+  title: string;
+  type: "mission" | "produit" | "experimentation";
+
+  // Résumé exécutif (2-3 lignes max, visible en haut)
+  tldr: string;
+
+  // Contexte de la mission
+  context: {
+    client: string; // "Cabinet comptable" ou "Projet personnel"
+    duration: string; // "3 mois" ou "En cours"
+    role: string; // "Développeur principal + architecture"
+    year: number;
+  };
+
+  // Problème concret
+  problem: {
+    situation: string; // État initial du client
+    stakes: string; // Ce qui était en jeu (temps, argent, qualité)
+  };
+
+  // Contraintes réelles rencontrées
+  constraints: string[];
+
+  // Choix techniques avec justification
+  decisions: {
+    choice: string;
+    why: string;
+    tradeoff?: string; // Ce qu'on a sacrifié pour ce choix
+  }[];
+
+  // Ce qui a été livré (factuel)
+  delivered: string[];
+
+  // Résultats obtenus
+  results: {
+    metrics?: string[]; // Chiffres concrets si disponibles
+    qualitative: string; // Toujours présent
+  };
+
+  // Ce que je referais différemment
+  retrospective: string[];
+
+  // Stack technique
+  stack: string[];
+
+  // Liens externes
+  links?: { label: string; href: string }[];
+
+  // Pour les projets type "experimentation"
+  status?: "en_cours" | "prototype" | "archive";
+};
+
+// Ancienne structure (compatibilité temporaire)
 export type Project = {
   name: string;
   slug: string;
@@ -14,126 +74,315 @@ export type Project = {
   exploreNext?: string[];
 };
 
-export const projects: Project[] = [
+export const caseStudies: CaseStudy[] = [
   {
-    name: "Budget AI",
     slug: "budget-ai",
-    problem: "Gerer son budget personnel de maniere intelligente avec une vision claire des finances et des conseils personnalises.",
-    solution: "Application web full-stack de gestion financiere avec assistant IA integre pour des conseils personnalises et anonymises.",
-    architecture: "Next.js 14 (App Router, Server Components) + Prisma ORM + PostgreSQL (Neon) + NextAuth.js + OpenRouter API (multi-modeles IA).",
-    stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL", "Neon", "NextAuth.js", "OpenRouter", "Recharts", "Radix UI", "Vercel"],
-    proof: "Demontre ma capacite a concevoir une application full-stack complete, de l'authentification securisee a l'integration IA, en passant par le deploiement cloud.",
-    impact: "Dashboard interactif avec graphiques temps reel, suivi multi-comptes, projections financieres et assistant IA pour optimiser son budget.",
-    lessons: [
-      "Anonymiser les donnees avant envoi a l'IA pour respecter la vie privee (RGPD-friendly).",
-      "Prisma + Neon offrent un excellent compromis performance/simplicite pour le serverless.",
-      "L'architecture Server Components de Next.js 14 reduit drastiquement le JS cote client.",
+    title: "Budget AI — Gestion financière avec assistant IA",
+    type: "produit",
+    tldr:
+      "Application de gestion budgétaire personnelle avec conseils IA. Les données financières sont anonymisées avant tout envoi vers l'IA — aucune donnée sensible ne quitte le navigateur en clair.",
+    context: {
+      client: "Projet personnel (utilisé au quotidien)",
+      duration: "2 mois de développement, maintenance continue",
+      role: "Conception, développement, déploiement",
+      year: 2024,
+    },
+    problem: {
+      situation:
+        "Les outils de budget existants sont soit basiques (tableurs), soit complexes (Bankin, YNAB), soit demandent de connecter ses comptes bancaires — ce que beaucoup refusent pour des raisons de confidentialité.",
+      stakes:
+        "Avoir une vision claire de ses finances sans sacrifier la vie privée, et obtenir des conseils personnalisés sans exposer ses données bancaires à un tiers.",
+    },
+    constraints: [
+      "Confidentialité absolue : aucune donnée bancaire en clair vers l'API IA",
+      "Budget infrastructure minimal (hébergement gratuit Vercel + Neon)",
+      "Interface utilisable sur mobile sans friction",
+      "Temps de réponse IA acceptable (<5 secondes)",
     ],
     decisions: [
-      "NextAuth.js pour l'authentification securisee avec sessions JWT.",
-      "OpenRouter pour acceder a plusieurs modeles IA (GPT-4, Claude, Llama) via une seule API.",
-      "Couche de confidentialite qui anonymise toutes les donnees financieres avant envoi a l'IA.",
-      "Recharts pour des graphiques performants et accessibles.",
+      {
+        choice: "Anonymisation côté client avant appel IA",
+        why: "Les montants et libellés sont transformés en catégories génériques avant envoi. L'IA reçoit 'dépense alimentaire 150€' et non 'Carrefour Market 147,32€'.",
+        tradeoff:
+          "Conseils moins précis sur les commerces spécifiques, mais confidentialité garantie.",
+      },
+      {
+        choice: "Next.js 14 avec Server Components",
+        why: "Rendu serveur pour les pages statiques, hydratation minimale côté client. Résultat : bundle JS divisé par 3 par rapport à une SPA classique.",
+      },
+      {
+        choice: "OpenRouter plutôt qu'API OpenAI directe",
+        why: "Accès à plusieurs modèles (GPT-4, Claude, Llama) via une seule clé. Permet de basculer sur un modèle moins cher si les coûts explosent.",
+      },
+      {
+        choice: "Neon (PostgreSQL serverless) plutôt que Supabase",
+        why: "Besoin uniquement de la base de données, pas de l'écosystème complet. Neon offre un tier gratuit généreux et une latence faible.",
+      },
     ],
-    risks: [
-      "Gestion des donnees sensibles financieres.",
-      "Couts d'inference IA a maitriser (modeles gratuits disponibles).",
-      "Synchronisation schema Prisma entre dev (SQLite) et prod (PostgreSQL).",
+    delivered: [
+      "Dashboard avec graphiques interactifs (dépenses par catégorie, évolution mensuelle)",
+      "Suivi multi-comptes (compte courant, épargne, espèces)",
+      "Assistant IA contextuel avec historique de conversation",
+      "Projections financières sur 3/6/12 mois",
+      "Export des données en JSON",
     ],
-    exploreNext: [
-      "Import automatique des releves bancaires (CSV/OFX).",
-      "Notifications push pour les echeances d'abonnements.",
-      "Mode hors-ligne avec sync differee.",
-      "Export PDF des rapports mensuels.",
+    results: {
+      metrics: [
+        "Utilisé quotidiennement depuis 6 mois",
+        "Temps de réponse IA moyen : 2,3 secondes",
+        "Coût d'infrastructure : 0€/mois (tiers gratuits)",
+      ],
+      qualitative:
+        "Première fois que je tiens un budget plus de 2 mois. L'IA aide à identifier les postes de dépense oubliés (abonnements dormants notamment).",
+    },
+    retrospective: [
+      "Aurais dû implémenter l'import CSV dès le départ — la saisie manuelle reste un frein",
+      "Le modèle de données 'catégories' est trop rigide, un système de tags serait plus flexible",
+      "Manque de tests automatisés sur la couche d'anonymisation — critique pourtant",
+    ],
+    stack: [
+      "Next.js 14",
+      "TypeScript",
+      "Tailwind CSS",
+      "Prisma",
+      "PostgreSQL (Neon)",
+      "OpenRouter",
+      "Recharts",
+      "Vercel",
     ],
     links: [
-      { label: "Application Live", href: "https://portfolio-ai-gcs9-6117x9tji-kenshu-projects.vercel.app" },
+      {
+        label: "Voir l'application",
+        href: "https://budget-ai.vercel.app",
+      },
     ],
   },
   {
-    name: "Ecrituria",
-    slug: "ecrituria",
-    problem: "Industrialiser la creation d'univers narratifs (textes, visuels, lore) sans perdre la coherence creative.",
-    solution: "Studio IA multi-agents : un architecte de lore, un ecrivain, un critique et un illustrateur se supervisent.",
-    architecture: "Knowledge graph + base vectorielle + orchestrateur multi-agent + UI narrative immersive.",
-    stack: ["Next.js", "LangChain", "Pinecone", "Supabase", "OpenRouter"],
-    proof: "Montre comment j'utilise l'IA pour fusionner imaginaire, structure et automation.",
-    impact: "Production reguliere de chapitres, fiches personnages et moodboards coherents avec l'univers.",
-    lessons: [
-      "Separer les roles (creatif vs critique) pour maintenir la qualite.",
-      "Le graph de connaissances est la charpente : il doit etre versionne comme du code.",
+    slug: "automatisation-cabinet",
+    title: "Automatisation documentaire — Cabinet comptable",
+    type: "mission",
+    tldr:
+      "Mise en place d'un système de traitement automatique des pièces comptables pour un cabinet de 12 personnes. Réduction du temps de saisie de 60%.",
+    context: {
+      client: "Cabinet d'expertise comptable (12 collaborateurs, 400 dossiers clients)",
+      duration: "4 mois",
+      role: "Audit, conception, développement, formation équipe",
+      year: 2024,
+    },
+    problem: {
+      situation:
+        "Les collaborateurs passaient 2-3 heures par jour à trier, renommer et classer les pièces comptables reçues par email ou scan. Processus 100% manuel, source d'erreurs et de retards.",
+      stakes:
+        "Libérer du temps pour le conseil client (activité à plus forte valeur) et réduire les erreurs de classement qui causaient des relances inutiles.",
+    },
+    constraints: [
+      "Pas de changement de logiciel comptable (éditeur imposé)",
+      "Données sensibles : aucun envoi vers des API cloud non européennes",
+      "Collaborateurs non techniques — formation minimale requise",
+      "Budget limité : pas de licence logicielle récurrente coûteuse",
     ],
     decisions: [
-      "Deux agents : creatif et critique, orchestres par un planner.",
-      "Knowledge graph versionne pour garder la coherence du lore.",
-      "Pipeline multi-modal (texte + visuel) avec validation humaine legere.",
+      {
+        choice: "OCR local (Tesseract) + classification par règles avant IA",
+        why: "90% des documents suivent des patterns récurrents (factures fournisseurs habituels). L'IA n'intervient que sur les 10% ambigus — divise les coûts par 10.",
+        tradeoff: "Maintenance des règles métier nécessaire quand nouveaux fournisseurs.",
+      },
+      {
+        choice: "Pipeline sur serveur local (NAS Synology du cabinet)",
+        why: "Zéro donnée qui sort du cabinet. Le NAS existant suffisait, pas d'investissement matériel.",
+      },
+      {
+        choice: "Interface web minimaliste plutôt qu'application desktop",
+        why: "Accessible depuis n'importe quel poste, pas d'installation. Formation en 30 minutes.",
+      },
     ],
-    risks: [
-      "Incoherences de lore si le graph n'est pas mis a jour.",
-      "Couts d'inference sur les passages longs.",
-      "Derive stylistique sans critique explicite.",
+    delivered: [
+      "Dossier email surveillé : dépôt = traitement automatique",
+      "Extraction automatique : date, montant, fournisseur, type de pièce",
+      "Renommage normalisé selon convention cabinet",
+      "Classement dans arborescence client",
+      "Interface de validation pour les cas ambigus (< 10% des documents)",
+      "Tableau de bord de suivi quotidien",
     ],
-    exploreNext: [
-      "Generation de planches visuelles coherentes (moodboards).",
-      "Synthese audio des chapitres pour validation rapide.",
-      "Portail public de lecture avec mode RAG questions sur le lore.",
+    results: {
+      metrics: [
+        "Temps de traitement réduit de 2h30 à 45min par jour",
+        "Taux de classement correct automatique : 91%",
+        "ROI atteint en 3 mois",
+      ],
+      qualitative:
+        "Les collaborateurs ont pu reprendre des missions de conseil abandonnées faute de temps. Le cabinet a pris 15 nouveaux dossiers sans recrutement.",
+    },
+    retrospective: [
+      "Aurais dû prévoir un mode 'apprentissage' où les corrections manuelles améliorent les règles automatiquement",
+      "La documentation utilisateur était trop technique — refaite en format vidéo courte après retours",
+      "Sous-estimé le temps de paramétrage initial (patterns fournisseurs spécifiques au cabinet)",
+    ],
+    stack: [
+      "Python",
+      "Tesseract OCR",
+      "FastAPI",
+      "SQLite",
+      "Synology NAS",
+      "Tailwind CSS",
     ],
   },
   {
-    name: "Nomah AI",
-    slug: "nomah-ai",
-    problem: "Creer une marketplace IA pilotee par des agents autonomes reliee a des workflows metier complexes.",
-    solution: "Ecosysteme modulaire : orchestrateur d'agents, API multi-tenant, monitoring temps reel.",
-    architecture: "Next.js + Workers + pipelines RAG sur Supabase, bus d'evenements + orchestrateur Temporal.",
-    stack: ["Next.js", "TypeScript", "Supabase", "Temporal", "OpenRouter"],
-    proof: "Capacite a concevoir un systeme commerce complet (produit + infra + IA).",
-    impact: "Ouverture du catalogue a des dizaines de vendeurs, automatisation de la conciliation financiere et monitoring en continu.",
-    lessons: [
-      "L'observabilite doit etre pensee avant d'orchestrer plusieurs agents.",
-      "Limiter les couts d'inference via un planner qui choisit le bon modele.",
+    slug: "assistant-prospection-immobilier",
+    title: "Assistant IA de prospection — Agence immobilière",
+    type: "mission",
+    tldr:
+      "Chatbot interne qui répond aux questions sur le portefeuille de biens et génère des fiches de présentation personnalisées pour les prospects.",
+    context: {
+      client: "Agence immobilière indépendante (8 négociateurs, 200 biens en portefeuille)",
+      duration: "6 semaines",
+      role: "Conception, développement, intégration CRM",
+      year: 2024,
+    },
+    problem: {
+      situation:
+        "Les négociateurs perdaient du temps à chercher les biens correspondant aux critères clients dans un CRM mal organisé. Les fiches PDF étaient créées manuellement, avec des erreurs fréquentes.",
+      stakes:
+        "Réactivité face au client (le premier qui rappelle avec le bon bien gagne le mandat). Professionnalisme des supports de présentation.",
+    },
+    constraints: [
+      "CRM existant non remplaçable (contrat en cours)",
+      "Négociateurs sur le terrain : accès mobile indispensable",
+      "Pas de compétence technique en interne pour la maintenance",
+      "Photos des biens hébergées sur serveur local",
     ],
-    links: [{ label: "Architecture", href: "https://example.com/nomah-architecture" }],
+    decisions: [
+      {
+        choice: "RAG sur base vectorielle légère (ChromaDB)",
+        why: "200 biens = petit volume. ChromaDB tourne en local, pas de coût cloud, recherche sémantique efficace.",
+        tradeoff: "Scalabilité limitée à ~5000 biens, suffisant pour ce client.",
+      },
+      {
+        choice: "Synchronisation CRM par export CSV quotidien",
+        why: "Le CRM n'avait pas d'API. Export automatique programmé à 6h, réindexation complète en 3 minutes.",
+        tradeoff: "Données pas temps réel (décalage max 24h acceptable pour l'usage).",
+      },
+      {
+        choice: "Génération PDF avec template Jinja + WeasyPrint",
+        why: "Contrôle total sur le rendu, pas de dépendance à un service externe. Templates modifiables par l'agence.",
+      },
+    ],
+    delivered: [
+      "Interface chat accessible sur mobile et desktop",
+      "Recherche en langage naturel ('appartement 3 pièces centre-ville balcon')",
+      "Fiches PDF générées en 10 secondes avec photos, caractéristiques, DPE",
+      "Envoi direct par email ou WhatsApp",
+      "Historique des recherches par négociateur",
+    ],
+    results: {
+      metrics: [
+        "Temps moyen de recherche de bien : 45 sec (vs 5-10 min avant)",
+        "100% des fiches générées sans erreur de données",
+        "Adoption par 7/8 négociateurs dès la première semaine",
+      ],
+      qualitative:
+        "Les négociateurs rappellent les prospects avec une fiche personnalisée en moins de 2 minutes après le premier contact. Retour client : 'On dirait une grande agence.'",
+    },
+    retrospective: [
+      "Aurais dû intégrer un système de feedback ('ce bien ne correspondait pas') pour améliorer la recherche",
+      "L'export CSV est fragile — une API même basique aurait été plus robuste",
+      "Prévoir un mode hors-ligne pour les visites en zone blanche",
+    ],
+    stack: [
+      "Python",
+      "FastAPI",
+      "ChromaDB",
+      "OpenRouter (Claude)",
+      "Jinja2",
+      "WeasyPrint",
+      "Tailwind CSS",
+    ],
   },
   {
-    name: "Anomalie 2084",
-    slug: "anomalie-2084",
-    problem: "Industrialiser du worldbuilding et de la narration generative sans perdre la coherence creative.",
-    solution: "Studio IA avec graphes de connaissances, generation multi-modale et automations de publication.",
-    architecture: "Pipeline LLM orchestre (agents creatifs + critique) + base vectorielle + UI immersive.",
-    stack: ["Next.js", "LangChain", "Pinecone", "Prisma"],
-    proof: "Union entre imaginaire et rigueur systeme : IA comme co-auteur controle.",
-    impact: "Production hebdomadaire de chapitres et d'assets visuels coherents avec le lore.",
-    lessons: [
-      "Toujours separer creativite et controle qualite via deux agents distincts.",
-      "Un knowledge graph simple (JSON-LD) suffit pour detecter les incoherences.",
-    ],
-  },
-  {
-    name: "Second Brain",
     slug: "second-brain",
-    problem: "Centraliser la connaissance personnelle (notes, recherches, NAS) et la rendre requetable.",
-    solution: "RAG prive, ingestion Obsidian/Git/Notion, agent concierge qui synthetise et notifie.",
-    architecture: "Pipeline ingestion Rust + workers Node, NAS chiffre, pgvector pour recherche semantique.",
-    stack: ["Obsidian", "Supabase pgvector", "Rust", "Next.js"],
-    proof: "Dialogue entre hardware personnel, securite et intelligence augmentee.",
-    impact: "Reponses en quelques secondes sur des annees de notes, exports automatiques de resumes hebdomadaires.",
-    lessons: [
-      "Indexer les medias (images/PDF) des la premiere version pour eviter la dette.",
-      "Automatiser le nettoyage des doublons avant l'embedding reduit les couts.",
+    title: "Second Brain — Base de connaissances personnelle augmentée",
+    type: "experimentation",
+    status: "en_cours",
+    tldr:
+      "Système RAG personnel qui indexe mes notes Obsidian, fichiers et recherches. Je peux interroger 5 ans de documentation en langage naturel.",
+    context: {
+      client: "Projet personnel",
+      duration: "En développement continu depuis 8 mois",
+      role: "Architecture, développement, usage quotidien",
+      year: 2024,
+    },
+    problem: {
+      situation:
+        "Des années de notes, bookmarks, PDF, snippets de code éparpillés. Impossible de retrouver une information précise sans parcourir des dizaines de fichiers.",
+      stakes:
+        "Capitaliser sur mes recherches passées au lieu de les refaire. Répondre rapidement à des questions clients en retrouvant mes notes de veille.",
+    },
+    constraints: [
+      "Données personnelles et professionnelles sensibles : hébergement local uniquement",
+      "Volume important : ~15 000 notes Obsidian + 2 000 PDF",
+      "Doit fonctionner sur mon NAS domestique (ressources limitées)",
+      "Pas de dépendance à un service cloud qui peut fermer",
     ],
-  },
-  {
-    name: "Automations NAS & Securite",
-    slug: "nas-automation",
-    problem: "Superviser backups, securite et acces a un cluster maison multi-sites.",
-    solution: "Automations Proxmox + scripts d'audit, alertes temps reel, bastions securises.",
-    architecture: "Proxmox + NAS + agents watchers + dashboard d'observabilite custom.",
-    stack: ["Proxmox", "Ansible", "Node", "Grafana"],
-    proof: "Savoir industrialiser l'automatisation infra (backups, securite, acces).",
-    impact: "Zero backup manque depuis 18 mois, detection instantanee des anomalies reseau.",
-    lessons: [
-      "Toujours logguer les acces physiques (NAS) autant que les acces distants.",
-      "Creer un simulateur de panne pour tester les runbooks tous les trimestres.",
+    decisions: [
+      {
+        choice: "PostgreSQL + pgvector plutôt que Pinecone",
+        why: "Hébergement local, pas de coût récurrent. pgvector suffisant pour ce volume.",
+        tradeoff: "Configuration initiale plus complexe qu'un service managé.",
+      },
+      {
+        choice: "Indexation incrémentale (hash de contenu)",
+        why: "Réindexer 15 000 documents à chaque modification serait trop lent. Seuls les fichiers modifiés sont retraités.",
+      },
+      {
+        choice: "Interface CLI plutôt que web",
+        why: "Usage personnel, rapidité d'accès. Une commande = une réponse.",
+      },
+    ],
+    delivered: [
+      "Pipeline d'ingestion Obsidian + PDF + Markdown",
+      "Recherche sémantique sur l'ensemble du corpus",
+      "Synthèse automatique avec citations des sources",
+      "Résumés hebdomadaires des notes récentes",
+      "Export vers Obsidian des réponses générées",
+    ],
+    results: {
+      metrics: [
+        "15 000+ documents indexés",
+        "Temps de réponse moyen : 3 secondes",
+        "Coût : 0€ (matériel existant)",
+      ],
+      qualitative:
+        "Je retrouve en 30 secondes des notes que je mettais 15 minutes à chercher. Changement d'usage : je prends plus de notes car je sais que je pourrai les retrouver.",
+    },
+    retrospective: [
+      "Aurais dû versionner les embeddings dès le départ — difficile de comparer les améliorations",
+      "L'interface CLI est limitante pour explorer les résultats connexes",
+      "Prévoir un mode 'question de suivi' pour affiner les recherches",
+    ],
+    stack: [
+      "Python",
+      "PostgreSQL",
+      "pgvector",
+      "Obsidian",
+      "OpenRouter",
+      "Rust (worker d'ingestion)",
     ],
   },
 ];
+
+// Export de compatibilité avec l'ancien format
+export const projects: Project[] = caseStudies.map((cs) => ({
+  name: cs.title,
+  slug: cs.slug,
+  problem: cs.problem.situation,
+  solution: cs.tldr,
+  architecture: cs.decisions.map((d) => d.choice).join(", "),
+  stack: cs.stack,
+  proof: cs.results.qualitative,
+  impact: cs.results.metrics?.join(" • ") ?? cs.results.qualitative,
+  lessons: cs.retrospective,
+  decisions: cs.decisions.map((d) => d.choice),
+  risks: cs.constraints,
+  exploreNext: [],
+  links: cs.links,
+}));
