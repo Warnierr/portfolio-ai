@@ -60,7 +60,7 @@ export default function LandingPage() {
           </div>
 
           {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href="/projets"
               className="rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
@@ -72,6 +72,12 @@ export default function LandingPage() {
               className="rounded-full border border-white/30 px-6 py-3 font-medium text-white transition hover:bg-white/10"
             >
               Comment je travaille
+            </Link>
+            <Link
+              href="/agent"
+              className="ml-2 text-sm text-zinc-400 transition hover:text-emerald-300"
+            >
+              Parler à l&apos;agent →
             </Link>
           </div>
         </div>

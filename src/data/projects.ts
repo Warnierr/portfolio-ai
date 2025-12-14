@@ -153,7 +153,11 @@ export const caseStudies: CaseStudy[] = [
     links: [
       {
         label: "Voir l'application",
-        href: "https://budget-ai.vercel.app",
+        href: "https://portfolio-ai-gcs9.vercel.app",
+      },
+      {
+        label: "Code source",
+        href: "https://github.com/Warnierr/budget-ai",
       },
     ],
   },

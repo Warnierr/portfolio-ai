@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 const navItems = [
   { label: "Projets", href: "/projets" },
   { label: "Méthode", href: "/methode" },
-  { label: "News", href: "/news" },
+  { label: "News", href: "/news", badge: "Nouveau" },
   { label: "Agent", href: "/agent" },
   { label: "Contact", href: "/contact" },
 ];
@@ -64,9 +64,14 @@ export default function RootLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="hidden text-zinc-300 transition hover:text-white md:block"
+                  className="hidden text-zinc-300 transition hover:text-white md:block relative"
                 >
                   {item.label}
+                  {item.badge && (
+                    <span className="absolute -top-1 -right-2 text-[9px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full border border-emerald-500/30">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               ))}
               <Link
