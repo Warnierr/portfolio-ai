@@ -14,10 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Navigation V1 simplifiée (4 liens)
+// Navigation V1 (6 liens)
 const navItems = [
   { label: "Projets", href: "/projets" },
   { label: "Méthode", href: "/methode" },
+  { label: "News", href: "/news" },
+  { label: "Agent", href: "/agent" },
   { label: "Contact", href: "/contact" },
 ];
 

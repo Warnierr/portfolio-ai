@@ -4,9 +4,9 @@
 - Framework : Next.js 16 (App Router) en mode static/SSR mixte.
 - UI : Tailwind CSS v4 (préconfig), Framer Motion pour les transitions.
 - Langage : TypeScript.
-- Pages V1 actives : `/`, `/projets`, `/projets/[slug]`, `/methode`, `/contact`.
-- Pages V2 (préparées mais hors nav) : `/ecosystemes`, `/lab`, `/stack`, `/news`, `/agent`.
-- Données statiques : `src/data/projects.ts` (format `CaseStudy`).
+- Pages V1 actives : `/`, `/projets`, `/projets/[slug]`, `/methode`, `/news`, `/agent`, `/contact`.
+- Pages V2 (préparées mais hors nav) : `/ecosystemes`, `/lab`, `/stack`.
+- Données statiques : `src/data/projects.ts` (format `CaseStudy`), `src/data/news.ts` (flux news).
 
 ### Positionnement V1
 - Cible : TPE/PME (cabinets comptables, avocats, agences immobilières/marketing)
@@ -32,8 +32,8 @@ Chaque projet suit une structure narrative :
 8. Rétrospective (ce que je referais différemment)
 
 ### Navigation V1
-- Header : Logo | Projets | Méthode | Contact | [CTA Discuter]
-- Footer : Projets | Méthode | Contact | Copyright
+- Header : Logo | Projets | Méthode | News | Agent | Contact | [CTA Discuter]
+- Footer : Projets | Méthode | News | Agent | Contact | Copyright
 
 ### Stack front
 - Next.js 16, React 19.
@@ -60,8 +60,8 @@ Chaque projet suit une structure narrative :
 | `/projets/[slug]` | ✓ Actif | Détail d'une étude de cas |
 | `/methode` | ✓ Actif | Process de travail, tarifs, FAQ |
 | `/contact` | ✓ Actif | Prise de contact, calendrier |
+| `/news` | ✓ Actif | Flux d'actualités généré par agent IA |
+| `/agent` | ✓ Actif | Chat RAG contextualisé (en construction) |
 | `/ecosystemes` | Préparé | Méthodo complète (V2) |
 | `/lab` | Préparé | Expérimentations (V2) |
 | `/stack` | Préparé | Radar skills (V2) |
-| `/news` | Préparé | Flux agent (V2) |
-| `/agent` | Préparé | Chat RAG (V2) |
