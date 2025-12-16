@@ -24,8 +24,8 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
   { label: "Méthode", href: "/methode" },
-  { label: "News", href: "/news", badge: "Nouveau" },
-  { label: "Agent", href: "/agent" },
+  { label: "News", href: "/news" },
+  { label: "Ask Kenshu", href: "/agent", badge: "Nouveau" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -80,12 +80,6 @@ export default function RootLayout({
                   )}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium text-black transition hover:bg-zinc-200"
-              >
-                Discuter
-              </Link>
             </nav>
           </div>
         </header>
