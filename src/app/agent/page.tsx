@@ -21,36 +21,76 @@ const skills = [
 
 const stack = ["Python", "Next.js", "PostgreSQL", "LLMs"];
 
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 export default function AgentPage() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<
-    { role: "user" | "assistant"; content: string }[]
-  >([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSuggestion = (text: string) => {
     setInput(text);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
-    // Ajoute le message utilisateur
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
+    const userMessage: Message = { role: "user", content: input };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+    setInput("");
+    setIsLoading(true);
 
-    // Réponse placeholder
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur API");
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let assistantContent = "";
+
+      // Ajouter un message assistant vide
+      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      while (reader) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        assistantContent += chunk;
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            role: "assistant",
+            content: assistantContent,
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      console.error("Erreur:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
           content:
-            "L'agent est en cours de développement. Pour discuter de votre projet, contactez-moi directement.",
+            "Désolé, une erreur s'est produite. Contactez-moi directement pour discuter de votre projet.",
         },
       ]);
-    }, 500);
-
-    setInput("");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -142,7 +182,19 @@ export default function AgentPage() {
                         : "border border-white/10 bg-white/5 text-zinc-300"
                     }`}
                   >
-                    {msg.content}
+                    {msg.content || (
+                      <span className="inline-flex gap-1">
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" />
+                        <span
+                          className="h-2 w-2 animate-bounce rounded-full bg-zinc-500"
+                          style={{ animationDelay: "0.1s" }}
+                        />
+                        <span
+                          className="h-2 w-2 animate-bounce rounded-full bg-zinc-500"
+                          style={{ animationDelay: "0.2s" }}
+                        />
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -151,23 +203,22 @@ export default function AgentPage() {
         </div>
 
         {/* Input */}
-        <form
-          onSubmit={handleSubmit}
-          className="border-t border-white/10 p-4"
-        >
+        <form onSubmit={handleSubmit} className="border-t border-white/10 p-4">
           <div className="flex gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Décrivez votre projet ou posez une question..."
-              className="flex-1 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20"
+              disabled={isLoading}
+              className="flex-1 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 disabled:opacity-50"
             />
             <button
               type="submit"
-              className="rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
+              disabled={isLoading}
+              className="rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200 disabled:opacity-50"
             >
-              Envoyer
+              {isLoading ? "..." : "Envoyer"}
             </button>
           </div>
         </form>
@@ -176,11 +227,11 @@ export default function AgentPage() {
       {/* Note */}
       <section className="text-center">
         <p className="text-sm text-zinc-500">
-          L&apos;agent IA est en développement.{" "}
+          Agent IA propulsé par Claude.{" "}
           <Link href="/contact" className="text-emerald-300 hover:underline">
             Contactez-moi directement
           </Link>{" "}
-          pour discuter de votre projet.
+          pour un échange plus approfondi.
         </p>
       </section>
     </PageContainer>
