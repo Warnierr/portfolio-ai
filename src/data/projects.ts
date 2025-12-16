@@ -80,7 +80,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Budget AI — Gestion financière avec assistant IA",
     type: "produit",
     tldr:
-      "Application de gestion budgétaire personnelle avec conseils IA. Les données financières sont anonymisées avant tout envoi vers l'IA — aucune donnée sensible ne quitte le navigateur en clair.",
+      "App de gestion budgétaire avec assistant IA. Anonymisation côté client avant envoi vers l'API.",
     context: {
       client: "Projet personnel (utilisé au quotidien)",
       duration: "2 mois de développement, maintenance continue",
@@ -166,7 +166,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Automatisation documentaire — Cabinet comptable",
     type: "mission",
     tldr:
-      "Mise en place d'un système de traitement automatique des pièces comptables pour un cabinet de 12 personnes. Réduction du temps de saisie de 60%.",
+      "Système OCR + classification automatique des pièces comptables. Temps de saisie réduit de 60%.",
     context: {
       client: "Cabinet d'expertise comptable (12 collaborateurs, 400 dossiers clients)",
       duration: "4 mois",
@@ -236,7 +236,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Assistant IA de prospection — Agence immobilière",
     type: "mission",
     tldr:
-      "Chatbot interne qui répond aux questions sur le portefeuille de biens et génère des fiches de présentation personnalisées pour les prospects.",
+      "Chatbot RAG sur le portefeuille de biens. Génère des fiches PDF personnalisées en 10 secondes.",
     context: {
       client: "Agence immobilière indépendante (8 négociateurs, 200 biens en portefeuille)",
       duration: "6 semaines",
@@ -308,7 +308,7 @@ export const caseStudies: CaseStudy[] = [
     type: "experimentation",
     status: "en_cours",
     tldr:
-      "Système RAG personnel qui indexe mes notes Obsidian, fichiers et recherches. Je peux interroger 5 ans de documentation en langage naturel.",
+      "RAG personnel sur 15 000 notes Obsidian. Recherche sémantique en 3 secondes.",
     context: {
       client: "Projet personnel",
       duration: "En développement continu depuis 8 mois",
