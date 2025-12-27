@@ -148,9 +148,19 @@ export default function AgentPage() {
           </div>
 
           <div className="flex flex-col items-end gap-4">
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-sm text-emerald-300">Agent en ligne</span>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                <span className="text-sm text-emerald-300">Agent en ligne</span>
+              </div>
+              <div className={`text-sm px-3 py-1 rounded-full border ${remaining > 5
+                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                  : remaining > 2
+                    ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-300'
+                    : 'border-orange-500/30 bg-orange-500/10 text-orange-300'
+                }`}>
+                💬 {remaining}/{MAX_REQUESTS}
+              </div>
             </div>
 
             <div className="text-right text-xs text-zinc-500">
@@ -296,8 +306,8 @@ export default function AgentPage() {
               onChange={(e) => setInput(e.target.value)}
               placeholder={limitReached ? "Limite atteinte — Contactez-moi directement" : "Décrivez votre projet ou posez une question..."}
               className={`flex-1 rounded-full border bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none ${limitReached
-                  ? 'border-orange-500/30 cursor-not-allowed opacity-50'
-                  : 'border-white/10 focus:border-emerald-400/50'
+                ? 'border-orange-500/30 cursor-not-allowed opacity-50'
+                : 'border-white/10 focus:border-emerald-400/50'
                 }`}
               disabled={isLoading || limitReached}
             />
