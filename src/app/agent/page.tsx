@@ -24,10 +24,14 @@ type Message = {
   content: string;
 };
 
+const MAX_REQUESTS = 10;
+
 export default function AgentPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [remaining, setRemaining] = useState(MAX_REQUESTS);
+  const [limitReached, setLimitReached] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -39,12 +43,14 @@ export default function AgentPage() {
   }, [messages, isLoading]);
 
   const handleSuggestion = (text: string) => {
-    setInput(text);
+    if (!limitReached) {
+      setInput(text);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || limitReached) return;
 
     const userMessage: Message = { role: "user", content: input };
     const newMessages = [...messages, userMessage];
@@ -58,6 +64,30 @@ export default function AgentPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: newMessages }),
       });
+
+      // Récupérer le nombre restant depuis les headers
+      const remainingHeader = response.headers.get("X-Requests-Remaining");
+      if (remainingHeader) {
+        const newRemaining = parseInt(remainingHeader, 10);
+        setRemaining(newRemaining);
+        if (newRemaining <= 0) {
+          setLimitReached(true);
+        }
+      }
+
+      if (response.status === 429) {
+        const errorData = await response.json();
+        setLimitReached(true);
+        setRemaining(0);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: errorData.message || "Limite de messages atteinte. Contactez-moi directement !",
+          },
+        ]);
+        return;
+      }
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -85,13 +115,14 @@ export default function AgentPage() {
           return updated;
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Une erreur s'est produite";
       console.error("Erreur:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: error.message || "Une erreur s'est produite. Contactez-moi directement : rww.warnier@gmail.com",
+          content: errorMessage || "Une erreur s'est produite. Contactez-moi directement : rww.warnier@gmail.com",
         },
       ]);
     } finally {
@@ -218,18 +249,61 @@ export default function AgentPage() {
 
         {/* Input */}
         <form onSubmit={handleSubmit} className="border-t border-white/10 p-4">
+          {/* Compteur de messages */}
+          {remaining <= 5 && remaining > 0 && (
+            <div className="mb-3 flex items-center justify-center gap-2 text-sm">
+              <span className={`${remaining <= 2 ? 'text-orange-400' : 'text-zinc-400'}`}>
+                💬 {remaining} message{remaining > 1 ? 's' : ''} restant{remaining > 1 ? 's' : ''}
+              </span>
+              {remaining <= 2 && (
+                <Link href="/contact" className="text-emerald-400 hover:underline text-xs">
+                  Continuer par email →
+                </Link>
+              )}
+            </div>
+          )}
+
+          {/* Message limite atteinte */}
+          {limitReached && (
+            <div className="mb-3 rounded-lg bg-orange-500/10 border border-orange-500/30 p-4 text-center">
+              <p className="text-orange-300 font-medium mb-2">
+                ⚠️ Limite de messages gratuits atteinte
+              </p>
+              <p className="text-sm text-zinc-400 mb-3">
+                Pour continuer notre échange, contactez-moi directement :
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href="mailto:rww.warnier@gmail.com"
+                  className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300 hover:bg-emerald-500/30 transition"
+                >
+                  📧 rww.warnier@gmail.com
+                </a>
+                <Link
+                  href="/contact"
+                  className="rounded-full bg-white/10 border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/20 transition"
+                >
+                  📅 Prendre rendez-vous
+                </Link>
+              </div>
+            </div>
+          )}
+
           <div className="flex gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Décrivez votre projet ou posez une question..."
-              className="flex-1 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none focus:border-emerald-400/50"
-              disabled={isLoading}
+              placeholder={limitReached ? "Limite atteinte — Contactez-moi directement" : "Décrivez votre projet ou posez une question..."}
+              className={`flex-1 rounded-full border bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none ${limitReached
+                  ? 'border-orange-500/30 cursor-not-allowed opacity-50'
+                  : 'border-white/10 focus:border-emerald-400/50'
+                }`}
+              disabled={isLoading || limitReached}
             />
             <button
               type="submit"
-              disabled={isLoading || !input.trim()}
+              disabled={isLoading || !input.trim() || limitReached}
               className="rounded-full border border-emerald-400 bg-emerald-400/10 px-6 py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50"
             >
               Envoyer

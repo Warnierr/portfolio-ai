@@ -91,10 +91,46 @@ ${buildContext()}
 - Mets en avant mon expérience chez Orange, Safran et ACC si pertinent
 `;
 
+const MAX_REQUESTS = 10;
+const COOKIE_NAME = "chat_requests";
+const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 heures
+
+function getRequestCount(req: Request): number {
+  const cookieHeader = req.headers.get("cookie") || "";
+  const cookies = cookieHeader.split(";").map((c) => c.trim());
+  const chatCookie = cookies.find((c) => c.startsWith(`${COOKIE_NAME}=`));
+  if (!chatCookie) return 0;
+  const count = parseInt(chatCookie.split("=")[1], 10);
+  return isNaN(count) ? 0 : count;
+}
+
 export async function POST(req: Request) {
   const apiKey = process.env.OPENROUTER_API_KEY;
 
   console.log("[Chat API] Request received, API key present:", !!apiKey);
+
+  // Vérification du rate limiting
+  const currentCount = getRequestCount(req);
+  const remaining = MAX_REQUESTS - currentCount;
+
+  console.log(`[Chat API] Request count: ${currentCount}/${MAX_REQUESTS}`);
+
+  if (remaining <= 0) {
+    return new Response(
+      JSON.stringify({
+        error: "limit_reached",
+        message: "Vous avez atteint la limite de messages gratuits. Contactez-moi directement : rww.warnier@gmail.com ou +33 7 49 41 63 55",
+        remaining: 0,
+      }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "X-Requests-Remaining": "0",
+        },
+      }
+    );
+  }
 
   if (!apiKey || apiKey.includes("%")) {
     console.error("[Chat API] ERROR: OPENROUTER_API_KEY is missing or invalid!");
@@ -188,8 +224,15 @@ export async function POST(req: Request) {
       },
     });
 
+    const newCount = currentCount + 1;
+    const newRemaining = MAX_REQUESTS - newCount;
+
     return new Response(stream, {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Set-Cookie": `${COOKIE_NAME}=${newCount}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax`,
+        "X-Requests-Remaining": String(newRemaining),
+      },
     });
 
   } catch (error: any) {
