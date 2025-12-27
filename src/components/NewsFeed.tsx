@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import type { NewsEntry } from "@/data/news";
 
-const filters = ["Tous", "Avancement", "Veille", "Réflexion"] as const;
+const filters = ["Tous", "avancement", "veille", "reflexion"] as const;
 
 export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
   const [activeFilter, setActiveFilter] = useState<(typeof filters)[number]>("Tous");
@@ -14,7 +14,7 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
     if (activeFilter === "Tous") {
       return entries;
     }
-    return entries.filter((entry) => entry.category === activeFilter);
+    return entries.filter((entry) => entry.tag === activeFilter);
   }, [activeFilter, entries]);
 
   return (
@@ -26,11 +26,10 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
               key={filter}
               type="button"
               onClick={() => setActiveFilter(filter)}
-              className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] transition-all duration-300 ${
-                activeFilter === filter
+              className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] transition-all duration-300 ${activeFilter === filter
                   ? "border-white bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                   : "border-white/20 text-zinc-400 hover:text-white hover:border-white/40"
-              }`}
+                }`}
             >
               {filter}
             </button>
@@ -45,7 +44,7 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
             title="Flux RSS (bientôt disponible)"
           >
             <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+              <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z" />
             </svg>
             RSS
           </a>
