@@ -1,15 +1,6 @@
-import { streamText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
 import { caseStudies } from "@/data/projects";
 import { newsFeed } from "@/data/news";
 
-// OpenRouter comme provider (compatible OpenAI)
-const openrouter = createOpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
-});
-
-// Contexte statique injecté dans le prompt
 function buildContext(): string {
   const projectsContext = caseStudies
     .map(
@@ -18,6 +9,7 @@ function buildContext(): string {
 - Type: ${p.type}
 - Client: ${p.context.client}
 - Durée: ${p.context.duration}
+- Rôle: ${p.context.role}
 - Résumé: ${p.tldr}
 - Stack: ${p.stack.join(", ")}
 - Résultats: ${p.results.metrics?.join(", ") || p.results.qualitative}
@@ -31,64 +23,179 @@ function buildContext(): string {
     .join("\n");
 
   return `
-# Contexte Kenshu Dev
+# Profil de Raouf Warnier
 
 ## Qui suis-je
-Je suis développeur IA freelance spécialisé TPE/PME. Je construis des outils d'automatisation pour les cabinets comptables, avocats, agences immobilières et marketing.
+Je suis Raouf Warnier, Data Engineer & DevOps avec 3+ ans d'expérience.
+Ingénieur diplômé de l'ESIEE Paris en Data Science et Intelligence Artificielle.
+Actuellement en transition vers le freelance pour offrir mes services aux entreprises.
 
-## Compétences
-- OCR documentaire et classification automatique
-- Chatbots RAG sur données métier
-- Dashboards intelligents
-- Intégration avec logiciels existants
+## Contact
+- Email: rww.warnier@gmail.com
+- Téléphone: +33 7 49 41 63 55
+- LinkedIn: @raouf-warnier
+- Localisation: Paris (télétravail ou présentiel)
 
-## Stack technique
-Python, Next.js, TypeScript, PostgreSQL, pgvector, OpenRouter, Vercel
+## Compétences principales
+### Data Engineering
+- Pipelines ETL/ELT (Spark, Hadoop, Airflow)
+- Data Warehousing et Data Lake
+- Architecture de données (Bronze/Silver/Gold)
+- Bases de données : PostgreSQL, MSSQL, MongoDB, MinIO
 
-## Tarifs
-- Forfait projet: 2 000€ - 15 000€ selon complexité
-- Accompagnement: à partir de 800€/mois
-- Diagnostic initial: gratuit (30 min)
+### DevOps & Infrastructure
+- Automatisation : Ansible, PowerShell, Shell
+- CI/CD : GitLab, GitHub Actions
+- Monitoring : Prometheus, Grafana
+- Cloud : AWS, GCP, Azure
+- Conteneurisation : Docker
+
+### Big Data & Analytics
+- Spark, PySpark, Hadoop
+- Databricks, Snowflake
+- Zeppelin, Jupyter
+- Power BI
+
+### Langages
+- Python, SQL, PL/SQL, JavaScript
+- R, Java, YAML
+
+## Tarifs Freelance
+- Mission longue durée (TJM) : 450€
+- Forfait pipeline data/automatisation : à partir de 2 000€
+- Développement d'application : sur devis
 
 ## Disponibilité
-Prochaine disponibilité: Janvier 2025
+Disponible immédiatement pour des missions freelance.
 
-## Projets réalisés
+## Expériences récentes
 ${projectsContext}
 
-## Actualités récentes
+## Actualités
 ${newsContext}
-
-## Process de travail
-1. Diagnostic gratuit (1h) - identifier ce qui peut être automatisé
-2. Prototype (1-2 semaines) - première version fonctionnelle
-3. Déploiement (2-4 semaines) - mise en production + formation
-4. Suivi optionnel - maintenance et évolutions
 `;
 }
 
-const SYSTEM_PROMPT = `Tu es Kenshu, l'assistant IA du portfolio de Kenshu Dev.
+const SYSTEM_PROMPT = `Tu es l'assistant IA de Raouf Warnier, Data Engineer & DevOps freelance.
 
 ${buildContext()}
 
-## Règles
+# Instructions de comportement
 - Réponds en français, de manière concise et professionnelle
-- Si on te pose une question sur un projet, donne des détails concrets
-- Si quelqu'un décrit un besoin, évalue si c'est dans mes compétences et suggère un projet similaire si pertinent
+- Ne dépasse pas 150 mots sauf si vraiment nécessaire
+- Si quelqu'un décrit un besoin data/DevOps, évalue si c'est dans mes compétences et suggère un projet similaire si pertinent
 - Pour les questions sur les tarifs ou la disponibilité, donne les infos et propose de prendre contact
-- Si tu ne sais pas, dis-le et suggère de contacter directement
+- Si tu ne sais pas, dis-le et suggère de contacter directement par email ou téléphone
 - Termine par une question ou une suggestion d'action quand c'est pertinent
 - Ne réponds PAS aux questions hors sujet (politique, médical, etc.)
+- Mets en avant mon expérience chez Orange, Safran et ACC si pertinent
 `;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const apiKey = process.env.OPENROUTER_API_KEY;
 
-  const result = streamText({
-    model: openrouter("anthropic/claude-3.5-haiku"),
-    system: SYSTEM_PROMPT,
-    messages,
-  });
+  console.log("[Chat API] Request received, API key present:", !!apiKey);
 
-  return result.toTextStreamResponse();
+  if (!apiKey || apiKey.includes("%")) {
+    console.error("[Chat API] ERROR: OPENROUTER_API_KEY is missing or invalid!");
+    return new Response("Erreur de configuration : clé API manquante. Contactez Raouf directement.", {
+      status: 500,
+    });
+  }
+
+  try {
+    const { messages } = await req.json();
+
+    console.log("[Chat API] Calling OpenRouter...");
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://raouf-warnier.dev",
+        "X-Title": "Raouf Warnier Portfolio",
+      },
+      body: JSON.stringify({
+        model: "anthropic/claude-3.5-haiku",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages,
+        ],
+        stream: true,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("[Chat API] OpenRouter error:", response.status, errorText);
+      return new Response(`Erreur temporaire. Contactez-moi directement : rww.warnier@gmail.com`, { status: 500 });
+    }
+
+    console.log("[Chat API] Stream started successfully");
+
+    const reader = response.body?.getReader();
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        if (!reader) {
+          controller.close();
+          return;
+        }
+
+        let fullResponse = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split("\n");
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6);
+              if (data === "[DONE]") continue;
+
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content;
+                if (content) {
+                  fullResponse += content;
+                  controller.enqueue(encoder.encode(content));
+                }
+              } catch {
+                // Ignore parsing errors for incomplete chunks
+              }
+            }
+          }
+        }
+
+        // Log l'interaction
+        try {
+          const { logInteraction } = await import("@/lib/db-utils");
+          await logInteraction(
+            messages[messages.length - 1]?.content || "",
+            fullResponse
+          );
+        } catch (e) {
+          console.error("[Chat API] Log error:", e);
+        }
+
+        controller.close();
+      },
+    });
+
+    return new Response(stream, {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+
+  } catch (error: any) {
+    console.error("[Chat API] ERROR:", error.message || error);
+    return new Response(`Erreur technique. Contactez-moi : rww.warnier@gmail.com`, {
+      status: 500,
+    });
+  }
 }

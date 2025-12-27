@@ -1,25 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageContainer from "@/components/PageContainer";
 
 const suggestions = [
-  "J'ai des documents à traiter automatiquement",
-  "Je veux un chatbot sur mes données",
-  "Je perds du temps sur des tâches répétitives",
+  "Quelles sont tes compétences en Big Data ?",
+  "Je cherche un Data Engineer freelance",
+  "Parle-moi de ton expérience chez Orange",
   "Quels sont tes tarifs ?",
-  "Montre-moi un projet similaire",
+  "Tu connais Spark et Airflow ?",
 ];
 
 const skills = [
-  { label: "OCR documentaire", icon: "📄" },
-  { label: "RAG / Chatbots", icon: "💬" },
-  { label: "Dashboards", icon: "📊" },
-  { label: "Intégration", icon: "🔗" },
+  { label: "Data Engineering", icon: "📊" },
+  { label: "DevOps & CI/CD", icon: "🔧" },
+  { label: "Big Data", icon: "💾" },
+  { label: "Cloud & Infra", icon: "☁️" },
 ];
-
-const stack = ["Python", "Next.js", "PostgreSQL", "LLMs"];
 
 type Message = {
   role: "user" | "assistant";
@@ -30,6 +28,15 @@ export default function AgentPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSuggestion = (text: string) => {
     setInput(text);
@@ -53,14 +60,14 @@ export default function AgentPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur API");
+        const errorText = await response.text();
+        throw new Error(errorText || "Erreur API");
       }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let assistantContent = "";
 
-      // Ajouter un message assistant vide
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
       while (reader) {
@@ -78,14 +85,13 @@ export default function AgentPage() {
           return updated;
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erreur:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content:
-            "Désolé, une erreur s'est produite. Contactez-moi directement pour discuter de votre projet.",
+          content: error.message || "Une erreur s'est produite. Contactez-moi directement : rww.warnier@gmail.com",
         },
       ]);
     } finally {
@@ -100,9 +106,9 @@ export default function AgentPage() {
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
-              Ask Kenshu
+              Ask Raouf
             </p>
-            <h1 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
+            <h1 className="mt-2 text-3xl font-semibold text-white md:text-4xl">
               Décrivez votre projet
             </h1>
             <p className="mt-2 text-zinc-400">
@@ -110,35 +116,51 @@ export default function AgentPage() {
             </p>
           </div>
 
-          {/* Infos sidebar */}
-          <div className="flex flex-wrap gap-4 md:flex-col md:items-end md:text-right">
-            <div>
-              <p className="text-xs text-zinc-500">Compétences</p>
-              <div className="mt-1 flex flex-wrap gap-2">
-                {skills.map((s) => (
+          <div className="flex flex-col items-end gap-4">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+              <span className="text-sm text-emerald-300">Agent en ligne</span>
+            </div>
+
+            <div className="text-right text-xs text-zinc-500">
+              <p>Compétences</p>
+              <div className="mt-2 flex flex-wrap gap-2 justify-end">
+                {skills.map((skill) => (
                   <span
-                    key={s.label}
-                    className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-zinc-300"
+                    key={skill.label}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300"
                   >
-                    {s.icon} {s.label}
+                    {skill.icon} {skill.label}
                   </span>
                 ))}
               </div>
             </div>
-            <div>
-              <p className="text-xs text-zinc-500">Stack</p>
-              <p className="mt-1 text-sm text-zinc-300">{stack.join(" · ")}</p>
-            </div>
-            <div>
-              <p className="text-xs text-zinc-500">Disponibilité</p>
-              <p className="mt-1 text-sm text-emerald-300">Janvier 2025</p>
-            </div>
+
+            <Link
+              href="/contact"
+              className="rounded-full border border-white/20 bg-white/5 px-6 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              Prendre rendez-vous
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Zone de chat */}
+      {/* Chat */}
       <section className="glass-panel flex min-h-[400px] flex-col p-0">
+        {/* Loading bar */}
+        {isLoading && (
+          <div className="h-1 w-full overflow-hidden rounded-t-2xl bg-white/10">
+            <div
+              className="h-full bg-gradient-to-r from-emerald-400 to-blue-500"
+              style={{
+                width: "30%",
+                animation: "loading 1.5s ease-in-out infinite"
+              }}
+            />
+          </div>
+        )}
+
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6">
           {messages.length === 0 ? (
@@ -150,7 +172,7 @@ export default function AgentPage() {
                 Comment puis-je vous aider ?
               </p>
               <p className="mt-2 max-w-md text-sm text-zinc-400">
-                Décrivez votre projet ou cliquez sur une suggestion ci-dessous.
+                Décrivez votre projet data ou posez-moi une question.
               </p>
 
               {/* Suggestions */}
@@ -171,33 +193,25 @@ export default function AgentPage() {
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${
-                    msg.role === "user" ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                      msg.role === "user"
-                        ? "bg-emerald-500/20 text-white"
-                        : "border border-white/10 bg-white/5 text-zinc-300"
-                    }`}
+                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${msg.role === "user"
+                      ? "bg-emerald-500/20 text-white"
+                      : "border border-white/10 bg-white/5 text-zinc-300"
+                      }`}
                   >
                     {msg.content || (
                       <span className="inline-flex gap-1">
                         <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" />
-                        <span
-                          className="h-2 w-2 animate-bounce rounded-full bg-zinc-500"
-                          style={{ animationDelay: "0.1s" }}
-                        />
-                        <span
-                          className="h-2 w-2 animate-bounce rounded-full bg-zinc-500"
-                          style={{ animationDelay: "0.2s" }}
-                        />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" style={{ animationDelay: "0.1s" }} />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" style={{ animationDelay: "0.2s" }} />
                       </span>
                     )}
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
           )}
         </div>
@@ -210,30 +224,28 @@ export default function AgentPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Décrivez votre projet ou posez une question..."
+              className="flex-1 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none focus:border-emerald-400/50"
               disabled={isLoading}
-              className="flex-1 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 disabled:opacity-50"
             />
             <button
               type="submit"
-              disabled={isLoading}
-              className="rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200 disabled:opacity-50"
+              disabled={isLoading || !input.trim()}
+              className="rounded-full border border-emerald-400 bg-emerald-400/10 px-6 py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50"
             >
-              {isLoading ? "..." : "Envoyer"}
+              Envoyer
             </button>
           </div>
         </form>
       </section>
 
-      {/* Note */}
-      <section className="text-center">
-        <p className="text-sm text-zinc-500">
-          Agent IA propulsé par Claude.{" "}
-          <Link href="/contact" className="text-emerald-300 hover:underline">
-            Contactez-moi directement
-          </Link>{" "}
-          pour un échange plus approfondi.
-        </p>
-      </section>
+      {/* Footer */}
+      <p className="text-center text-sm text-zinc-500">
+        Agent IA propulsé par Claude.{" "}
+        <Link href="/contact" className="text-emerald-400 hover:underline">
+          Contactez-moi directement
+        </Link>{" "}
+        pour un échange plus approfondi.
+      </p>
     </PageContainer>
   );
 }

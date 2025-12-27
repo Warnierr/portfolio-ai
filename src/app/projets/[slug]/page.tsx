@@ -50,25 +50,82 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {project.tldr}
         </p>
 
-        <div className="mt-6 grid gap-4 border-t border-white/10 pt-6 text-sm md:grid-cols-4">
+        {/* Liens (Action immédiate) */}
+        {project.links && project.links.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-3">
+            {project.links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-zinc-200"
+              >
+                {link.label} →
+              </a>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 text-sm md:grid-cols-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Client</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+              Client
+            </p>
             <p className="mt-1 text-zinc-200">{project.context.client}</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Durée</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+              Durée
+            </p>
             <p className="mt-1 text-zinc-200">{project.context.duration}</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Rôle</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+              Rôle
+            </p>
             <p className="mt-1 text-zinc-200">{project.context.role}</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">Stack</p>
-            <p className="mt-1 text-zinc-200">{project.stack.slice(0, 4).join(", ")}</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+              Stack
+            </p>
+            <p className="mt-1 text-zinc-200">
+              {project.stack.slice(0, 4).join(", ")}
+            </p>
           </div>
         </div>
       </section>
+
+      {/* Médias / Démo */}
+      {project.media && project.media.length > 0 && (
+        <section className="grid gap-6 md:grid-cols-2">
+          {project.media.map((item, i) => (
+            <div key={i} className="glass-panel overflow-hidden">
+              {item.type === "image" ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={item.url}
+                  alt={item.caption || project.title}
+                  className="w-full object-cover"
+                />
+              ) : (
+                <video
+                  src={item.url}
+                  controls
+                  className="w-full"
+                  poster="/video-placeholder.png"
+                />
+              )}
+              {item.caption && (
+                <p className="bg-white/5 p-3 text-center text-xs text-zinc-500">
+                  {item.caption}
+                </p>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* Problème */}
       <section className="glass-panel p-8 md:p-10">
@@ -168,10 +225,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </h2>
         <ul className="mt-4 space-y-3">
           {project.retrospective.map((item, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-3 text-sm text-zinc-300"
-            >
+            <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
               <span className="mt-0.5 text-zinc-500">→</span>
               {item}
             </li>
@@ -195,25 +249,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ))}
         </div>
       </section>
-
-      {/* Liens */}
-      {project.links && project.links.length > 0 && (
-        <section className="glass-panel p-6 md:p-8">
-          <div className="flex flex-wrap gap-3">
-            {project.links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-zinc-200"
-              >
-                {link.label} →
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Navigation */}
       <div className="flex justify-between text-sm">

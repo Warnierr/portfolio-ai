@@ -1,0 +1,50 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
+
+model ChatLog {
+  id          String   @id @default(cuid())
+  userMessage String
+  aiResponse  String?
+  tokens      Int?
+  feedback    Int?
+  theme       String?
+  sentiment   String?
+  createdAt   DateTime @default(now())
+}
+
+model News {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  summary     String?
+  tag         String
+  date        String
+  category    String
+  status      String   @default("PENDING")
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  page      String
+  visitorId String?
+  userAgent String?
+  referrer  String?
+  createdAt DateTime @default(now())
+}

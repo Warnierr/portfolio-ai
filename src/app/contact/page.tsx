@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import PageContainer from "@/components/PageContainer";
+import ContactForm from "@/components/ContactForm";
 
 const faqItems = [
   {
@@ -57,34 +58,12 @@ export default function ContactPage() {
         </div>
 
         <div className="glass-panel p-8">
-          <h2 className="text-xl font-semibold text-white">Par email</h2>
-          <p className="mt-2 text-zinc-400">
-            Pour les demandes précises.
+          <h2 className="text-xl font-semibold text-white">Envoyer un message</h2>
+          <p className="mt-2 text-zinc-400 mb-6">
+            Réponse garantie sous 24h.
           </p>
-          <div className="mt-6 space-y-3">
-            <a
-              href="mailto:contact@exemple.com"
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-            >
-              <div>
-                <p className="font-medium text-white">contact@exemple.com</p>
-                <p className="text-xs text-zinc-500">Réponse sous 24h</p>
-              </div>
-              <span className="text-zinc-500">→</span>
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-            >
-              <div>
-                <p className="font-medium text-white">LinkedIn</p>
-                <p className="text-xs text-zinc-500">Profil professionnel</p>
-              </div>
-              <span className="text-zinc-500">→</span>
-            </a>
-          </div>
+
+          <ContactForm />
         </div>
       </section>
 

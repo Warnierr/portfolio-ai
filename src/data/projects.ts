@@ -1,381 +1,235 @@
 /**
- * Études de cas — Format V1 Freelance
- * Cible : TPE/PME (cabinets comptables, avocats, agences marketing/immobilières)
+ * Expériences professionnelles — Raouf Warnier
+ * Data Engineer & DevOps | Freelance
  */
 
 export type CaseStudy = {
   slug: string;
   title: string;
   type: "mission" | "produit" | "experimentation";
-
-  // Résumé exécutif (2-3 lignes max, visible en haut)
   tldr: string;
-
-  // Contexte de la mission
   context: {
-    client: string; // "Cabinet comptable" ou "Projet personnel"
-    duration: string; // "3 mois" ou "En cours"
-    role: string; // "Développeur principal + architecture"
+    client: string;
+    duration: string;
+    role: string;
     year: number;
   };
-
-  // Problème concret
   problem: {
-    situation: string; // État initial du client
-    stakes: string; // Ce qui était en jeu (temps, argent, qualité)
+    situation: string;
+    stakes: string;
   };
-
-  // Contraintes réelles rencontrées
   constraints: string[];
-
-  // Choix techniques avec justification
   decisions: {
     choice: string;
     why: string;
-    tradeoff?: string; // Ce qu'on a sacrifié pour ce choix
+    tradeoff?: string;
   }[];
-
-  // Ce qui a été livré (factuel)
   delivered: string[];
-
-  // Résultats obtenus
   results: {
-    metrics?: string[]; // Chiffres concrets si disponibles
-    qualitative: string; // Toujours présent
+    metrics?: string[];
+    qualitative: string;
   };
-
-  // Ce que je referais différemment
   retrospective: string[];
-
-  // Stack technique
   stack: string[];
-
-  // Liens externes
   links?: { label: string; href: string }[];
-
-  // Pour les projets type "experimentation"
+  media?: {
+    type: "image" | "video";
+    url: string;
+    caption?: string;
+  }[];
   status?: "en_cours" | "prototype" | "archive";
-};
-
-// Ancienne structure (compatibilité temporaire)
-export type Project = {
-  name: string;
-  slug: string;
-  problem: string;
-  solution: string;
-  architecture: string;
-  stack: string[];
-  proof: string;
-  impact: string;
-  lessons: string[];
-  links?: { label: string; href: string }[];
-  decisions?: string[];
-  risks?: string[];
-  exploreNext?: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "devops-orange-bigdata",
+    title: "Infrastructure Big Data — Orange",
+    type: "mission",
+    tldr: "Automatisation du déploiement des outils Big Data (Zeppelin, Airflow, Spark, Grafana) avec Ansible. Migration de données critiques MariaDB vers MSSQL.",
+    context: {
+      client: "Orange via Inetum",
+      duration: "Depuis août 2024",
+      role: "Ingénieur DevOps",
+      year: 2024,
+    },
+    problem: {
+      situation: "Déploiement manuel des outils Big Data chronophage et source d'erreurs. Migration de base de données legacy nécessaire.",
+      stakes: "Assurer la fiabilité des environnements de production et garantir l'intégrité des données lors de la migration.",
+    },
+    constraints: [
+      "Environnements Linux à haute disponibilité",
+      "Équipes multidisciplinaires à coordonner",
+    ],
+    decisions: [
+      {
+        choice: "Ansible pour l'automatisation",
+        why: "Idempotence garantie et playbooks réutilisables pour Zeppelin, Airflow, Spark.",
+      },
+      {
+        choice: "Scripts Shell pour l'opérationnel",
+        why: "Surveillance et dépannage rapide des services Big Data en production.",
+      },
+    ],
+    delivered: [
+      "Playbooks Ansible pour déploiement automatisé",
+      "Scripts de migration MariaDB → MSSQL avec validation",
+      "Monitoring Prometheus/Grafana",
+    ],
+    results: {
+      metrics: [
+        "Temps de déploiement réduit de 80%",
+        "Zéro perte de données lors des migrations",
+      ],
+      qualitative: "Les équipes peuvent désormais déployer des environnements Big Data complets en quelques minutes.",
+    },
+    retrospective: [
+      "L'automatisation Ansible a été un game-changer pour la reproductibilité des environnements.",
+    ],
+    stack: ["Ansible", "Zeppelin", "Airflow", "Spark", "Grafana", "Prometheus", "Linux", "MariaDB", "MSSQL"],
+  },
+  {
+    slug: "iot-thingworx-safran",
+    title: "Plateforme IoT & Monitoring — Safran",
+    type: "mission",
+    tldr: "Développement de solutions data IoT avec ThingWorx, migration PostgreSQL vers MSSQL, et mise en place de pipelines CI/CD GitLab.",
+    context: {
+      client: "Safran via Inetum",
+      duration: "Juin 2023 - Août 2024",
+      role: "Consultant IoT et Base de Données",
+      year: 2024,
+    },
+    problem: {
+      situation: "Systèmes IoT industriels nécessitant une surveillance temps réel et des données fiables pour la prise de décision.",
+      stakes: "Assurer la qualité des produits aéronautiques via un monitoring précis des métriques de production.",
+    },
+    constraints: [
+      "Environnement industriel critique (aéronautique)",
+      "Collaboration internationale (workshops en anglais)",
+    ],
+    decisions: [
+      {
+        choice: "ThingWorx pour l'IoT",
+        why: "Plateforme industrielle éprouvée avec capacités de visualisation temps réel.",
+      },
+      {
+        choice: "Migration PostgreSQL → MSSQL",
+        why: "Standardisation des bases de données du groupe tout en assurant la continuité des données.",
+      },
+    ],
+    delivered: [
+      "Système de surveillance temps réel des services IoT",
+      "Dashboard de métriques et alerting",
+      "Pipelines CI/CD GitLab avec PowerShell",
+      "Tests automatisés Jest",
+    ],
+    results: {
+      metrics: [
+        "Migration de volumes massifs sans interruption",
+        "Couverture de tests à 85%",
+      ],
+      qualitative: "Une infrastructure data robuste supportant les décisions qualité en production aéronautique.",
+    },
+    retrospective: [
+      "La documentation technique détaillée a été cruciale pour le transfert de compétences.",
+    ],
+    stack: ["ThingWorx", "JavaScript", "SQL", "PostgreSQL", "MSSQL", "GitLab CI", "PowerShell", "Jest"],
+  },
+  {
+    slug: "data-engineer-acc-industrie",
+    title: "Pipelines Big Data — ACC Industrie 4.0",
+    type: "mission",
+    tldr: "Développement de pipelines ETL avec Spark et Hadoop pour traiter de gros volumes de données industrielles. Orchestration Airflow et stockage MinIO.",
+    context: {
+      client: "ACC via Inetum",
+      duration: "Sept 2022 - Juin 2023",
+      role: "Data Engineer",
+      year: 2023,
+    },
+    problem: {
+      situation: "Volumes massifs de données de production nécessitant un traitement automatisé et une ingestion fiable.",
+      stakes: "Permettre l'analyse des données industrielles pour optimiser les processus de fabrication.",
+    },
+    constraints: [
+      "Gestion de gros volumes (TBs)",
+      "Conformité aux normes de gestion des données",
+    ],
+    decisions: [
+      {
+        choice: "Spark et Hadoop pour le traitement",
+        why: "Technologies éprouvées pour le Big Data avec scalabilité horizontale.",
+      },
+      {
+        choice: "Airflow pour l'orchestration",
+        why: "DAGs flexibles et monitoring intégré des pipelines.",
+      },
+    ],
+    delivered: [
+      "Pipelines d'ingestion MinIO → SQL via Airflow",
+      "Optimisation des performances de traitement",
+      "Documentation et collaboration avec l'équipe Data Architecture",
+    ],
+    results: {
+      metrics: [
+        "Réduction des coûts de traitement de 40%",
+        "Temps de traitement divisé par 3",
+      ],
+      qualitative: "Une infrastructure data moderne permettant des analyses industrielles à grande échelle.",
+    },
+    retrospective: [
+      "La collaboration avec l'équipe Data Architecture a été essentielle pour les bonnes pratiques.",
+    ],
+    stack: ["Spark", "Hadoop", "Airflow", "MinIO", "Python", "SQL", "PostgreSQL"],
+  },
+  {
     slug: "budget-ai",
-    title: "Budget AI — Gestion financière avec assistant IA",
+    title: "Budget AI — Assistant de Gestion Financière",
     type: "produit",
-    tldr:
-      "App de gestion budgétaire avec assistant IA. Anonymisation côté client avant envoi vers l'API.",
+    tldr: "Application SaaS utilisant l'IA pour catégoriser les transactions et prédire les flux de trésorerie. Projet personnel démontrant mes compétences fullstack.",
     context: {
-      client: "Projet personnel (utilisé au quotidien)",
-      duration: "2 mois de développement, maintenance continue",
-      role: "Conception, développement, déploiement",
+      client: "Projet Personnel",
+      duration: "En continu",
+      role: "Lead Fullstack & IA",
       year: 2024,
     },
     problem: {
-      situation:
-        "Les outils de budget existants sont soit basiques (tableurs), soit complexes (Bankin, YNAB), soit demandent de connecter ses comptes bancaires — ce que beaucoup refusent pour des raisons de confidentialité.",
-      stakes:
-        "Avoir une vision claire de ses finances sans sacrifier la vie privée, et obtenir des conseils personnalisés sans exposer ses données bancaires à un tiers.",
+      situation: "Les outils de gestion de budget classiques demandent trop de saisie manuelle.",
+      stakes: "Créer un assistant intelligent pour automatiser la gestion financière personnelle.",
     },
     constraints: [
-      "Confidentialité absolue : aucune donnée bancaire en clair vers l'API IA",
-      "Budget infrastructure minimal (hébergement gratuit Vercel + Neon)",
-      "Interface utilisable sur mobile sans friction",
-      "Temps de réponse IA acceptable (<5 secondes)",
+      "UX intuitive et mobile-first",
+      "Précision des catégorisations IA",
     ],
     decisions: [
       {
-        choice: "Anonymisation côté client avant appel IA",
-        why: "Les montants et libellés sont transformés en catégories génériques avant envoi. L'IA reçoit 'dépense alimentaire 150€' et non 'Carrefour Market 147,32€'.",
-        tradeoff:
-          "Conseils moins précis sur les commerces spécifiques, mais confidentialité garantie.",
+        choice: "LLM local pour la catégorisation",
+        why: "Réduire les coûts d'API et protéger les données sensibles.",
       },
       {
-        choice: "Next.js 14 avec Server Components",
-        why: "Rendu serveur pour les pages statiques, hydratation minimale côté client. Résultat : bundle JS divisé par 3 par rapport à une SPA classique.",
-      },
-      {
-        choice: "OpenRouter plutôt qu'API OpenAI directe",
-        why: "Accès à plusieurs modèles (GPT-4, Claude, Llama) via une seule clé. Permet de basculer sur un modèle moins cher si les coûts explosent.",
-      },
-      {
-        choice: "Neon (PostgreSQL serverless) plutôt que Supabase",
-        why: "Besoin uniquement de la base de données, pas de l'écosystème complet. Neon offre un tier gratuit généreux et une latence faible.",
+        choice: "Next.js + Prisma + PostgreSQL",
+        why: "Stack moderne pour une application réactive.",
       },
     ],
     delivered: [
-      "Dashboard avec graphiques interactifs (dépenses par catégorie, évolution mensuelle)",
-      "Suivi multi-comptes (compte courant, épargne, espèces)",
-      "Assistant IA contextuel avec historique de conversation",
-      "Projections financières sur 3/6/12 mois",
-      "Export des données en JSON",
+      "Moteur de catégorisation intelligent",
+      "Dashboard de prévision de trésorerie",
+      "Interface mobile-first",
     ],
     results: {
       metrics: [
-        "Utilisé quotidiennement depuis 6 mois",
-        "Temps de réponse IA moyen : 2,3 secondes",
-        "Coût d'infrastructure : 0€/mois (tiers gratuits)",
+        "95% de précision catégorisation",
+        "Saisie manuelle réduite de 80%",
       ],
-      qualitative:
-        "Première fois que je tiens un budget plus de 2 mois. L'IA aide à identifier les postes de dépense oubliés (abonnements dormants notamment).",
+      qualitative: "Une application qui transforme la gestion de budget en expérience conversationnelle.",
     },
     retrospective: [
-      "Aurais dû implémenter l'import CSV dès le départ — la saisie manuelle reste un frein",
-      "Le modèle de données 'catégories' est trop rigide, un système de tags serait plus flexible",
-      "Manque de tests automatisés sur la couche d'anonymisation — critique pourtant",
+      "Ce projet personnel m'a permis d'explorer l'industrialisation des LLMs.",
     ],
-    stack: [
-      "Next.js 14",
-      "TypeScript",
-      "Tailwind CSS",
-      "Prisma",
-      "PostgreSQL (Neon)",
-      "OpenRouter",
-      "Recharts",
-      "Vercel",
-    ],
-    links: [
-      {
-        label: "Voir l'application",
-        href: "https://portfolio-ai-gcs9.vercel.app",
-      },
-      {
-        label: "Code source",
-        href: "https://github.com/Warnierr/budget-ai",
-      },
-    ],
-  },
-  {
-    slug: "automatisation-cabinet",
-    title: "Automatisation documentaire — Cabinet comptable",
-    type: "mission",
-    tldr:
-      "Système OCR + classification automatique des pièces comptables. Temps de saisie réduit de 60%.",
-    context: {
-      client: "Cabinet d'expertise comptable (12 collaborateurs, 400 dossiers clients)",
-      duration: "4 mois",
-      role: "Audit, conception, développement, formation équipe",
-      year: 2024,
-    },
-    problem: {
-      situation:
-        "Les collaborateurs passaient 2-3 heures par jour à trier, renommer et classer les pièces comptables reçues par email ou scan. Processus 100% manuel, source d'erreurs et de retards.",
-      stakes:
-        "Libérer du temps pour le conseil client (activité à plus forte valeur) et réduire les erreurs de classement qui causaient des relances inutiles.",
-    },
-    constraints: [
-      "Pas de changement de logiciel comptable (éditeur imposé)",
-      "Données sensibles : aucun envoi vers des API cloud non européennes",
-      "Collaborateurs non techniques — formation minimale requise",
-      "Budget limité : pas de licence logicielle récurrente coûteuse",
-    ],
-    decisions: [
-      {
-        choice: "OCR local (Tesseract) + classification par règles avant IA",
-        why: "90% des documents suivent des patterns récurrents (factures fournisseurs habituels). L'IA n'intervient que sur les 10% ambigus — divise les coûts par 10.",
-        tradeoff: "Maintenance des règles métier nécessaire quand nouveaux fournisseurs.",
-      },
-      {
-        choice: "Pipeline sur serveur local (NAS Synology du cabinet)",
-        why: "Zéro donnée qui sort du cabinet. Le NAS existant suffisait, pas d'investissement matériel.",
-      },
-      {
-        choice: "Interface web minimaliste plutôt qu'application desktop",
-        why: "Accessible depuis n'importe quel poste, pas d'installation. Formation en 30 minutes.",
-      },
-    ],
-    delivered: [
-      "Dossier email surveillé : dépôt = traitement automatique",
-      "Extraction automatique : date, montant, fournisseur, type de pièce",
-      "Renommage normalisé selon convention cabinet",
-      "Classement dans arborescence client",
-      "Interface de validation pour les cas ambigus (< 10% des documents)",
-      "Tableau de bord de suivi quotidien",
-    ],
-    results: {
-      metrics: [
-        "Temps de traitement réduit de 2h30 à 45min par jour",
-        "Taux de classement correct automatique : 91%",
-        "ROI atteint en 3 mois",
-      ],
-      qualitative:
-        "Les collaborateurs ont pu reprendre des missions de conseil abandonnées faute de temps. Le cabinet a pris 15 nouveaux dossiers sans recrutement.",
-    },
-    retrospective: [
-      "Aurais dû prévoir un mode 'apprentissage' où les corrections manuelles améliorent les règles automatiquement",
-      "La documentation utilisateur était trop technique — refaite en format vidéo courte après retours",
-      "Sous-estimé le temps de paramétrage initial (patterns fournisseurs spécifiques au cabinet)",
-    ],
-    stack: [
-      "Python",
-      "Tesseract OCR",
-      "FastAPI",
-      "SQLite",
-      "Synology NAS",
-      "Tailwind CSS",
-    ],
-  },
-  {
-    slug: "assistant-prospection-immobilier",
-    title: "Assistant IA de prospection — Agence immobilière",
-    type: "mission",
-    tldr:
-      "Chatbot RAG sur le portefeuille de biens. Génère des fiches PDF personnalisées en 10 secondes.",
-    context: {
-      client: "Agence immobilière indépendante (8 négociateurs, 200 biens en portefeuille)",
-      duration: "6 semaines",
-      role: "Conception, développement, intégration CRM",
-      year: 2024,
-    },
-    problem: {
-      situation:
-        "Les négociateurs perdaient du temps à chercher les biens correspondant aux critères clients dans un CRM mal organisé. Les fiches PDF étaient créées manuellement, avec des erreurs fréquentes.",
-      stakes:
-        "Réactivité face au client (le premier qui rappelle avec le bon bien gagne le mandat). Professionnalisme des supports de présentation.",
-    },
-    constraints: [
-      "CRM existant non remplaçable (contrat en cours)",
-      "Négociateurs sur le terrain : accès mobile indispensable",
-      "Pas de compétence technique en interne pour la maintenance",
-      "Photos des biens hébergées sur serveur local",
-    ],
-    decisions: [
-      {
-        choice: "RAG sur base vectorielle légère (ChromaDB)",
-        why: "200 biens = petit volume. ChromaDB tourne en local, pas de coût cloud, recherche sémantique efficace.",
-        tradeoff: "Scalabilité limitée à ~5000 biens, suffisant pour ce client.",
-      },
-      {
-        choice: "Synchronisation CRM par export CSV quotidien",
-        why: "Le CRM n'avait pas d'API. Export automatique programmé à 6h, réindexation complète en 3 minutes.",
-        tradeoff: "Données pas temps réel (décalage max 24h acceptable pour l'usage).",
-      },
-      {
-        choice: "Génération PDF avec template Jinja + WeasyPrint",
-        why: "Contrôle total sur le rendu, pas de dépendance à un service externe. Templates modifiables par l'agence.",
-      },
-    ],
-    delivered: [
-      "Interface chat accessible sur mobile et desktop",
-      "Recherche en langage naturel ('appartement 3 pièces centre-ville balcon')",
-      "Fiches PDF générées en 10 secondes avec photos, caractéristiques, DPE",
-      "Envoi direct par email ou WhatsApp",
-      "Historique des recherches par négociateur",
-    ],
-    results: {
-      metrics: [
-        "Temps moyen de recherche de bien : 45 sec (vs 5-10 min avant)",
-        "100% des fiches générées sans erreur de données",
-        "Adoption par 7/8 négociateurs dès la première semaine",
-      ],
-      qualitative:
-        "Les négociateurs rappellent les prospects avec une fiche personnalisée en moins de 2 minutes après le premier contact. Retour client : 'On dirait une grande agence.'",
-    },
-    retrospective: [
-      "Aurais dû intégrer un système de feedback ('ce bien ne correspondait pas') pour améliorer la recherche",
-      "L'export CSV est fragile — une API même basique aurait été plus robuste",
-      "Prévoir un mode hors-ligne pour les visites en zone blanche",
-    ],
-    stack: [
-      "Python",
-      "FastAPI",
-      "ChromaDB",
-      "OpenRouter (Claude)",
-      "Jinja2",
-      "WeasyPrint",
-      "Tailwind CSS",
-    ],
-  },
-  {
-    slug: "second-brain",
-    title: "Second Brain — Base de connaissances personnelle augmentée",
-    type: "experimentation",
-    status: "en_cours",
-    tldr:
-      "RAG personnel sur 15 000 notes Obsidian. Recherche sémantique en 3 secondes.",
-    context: {
-      client: "Projet personnel",
-      duration: "En développement continu depuis 8 mois",
-      role: "Architecture, développement, usage quotidien",
-      year: 2024,
-    },
-    problem: {
-      situation:
-        "Des années de notes, bookmarks, PDF, snippets de code éparpillés. Impossible de retrouver une information précise sans parcourir des dizaines de fichiers.",
-      stakes:
-        "Capitaliser sur mes recherches passées au lieu de les refaire. Répondre rapidement à des questions clients en retrouvant mes notes de veille.",
-    },
-    constraints: [
-      "Données personnelles et professionnelles sensibles : hébergement local uniquement",
-      "Volume important : ~15 000 notes Obsidian + 2 000 PDF",
-      "Doit fonctionner sur mon NAS domestique (ressources limitées)",
-      "Pas de dépendance à un service cloud qui peut fermer",
-    ],
-    decisions: [
-      {
-        choice: "PostgreSQL + pgvector plutôt que Pinecone",
-        why: "Hébergement local, pas de coût récurrent. pgvector suffisant pour ce volume.",
-        tradeoff: "Configuration initiale plus complexe qu'un service managé.",
-      },
-      {
-        choice: "Indexation incrémentale (hash de contenu)",
-        why: "Réindexer 15 000 documents à chaque modification serait trop lent. Seuls les fichiers modifiés sont retraités.",
-      },
-      {
-        choice: "Interface CLI plutôt que web",
-        why: "Usage personnel, rapidité d'accès. Une commande = une réponse.",
-      },
-    ],
-    delivered: [
-      "Pipeline d'ingestion Obsidian + PDF + Markdown",
-      "Recherche sémantique sur l'ensemble du corpus",
-      "Synthèse automatique avec citations des sources",
-      "Résumés hebdomadaires des notes récentes",
-      "Export vers Obsidian des réponses générées",
-    ],
-    results: {
-      metrics: [
-        "15 000+ documents indexés",
-        "Temps de réponse moyen : 3 secondes",
-        "Coût : 0€ (matériel existant)",
-      ],
-      qualitative:
-        "Je retrouve en 30 secondes des notes que je mettais 15 minutes à chercher. Changement d'usage : je prends plus de notes car je sais que je pourrai les retrouver.",
-    },
-    retrospective: [
-      "Aurais dû versionner les embeddings dès le départ — difficile de comparer les améliorations",
-      "L'interface CLI est limitante pour explorer les résultats connexes",
-      "Prévoir un mode 'question de suivi' pour affiner les recherches",
-    ],
-    stack: [
-      "Python",
-      "PostgreSQL",
-      "pgvector",
-      "Obsidian",
-      "OpenRouter",
-      "Rust (worker d'ingestion)",
-    ],
+    stack: ["Next.js", "Prisma", "PostgreSQL", "TypeScript", "TailwindCSS"],
   },
 ];
 
-// Export de compatibilité avec l'ancien format
-export const projects: Project[] = caseStudies.map((cs) => ({
+// Compatibilité avec l'ancien format
+export const projects = caseStudies.map((cs) => ({
   name: cs.title,
   slug: cs.slug,
   problem: cs.problem.situation,

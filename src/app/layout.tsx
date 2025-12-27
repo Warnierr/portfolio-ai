@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,30 +24,62 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
+  { label: "Services", href: "/services" },
   { label: "Méthode", href: "/methode" },
-  { label: "News", href: "/news" },
-  { label: "Ask Kenshu", href: "/agent", badge: "Nouveau" },
+  { label: "Ask Raouf", href: "/agent", badge: "IA" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const metadata: Metadata = {
-  title: "Développeur IA pour TPE & PME",
+  title: "Raouf Warnier | Data Engineer & DevOps Freelance",
   description:
-    "J'aide les cabinets comptables, avocats, agences immobilières et marketing à intégrer l'IA dans leur quotidien. Automatisation documentaire, assistants métier, tableaux de bord intelligents.",
-  metadataBase: new URL("https://portfolio-ai.vercel.app"),
+    "Data Engineer & DevOps avec 3+ ans d'expérience. Pipelines Big Data (Spark, Airflow), automatisation Ansible, CI/CD et infrastructure cloud. Disponible en freelance.",
+  metadataBase: new URL("https://raouf-warnier.dev"),
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
-    "IA pour TPE",
-    "automatisation cabinet comptable",
-    "assistant IA immobilier",
-    "développeur IA freelance",
-    "automatisation PME",
+    "Data Engineer freelance",
+    "DevOps freelance",
+    "Spark Hadoop",
+    "Airflow ETL",
+    "Ansible automatisation",
+    "Big Data Paris",
+    "Raouf Warnier",
   ],
   openGraph: {
-    title: "Développeur IA pour TPE & PME",
+    title: "Raouf Warnier | Data Engineer & DevOps Freelance",
     description:
-      "Automatisation documentaire, assistants métier, tableaux de bord intelligents pour les TPE et PME.",
+      "Data Engineer & DevOps avec 3+ ans d'expérience. Pipelines Big Data, automatisation et infrastructure cloud.",
+    url: "https://raouf-warnier.dev",
+    siteName: "Raouf Warnier Portfolio",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Raouf Warnier - Data Engineer & DevOps",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Raouf Warnier | Data Engineer & DevOps",
+    description: "Pipelines Big Data, automatisation Ansible, CI/CD.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -60,6 +93,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AnalyticsTracker />
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-sm text-white sm:px-6">
             <Link href="/" className="font-semibold tracking-wide">

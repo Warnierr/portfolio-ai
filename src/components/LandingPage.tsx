@@ -6,6 +6,7 @@ import { motion, type MotionProps } from "framer-motion";
 import PageContainer from "@/components/PageContainer";
 import StickyCTA from "@/components/StickyCtA";
 import { caseStudies } from "@/data/projects";
+import BackgroundDecoration from "@/components/BackgroundDecoration";
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -14,84 +15,74 @@ const fadeUp: MotionProps = {
   transition: { duration: 0.6, ease: "easeOut" },
 };
 
-const audiences = [
-  "Cabinets comptables",
-  "Avocats",
-  "Agences immobilières",
-  "Agences marketing",
-];
-
 export default function LandingPage() {
-  const featuredProjects = caseStudies
-    .filter((p) => p.type === "mission")
-    .slice(0, 2)
-    .concat(caseStudies.filter((p) => p.type === "produit").slice(0, 1));
+  const featuredProjects = caseStudies.filter(p => p.type === "mission").slice(0, 3);
 
   return (
     <>
       <PageContainer className="gap-16">
         {/* Hero */}
-        <motion.section className="glass-panel p-8 md:p-12" {...fadeUp}>
-          <div className="max-w-3xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
-              Kenshu Dev
-            </p>
+        <section className="relative flex min-h-[90vh] flex-col items-center justify-center px-4 pt-20 text-center sm:px-6">
+          <BackgroundDecoration />
 
-            <h1 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-5xl">
-              Développeur IA spécialisé TPE/PME
-            </h1>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs font-medium tracking-wider text-emerald-400 backdrop-blur-md"
+          >
+            DISPONIBLE IMMÉDIATEMENT • TJM 450€
+          </motion.div>
 
-            <p className="mt-6 text-lg text-zinc-300">
-              Je construis des outils d&apos;automatisation pour les métiers du
-              tertiaire. OCR documentaire, chatbots métier, dashboards
-              intelligents.
-            </p>
+          <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight">
+            Raouf Warnier <br />
+            <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+              Data Engineer & DevOps
+            </span>
+          </h1>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {audiences.map((audience) => (
-                <span
-                  key={audience}
-                  className="rounded-full border border-white/15 px-3 py-1.5 text-sm text-zinc-400"
-                >
-                  {audience}
-                </span>
-              ))}
-            </div>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
+            3+ ans d&apos;expérience en pipelines Big Data, automatisation et infrastructure.
+            J&apos;accompagne les entreprises dans leurs projets data critiques.
+          </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                href="/projets"
-                className="rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
-              >
-                Voir les projets
-              </Link>
-              <Link
-                href="/methode"
-                className="rounded-full border border-white/30 px-6 py-3 font-medium text-white transition hover:bg-white/10"
-              >
-                Ma méthode
-              </Link>
-            </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-3 text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+            <span className="rounded-full border border-white/10 px-3 py-1">Spark / Hadoop</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">Airflow / ETL</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">Ansible / CI-CD</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">PostgreSQL / MSSQL</span>
           </div>
-        </motion.section>
 
-        {/* Ce que je fais */}
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+            <Link
+              href="/projets"
+              className="rounded-full bg-white px-8 py-4 font-bold text-black transition hover:bg-zinc-200"
+            >
+              Voir mes missions →
+            </Link>
+            <Link
+              href="/agent"
+              className="rounded-full border border-white/10 px-8 py-4 font-bold text-white transition hover:bg-white/5"
+            >
+              Parler à l&apos;agent IA
+            </Link>
+          </div>
+        </section>
+
+        {/* Expertise Grid */}
         <section className="grid gap-4 md:grid-cols-3">
           {[
             {
-              title: "Données locales",
-              description:
-                "Hébergement européen ou sur site. Anonymisation systématique avant envoi vers les API.",
+              title: "Data Engineering",
+              description: "Pipelines ETL/ELT avec Spark, Hadoop et Airflow. Architecture Data Lake et Data Warehouse.",
             },
             {
-              title: "Intégration douce",
-              description:
-                "Je m'adapte à vos logiciels existants. Pas de migration, pas de changement d'habitudes.",
+              title: "DevOps & Infrastructure",
+              description: "Automatisation Ansible, CI/CD GitLab, monitoring Prometheus/Grafana. Cloud AWS/GCP/Azure.",
             },
             {
-              title: "Transfert inclus",
-              description:
-                "Formation de l'équipe et documentation. L'outil doit fonctionner sans moi.",
+              title: "Big Data & Analytics",
+              description: "Traitement de volumes massifs avec PySpark, Databricks. Migration et optimisation de bases de données.",
             },
           ].map((item, i) => (
             <motion.div
@@ -108,15 +99,22 @@ export default function LandingPage() {
           ))}
         </section>
 
-        {/* Projets */}
+        {/* Clients */}
+        <section className="glass-panel overflow-hidden p-8 md:p-12">
+          <p className="text-center text-xs uppercase tracking-[0.3em] text-zinc-500 mb-8">Clients récents</p>
+          <div className="flex flex-wrap justify-center gap-8 text-xl font-semibold text-zinc-400">
+            <span className="hover:text-white transition">Orange</span>
+            <span className="hover:text-white transition">Safran</span>
+            <span className="hover:text-white transition">ACC</span>
+            <span className="hover:text-white transition">C40 Cities</span>
+          </div>
+        </section>
+
+        {/* Featured Projects */}
         <section className="glass-panel p-8 md:p-10">
           <div className="mb-8">
-            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-              Études de cas
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
-              Projets récents
-            </h2>
+            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">Missions</p>
+            <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">Expériences récentes</h2>
           </div>
 
           <div className="space-y-6">
@@ -135,140 +133,53 @@ export default function LandingPage() {
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-3">
-                        <span className="text-xs uppercase tracking-[0.15em] text-zinc-500">
-                          {project.context.client}
-                        </span>
+                        <span className="text-xs uppercase tracking-[0.15em] text-zinc-500">{project.context.client}</span>
                         <span className="text-xs text-zinc-600">•</span>
-                        <span className="text-xs text-zinc-500">
-                          {project.context.duration}
-                        </span>
+                        <span className="text-xs text-zinc-500">{project.context.role}</span>
                       </div>
-
-                      <h3 className="text-xl font-semibold text-white group-hover:text-emerald-200">
-                        {project.title}
-                      </h3>
-
-                      <p className="mt-2 text-sm text-zinc-400">
-                        {project.tldr}
-                      </p>
-
-                      {project.results.metrics &&
-                        project.results.metrics.length > 0 && (
-                          <div className="mt-4 flex flex-wrap gap-3">
-                            {project.results.metrics.slice(0, 2).map((m, j) => (
-                              <span
-                                key={j}
-                                className="rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1 text-xs text-emerald-300"
-                              >
-                                {m}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                      <h3 className="text-xl font-semibold text-white group-hover:text-emerald-200">{project.title}</h3>
+                      <p className="mt-2 text-sm text-zinc-400">{project.tldr}</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {project.stack.slice(0, 4).map((tech) => (
+                          <span key={tech} className="text-xs text-zinc-500 bg-white/5 px-2 py-1 rounded">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-
-                    <span className="text-sm text-zinc-500 group-hover:text-emerald-300 md:mt-4">
-                      Lire →
-                    </span>
+                    <span className="text-sm text-zinc-500 group-hover:text-emerald-300 md:mt-4">Détails →</span>
                   </div>
                 </Link>
               </motion.div>
             ))}
           </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/projets"
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              Tous les projets →
-            </Link>
-          </div>
-        </section>
-
-        {/* Process */}
-        <section className="glass-panel p-8 md:p-10">
-          <div className="mb-8">
-            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-              Process
-            </p>
-            <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
-              Comment je travaille
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                step: "1",
-                title: "Diagnostic",
-                description:
-                  "30 min pour identifier ce qui peut être automatisé. Gratuit.",
-              },
-              {
-                step: "2",
-                title: "Prototype",
-                description:
-                  "Première version fonctionnelle en 1-2 semaines. Test sur vos données.",
-              },
-              {
-                step: "3",
-                title: "Déploiement",
-                description:
-                  "Mise en production et formation de l'équipe. Documentation fournie.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.step}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-xl font-semibold text-emerald-300">
-                  {item.step}
-                </div>
-                <h3 className="mt-4 font-medium text-white">{item.title}</h3>
-                <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/methode"
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              Détails de la méthode →
-            </Link>
-          </div>
         </section>
 
         {/* CTA */}
         <motion.section
-          className="glass-panel p-8 text-center md:p-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          className="glass-panel p-8 text-center md:p-12 mb-10"
+          {...fadeUp}
         >
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">
-            Un projet en tête ?
-          </h2>
-          <p className="mt-4 text-zinc-400">
-            Premier appel gratuit pour évaluer si l&apos;IA peut aider.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-6 inline-block rounded-full bg-white px-8 py-3 font-medium text-black transition hover:bg-zinc-200"
-          >
-            Prendre contact
-          </Link>
+          <h2 className="text-2xl font-semibold text-white md:text-3xl">Un projet data en tête ?</h2>
+          <p className="mt-4 text-zinc-400">Discutons de vos besoins en pipelines, automatisation ou infrastructure.</p>
+          <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link
+              href="/contact"
+              className="rounded-full bg-white px-8 py-3 font-medium text-black transition hover:bg-zinc-200"
+            >
+              Me contacter
+            </Link>
+            <a
+              href="mailto:rww.warnier@gmail.com"
+              className="text-sm text-zinc-400 hover:text-white transition"
+            >
+              rww.warnier@gmail.com
+            </a>
+          </div>
         </motion.section>
       </PageContainer>
 
-      <StickyCTA text="Contact" href="/contact" />
+      <StickyCTA text="Parler à l'agent" href="/agent" />
     </>
   );
 }
