@@ -25,6 +25,17 @@ type Message = {
 };
 
 const MAX_REQUESTS = 10;
+const COOKIE_NAME = "chat_requests";
+
+// Fonction pour lire le cookie
+function getCookieValue(name: string): number {
+  if (typeof document === "undefined") return 0;
+  const cookies = document.cookie.split(";").map((c) => c.trim());
+  const cookie = cookies.find((c) => c.startsWith(`${name}=`));
+  if (!cookie) return 0;
+  const value = parseInt(cookie.split("=")[1], 10);
+  return isNaN(value) ? 0 : value;
+}
 
 export default function AgentPage() {
   const [input, setInput] = useState("");
@@ -33,6 +44,16 @@ export default function AgentPage() {
   const [remaining, setRemaining] = useState(MAX_REQUESTS);
   const [limitReached, setLimitReached] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Lire le cookie au chargement pour restaurer le compteur
+  useEffect(() => {
+    const usedCount = getCookieValue(COOKIE_NAME);
+    const currentRemaining = MAX_REQUESTS - usedCount;
+    setRemaining(currentRemaining);
+    if (currentRemaining <= 0) {
+      setLimitReached(true);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -154,10 +175,10 @@ export default function AgentPage() {
                 <span className="text-sm text-emerald-300">Agent en ligne</span>
               </div>
               <div className={`text-sm px-3 py-1 rounded-full border ${remaining > 5
-                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                  : remaining > 2
-                    ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-300'
-                    : 'border-orange-500/30 bg-orange-500/10 text-orange-300'
+                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                : remaining > 2
+                  ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-300'
+                  : 'border-orange-500/30 bg-orange-500/10 text-orange-300'
                 }`}>
                 💬 {remaining}/{MAX_REQUESTS}
               </div>
