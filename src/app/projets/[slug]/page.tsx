@@ -53,17 +53,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {/* Liens (Action immédiate) */}
         {project.links && project.links.length > 0 && (
           <div className="mt-6 flex flex-wrap gap-3">
-            {project.links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-zinc-200"
-              >
-                {link.label} →
-              </a>
-            ))}
+            {project.links.map((link) => {
+              const isLiveDemo = link.label.toLowerCase().includes("live demo");
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition ${isLiveDemo
+                      ? "bg-red-500 text-white hover:bg-red-600 shadow-[0_0_15px_rgba(239,68,68,0.5)] border border-red-400"
+                      : "bg-white text-black hover:bg-zinc-200"
+                    }`}
+                >
+                  {link.label} →
+                </a>
+              );
+            })}
           </div>
         )}
 
@@ -232,6 +238,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ))}
         </ul>
       </section>
+
+      {/* Roadmap */}
+      {project.roadmap && project.roadmap.length > 0 && (
+        <section className="glass-panel p-8 md:p-10">
+          <h2 className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+            Potentiel d&apos;Évolution (Roadmap)
+          </h2>
+          <ul className="mt-4 space-y-3">
+            {project.roadmap.map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
+                <span className="mt-0.5 text-zinc-500">☐</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Stack complète */}
       <section className="glass-panel p-6 md:p-8">

@@ -32,6 +32,7 @@ export type CaseStudy = {
   retrospective: string[];
   stack: string[];
   links?: { label: string; href: string }[];
+  roadmap?: string[];
   media?: {
     type: "image" | "video";
     url: string;
@@ -41,6 +42,127 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "budget-ai",
+    title: "Budget AI — Assistant Financier Intelligent",
+    type: "produit",
+    tldr: "Assistant personnel intelligent qui transforme des lignes de dépenses brutes en conseils stratégiques. Prédictions de solde, détection d'abonnements et coaching IA en temps réel.",
+    context: {
+      client: "Projet Personnel (SaaS)",
+      duration: "En développement continu",
+      role: "Lead Fullstack & AI Engineer",
+      year: 2024,
+    },
+    problem: {
+      situation: "Les applications bancaires classiques regardent le passé. Les utilisateurs manquent de visibilité sur leur futur financier et de conseils personnalisés.",
+      stakes: "Transformer la gestion financière passive en un coaching proactif, intelligent, sécurisé et agréable à utiliser via une interface conversationnelle.",
+    },
+    constraints: [
+      "Confidentialité des données bancaires (Privacy by Design)",
+      "Expérience utilisateur fluide avec réponses IA en streaming",
+      "Architecture Serverless optimisée pour les coûts",
+    ],
+    decisions: [
+      {
+        choice: "Next.js 14 + Server-Sent Events (SSE)",
+        why: "Pour un effet 'machine à écrire' fluide et natif sans bloquer l'interface utilisateur.",
+      },
+      {
+        choice: "Middleware d'anonymisation (Privacy Layer)",
+        why: "Couche logicielle qui anonymise toutes les données financières (suppression des noms, comptes, lieux) AVANT l'envoi aux LLMs publics (OpenRouter).",
+      },
+      {
+        choice: "Variables CSS Sémantiques & Tailwind",
+        why: "Système de thèmes dynamiques (Neon, Ocean...) injectés par Context React pour changer l'ambiance sans recharger la page.",
+      },
+      {
+        choice: "OpenRouter API",
+        why: "Permet de switcher de modèle d'IA à la volée (Claude 3.5 Sonnet, GPT-4o) selon le besoin en intelligence.",
+      },
+    ],
+    delivered: [
+      "Assistant Financier Contextuel (Chat en temps réel avec vos données)",
+      "Projection de Solde & 'Reste à Vivre'",
+      "Détection et isolement automatique des abonnements",
+      "Interface Glassmorphism & Thèmes dynamiques",
+    ],
+    results: {
+      metrics: [
+        "Temps de réponse de l'IA < 200ms (SFE)",
+        "Plus de 3 modèles LLM supportés",
+      ],
+      qualitative: "Une application qui impressionne par son design 'Wow' (Glassmorphism, Recharts) et rassure par sa gestion stricte de la privacy.",
+    },
+    retrospective: [
+      "La gestion des ReadableStreams entre serveur et client (SSE) a demandé une configuration fine sur Next.js.",
+      "L'architecture 'Privacy-First' est le véritable atout confiance du produit.",
+    ],
+    stack: [
+      "Next.js 14",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shadcn/UI",
+      "Framer Motion",
+      "Recharts",
+      "Prisma",
+      "PostgreSQL (Neon)",
+      "NextAuth.js",
+      "OpenRouter API"
+    ],
+    roadmap: [
+      "Connexion Bancaire Directe (via GoCardless/Plaid) pour ne plus importer de CSV.",
+      "Mode Multi-Worskapce (Budget Perso / Budget Pro).",
+      "Application Mobile (via React Native ou PWA)."
+    ],
+    links: [{ label: "🔴 Live Demo : Budget AI", href: "https://budget-ai-portfolio.vercel.app" }],
+  },
+  {
+    slug: "data-engineer-bnpp",
+    title: "Ingénieur Data / Big Data — BNP Paribas",
+    type: "mission",
+    tldr: "Migration d'ETL legacy vers architecture moderne. Debugging de pipelines complexes, automatisation Jenkins et développement Scala/Spark SQL.",
+    context: {
+      client: "BNP Paribas",
+      duration: "Sept 2025 - Déc 2025",
+      role: "Ingénieur Data",
+      year: 2025,
+    },
+    problem: {
+      situation: "Maintenance et évolution d'un SI critique bancaire. Nécessité de comprendre et migrer des pipelines legacy sans documentation.",
+      stakes: "Assurer la continuité de service des flux financiers tout en migrant vers une stack plus performante et maintenable.",
+    },
+    constraints: [
+      "Environnement bancaire hautement sécurisé",
+      "Systèmes existants complexes (Reverse Engineering)",
+      "Qualité de service critique (SLA strict)",
+    ],
+    decisions: [
+      {
+        choice: "Scala & Spark SQL",
+        why: "Performance et typage fort pour les traitements critiques à grande échelle.",
+      },
+      {
+        choice: "Jenkins pour l'orchestration",
+        why: "Automatisation complète des flux pour réduire les interventions manuelles et sécuriser les déploiements.",
+      },
+    ],
+    delivered: [
+      "Migration de pipelines ETL legacy vers nouvelle architecture",
+      "Scripts de debugging et d'analyse de données",
+      "Documentation technique détaillée des flux migrés",
+    ],
+    results: {
+      metrics: [
+        "100% des flux migrés sans régression",
+        "Réduction du temps de debug",
+      ],
+      qualitative: "Une transition fluide vers une architecture plus moderne, avec une meilleure visibilité sur les traitements.",
+    },
+    retrospective: [
+      "L'analyse approfondie (reverse engineering) avant le code est la clé du succès sur du legacy.",
+    ],
+    stack: ["Scala", "Spark", "Spark SQL", "Jenkins", "Shell", "Linux", "Hadoop", "Git"],
+  },
   {
     slug: "devops-orange-bigdata",
     title: "Infrastructure Big Data — Orange",
@@ -180,52 +302,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     stack: ["Spark", "Hadoop", "Airflow", "MinIO", "Python", "SQL", "PostgreSQL"],
   },
-  {
-    slug: "budget-ai",
-    title: "Budget AI — Assistant de Gestion Financière",
-    type: "produit",
-    tldr: "Application SaaS utilisant l'IA pour catégoriser les transactions et prédire les flux de trésorerie. Projet personnel démontrant mes compétences fullstack.",
-    context: {
-      client: "Projet Personnel",
-      duration: "En continu",
-      role: "Lead Fullstack & IA",
-      year: 2024,
-    },
-    problem: {
-      situation: "Les outils de gestion de budget classiques demandent trop de saisie manuelle.",
-      stakes: "Créer un assistant intelligent pour automatiser la gestion financière personnelle.",
-    },
-    constraints: [
-      "UX intuitive et mobile-first",
-      "Précision des catégorisations IA",
-    ],
-    decisions: [
-      {
-        choice: "LLM local pour la catégorisation",
-        why: "Réduire les coûts d'API et protéger les données sensibles.",
-      },
-      {
-        choice: "Next.js + Prisma + PostgreSQL",
-        why: "Stack moderne pour une application réactive.",
-      },
-    ],
-    delivered: [
-      "Moteur de catégorisation intelligent",
-      "Dashboard de prévision de trésorerie",
-      "Interface mobile-first",
-    ],
-    results: {
-      metrics: [
-        "95% de précision catégorisation",
-        "Saisie manuelle réduite de 80%",
-      ],
-      qualitative: "Une application qui transforme la gestion de budget en expérience conversationnelle.",
-    },
-    retrospective: [
-      "Ce projet personnel m'a permis d'explorer l'industrialisation des LLMs.",
-    ],
-    stack: ["Next.js", "Prisma", "PostgreSQL", "TypeScript", "TailwindCSS"],
-  },
+
 ];
 
 // Compatibilité avec l'ancien format

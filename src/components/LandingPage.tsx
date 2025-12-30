@@ -37,20 +37,20 @@ export default function LandingPage() {
           <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight">
             Raouf Warnier <br />
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              Data Engineer & DevOps
+              Data Engineer — Scala / Spark
             </span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
-            3+ ans d&apos;expérience en pipelines Big Data, automatisation et infrastructure.
-            J&apos;accompagne les entreprises dans leurs projets data critiques.
+            Ingénieur Data spécialisé dans les environnements critiques (Banque, Industrie).
+            Je conçois, migre et fiabilise vos pipelines Big Data et votre infrastructure.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3 text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-            <span className="rounded-full border border-white/10 px-3 py-1">Spark / Hadoop</span>
-            <span className="rounded-full border border-white/10 px-3 py-1">Airflow / ETL</span>
-            <span className="rounded-full border border-white/10 px-3 py-1">Ansible / CI-CD</span>
-            <span className="rounded-full border border-white/10 px-3 py-1">PostgreSQL / MSSQL</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">Scala / Spark</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">Jenkins / CI-CD</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">ETL / SQL</span>
+            <span className="rounded-full border border-white/10 px-3 py-1">Linux / Shell</span>
           </div>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
@@ -74,15 +74,15 @@ export default function LandingPage() {
           {[
             {
               title: "Data Engineering",
-              description: "Pipelines ETL/ELT avec Spark, Hadoop et Airflow. Architecture Data Lake et Data Warehouse.",
+              description: "Pipelines ETL/ELT avec Spark, Scala et Airflow. Migration de systèmes legacy vers architecture moderne.",
             },
             {
-              title: "DevOps & Infrastructure",
-              description: "Automatisation Ansible, CI/CD GitLab, monitoring Prometheus/Grafana. Cloud AWS/GCP/Azure.",
+              title: "DevOps & Automatisation",
+              description: "CI/CD avec Jenkins et GitLab. Scripting Shell pour l'exploitation et l'automatisation des flux.",
             },
             {
-              title: "Big Data & Analytics",
-              description: "Traitement de volumes massifs avec PySpark, Databricks. Migration et optimisation de bases de données.",
+              title: "Big Data & Qualité",
+              description: "Traitement de données critiques (Banque/Industrie). Fiabilisation, debugging et documentation.",
             },
           ].map((item, i) => (
             <motion.div
@@ -103,10 +103,10 @@ export default function LandingPage() {
         <section className="glass-panel overflow-hidden p-8 md:p-12">
           <p className="text-center text-xs uppercase tracking-[0.3em] text-zinc-500 mb-8">Clients récents</p>
           <div className="flex flex-wrap justify-center gap-8 text-xl font-semibold text-zinc-400">
+            <span className="hover:text-white transition">BNP Paribas</span>
             <span className="hover:text-white transition">Orange</span>
             <span className="hover:text-white transition">Safran</span>
             <span className="hover:text-white transition">ACC</span>
-            <span className="hover:text-white transition">C40 Cities</span>
           </div>
         </section>
 

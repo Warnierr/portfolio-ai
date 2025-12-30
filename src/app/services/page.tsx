@@ -7,7 +7,7 @@ const services = [
         id: "freelance",
         title: "Missions Freelance",
         subtitle: "Data Engineering & DevOps",
-        description: "J'interviens en renfort d'équipes data sur des missions de 3 mois à 1 an. Pipelines Big Data, infrastructure DevOps, migrations de bases de données.",
+        description: "J'interviens en renfort d'équipes data sur des missions de 3 mois à 1 an. Pipelines Big Data, infrastructure DevOps, migrations de données.",
         features: [
             "Pipelines ETL/ELT (Spark, Airflow, dbt)",
             "Infrastructure DevOps (Ansible, Docker, CI/CD)",
@@ -36,35 +36,27 @@ const services = [
     {
         id: "produits",
         title: "Produits IA",
-        subtitle: "Solutions SaaS en développement",
-        description: "Je développe des micro-SaaS pour résoudre des problèmes concrets. Ces outils sont en cours de création et seront bientôt disponibles.",
+        subtitle: "Solutions SaaS",
+        description: "Je développe des micro-SaaS pour résoudre des problèmes concrets. Applications complètes et scalables.",
         features: [
-            "DataOps Dashboard — Monitoring de pipelines",
-            "Lead Enricher — Qualification automatique",
+            "Budget AI — Assistant Financier Personnel",
             "Invoice AI — Catégorisation de factures",
+            "Solutions sur-mesure pour startups",
         ],
-        pricing: "Bientôt disponible",
-        cta: "Être informé du lancement",
+        pricing: "En ligne",
+        cta: "Voir les produits",
         color: "purple",
     },
 ];
 
 const products = [
     {
-        slug: "pipeline-monitor",
-        name: "Pipeline Monitor",
-        tagline: "Monitoring unifié pour petites équipes data",
-        problem: "Surveillez vos pipelines Airflow, dbt et Spark depuis un seul dashboard. Détectez les anomalies avant qu'elles n'impactent vos utilisateurs.",
-        status: "Concept",
-        eta: "Q2 2025",
-    },
-    {
-        slug: "lead-enricher",
-        name: "Lead Enricher",
-        tagline: "Enrichissez vos prospects en conformité RGPD",
-        problem: "Transformez un simple email en profil complet : poste, entreprise, réseaux sociaux. L'IA qualifie et score chaque lead.",
-        status: "Concept",
-        eta: "Q2 2025",
+        slug: "budget-ai",
+        name: "Budget AI",
+        tagline: "Assistant Financier Intelligent",
+        problem: "Transformez vos lignes de dépenses en conseils stratégiques. Prédictions de solde, détection d'abonnements et coaching IA en temps réel.",
+        status: "Live Demo",
+        eta: "Disponible",
     },
     {
         slug: "invoice-ai",

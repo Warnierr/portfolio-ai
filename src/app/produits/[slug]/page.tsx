@@ -59,12 +59,23 @@ export default async function ProductPage({ params }: Props) {
                         <p className={`text-lg text-${product.color}-400 mt-1`}>{product.tagline}</p>
                     </div>
 
-                    <Link
-                        href="/contact"
-                        className={`rounded-full bg-${product.color}-500/20 border border-${product.color}-500/30 px-6 py-3 text-sm font-medium text-${product.color}-300 hover:bg-${product.color}-500/30 transition`}
-                    >
-                        🔔 M'informer du lancement
-                    </Link>
+                    {product.demoUrl ? (
+                        <a
+                            href={product.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`rounded-full bg-${product.color}-500 text-white border border-${product.color}-400 px-6 py-3 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:bg-${product.color}-600 transition flex items-center gap-2`}
+                        >
+                            <span>🔴</span> Live Demo
+                        </a>
+                    ) : (
+                        <Link
+                            href="/contact"
+                            className={`rounded-full bg-${product.color}-500/20 border border-${product.color}-500/30 px-6 py-3 text-sm font-medium text-${product.color}-300 hover:bg-${product.color}-500/30 transition`}
+                        >
+                            🔔 M&apos;informer du lancement
+                        </Link>
+                    )}
                 </div>
             </section>
 
@@ -166,8 +177,8 @@ export default async function ProductPage({ params }: Props) {
                         <div
                             key={plan.name}
                             className={`rounded-xl border p-5 ${plan.recommended
-                                    ? `border-${product.color}-500/50 bg-${product.color}-500/10`
-                                    : "border-white/10 bg-white/5"
+                                ? `border-${product.color}-500/50 bg-${product.color}-500/10`
+                                : "border-white/10 bg-white/5"
                                 }`}
                         >
                             {plan.recommended && (
