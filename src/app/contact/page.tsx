@@ -47,12 +47,16 @@ export default function ContactPage() {
             30 minutes pour discuter de votre situation.
           </p>
           <a
-            href="tel:+33749416355"
+            href="https://cal.com/raouf-warnier"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
           >
-            📞 +33 7 49 41 63 55
+            📅 Choisir un créneau
           </a>
-          <p className="mt-3 text-xs text-zinc-500">Disponible 9h-18h</p>
+          <p className="mt-3 text-xs text-zinc-500">
+            Ou appelez : <a href="tel:+33749416355" className="text-emerald-400 hover:underline">+33 7 49 41 63 55</a>
+          </p>
         </div>
 
         <div className="glass-panel p-8">
