@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: "/private/",
+            disallow: ["/private/", "/admin/"],
         },
-        sitemap: "https://portfolio-ai.vercel.app/sitemap.xml",
+        sitemap: "https://kenshu-dev.vercel.app/sitemap.xml",
     };
 }

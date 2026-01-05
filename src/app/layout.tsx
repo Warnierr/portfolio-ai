@@ -31,28 +31,29 @@ const navItems: NavItem[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Raouf Warnier | Data Engineer & DevOps Freelance",
+  title: "Raouf Warnier | Ingénieur Produit Data - Freelance",
   description:
-    "Data Engineer & DevOps avec 3+ ans d'expérience. Pipelines Big Data (Spark, Airflow), automatisation Ansible, CI/CD et infrastructure cloud. Disponible en freelance.",
-  metadataBase: new URL("https://raouf-warnier.dev"),
+    "Ingénieur Produit Data freelance. Je conçois des systèmes data end-to-end : pipelines ETL, plateformes analytics et applications SaaS. Disponible en France et remote.",
+  metadataBase: new URL("https://kenshu-dev.vercel.app"),
   alternates: {
     canonical: "/",
   },
   keywords: [
-    "Data Engineer freelance",
-    "DevOps freelance",
-    "Spark Hadoop",
-    "Airflow ETL",
-    "Ansible automatisation",
-    "Big Data Paris",
+    "Ingénieur Produit Data",
+    "Data Product Engineer freelance",
+    "Data Platform",
+    "Data Pipelines",
+    "ETL Spark Airflow",
+    "SaaS Data Products",
+    "Freelance Data France",
     "Raouf Warnier",
   ],
   openGraph: {
-    title: "Raouf Warnier | Data Engineer & DevOps Freelance",
+    title: "Raouf Warnier | Ingénieur Produit Data - Freelance",
     description:
-      "Data Engineer & DevOps avec 3+ ans d'expérience. Pipelines Big Data, automatisation et infrastructure cloud.",
-    url: "https://raouf-warnier.dev",
-    siteName: "Raouf Warnier Portfolio",
+      "Ingénieur Produit Data freelance. Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
+    url: "https://kenshu-dev.vercel.app",
+    siteName: "Raouf Warnier - Ingénieur Produit Data",
     locale: "fr_FR",
     type: "website",
     images: [
@@ -60,14 +61,14 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Raouf Warnier - Data Engineer & DevOps",
+        alt: "Raouf Warnier - Ingénieur Produit Data",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raouf Warnier | Data Engineer & DevOps",
-    description: "Pipelines Big Data, automatisation Ansible, CI/CD.",
+    title: "Raouf Warnier | Ingénieur Produit Data",
+    description: "Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -134,7 +135,7 @@ export default function RootLayout({
                   </Link>
                 ))}
               </div>
-              <p>© 2024 — Développeur IA indépendant</p>
+              <p>© 2025 — Ingénieur Produit Data</p>
             </div>
           </div>
         </footer>
