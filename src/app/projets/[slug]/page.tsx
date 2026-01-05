@@ -83,12 +83,44 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ].join(", "),
   };
 
+  // Breadcrumb Schema pour navigation
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://kenshu.dev",
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Projets",
+        "item": "https://kenshu.dev/projets",
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": project.title,
+        "item": `https://kenshu.dev/projets/${slug}`,
+      },
+    ],
+  };
+
   return (
     <>
-      {/* Schema.org JSON-LD */}
+      {/* Schema.org JSON-LD - Project */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+      
+      {/* Schema.org JSON-LD - Breadcrumb */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <PageContainer className="gap-8">
@@ -337,6 +369,37 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </section>
 
+      {/* Maillage interne - CTA contextuels */}
+      <section className="glass-panel p-8 md:p-10">
+        <h3 className="text-lg font-semibold text-white">
+          Intéressé par un projet similaire ?
+        </h3>
+        <p className="mt-3 text-zinc-400">
+          Découvrez comment je peux vous aider à industrialiser vos pipelines data 
+          ou développer votre application IA en production.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-4">
+          <Link
+            href="/methode"
+            className="rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+          >
+            Découvrir ma méthode →
+          </Link>
+          <Link
+            href="/services"
+            className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-medium text-white transition hover:bg-emerald-600"
+          >
+            Voir mes services
+          </Link>
+          <Link
+            href="/contact"
+            className="rounded-full border border-emerald-500/50 bg-emerald-500/10 px-6 py-3 text-sm font-medium text-emerald-300 transition hover:bg-emerald-500/20"
+          >
+            Me contacter
+          </Link>
+        </div>
+      </section>
+
       {/* Navigation */}
       <div className="flex justify-between text-sm">
         <Link
@@ -346,10 +409,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ← Tous les projets
         </Link>
         <Link
-          href="/contact"
-          className="text-emerald-300 transition hover:text-white"
+          href="/blog"
+          className="text-zinc-400 transition hover:text-white"
         >
-          Discuter d&apos;un projet similaire →
+          Lire les articles tech →
         </Link>
       </div>
     </PageContainer>

@@ -128,18 +128,53 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="glass-panel p-8 text-center">
-        <h2 className="text-2xl font-bold text-white mb-3">Besoin d'aide sur vos pipelines ?</h2>
-        <p className="text-zinc-400 mb-6">
-          J'accompagne les équipes techniques dans l'industrialisation de leurs pipelines data et IA.
+      {/* Maillage interne - CTA contextuels */}
+      <section className="glass-panel p-8 md:p-10">
+        <h2 className="text-2xl font-bold text-white mb-3 text-center">
+          Besoin d'aide sur {post.category === 'spark' ? 'Spark' : post.category === 'airflow' ? 'Airflow' : 'vos pipelines'} ?
+        </h2>
+        <p className="text-zinc-400 mb-6 text-center max-w-2xl mx-auto">
+          J'accompagne les équipes techniques dans l'industrialisation de leurs pipelines data et IA. 
+          Découvrez mes services ou consultez mes réalisations concrètes.
         </p>
-        <Link
-          href="/contact"
-          className="inline-block rounded-full bg-white px-8 py-3 font-medium text-black hover:bg-zinc-200 transition"
-        >
-          Discuter de votre projet
-        </Link>
+        
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link
+            href="/services"
+            className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-medium text-white transition hover:bg-emerald-600"
+          >
+            Voir mes services
+          </Link>
+          <Link
+            href="/projets"
+            className="rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+          >
+            Mes réalisations
+          </Link>
+          <Link
+            href="/methode"
+            className="rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+          >
+            Ma méthode
+          </Link>
+          <Link
+            href="/contact"
+            className="rounded-full border border-emerald-500/50 bg-emerald-500/10 px-6 py-3 text-sm font-medium text-emerald-300 transition hover:bg-emerald-500/20"
+          >
+            Me contacter
+          </Link>
+        </div>
+
+        {/* Lien vers autres articles */}
+        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          <p className="text-sm text-zinc-500 mb-3">Continuer la lecture</p>
+          <Link
+            href="/blog"
+            className="text-sm text-emerald-400 hover:underline"
+          >
+            Tous les articles Data Engineering & IA →
+          </Link>
+        </div>
       </section>
 
       {/* Schema.org Article */}
@@ -168,6 +203,37 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             },
             "keywords": post.tags.join(", "),
             "articleSection": post.category,
+          })
+        }}
+      />
+
+      {/* Schema.org Breadcrumb */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Accueil",
+                "item": "https://kenshu.dev"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://kenshu.dev/blog"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": post.title,
+                "item": `https://kenshu.dev/blog/${post.slug}`
+              }
+            ]
           })
         }}
       />
