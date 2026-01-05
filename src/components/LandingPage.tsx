@@ -121,16 +121,6 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Badge AI Compliance - Discret mais stratégique */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="mt-4 inline-block rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 px-6 py-2 text-sm font-medium text-amber-300 backdrop-blur-sm"
-          >
-            🔒 AI Compliance & Audit (AI Act, RGPD)
-          </motion.div>
-
           {/* Badge Disponibilité Freelance */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -154,7 +144,7 @@ export default function LandingPage() {
                   text: 'Disponible bientôt',
                   icon: '🟡',
                   className: 'border-orange-500/50 bg-orange-500/10 text-orange-300',
-                  dotClassName: 'bg-orange-500',
+                  dotClassName: 'bg-orange-500 animate-pulse',
                 },
                 unavailable: {
                   text: 'Non disponible',
@@ -193,29 +183,11 @@ export default function LandingPage() {
             Pipelines fiables, souverains et à coûts maîtrisés — de l&apos;ETL aux applications IA en production
           </motion.p>
 
-          {/* Badges métriques */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-            className="mt-6 flex flex-wrap justify-center gap-3"
-          >
-            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
-              -75% coûts infra
-            </span>
-            <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-300">
-              100% automatisation
-            </span>
-            <span className="rounded-full border border-purple-500/40 bg-purple-500/10 px-4 py-1.5 text-sm font-medium text-purple-300">
-              99.9% uptime
-            </span>
-          </motion.div>
-
           {/* Tags orientés valeur (pas technos) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.35 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
             className="mt-8 flex flex-wrap justify-center gap-3 text-[11px] uppercase tracking-[0.15em]"
           >
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
@@ -261,6 +233,16 @@ export default function LandingPage() {
           >
             France • Remote • Europe
           </motion.p>
+
+          {/* Badge AI Compliance - Discret, placé après les CTAs */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.8 }}
+            className="mt-6 inline-block rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 px-5 py-2 text-xs font-medium text-amber-300/80 backdrop-blur-sm"
+          >
+            🔒 AI Compliance & Audit (AI Act, RGPD)
+          </motion.div>
 
           {/* Technologies & Outils */}
           <IconGrid />
