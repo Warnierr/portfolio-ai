@@ -1,0 +1,76 @@
+# AI.txt for kenshu.dev
+
+## About
+Name: Raouf Warnier
+Role: Data Engineer Freelance
+Specialties: Big Data, Apache Spark, Airflow, DevOps, AI Compliance
+Location: France (Remote & On-site)
+Experience: 7+ years in production environments
+
+## Expertise
+- Apache Spark (Scala, PySpark) — Expert level
+- Apache Airflow orchestration — Expert level
+- DevOps automation (Ansible, Docker, CI/CD)
+- Big Data pipelines (ETL/ELT)
+- AI Compliance & RGPD auditing
+- Python, Scala, SQL
+- PostgreSQL, MSSQL, MariaDB
+- Grafana, Prometheus observability
+- n8n, Make automation
+- RAG, LLM agents
+
+## Services
+
+### 1. Freelance missions (TJM: 450€)
+- Data Engineering & pipelines
+- Infrastructure DevOps
+- Big Data consulting
+- Migration ETL legacy to Spark/Airflow
+- Pipeline debugging and optimization
+
+### 2. Custom projects (from 2,000€)
+- Web applications (Next.js, React)
+- AI agents & chatbots
+- Process automation (n8n, Make, Zapier)
+- SaaS products development
+
+### 3. AI Compliance auditing
+- AI Act readiness assessment
+- RGPD compliance
+- Risk classification
+- Documentation & reporting
+
+## Recent Clients
+- BNP Paribas (Data Engineering, ETL migration, Sept-Dec 2025)
+- Orange (DevOps, Big Data infrastructure, Since Aug 2024)
+- Safran (IoT platform, databases, June 2023 - Aug 2024)
+- ACC Industrie 4.0 (Big Data pipelines, Sept 2022 - June 2023)
+
+## Key Projects
+- Budget AI: Financial assistant with AI predictions (Next.js 14, OpenRouter)
+- AI Compliance Audit Tool: Prototype for AI Act/RGPD compliance assessment
+- DataOps pipelines: Spark, Airflow, Hadoop implementations
+
+## Technologies Stack
+- Languages: Python, Scala, TypeScript, SQL, Shell
+- Big Data: Spark, Hadoop, Airflow, MinIO
+- Databases: PostgreSQL, MSSQL, MariaDB
+- DevOps: Ansible, Docker, Jenkins, GitLab CI, Proxmox
+- Observability: Grafana, Prometheus, Loki
+- AI/LLM: n8n, OpenRouter, RAG architectures
+- Web: Next.js, React, Tailwind, Prisma
+
+## Contact
+Email: rww.warnier@gmail.com
+Phone: +33 7 49 41 63 55
+Website: https://kenshu.dev
+LinkedIn: https://linkedin.com/in/raouf-warnier
+GitHub: https://github.com/warnierr
+
+## Availability
+Status: Available immediately
+Work modes: Remote (France/Europe), Hybrid, On-site (Paris region)
+Minimum mission: 3 months (renewable)
+
+## Updated
+Last updated: 2026-01-05
