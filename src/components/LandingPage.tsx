@@ -106,7 +106,7 @@ export default function LandingPage() {
             className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight"
           >
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              Ingénieur Produit Data
+              Data Engineering & Product Development
             </span>
           </motion.h1>
 
@@ -125,7 +125,7 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-2 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
-            Je conçois des systèmes data end-to-end — de l&apos;ingestion ETL
+            Conception de systèmes data end-to-end — de l&apos;ingestion ETL
             aux applications et plateformes SaaS en production.
           </motion.p>
 
@@ -332,66 +332,6 @@ export default function LandingPage() {
                 <p className="text-2xl font-bold text-purple-300">Production</p>
                 <p className="text-xs text-zinc-400 mt-1">Qualité industrielle</p>
               </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            TESTIMONIALS - Preuve sociale
-        ══════════════════════════════════════════════════════════════════ */}
-        <motion.section 
-          className="glass-panel p-8 md:p-10"
-          {...fadeUp}
-        >
-          <div className="text-center mb-8">
-            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">Témoignages</p>
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Ce qu&apos;ils disent</h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-2xl">
-                  🏢
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Tech Lead</p>
-                  <p className="text-xs text-zinc-500">Orange</p>
-                </div>
-              </div>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                &ldquo;Raouf a automatisé nos déploiements Big Data avec Ansible. Réduction du temps de 80% et zéro erreur depuis 6 mois.&rdquo;
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-2xl">
-                  🏦
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Data Manager</p>
-                  <p className="text-xs text-zinc-500">BNP Paribas</p>
-                </div>
-              </div>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                &ldquo;Migration de nos ETL legacy sans aucune régression. Rigoureux, documenté et livré dans les temps.&rdquo;
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/10 text-2xl">
-                  ✈️
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Product Owner</p>
-                  <p className="text-xs text-zinc-500">Safran</p>
-                </div>
-              </div>
-              <p className="text-sm text-zinc-300 leading-relaxed">
-                &ldquo;Excellent sur la partie IoT et monitoring. Tests complets et migration de données sans interruption.&rdquo;
-              </p>
             </div>
           </div>
         </motion.section>

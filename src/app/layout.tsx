@@ -32,16 +32,17 @@ const navItems: NavItem[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Raouf Warnier | Ingénieur Produit Data - Freelance",
+  title: "Raouf Warnier | Data Engineering & Product Development",
   description:
-    "Ingénieur Produit Data freelance. Je conçois des systèmes data end-to-end : pipelines ETL, plateformes analytics et applications SaaS. Disponible en France et remote.",
+    "Data Engineering & Product Development. Systèmes data end-to-end : pipelines ETL, plateformes analytics et applications SaaS. Disponible en France et remote.",
   metadataBase: new URL("https://kenshu-dev.vercel.app"),
   alternates: {
     canonical: "/",
   },
   keywords: [
-    "Ingénieur Produit Data",
-    "Data Product Engineer freelance",
+    "Data Engineering",
+    "Data Product Development",
+    "Data Engineer freelance",
     "Data Platform",
     "Data Pipelines",
     "ETL Spark Airflow",
@@ -50,11 +51,11 @@ export const metadata: Metadata = {
     "Raouf Warnier",
   ],
   openGraph: {
-    title: "Raouf Warnier | Ingénieur Produit Data - Freelance",
+    title: "Raouf Warnier | Data Engineering & Product Development",
     description:
-      "Ingénieur Produit Data freelance. Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
+      "Data Engineering & Product Development. Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
     url: "https://kenshu-dev.vercel.app",
-    siteName: "Raouf Warnier - Ingénieur Produit Data",
+    siteName: "Raouf Warnier - Data Engineering",
     locale: "fr_FR",
     type: "website",
     images: [
@@ -147,7 +148,7 @@ export default function RootLayout({
                   </Link>
                 ))}
               </div>
-              <p>© 2025 — Ingénieur Produit Data</p>
+              <p>© 2025 — Data Engineering & Product Development</p>
             </div>
           </div>
         </footer>
@@ -160,8 +161,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Raouf Warnier",
-              jobTitle: "Ingénieur Produit Data",
-              description: "Ingénieur Produit Data avec 3+ ans d'expérience. Spécialisé en Data Engineering, DevOps, et applications SaaS.",
+              jobTitle: "Data Engineer & Product Developer",
+              description: "Data Engineering & Product Development avec 3+ ans d'expérience. Spécialisé en pipelines data, plateformes analytics, DevOps et applications SaaS.",
               url: "https://kenshu-dev.vercel.app",
               email: "contact@kenshu-dev.vercel.app",
               telephone: "+33749416355",
