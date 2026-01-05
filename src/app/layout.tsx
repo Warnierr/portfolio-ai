@@ -118,7 +118,6 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-video-preview": -1,
-      "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
