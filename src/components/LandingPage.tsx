@@ -7,6 +7,7 @@ import PageContainer from "@/components/PageContainer";
 import StickyCTA from "@/components/StickyCtA";
 import { caseStudies } from "@/data/projects";
 import BackgroundDecoration from "@/components/BackgroundDecoration";
+import IconGrid from "@/components/IconGrid";
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -131,27 +132,44 @@ export default function LandingPage() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-8 max-w-3xl text-lg leading-relaxed text-zinc-300 sm:text-xl"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-6 text-xl text-zinc-200 sm:text-2xl font-medium"
           >
-            Des pipelines de données aux produits scalables.
+            Architecte DataOps & IA Industrialisée
           </motion.p>
-          
+
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-2 max-w-3xl text-base leading-relaxed text-zinc-400 sm:text-lg"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
-            Conception de systèmes data end-to-end — de l&apos;ingestion ETL
-            aux applications IA et plateformes SaaS en production.
+            Pipelines fiables, souverains et à coûts maîtrisés — de l&apos;ETL aux applications IA en production
           </motion.p>
+
+          {/* Badges métriques */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="mt-6 flex flex-wrap justify-center gap-3"
+          >
+            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
+              -75% coûts infra
+            </span>
+            <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-300">
+              100% automatisation
+            </span>
+            <span className="rounded-full border border-purple-500/40 bg-purple-500/10 px-4 py-1.5 text-sm font-medium text-purple-300">
+              99.9% uptime
+            </span>
+          </motion.div>
 
           {/* Tags orientés valeur (pas technos) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
             className="mt-8 flex flex-wrap justify-center gap-3 text-[11px] uppercase tracking-[0.15em]"
           >
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
@@ -197,6 +215,9 @@ export default function LandingPage() {
           >
             France • Remote • Europe
           </motion.p>
+
+          {/* Technologies & Outils */}
+          <IconGrid />
         </section>
 
         {/* ══════════════════════════════════════════════════════════════════

@@ -1,6 +1,17 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
+
+export const metadata: Metadata = {
+  title: "Services Data Engineering & IA | Kenshu",
+  description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS. TJM 450€.",
+  openGraph: {
+    title: "Services Data Engineering & IA | Kenshu",
+    description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",
+    url: "https://kenshu-dev.vercel.app/services",
+  },
+};
 
 const services = [
     {

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/private/", "/admin/"],
+            disallow: ["/api/", "/admin/", "/_next/", "/private/"],
         },
         sitemap: "https://kenshu-dev.vercel.app/sitemap.xml",
     };

@@ -1,11 +1,41 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import StickyCTA from "@/components/StickyCtA";
+import ProcessDiagram from "@/components/ProcessDiagram";
+
+export const metadata: Metadata = {
+  title: "Méthode DataOps & IA Industrialisée | Kenshu",
+  description: "Cycle d'intervention Kenshu : Audit → Sprint → Industrialisation. Pipelines souverains, -75% coûts, 100% automatisation.",
+  openGraph: {
+    title: "Méthode DataOps & IA Industrialisée | Kenshu",
+    description: "Cycle d'intervention Kenshu : Audit → Sprint → Industrialisation. Pipelines souverains, -75% coûts, 100% automatisation.",
+    url: "https://kenshu-dev.vercel.app/methode",
+  },
+};
 
 const metrics = [
   { value: "100%", label: "automatisation flux", context: "Pipelines DataOps" },
   { value: "450 €", label: "TJM Freelance", context: "Expertise Senior" },
   { value: "-75%", label: "coûts infra", context: "vs solutions Cloud" },
+];
+
+const personas = [
+  {
+    icon: "🏢",
+    title: "CTOs & Lead Data Engineers",
+    description: "Équipes 5-50 personnes nécessitant industrialisation et scalabilité",
+  },
+  {
+    icon: "🚀",
+    title: "Startups tech & Scale-ups",
+    description: "Product-driven avec données critiques et croissance rapide",
+  },
+  {
+    icon: "🏦",
+    title: "DSI grands comptes",
+    description: "Environnements réglementés : Banque, Telecom, Industrie",
+  },
 ];
 
 export default function MethodePage() {
@@ -20,11 +50,14 @@ export default function MethodePage() {
           <h1 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
             L&apos;Approche DataOps & IA Industrialisée
           </h1>
+          <p className="mt-4 text-lg text-emerald-300 font-medium">
+            Industrialisation DataOps & IA pour la scalabilité, la fiabilité et la souveraineté.
+          </p>
           <p className="mt-6 max-w-2xl text-zinc-300">
-            J&apos;accompagne les entreprises dans la transition d&apos;un artisanat de la donnée vers une véritable usine logicielle. Mon focus : la fiabilité, la scalabilité et la souveraineté.
+            Kenshu accompagne les équipes techniques dans la transformation de flux data instables en pipelines automatisés, industrialisés et souverains — prêts pour l&apos;IA et les usages critiques.
           </p>
 
-          <div className="mt-8 grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {metrics.map((item) => (
               <div
                 key={item.label}
@@ -38,30 +71,64 @@ export default function MethodePage() {
           </div>
         </section>
 
+        {/* Pour qui ? */}
+        <section className="glass-panel p-8 md:p-10">
+          <h2 className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+            Pour qui ?
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {personas.map((persona, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-white/10 bg-white/5 p-6 text-center"
+              >
+                <div className="text-4xl mb-3">{persona.icon}</div>
+                <h3 className="font-medium text-white mb-2">{persona.title}</h3>
+                <p className="text-sm text-zinc-400">{persona.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Pourquoi DataOps */}
         <section className="glass-panel p-8 md:p-10">
           <h2 className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-            Pourquoi le DataOps ?
+            Problèmes typiques rencontrés
           </h2>
-          <ul className="mt-6 space-y-3">
+          <div className="mt-6 space-y-4">
             {[
-              "Marre des pipelines qui cassent sans prévenir",
-              "Besoin d'industrialiser les agents IA (LLM) en production",
-              "Volonté de réduire les factures cloud (AWS/GCP/Azure)",
-              "Nécessité de garantir la souveraineté des données métier",
+              {
+                problem: "Pipelines qui cassent sans prévenir",
+                metric: "40% du temps data engineer perdu en debug",
+              },
+              {
+                problem: "Agents LLM en production",
+                metric: "80% échouent sans DataOps structuré",
+              },
+              {
+                problem: "Factures cloud incontrôlées",
+                metric: "Réduction possible de 60-75% avec souveraineté",
+              },
+              {
+                problem: "Souveraineté des données métier",
+                metric: "Conformité RGPD et sécurité renforcée",
+              },
             ].map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-zinc-300">
-                <span className="mt-1 text-emerald-400">•</span>
-                {item}
-              </li>
+              <div key={i} className="flex items-start gap-3 text-zinc-300 rounded-xl border border-white/10 bg-white/5 p-4">
+                <span className="mt-1 text-emerald-400 text-xl">→</span>
+                <div className="flex-1">
+                  <p className="font-medium text-white">{item.problem}</p>
+                  <p className="text-sm text-emerald-300 mt-1">{item.metric}</p>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
 
-        {/* Mes Services */}
+        {/* Services Kenshu */}
         <section className="glass-panel p-8 md:p-10">
           <h2 className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-            Mes Services
+            Services Kenshu
           </h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
@@ -98,57 +165,12 @@ export default function MethodePage() {
           </div>
         </section>
 
-        {/* Process */}
+        {/* Process - Visualisation avec diagramme */}
         <section className="glass-panel p-8 md:p-10">
           <h2 className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-            Cycle d'Intervention
+            Cycle d'Intervention Kenshu
           </h2>
-          <div className="mt-6 space-y-4">
-            {[
-              {
-                step: "1",
-                title: "Audit & Stratégie",
-                duration: "1-2 jours",
-                description: "Analyse de l'existant et définition de la stack cible.",
-                deliverable: "Roadmap technique détaillée",
-              },
-              {
-                step: "2",
-                title: "Sprint Implementation",
-                duration: "1-4 semaines",
-                description: "Développement itératif des pipelines ou de l'application.",
-                deliverable: "Code source & Tests automatisés",
-              },
-              {
-                step: "3",
-                title: "Industrialisation",
-                duration: "1 semaine",
-                description: "Mise en place du CI/CD et du monitoring (Grafana/Alerting).",
-                deliverable: "Infrastructure stable à 99.9%",
-              },
-            ].map((item) => (
-              <div
-                key={item.step}
-                className="flex gap-5 rounded-xl border border-white/10 bg-white/5 p-5"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 font-semibold text-emerald-300">
-                  {item.step}
-                </div>
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-medium text-white">{item.title}</h3>
-                    <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs text-zinc-400">
-                      {item.duration}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
-                  <p className="mt-1 text-xs text-zinc-500">
-                    Livrable : {item.deliverable}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProcessDiagram />
         </section>
 
         {/* Tarifs */}
@@ -174,24 +196,30 @@ export default function MethodePage() {
             </div>
           </div>
           <p className="mt-6 text-sm text-center text-zinc-500 italic">
-            Mes tarifs sont transparents : pas de coûts cachés, pas de maintenance forcée.
+            Tarifs transparents : pas de coûts cachés, pas de maintenance forcée.
           </p>
         </section>
 
         {/* CTA */}
         <section className="glass-panel p-8 text-center md:p-10">
           <h2 className="text-2xl font-semibold text-white">
-            Besoin d'un architecte ?
+            Besoin d'un architecte data ?
           </h2>
           <p className="mt-2 text-zinc-400">
-            Parlons de vos flux de données et de vos besoins d'automatisation.
+            Discutons de vos flux de données et de vos besoins d'automatisation.
           </p>
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/contact"
               className="rounded-full bg-white px-8 py-3 font-medium text-black transition hover:bg-zinc-100"
             >
-              Lancer le diagnostic
+              Planifier un diagnostic gratuit (30 min)
+            </Link>
+            <Link
+              href="/projets"
+              className="rounded-full border border-white/20 bg-white/5 px-8 py-3 font-medium text-white transition hover:bg-white/10"
+            >
+              Voir un exemple de roadmap
             </Link>
           </div>
         </section>

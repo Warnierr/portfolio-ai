@@ -74,6 +74,16 @@ export const metadata: Metadata = {
     "Freelance Data Engineering remote",
     "TJM Data Engineer 450",
     
+    // Mots-clés 2026
+    "industrialisation IA souveraineté",
+    "pipeline data on-premise france",
+    "freelance dataops remote europe",
+    "chatbot RAG LLM production",
+    "optimisation coûts cloud aws azure",
+    "n8n automation expert",
+    "Modern Data Stack consultant",
+    "Data Mesh architecture",
+    
     // Nom
     "Raouf Warnier",
   ],
@@ -106,12 +116,16 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-image-preview": "large",
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
 };
+
+// Objectifs Core Web Vitals 2026: LCP <2.5s, FID <100ms, CLS <0.1
+// Monitoring: @vercel/speed-insights + @vercel/analytics
 
 export default function RootLayout({
   children,
@@ -322,6 +336,117 @@ export default function RootLayout({
                   }
                 ]
               }
+            })
+          }}
+        />
+        
+        {/* Schema.org JSON-LD Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Kenshu Dev",
+              url: "https://kenshu-dev.vercel.app",
+              logo: "https://kenshu-dev.vercel.app/og-image.png",
+              sameAs: [
+                "https://www.linkedin.com/in/raouf-warnier",
+                "https://github.com/raouf-warnier"
+              ],
+              founder: {
+                "@type": "Person",
+                name: "Raouf Warnier"
+              },
+              description: "Expertise Data Engineering, AI Product Building et DevOps pour entreprises tech et grands comptes"
+            })
+          }}
+        />
+        
+        {/* Schema.org JSON-LD FAQPage */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Quel est le TJM d'un Data Engineer freelance en 2026 ?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "450€ pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie)."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: "Comment réduire les coûts cloud de 75% ?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Via souveraineté on-premise avec des outils comme n8n, Python, Airflow et une infrastructure optimisée. L'industrialisation DataOps permet de maîtriser les coûts tout en garantissant fiabilité et scalabilité."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: "Qu'est-ce que l'industrialisation DataOps ?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "L'industrialisation DataOps transforme des flux de données instables en pipelines automatisés, fiables et scalables. Cela inclut l'automatisation à 100%, le monitoring, l'alerting et la garantie de qualité des données."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  name: "Comment industrialiser un agent LLM en production ?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Via une architecture RAG structurée, des pipelines DataOps robustes, du monitoring temps réel et une infrastructure souveraine. 80% des agents LLM échouent sans approche DataOps structurée."
+                  }
+                }
+              ]
+            })
+          }}
+        />
+        
+        {/* Schema.org JSON-LD BreadcrumbList */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Accueil",
+                  item: "https://kenshu-dev.vercel.app"
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Méthode",
+                  item: "https://kenshu-dev.vercel.app/methode"
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "Projets",
+                  item: "https://kenshu-dev.vercel.app/projets"
+                },
+                {
+                  "@type": "ListItem",
+                  position: 4,
+                  name: "Services",
+                  item: "https://kenshu-dev.vercel.app/services"
+                },
+                {
+                  "@type": "ListItem",
+                  position: 5,
+                  name: "Contact",
+                  item: "https://kenshu-dev.vercel.app/contact"
+                }
+              ]
             })
           }}
         />
