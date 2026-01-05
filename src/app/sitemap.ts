@@ -1,11 +1,12 @@
 import { MetadataRoute } from "next";
 
-// Version 2.0 - Domaine kenshu.dev + AI Compliance
+// Version 3.0 - Pages long-tail SEO + /a-propos
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
 
     return [
+        // Core pages (priority élevée)
         {
             url: baseUrl,
             lastModified: now,
@@ -13,16 +14,44 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1.0,
         },
         {
-            url: `${baseUrl}/methode`,
+            url: `${baseUrl}/a-propos`,
             lastModified: now,
             changeFrequency: "monthly",
             priority: 0.95,
         },
         {
+            url: `${baseUrl}/methode`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.95,
+        },
+        
+        // Pages SEO long-tail (forte priorité conversion)
+        {
+            url: `${baseUrl}/freelance-data-engineer-spark-airflow`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/dataops-observabilite-pipelines`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/audit-conformite-ai-act-rgpd`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.9,
+        },
+        
+        // Services & Projets
+        {
             url: `${baseUrl}/projets`,
             lastModified: now,
             changeFrequency: "weekly",
-            priority: 0.9,
+            priority: 0.85,
         },
         {
             url: `${baseUrl}/services`,
@@ -36,12 +65,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.8,
         },
-        {
-            url: `${baseUrl}/audit`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.7,
-        },
+        
+        // Pages secondaires
         {
             url: `${baseUrl}/agent`,
             lastModified: now,
