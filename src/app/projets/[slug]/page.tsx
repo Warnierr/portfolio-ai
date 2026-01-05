@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import PageContainer from "@/components/PageContainer";
 import { caseStudies } from "@/data/projects";
@@ -10,6 +11,32 @@ type ProjectPageProps = {
 
 export async function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
+}
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = caseStudies.find((item) => item.slug === slug);
+
+  if (!project) {
+    return {
+      title: "Projet non trouvé | Kenshu",
+    };
+  }
+
+  return {
+    title: `${project.title} | Kenshu`,
+    description: project.tldr,
+    alternates: {
+      canonical: `/projets/${slug}`,
+    },
+    openGraph: {
+      title: `${project.title} | Kenshu`,
+      description: project.tldr,
+      url: `https://kenshu.dev/projets/${slug}`,
+      type: "article",
+      publishedTime: `${project.context.year}-01-01`,
+    },
+  };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -26,10 +53,47 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     experimentation: "Expérimentation",
   };
 
+  // Schema.org JSON-LD pour référencement optimisé
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": project.title,
+    "description": project.tldr,
+    "applicationCategory": project.type === "produit" ? "ProductivityApplication" : "BusinessApplication",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "Raouf Warnier",
+      "url": "https://kenshu.dev",
+      "jobTitle": "Data Engineer, AI Product Builder, DevOps Specialist",
+    },
+    "datePublished": `${project.context.year}-01-01`,
+    "offers": project.type === "produit" ? {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+    } : undefined,
+    "programmingLanguage": project.stack.filter(tech => 
+      ["Python", "TypeScript", "JavaScript", "Scala", "SQL"].includes(tech)
+    ),
+    "softwareRequirements": project.stack.join(", "),
+    "keywords": [
+      ...project.stack,
+      project.type === "mission" ? "consulting" : project.type,
+      project.context.client,
+    ].join(", "),
+  };
+
   return (
-    <PageContainer className="gap-8">
-      {/* TL;DR + Contexte */}
-      <section className="glass-panel p-8 md:p-10">
+    <>
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+
+      <PageContainer className="gap-8">
+        {/* TL;DR + Contexte */}
+        <section className="glass-panel p-8 md:p-10">
         <div className="mb-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em]">
           <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-emerald-300">
             {typeLabels[project.type]}
@@ -289,5 +353,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
       </div>
     </PageContainer>
+    </>
   );
 }
