@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageContainer from "@/components/PageContainer";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const suggestions = [
   "Quelles sont tes compétences en Big Data ?",
@@ -17,6 +19,27 @@ const skills = [
   { label: "DevOps & CI/CD", icon: "🔧" },
   { label: "Big Data", icon: "💾" },
   { label: "Cloud & Infra", icon: "☁️" },
+];
+
+const models = [
+  { 
+    id: "anthropic/claude-3.5-haiku", 
+    name: "Claude Haiku", 
+    description: "Rapide et efficace", 
+    icon: "⚡" 
+  },
+  { 
+    id: "anthropic/claude-3.5-sonnet", 
+    name: "Claude Sonnet", 
+    description: "Équilibré et précis", 
+    icon: "✨" 
+  },
+  { 
+    id: "openai/gpt-4o", 
+    name: "GPT-4o", 
+    description: "Puissant et créatif", 
+    icon: "🧠" 
+  },
 ];
 
 type Message = {
@@ -43,6 +66,8 @@ export default function AgentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [remaining, setRemaining] = useState(MAX_REQUESTS);
   const [limitReached, setLimitReached] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(models[0].id);
+  const [showModelSelector, setShowModelSelector] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Lire le cookie au chargement pour restaurer le compteur
@@ -69,6 +94,12 @@ export default function AgentPage() {
     }
   };
 
+  const handleNewConversation = () => {
+    setMessages([]);
+    setInput("");
+    setIsLoading(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading || limitReached) return;
@@ -83,7 +114,7 @@ export default function AgentPage() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: newMessages, model: selectedModel }),
       });
 
       // Récupérer le nombre restant depuis les headers
@@ -151,6 +182,8 @@ export default function AgentPage() {
     }
   };
 
+  const currentModel = models.find(m => m.id === selectedModel) || models[0];
+
   return (
     <PageContainer className="gap-6">
       {/* Header */}
@@ -209,10 +242,66 @@ export default function AgentPage() {
       </section>
 
       {/* Chat */}
-      <section className="glass-panel flex min-h-[400px] flex-col p-0">
+      <section className="glass-panel flex min-h-[500px] flex-col p-0">
+        {/* Header avec contrôles */}
+        <div className="border-b border-white/10 p-4 flex items-center justify-between">
+          <div className="relative">
+            <button
+              onClick={() => setShowModelSelector(!showModelSelector)}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10"
+            >
+              <span>{currentModel.icon}</span>
+              <span className="font-medium text-white">{currentModel.name}</span>
+              <span className="text-xs text-zinc-500">•</span>
+              <span className="text-xs">{currentModel.description}</span>
+              <span className="text-zinc-500">▼</span>
+            </button>
+            
+            {showModelSelector && (
+              <div className="absolute top-full left-0 mt-2 z-10 min-w-[280px] rounded-xl border border-white/10 bg-zinc-900/95 backdrop-blur-xl shadow-xl">
+                {models.map((model) => (
+                  <button
+                    key={model.id}
+                    onClick={() => {
+                      setSelectedModel(model.id);
+                      setShowModelSelector(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition first:rounded-t-xl last:rounded-b-xl ${
+                      selectedModel === model.id
+                        ? 'bg-emerald-500/10 border-l-2 border-l-emerald-500'
+                        : 'hover:bg-white/5'
+                    }`}
+                  >
+                    <span className="text-xl">{model.icon}</span>
+                    <div className="flex-1">
+                      <p className={`text-sm font-medium ${selectedModel === model.id ? 'text-emerald-300' : 'text-white'}`}>
+                        {model.name}
+                      </p>
+                      <p className="text-xs text-zinc-400">{model.description}</p>
+                    </div>
+                    {selectedModel === model.id && (
+                      <span className="text-emerald-400">✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {messages.length > 0 && (
+            <button
+              onClick={handleNewConversation}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white"
+            >
+              <span>🔄</span>
+              <span>Nouvelle conversation</span>
+            </button>
+          )}
+        </div>
+
         {/* Loading bar */}
         {isLoading && (
-          <div className="h-1 w-full overflow-hidden rounded-t-2xl bg-white/10">
+          <div className="h-1 w-full overflow-hidden bg-white/5">
             <div
               className="h-full bg-gradient-to-r from-emerald-400 to-blue-500"
               style={{
@@ -251,26 +340,44 @@ export default function AgentPage() {
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {messages.map((msg, i) => (
                 <div
                   key={i}
                   className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
+                  {msg.role === "assistant" && (
+                    <div className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-sm">
+                      🤖
+                    </div>
+                  )}
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${msg.role === "user"
-                      ? "bg-emerald-500/20 text-white"
-                      : "border border-white/10 bg-white/5 text-zinc-300"
+                    className={`max-w-[85%] rounded-2xl px-5 py-4 ${msg.role === "user"
+                      ? "bg-emerald-500/20 text-white border border-emerald-500/30"
+                      : "border border-white/10 bg-white/5"
                       }`}
                   >
-                    {msg.content || (
+                    {msg.role === "user" ? (
+                      <p className="text-white">{msg.content}</p>
+                    ) : msg.content ? (
+                      <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white prose-headings:font-semibold prose-h1:text-xl prose-h2:text-lg prose-h3:text-base prose-p:text-zinc-300 prose-p:leading-relaxed prose-strong:text-white prose-strong:font-semibold prose-ul:text-zinc-300 prose-ol:text-zinc-300 prose-li:my-1 prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-white/10 prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
                       <span className="inline-flex gap-1">
-                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" />
-                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" style={{ animationDelay: "0.1s" }} />
-                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-500" style={{ animationDelay: "0.2s" }} />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.1s" }} />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.2s" }} />
                       </span>
                     )}
                   </div>
+                  {msg.role === "user" && (
+                    <div className="ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-400/10 text-sm">
+                      👤
+                    </div>
+                  )}
                 </div>
               ))}
               <div ref={messagesEndRef} />
@@ -326,18 +433,18 @@ export default function AgentPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={limitReached ? "Limite atteinte — Contactez-moi directement" : "Décrivez votre projet ou posez une question..."}
-              className={`flex-1 rounded-full border bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none ${limitReached
+              className={`flex-1 rounded-full border bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none transition ${limitReached
                 ? 'border-orange-500/30 cursor-not-allowed opacity-50'
-                : 'border-white/10 focus:border-emerald-400/50'
+                : 'border-white/10 focus:border-emerald-400/50 focus:bg-white/10'
                 }`}
               disabled={isLoading || limitReached}
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim() || limitReached}
-              className="rounded-full border border-emerald-400 bg-emerald-400/10 px-6 py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50"
+              className="rounded-full border border-emerald-400 bg-emerald-400/10 px-6 py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Envoyer
+              {isLoading ? "..." : "Envoyer"}
             </button>
           </div>
         </form>
@@ -345,7 +452,7 @@ export default function AgentPage() {
 
       {/* Footer */}
       <p className="text-center text-sm text-zinc-500">
-        Agent IA propulsé par Claude.{" "}
+        Agent IA propulsé par {currentModel.name}.{" "}
         <Link href="/contact" className="text-emerald-400 hover:underline">
           Contactez-moi directement
         </Link>{" "}
