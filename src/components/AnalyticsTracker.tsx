@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function AnalyticsTracker() {
     const pathname = usePathname();
@@ -28,5 +30,10 @@ export default function AnalyticsTracker() {
         track();
     }, [pathname]);
 
-    return null;
+    return (
+        <>
+            <Analytics />
+            <SpeedInsights />
+        </>
+    );
 }

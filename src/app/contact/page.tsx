@@ -47,14 +47,12 @@ export default function ContactPage() {
             30 minutes pour discuter de votre situation.
           </p>
           <a
-            href="https://calendly.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="tel:+33749416355"
             className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
           >
-            Choisir un créneau →
+            📞 +33 7 49 41 63 55
           </a>
-          <p className="mt-3 text-xs text-zinc-500">Via Calendly</p>
+          <p className="mt-3 text-xs text-zinc-500">Disponible 9h-18h</p>
         </div>
 
         <div className="glass-panel p-8">

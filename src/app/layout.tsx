@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import MobileMenu from "@/components/MobileMenu";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -100,22 +101,33 @@ export default function RootLayout({
             <Link href="/" className="font-semibold tracking-wide">
               Kenshu Dev
             </Link>
-            <nav className="flex items-center gap-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="hidden text-zinc-300 transition hover:text-white md:block relative"
+            <div className="flex items-center gap-4">
+              <nav className="hidden md:flex items-center gap-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-zinc-300 transition hover:text-white relative"
+                  >
+                    {item.label}
+                    {item.badge && (
+                      <span className="absolute -top-1 -right-2 text-[9px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full border border-emerald-500/30">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                ))}
+                <a
+                  href="/cv-raouf-warnier.pdf"
+                  download
+                  className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-emerald-300 transition hover:bg-emerald-500/20"
                 >
-                  {item.label}
-                  {item.badge && (
-                    <span className="absolute -top-1 -right-2 text-[9px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full border border-emerald-500/30">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              ))}
-            </nav>
+                  <span>📄</span>
+                  <span className="text-xs font-medium">CV</span>
+                </a>
+              </nav>
+              <MobileMenu navItems={navItems} />
+            </div>
           </div>
         </header>
 
@@ -139,6 +151,63 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        
+        {/* Schema.org JSON-LD pour SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Raouf Warnier",
+              jobTitle: "Ingénieur Produit Data",
+              description: "Ingénieur Produit Data avec 3+ ans d'expérience. Spécialisé en Data Engineering, DevOps, et applications SaaS.",
+              url: "https://kenshu-dev.vercel.app",
+              email: "contact@kenshu-dev.vercel.app",
+              telephone: "+33749416355",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "FR",
+                addressLocality: "France"
+              },
+              alumniOf: {
+                "@type": "Organization",
+                name: "ESIEE Paris",
+                sameAs: "https://www.esiee.fr"
+              },
+              knowsAbout: [
+                "Data Engineering",
+                "DevOps",
+                "Big Data",
+                "Apache Spark",
+                "Python",
+                "Scala",
+                "Jenkins",
+                "Airflow",
+                "Ansible",
+                "Cloud Computing"
+              ],
+              worksFor: [
+                {
+                  "@type": "Organization",
+                  name: "BNP Paribas"
+                },
+                {
+                  "@type": "Organization",
+                  name: "Orange"
+                },
+                {
+                  "@type": "Organization",
+                  name: "Safran"
+                }
+              ],
+              sameAs: [
+                "https://www.linkedin.com/in/raouf-warnier",
+                "https://github.com/raouf-warnier"
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );
