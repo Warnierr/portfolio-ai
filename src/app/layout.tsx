@@ -142,8 +142,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // ID Google Analytics 4 (remplace par ton vrai ID)
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX";
+  // ID Google Analytics 4
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-PM3SYTQ39Y";
 
   return (
     <html lang="fr">
