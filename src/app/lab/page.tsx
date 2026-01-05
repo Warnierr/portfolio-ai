@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
 import { labExperiments } from "@/data/lab";
+
+export const metadata: Metadata = {
+  title: "Laboratoire R&D | Kenshu",
+  description: "Expérimentations en R&D : agents IA, architectures hybrides, scripts d'automatisation. Sandbox connecté à NAS, Obsidian et cloud. Roadmap des prochaines sorties publiques.",
+  alternates: {
+    canonical: "/lab",
+  },
+};
 
 const roadmap = [
   { label: "Q1", items: ["Release agent d’autodoc", "Nouvelle version du chat RAG public"] },

@@ -97,6 +97,11 @@ export default function LandingPage() {
         <section className="relative flex min-h-[92vh] flex-col items-center justify-center px-4 pt-20 text-center sm:px-6">
           <BackgroundDecoration />
 
+          {/* H1 principal pour SEO (masqué visuellement) */}
+          <h1 className="sr-only">
+            Raouf Warnier — Data Engineer Freelance | Pipelines Big Data, IA & DevOps
+          </h1>
+
           {/* 3 Spécialités principales - Design premium avec hover effects */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -111,7 +116,7 @@ export default function LandingPage() {
               className="group relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/25"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h1 className="relative text-3xl font-bold tracking-tight text-emerald-300 sm:text-4xl lg:text-5xl">Data Engineering</h1>
+              <h2 className="relative text-3xl font-bold tracking-tight text-emerald-300 sm:text-4xl lg:text-5xl">Data Engineering</h2>
             </motion.div>
             
             <motion.div 
@@ -121,7 +126,7 @@ export default function LandingPage() {
               className="group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h1 className="relative text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl lg:text-5xl">AI Product Builder</h1>
+              <h2 className="relative text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl lg:text-5xl">AI Product Builder</h2>
             </motion.div>
             
             <motion.div 
@@ -131,7 +136,7 @@ export default function LandingPage() {
               className="group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h1 className="relative text-3xl font-bold tracking-tight text-purple-300 sm:text-4xl lg:text-5xl">DevOps Automation</h1>
+              <h2 className="relative text-3xl font-bold tracking-tight text-purple-300 sm:text-4xl lg:text-5xl">DevOps Automation</h2>
             </motion.div>
           </motion.div>
 

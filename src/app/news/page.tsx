@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { newsFeed as staticNews } from "@/data/news";
 import PageContainer from "@/components/PageContainer";
@@ -5,6 +6,14 @@ import SectionTitle from "@/components/SectionTitle";
 import NewsFeed from "@/components/NewsFeed";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Veille & Retours d'Expérience | Kenshu",
+  description: "Analyses techniques sur l'industrialisation IA, DataOps, automatisation n8n. Veille continue et réflexions pratiques générées avec agent IA. Actualités du secteur Data/IA.",
+  alternates: {
+    canonical: "/news",
+  },
+};
 
 export default async function NewsPage() {
   const dbNews = await prisma.news.findMany({

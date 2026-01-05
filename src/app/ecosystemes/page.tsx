@@ -1,6 +1,15 @@
+import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
 import { dnaHighlights, educationHighlights, experienceHighlights } from "@/data/highlights";
+
+export const metadata: Metadata = {
+  title: "Écosystèmes IA | Kenshu",
+  description: "Conception de systèmes IA complets : architecture Data/IA/Infra, agents autonomes, RAG, observabilité. Vision, architecture et automatisation pour écosystèmes cohérents.",
+  alternates: {
+    canonical: "/ecosystemes",
+  },
+};
 
 const timeline = [
   { year: "2015", label: "Dév & Produit", detail: "Applications web, UX, premières API." },

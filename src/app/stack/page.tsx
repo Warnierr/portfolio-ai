@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
+
+export const metadata: Metadata = {
+  title: "Stack Technique | Kenshu",
+  description: "Technologies et infrastructure maîtrisées : IA & Data (RAG, LLM), DevOps (Proxmox, CI/CD), Web (Next.js), systèmes internes. Exemples concrets de production.",
+  alternates: {
+    canonical: "/stack",
+  },
+};
 
 const stack = [
   {
