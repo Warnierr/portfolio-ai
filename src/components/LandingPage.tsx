@@ -150,6 +150,50 @@ export default function LandingPage() {
             🔒 AI Compliance & Audit (AI Act, RGPD)
           </motion.div>
 
+          {/* Badge Disponibilité Freelance */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mt-8 flex justify-center"
+          >
+            {/* Statut: 'available' (vert clignotant) | 'soon' (orange) | 'unavailable' (rouge) */}
+            {/* Changer la valeur ci-dessous pour modifier le statut */}
+            {(() => {
+              const status = 'soon'; // 'available' | 'soon' | 'unavailable'
+              
+              const statusConfig = {
+                available: {
+                  text: 'Disponible immédiatement',
+                  icon: '🟢',
+                  className: 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300',
+                  dotClassName: 'bg-emerald-500 animate-pulse',
+                },
+                soon: {
+                  text: 'Disponible bientôt',
+                  icon: '🟡',
+                  className: 'border-orange-500/50 bg-orange-500/10 text-orange-300',
+                  dotClassName: 'bg-orange-500',
+                },
+                unavailable: {
+                  text: 'Non disponible',
+                  icon: '🔴',
+                  className: 'border-red-500/50 bg-red-500/10 text-red-300',
+                  dotClassName: 'bg-red-500',
+                },
+              };
+              
+              const config = statusConfig[status];
+              
+              return (
+                <div className={`inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 backdrop-blur-sm ${config.className}`}>
+                  <span className={`h-2.5 w-2.5 rounded-full ${config.dotClassName}`} />
+                  <span className="text-sm font-semibold">{config.text}</span>
+                </div>
+              );
+            })()}
+          </motion.div>
+
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
