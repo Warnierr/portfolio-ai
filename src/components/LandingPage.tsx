@@ -103,48 +103,29 @@ export default function LandingPage() {
           </h1>
 
           {/* 3 Spécialités principales - Design premium avec hover effects */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="mb-10 flex flex-col items-center gap-5 sm:flex-row sm:gap-6"
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="group relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/25"
-            >
+          {/* Optimisation LCP : affichage instantané sans animation pour réduire LCP < 2.5s */}
+          <div className="mb-10 flex flex-col items-center gap-5 sm:flex-row sm:gap-6">
+            <div className="group relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-3xl font-bold tracking-tight text-emerald-300 sm:text-4xl lg:text-5xl">Data Engineering</h2>
-            </motion.div>
+            </div>
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25"
-            >
+            <div className="group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl lg:text-5xl">AI Product Builder</h2>
-            </motion.div>
+            </div>
             
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25"
-            >
+            <div className="group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-3xl font-bold tracking-tight text-purple-300 sm:text-4xl lg:text-5xl">DevOps Automation</h2>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Badge AI Compliance - Discret mais stratégique */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="mt-4 inline-block rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 px-6 py-2 text-sm font-medium text-amber-300 backdrop-blur-sm"
           >
             🔒 AI Compliance & Audit (AI Act, RGPD)
@@ -154,7 +135,7 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
             className="mt-8 flex justify-center"
           >
             {/* Statut: 'available' (vert clignotant) | 'soon' (orange) | 'unavailable' (rouge) */}
@@ -197,7 +178,7 @@ export default function LandingPage() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             className="mt-6 text-xl text-zinc-200 sm:text-2xl font-medium"
           >
             Architecte DataOps & IA Industrialisée
@@ -206,7 +187,7 @@ export default function LandingPage() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.3, delay: 0.25 }}
             className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             Pipelines fiables, souverains et à coûts maîtrisés — de l&apos;ETL aux applications IA en production
@@ -216,7 +197,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
             className="mt-6 flex flex-wrap justify-center gap-3"
           >
             <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
@@ -234,7 +215,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.3, delay: 0.35 }}
             className="mt-8 flex flex-wrap justify-center gap-3 text-[11px] uppercase tracking-[0.15em]"
           >
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
@@ -254,7 +235,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
           >
             <Link
