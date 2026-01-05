@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-// Version 3.0 - Pages long-tail SEO + /a-propos
+// Version 4.0 - Blog + articles SEO
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
@@ -96,6 +96,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: "daily",
             priority: 0.6,
+        },
+        
+        // Blog
+        {
+            url: `${baseUrl}/blog`,
+            lastModified: now,
+            changeFrequency: "weekly",
+            priority: 0.85,
+        },
+        {
+            url: `${baseUrl}/blog/5-erreurs-spark-production`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/blog/airflow-patterns-anti-fragiles`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.8,
         },
     ];
 }
