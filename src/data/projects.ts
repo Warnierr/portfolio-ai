@@ -117,6 +117,65 @@ export const caseStudies: CaseStudy[] = [
     links: [{ label: "🔴 Live Demo : Budget AI", href: "https://budget-ai-portfolio.vercel.app" }],
   },
   {
+    slug: "ai-compliance-audit-tool",
+    title: "AI Compliance Audit Tool — Conformité AI Act & RGPD",
+    type: "experimentation",
+    tldr: "Outil d'audit automatisé pour évaluer la conformité des systèmes d'IA selon le cadre européen AI Act et RGPD. Classification des risques, checklists réglementaires et rapports détaillés.",
+    context: {
+      client: "Projet R&D Personnel",
+      duration: "En développement (2025-2026)",
+      role: "Lead Engineer & Compliance Researcher",
+      year: 2025,
+    },
+    problem: {
+      situation: "Les entreprises européennes devront auditer leurs systèmes d'IA d'ici 2026-2027 selon l'AI Act. Pas d'outils techniques accessibles pour les équipes produit.",
+      stakes: "Créer un outil qui traduit les obligations légales en checklists techniques exploitables par les développeurs et product managers.",
+    },
+    constraints: [
+      "Interprétation correcte du cadre réglementaire AI Act",
+      "Interface simple pour non-juristes",
+      "Évolutivité (le texte évoluera)",
+    ],
+    decisions: [
+      {
+        choice: "Architecture modulaire par catégorie de risque",
+        why: "Le texte AI Act est structuré par niveaux de risque (inacceptable, élevé, limité, minimal). L'outil reflète cette logique.",
+      },
+      {
+        choice: "Checklist interactive avec export PDF/JSON",
+        why: "Les équipes ont besoin de rapports partageables avec direction et juristes.",
+      },
+      {
+        choice: "Base de connaissances intégrée (articles de loi)",
+        why: "Chaque question renvoie à l'article précis du règlement pour traçabilité.",
+      },
+    ],
+    delivered: [
+      "Interface de classification des systèmes IA",
+      "Checklist dynamique selon le niveau de risque détecté",
+      "Rapport d'audit exportable (PDF)",
+      "Base de connaissances AI Act intégrée",
+    ],
+    results: {
+      metrics: [
+        "Prototype fonctionnel v0.1",
+        "Couverture de 80% des obligations high-risk",
+      ],
+      qualitative: "Un outil early pour anticiper les besoins 2026-2027. Positionnement unique entre tech et réglementation.",
+    },
+    retrospective: [
+      "La complexité du texte AI Act nécessite une veille constante.",
+      "L'outil est un excellent différenciateur pour attirer des missions compliance.",
+    ],
+    stack: ["Next.js 15", "TypeScript", "Tailwind", "Prisma", "PostgreSQL", "PDF Generation"],
+    roadmap: [
+      "Intégration API pour audit automatisé de code/modèles",
+      "Module RGPD complémentaire",
+      "Multi-langue (EN/FR)",
+    ],
+    status: "prototype",
+  },
+  {
     slug: "data-engineer-bnpp",
     title: "Ingénieur Data / Big Data — BNP Paribas",
     type: "mission",

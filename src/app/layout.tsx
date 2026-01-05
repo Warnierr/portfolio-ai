@@ -34,7 +34,7 @@ const navItems: NavItem[] = [
 export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
-    "Expert Data Engineering, AI Product Builder & DevOps Automation. Pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement en France et remote.",
+    "Expert Data Engineering, AI Product Builder & DevOps. Pipelines Big Data, applications IA, audit AI Act & RGPD. TJM 450€. Disponible immédiatement en France et remote.",
   metadataBase: new URL("https://kenshu.dev"),
   alternates: {
     canonical: "/",
@@ -83,6 +83,15 @@ export const metadata: Metadata = {
     "n8n automation expert",
     "Modern Data Stack consultant",
     "Data Mesh architecture",
+    
+    // AI Act & Compliance 2026-2027
+    "ai act audit",
+    "conformité rgpd freelance",
+    "audit ia europe",
+    "ai compliance engineer",
+    "gpai obligations france",
+    "ai act readiness 2026",
+    "audit systèmes ia",
     
     // Nom
     "Raouf Warnier",
@@ -237,7 +246,8 @@ export default function RootLayout({
                 "ETL Development",
                 "Data Pipelines",
                 "Data Platforms",
-                "SaaS Development"
+                "SaaS Development",
+                "AI Compliance & RGPD Auditing"
               ],
               hasOccupation: {
                 "@type": "Occupation",
@@ -403,6 +413,31 @@ export default function RootLayout({
                   }
                 }
               ]
+            })
+          }}
+        />
+        
+        {/* Schema.org JSON-LD SoftwareApplication */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "AI Compliance Audit Tool",
+              applicationCategory: "BusinessApplication",
+              description: "Outil d'audit et de conformité pour systèmes d'IA selon AI Act EU et RGPD. Classification des risques, checklists réglementaires et rapports automatisés.",
+              operatingSystem: "Web",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "EUR"
+              },
+              author: {
+                "@type": "Person",
+                name: "Raouf Warnier",
+                url: "https://kenshu.dev"
+              }
             })
           }}
         />

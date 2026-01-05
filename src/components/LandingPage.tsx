@@ -57,6 +57,12 @@ const services = [
     result: "Solutions sur-mesure",
     icon: "🛠️",
   },
+  {
+    title: "AI Compliance & Audit",
+    description: "Audit de conformité AI Act et RGPD pour systèmes d'IA. Classification des risques, documentation réglementaire et outils d'évaluation automatisés.",
+    result: "Conformité 2026-ready",
+    icon: "🔒",
+  },
 ];
 
 // Produits SaaS / Experiments
@@ -129,10 +135,20 @@ export default function LandingPage() {
             </motion.div>
           </motion.div>
 
+          {/* Badge AI Compliance - Discret mais stratégique */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-4 inline-block rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 px-6 py-2 text-sm font-medium text-amber-300 backdrop-blur-sm"
+          >
+            🔒 AI Compliance & Audit (AI Act, RGPD)
+          </motion.div>
+
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-6 text-xl text-zinc-200 sm:text-2xl font-medium"
           >
             Architecte DataOps & IA Industrialisée
@@ -141,7 +157,7 @@ export default function LandingPage() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             Pipelines fiables, souverains et à coûts maîtrisés — de l&apos;ETL aux applications IA en production
@@ -151,7 +167,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
             className="mt-6 flex flex-wrap justify-center gap-3"
           >
             <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
@@ -169,7 +185,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-8 flex flex-wrap justify-center gap-3 text-[11px] uppercase tracking-[0.15em]"
           >
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-emerald-300">
@@ -189,7 +205,7 @@ export default function LandingPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
           >
             <Link

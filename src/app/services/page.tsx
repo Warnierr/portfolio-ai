@@ -6,6 +6,9 @@ import SectionTitle from "@/components/SectionTitle";
 export const metadata: Metadata = {
   title: "Services Data Engineering & IA | Kenshu",
   description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS. TJM 450€.",
+  alternates: {
+    canonical: "/services",
+  },
   openGraph: {
     title: "Services Data Engineering & IA | Kenshu",
     description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",

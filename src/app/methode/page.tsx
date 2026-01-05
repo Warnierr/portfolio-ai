@@ -7,6 +7,9 @@ import ProcessDiagram from "@/components/ProcessDiagram";
 export const metadata: Metadata = {
   title: "Méthode DataOps & IA Industrialisée | Kenshu",
   description: "Cycle d'intervention Kenshu : Audit → Sprint → Industrialisation. Pipelines souverains, -75% coûts, 100% automatisation.",
+  alternates: {
+    canonical: "/methode",
+  },
   openGraph: {
     title: "Méthode DataOps & IA Industrialisée | Kenshu",
     description: "Cycle d'intervention Kenshu : Audit → Sprint → Industrialisation. Pipelines souverains, -75% coûts, 100% automatisation.",

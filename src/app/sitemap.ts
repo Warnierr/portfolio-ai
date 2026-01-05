@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 
+// Version 2.0 - Domaine kenshu.dev + AI Compliance
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
@@ -15,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             url: `${baseUrl}/methode`,
             lastModified: now,
             changeFrequency: "monthly",
-            priority: 0.9,
+            priority: 0.95,
         },
         {
             url: `${baseUrl}/projets`,
@@ -34,6 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: "monthly",
             priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/audit`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.7,
         },
         {
             url: `${baseUrl}/agent`,
