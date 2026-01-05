@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
   { label: "Services", href: "/services" },
   { label: "Méthode", href: "/methode" },
-  { label: "Ask Raouf", href: "/agent", badge: "IA" },
+  { label: "Kenshu IA", href: "/agent" },
   { label: "Contact", href: "/contact" },
 ];
 
