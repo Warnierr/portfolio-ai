@@ -99,22 +99,31 @@ export default function LandingPage() {
             DISPONIBLE IMMÉDIATEMENT • FREELANCE & MISSIONS LONGUES
           </motion.div>
 
-          <motion.h1 
+          {/* 3 Spécialités principales */}
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight"
+            className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4"
           >
-            <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              Data Engineering & Product Development
-            </span>
-          </motion.h1>
+            <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 px-6 py-3 backdrop-blur-sm">
+              <h1 className="text-2xl font-bold text-emerald-400 sm:text-3xl">Data Engineering</h1>
+            </div>
+            
+            <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-500/5 px-6 py-3 backdrop-blur-sm">
+              <h1 className="text-2xl font-bold text-blue-400 sm:text-3xl">AI Product Builder</h1>
+            </div>
+            
+            <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-purple-500/5 px-6 py-3 backdrop-blur-sm">
+              <h1 className="text-2xl font-bold text-purple-400 sm:text-3xl">DevOps Automation</h1>
+            </div>
+          </motion.div>
 
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300 sm:text-xl"
+            className="mt-8 max-w-3xl text-lg leading-relaxed text-zinc-300 sm:text-xl"
           >
             Des pipelines de données aux produits scalables.
           </motion.p>
@@ -123,10 +132,10 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-2 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg"
+            className="mt-2 max-w-3xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             Conception de systèmes data end-to-end — de l&apos;ingestion ETL
-            aux applications et plateformes SaaS en production.
+            aux applications IA et plateformes SaaS en production.
           </motion.p>
 
           {/* Tags orientés valeur (pas technos) */}

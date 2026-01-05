@@ -32,30 +32,57 @@ const navItems: NavItem[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Raouf Warnier | Data Engineering & Product Development",
+  title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
-    "Data Engineering & Product Development. Systèmes data end-to-end : pipelines ETL, plateformes analytics et applications SaaS. Disponible en France et remote.",
+    "Expert Data Engineering, AI Product Builder & DevOps Automation. Pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement en France et remote.",
   metadataBase: new URL("https://kenshu-dev.vercel.app"),
   alternates: {
     canonical: "/",
   },
+  authors: [{ name: "Raouf Warnier", url: "https://kenshu-dev.vercel.app" }],
+  creator: "Raouf Warnier",
+  publisher: "Raouf Warnier",
   keywords: [
-    "Data Engineering",
-    "Data Product Development",
+    // Mots-clés primaires (high volume)
     "Data Engineer freelance",
-    "Data Platform",
-    "Data Pipelines",
-    "ETL Spark Airflow",
+    "Data Engineering France",
+    "Ingénieur Data freelance Paris",
+    
+    // Spécialités techniques
+    "Apache Spark développeur",
+    "Airflow ETL expert",
+    "Big Data consultant",
+    "DevOps Automation",
+    "Ansible expert",
+    
+    // Services & Solutions
+    "Pipeline Big Data",
+    "Plateforme Data Analytics",
+    "Application IA sur-mesure",
+    "Migration ETL",
+    "Automatisation Data",
+    
+    // AI & Product
+    "AI Product Builder",
+    "Développeur IA freelance",
     "SaaS Data Products",
-    "Freelance Data France",
+    "Chatbot IA entreprise",
+    
+    // Longue traîne SEO
+    "Data Engineer Spark Scala",
+    "Consultant Big Data BNP Paribas Orange Safran",
+    "Freelance Data Engineering remote",
+    "TJM Data Engineer 450",
+    
+    // Nom
     "Raouf Warnier",
   ],
   openGraph: {
-    title: "Raouf Warnier | Data Engineering & Product Development",
+    title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps",
     description:
-      "Data Engineering & Product Development. Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
+      "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement.",
     url: "https://kenshu-dev.vercel.app",
-    siteName: "Raouf Warnier - Data Engineering",
+    siteName: "Raouf Warnier - Data Engineering & AI",
     locale: "fr_FR",
     type: "website",
     images: [
@@ -153,7 +180,7 @@ export default function RootLayout({
           </div>
         </footer>
         
-        {/* Schema.org JSON-LD pour SEO */}
+        {/* Schema.org JSON-LD Person */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -161,11 +188,12 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Raouf Warnier",
-              jobTitle: "Data Engineer & Product Developer",
-              description: "Data Engineering & Product Development avec 3+ ans d'expérience. Spécialisé en pipelines data, plateformes analytics, DevOps et applications SaaS.",
+              jobTitle: "Data Engineer, AI Product Builder, DevOps Specialist",
+              description: "Expert Data Engineering, AI Product Builder & DevOps Automation avec 3+ ans d'expérience. Spécialisé en pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS et automatisation.",
               url: "https://kenshu-dev.vercel.app",
-              email: "contact@kenshu-dev.vercel.app",
+              email: "rww.warnier@gmail.com",
               telephone: "+33749416355",
+              image: "https://kenshu-dev.vercel.app/og-image.png",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "FR",
@@ -178,16 +206,40 @@ export default function RootLayout({
               },
               knowsAbout: [
                 "Data Engineering",
+                "Artificial Intelligence",
+                "Machine Learning",
                 "DevOps",
                 "Big Data",
                 "Apache Spark",
+                "Apache Airflow",
                 "Python",
                 "Scala",
                 "Jenkins",
-                "Airflow",
                 "Ansible",
-                "Cloud Computing"
+                "Docker",
+                "Kubernetes",
+                "PostgreSQL",
+                "MSSQL",
+                "Cloud Computing",
+                "ETL Development",
+                "Data Pipelines",
+                "Data Platforms",
+                "SaaS Development"
               ],
+              hasOccupation: {
+                "@type": "Occupation",
+                name: "Data Engineer",
+                occupationalCategory: "15-1254.00",
+                estimatedSalary: {
+                  "@type": "MonetaryAmount",
+                  currency: "EUR",
+                  value: {
+                    "@type": "QuantitativeValue",
+                    value: 450,
+                    unitText: "DAY"
+                  }
+                }
+              },
               worksFor: [
                 {
                   "@type": "Organization",
@@ -206,6 +258,70 @@ export default function RootLayout({
                 "https://www.linkedin.com/in/raouf-warnier",
                 "https://github.com/raouf-warnier"
               ]
+            })
+          }}
+        />
+        
+        {/* Schema.org JSON-LD ProfessionalService */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "Raouf Warnier - Data Engineering & AI Services",
+              description: "Services de Data Engineering, développement d'applications IA et automatisation DevOps. Pipelines Big Data, plateformes analytics, applications SaaS sur-mesure.",
+              url: "https://kenshu-dev.vercel.app",
+              telephone: "+33749416355",
+              email: "rww.warnier@gmail.com",
+              priceRange: "450€/jour",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "FR"
+              },
+              areaServed: {
+                "@type": "Country",
+                name: "France"
+              },
+              availableLanguage: ["French", "English"],
+              serviceType: [
+                "Data Engineering",
+                "AI Product Development",
+                "DevOps Automation",
+                "Big Data Consulting",
+                "ETL Development",
+                "Data Platform Architecture"
+              ],
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Services Data & IA",
+                itemListElement: [
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Data Engineering & Pipelines",
+                      description: "Conception et industrialisation de pipelines ETL/ELT, migration vers architectures modernes"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "AI Product Building",
+                      description: "Développement d'applications IA sur-mesure, chatbots, assistants intelligents"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "DevOps & Automation",
+                      description: "CI/CD, monitoring, automatisation des déploiements Big Data"
+                    }
+                  }
+                ]
+              }
             })
           }}
         />
