@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Services Data Engineering & IA | Kenshu",
     description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",
-    url: "https://kenshu-dev.vercel.app/services",
+    url: "https://kenshu.dev/services",
   },
 };
 

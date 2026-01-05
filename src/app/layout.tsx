@@ -35,11 +35,11 @@ export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
     "Expert Data Engineering, AI Product Builder & DevOps Automation. Pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement en France et remote.",
-  metadataBase: new URL("https://kenshu-dev.vercel.app"),
+  metadataBase: new URL("https://kenshu.dev"),
   alternates: {
     canonical: "/",
   },
-  authors: [{ name: "Raouf Warnier", url: "https://kenshu-dev.vercel.app" }],
+  authors: [{ name: "Raouf Warnier", url: "https://kenshu.dev" }],
   creator: "Raouf Warnier",
   publisher: "Raouf Warnier",
   keywords: [
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps",
     description:
       "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement.",
-    url: "https://kenshu-dev.vercel.app",
+    url: "https://kenshu.dev",
     siteName: "Raouf Warnier - Data Engineering & AI",
     locale: "fr_FR",
     type: "website",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Raouf Warnier | Ingénieur Produit Data",
     description: "Systèmes data end-to-end : pipelines, plateformes et applications SaaS.",
-    images: ["/og-image.png"],
+    images: ["https://kenshu.dev/og-image.png"],
   },
   robots: {
     index: true,
@@ -204,10 +204,10 @@ export default function RootLayout({
               name: "Raouf Warnier",
               jobTitle: "Data Engineer, AI Product Builder, DevOps Specialist",
               description: "Expert Data Engineering, AI Product Builder & DevOps Automation avec 3+ ans d'expérience. Spécialisé en pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS et automatisation.",
-              url: "https://kenshu-dev.vercel.app",
+              url: "https://kenshu.dev",
               email: "rww.warnier@gmail.com",
               telephone: "+33749416355",
-              image: "https://kenshu-dev.vercel.app/og-image.png",
+              image: "https://kenshu.dev/og-image.png",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "FR",
@@ -285,7 +285,7 @@ export default function RootLayout({
               "@type": "ProfessionalService",
               name: "Raouf Warnier - Data Engineering & AI Services",
               description: "Services de Data Engineering, développement d'applications IA et automatisation DevOps. Pipelines Big Data, plateformes analytics, applications SaaS sur-mesure.",
-              url: "https://kenshu-dev.vercel.app",
+              url: "https://kenshu.dev",
               telephone: "+33749416355",
               email: "rww.warnier@gmail.com",
               priceRange: "450€/jour",
@@ -348,8 +348,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Kenshu Dev",
-              url: "https://kenshu-dev.vercel.app",
-              logo: "https://kenshu-dev.vercel.app/og-image.png",
+              url: "https://kenshu.dev",
+              logo: "https://kenshu.dev/og-image.png",
               sameAs: [
                 "https://www.linkedin.com/in/raouf-warnier",
                 "https://github.com/raouf-warnier"
@@ -420,31 +420,31 @@ export default function RootLayout({
                   "@type": "ListItem",
                   position: 1,
                   name: "Accueil",
-                  item: "https://kenshu-dev.vercel.app"
+                  item: "https://kenshu.dev"
                 },
                 {
                   "@type": "ListItem",
                   position: 2,
                   name: "Méthode",
-                  item: "https://kenshu-dev.vercel.app/methode"
+                  item: "https://kenshu.dev/methode"
                 },
                 {
                   "@type": "ListItem",
                   position: 3,
                   name: "Projets",
-                  item: "https://kenshu-dev.vercel.app/projets"
+                  item: "https://kenshu.dev/projets"
                 },
                 {
                   "@type": "ListItem",
                   position: 4,
                   name: "Services",
-                  item: "https://kenshu-dev.vercel.app/services"
+                  item: "https://kenshu.dev/services"
                 },
                 {
                   "@type": "ListItem",
                   position: 5,
                   name: "Contact",
-                  item: "https://kenshu-dev.vercel.app/contact"
+                  item: "https://kenshu.dev/contact"
                 }
               ]
             })

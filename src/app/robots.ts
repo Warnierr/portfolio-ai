@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: "/",
             disallow: ["/api/", "/admin/", "/_next/", "/private/"],
         },
-        sitemap: "https://kenshu-dev.vercel.app/sitemap.xml",
+        sitemap: "https://kenshu.dev/sitemap.xml",
     };
 }

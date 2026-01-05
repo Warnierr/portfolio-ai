@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Méthode DataOps & IA Industrialisée | Kenshu",
     description: "Cycle d'intervention Kenshu : Audit → Sprint → Industrialisation. Pipelines souverains, -75% coûts, 100% automatisation.",
-    url: "https://kenshu-dev.vercel.app/methode",
+    url: "https://kenshu.dev/methode",
   },
 };
 
