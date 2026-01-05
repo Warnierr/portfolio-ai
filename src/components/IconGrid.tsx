@@ -47,7 +47,7 @@ export default function IconGrid() {
                 {tech.icon}
               </span>
             </div>
-            <span className={`mt-2 text-xs font-medium ${tech.color} opacity-0 transition-opacity group-hover:opacity-100`}>
+            <span className={`mt-2 text-xs font-medium ${tech.color} opacity-100 sm:opacity-0 transition-opacity sm:group-hover:opacity-100`}>
               {tech.name}
             </span>
           </motion.div>

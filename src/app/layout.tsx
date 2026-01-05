@@ -21,14 +21,15 @@ type NavItem = {
   label: string;
   href: string;
   badge?: string;
+  highlighted?: boolean;
 };
 
 const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
   { label: "Services", href: "/services" },
   { label: "Méthode", href: "/methode" },
-  { label: "Kenshu IA", href: "/agent" },
-  { label: "Contact", href: "/contact" },
+  { label: "🤖 Kenshu IA", href: "/agent" },
+  { label: "Contact", href: "/contact", highlighted: true },
 ];
 
 export const metadata: Metadata = {
@@ -157,7 +158,11 @@ export default function RootLayout({
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="text-zinc-300 transition hover:text-white relative"
+                    className={
+                      item.highlighted
+                        ? "rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-2 text-emerald-300 font-medium transition hover:bg-emerald-500/20 hover:border-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/20"
+                        : "text-zinc-300 transition hover:text-white relative"
+                    }
                   >
                     {item.label}
                     {item.badge && (
@@ -167,14 +172,6 @@ export default function RootLayout({
                     )}
                   </Link>
                 ))}
-                <a
-                  href="/cv-raouf-warnier.pdf"
-                  download
-                  className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-emerald-300 transition hover:bg-emerald-500/20"
-                >
-                  <span>📄</span>
-                  <span className="text-xs font-medium">CV</span>
-                </a>
               </nav>
               <MobileMenu navItems={navItems} />
             </div>

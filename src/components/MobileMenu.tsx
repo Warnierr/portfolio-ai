@@ -8,6 +8,7 @@ type NavItem = {
   label: string;
   href: string;
   badge?: string;
+  highlighted?: boolean;
 };
 
 type MobileMenuProps = {
@@ -66,27 +67,20 @@ export default function MobileMenu({ navItems }: MobileMenuProps) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="group flex items-center justify-between rounded-lg px-4 py-3 text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                    className={
+                      item.highlighted
+                        ? "flex items-center justify-center rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300 font-medium transition hover:bg-emerald-500/20 hover:border-emerald-500/60"
+                        : "group flex items-center justify-between rounded-lg px-4 py-3 text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                    }
                   >
                     <span>{item.label}</span>
-                    {item.badge && (
+                    {item.badge && !item.highlighted && (
                       <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-300">
                         {item.badge}
                       </span>
                     )}
                   </Link>
                 ))}
-
-                {/* CV Download */}
-                <a
-                  href="/cv-raouf-warnier.pdf"
-                  download
-                  onClick={() => setIsOpen(false)}
-                  className="mt-4 flex items-center justify-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-300 transition hover:bg-emerald-500/20"
-                >
-                  <span>📄</span>
-                  <span className="text-sm font-medium">Télécharger CV</span>
-                </a>
 
                 {/* Phone CTA */}
                 <a
