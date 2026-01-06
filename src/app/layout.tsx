@@ -230,7 +230,7 @@ export default function RootLayout({
               jobTitle: "Data Engineer, AI Product Builder, DevOps Specialist",
               description: "Expert Data Engineering, AI Product Builder & DevOps Automation avec 3+ ans d'expérience. Spécialisé en pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS et automatisation.",
               url: "https://kenshu.dev",
-              email: "rww.warnier@gmail.com",
+              email: "contact@kenshu.dev",
               telephone: "+33749416355",
               image: "https://kenshu.dev/og-image.png",
               address: {
