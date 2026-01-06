@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
+import ContentToggle from "@/components/ContentToggle";
 
 export const metadata: Metadata = {
   title: "Services Data Engineering & IA | Kenshu",
@@ -21,13 +22,23 @@ const services = [
         id: "freelance",
         title: "Missions Freelance",
         subtitle: "Data Engineering & DevOps",
-        description: "J'interviens en renfort d'équipes data sur des missions de 3 mois à 1 an. Pipelines Big Data, infrastructure DevOps, migrations de données.",
-        features: [
-            "Pipelines ETL/ELT (Spark, Airflow, dbt)",
-            "Infrastructure DevOps (Ansible, Docker, CI/CD)",
-            "Migrations de données (PostgreSQL, MSSQL)",
-            "Architecture Data Lake / Data Warehouse",
-        ],
+        businessContent: {
+            benefits: [
+                "Vos données deviennent fiables et exploitables en production",
+                "Réduction des coûts d'infrastructure jusqu'à 75%",
+                "Équipes renforcées sans recrutement long et coûteux",
+                "Transfert de compétences et autonomie progressive",
+            ],
+        },
+        technicalContent: {
+            description: "Intervention en renfort sur des missions de 3 mois à 1 an pour industrialiser vos pipelines data.",
+            features: [
+                "Pipelines ETL/ELT (Spark, Airflow, dbt)",
+                "Infrastructure DevOps (Ansible, Docker, CI/CD)",
+                "Migrations de données (PostgreSQL, MSSQL)",
+                "Architecture Data Lake / Data Warehouse",
+            ],
+        },
         pricing: "TJM 450€",
         cta: "Discuter d'une mission",
         color: "emerald",
@@ -36,13 +47,23 @@ const services = [
         id: "projets",
         title: "Projets Sur Mesure",
         subtitle: "Sites Web & Automatisation",
-        description: "Je développe des solutions clé en main pour les PME et entrepreneurs : sites vitrines, e-commerce, automatisation des processus métier.",
-        features: [
-            "Sites web modernes (Next.js, React)",
-            "E-commerce et paiements en ligne",
-            "Automatisation n8n / Make / Zapier",
-            "Chatbots et agents IA",
-        ],
+        businessContent: {
+            benefits: [
+                "Votre site ou app en ligne en 4 semaines maximum",
+                "Design moderne et professionnel qui inspire confiance",
+                "Paiements sécurisés et automatisation des tâches répétitives",
+                "Formation incluse : vous restez maître de votre outil",
+            ],
+        },
+        technicalContent: {
+            description: "Solutions clé en main pour PME et entrepreneurs : sites vitrines, e-commerce, automatisation.",
+            features: [
+                "Sites web modernes (Next.js, React, Tailwind)",
+                "E-commerce et paiements (Stripe, PayPal)",
+                "Automatisation (n8n, Make, Zapier)",
+                "Chatbots et agents IA conversationnels",
+            ],
+        },
         pricing: "À partir de 2 000€",
         cta: "Demander un devis",
         color: "blue",
@@ -51,13 +72,24 @@ const services = [
         id: "produits",
         title: "Produits IA",
         subtitle: "Solutions SaaS",
-        description: "Je développe des micro-SaaS pour résoudre des problèmes concrets. Applications complètes et scalables.",
-        features: [
-            "Budget AI — Assistant Financier Personnel",
-            "Invoice AI — Catégorisation de factures",
-            "Solutions sur-mesure pour startups",
-        ],
-        pricing: "En ligne",
+        businessContent: {
+            benefits: [
+                "Votre idée devient un produit fonctionnel et scalable",
+                "Hébergement géré : vous ne gérez pas l'infrastructure",
+                "Maintenance et évolutions comprises dans l'abonnement",
+                "Déploiement rapide et itérations basées sur vos retours",
+            ],
+        },
+        technicalContent: {
+            description: "Développement de micro-SaaS pour résoudre des problèmes concrets avec l'IA.",
+            features: [
+                "Architecture serverless (Next.js, Vercel)",
+                "APIs LLM (OpenRouter, OpenAI, Anthropic)",
+                "Base de données managée (PostgreSQL, Prisma)",
+                "CI/CD automatisé et monitoring intégré",
+            ],
+        },
+        pricing: "Sur devis",
         cta: "Voir les produits",
         color: "purple",
     },
@@ -105,16 +137,33 @@ export default function ServicesPage() {
                             <h2 className="mt-1 text-xl font-bold text-white">{service.title}</h2>
                         </div>
 
-                        <p className="text-sm text-zinc-400 mb-4">{service.description}</p>
-
-                        <ul className="space-y-2 mb-6 flex-1">
-                            {service.features.map((feature) => (
-                                <li key={feature} className="flex items-start gap-2 text-sm text-zinc-300">
-                                    <span className="text-emerald-400 mt-0.5">✓</span>
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="flex-1">
+                            <ContentToggle
+                                businessContent={
+                                    <div className="space-y-3">
+                                        {service.businessContent.benefits.map((benefit, idx) => (
+                                            <div key={idx} className="flex items-start gap-2 text-sm text-zinc-300">
+                                                <span className="text-emerald-400 mt-0.5">✓</span>
+                                                <span>{benefit}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                }
+                                technicalContent={
+                                    <div>
+                                        <p className="text-sm text-zinc-400 mb-4">{service.technicalContent.description}</p>
+                                        <ul className="space-y-2">
+                                            {service.technicalContent.features.map((feature, idx) => (
+                                                <li key={idx} className="flex items-start gap-2 text-sm text-zinc-300">
+                                                    <span className="text-blue-400 mt-0.5">•</span>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                }
+                            />
+                        </div>
 
                         <div className="mt-auto pt-4 border-t border-white/10">
                             <div className="flex items-center justify-between">

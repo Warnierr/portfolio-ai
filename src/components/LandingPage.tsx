@@ -8,6 +8,7 @@ import StickyCTA from "@/components/StickyCtA";
 import { caseStudies } from "@/data/projects";
 import BackgroundDecoration from "@/components/BackgroundDecoration";
 import IconGrid from "@/components/IconGrid";
+import TechAccordion from "@/components/TechAccordion";
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -70,18 +71,24 @@ const products = [
   {
     name: "Budget AI",
     tagline: "Assistant Financier Intelligent",
-    description: "Transforme vos dépenses en conseils stratégiques. Prédictions, détection d'abonnements et coaching IA.",
+    description: "Assistant financier qui prédit votre solde et détecte vos abonnements. Privacy-first.",
+    benefits: ["Prédictions de solde", "Coaching IA en temps réel", "Données anonymisées"],
+    technologies: ["Next.js 14", "TypeScript", "PostgreSQL", "OpenRouter API"],
+    techDescription: "Architecture serverless avec SSE streaming pour réponses IA en temps réel.",
     status: "Live Demo",
     href: "/projets/budget-ai",
     color: "emerald",
   },
   {
-    name: "Expérimentations",
-    tagline: "Prototypes & Open-Source",
-    description: "Outils data, agents IA et MVPs en développement. Laboratoire d'innovation continue.",
-    status: "En cours",
-    href: "/projets",
-    color: "blue",
+    name: "AI Compliance Audit Tool",
+    tagline: "Conformité AI Act & RGPD",
+    description: "Outil d'audit pour évaluer la conformité de vos systèmes IA selon l'AI Act européen.",
+    benefits: ["Classification des risques", "Checklists réglementaires", "Rapports exportables"],
+    technologies: ["Next.js 15", "TypeScript", "Prisma", "PDF Generation"],
+    techDescription: "Module automatisé d'audit avec base de connaissances AI Act intégrée.",
+    status: "Beta 2026",
+    href: "/projets/ai-compliance-audit-tool",
+    color: "purple",
   },
 ];
 
@@ -104,20 +111,21 @@ export default function LandingPage() {
 
           {/* 3 Spécialités principales - Design premium avec hover effects */}
           {/* Optimisation LCP : affichage instantané sans animation pour réduire LCP < 2.5s */}
+          {/* Optimisation mobile : badges uniformes avec w-full sur mobile */}
           <div className="mb-10 flex flex-col items-center gap-5 sm:flex-row sm:gap-6">
-            <div className="group relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/25">
+            <div className="w-full sm:w-auto group relative overflow-hidden rounded-3xl border border-emerald-500/40 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 px-6 py-3 sm:px-10 sm:py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h2 className="relative text-3xl font-bold tracking-tight text-emerald-300 sm:text-4xl lg:text-5xl">Data Engineering</h2>
+              <h2 className="relative text-center text-xl font-bold tracking-tight text-emerald-300 sm:text-3xl lg:text-5xl">Data Engineering</h2>
             </div>
             
-            <div className="group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25">
+            <div className="w-full sm:w-auto group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-6 py-3 sm:px-10 sm:py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h2 className="relative text-3xl font-bold tracking-tight text-blue-300 sm:text-4xl lg:text-5xl">AI Product Builder</h2>
+              <h2 className="relative text-center text-xl font-bold tracking-tight text-blue-300 sm:text-3xl lg:text-5xl">AI Product Builder</h2>
             </div>
             
-            <div className="group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-10 py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25">
+            <div className="w-full sm:w-auto group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-6 py-3 sm:px-10 sm:py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <h2 className="relative text-3xl font-bold tracking-tight text-purple-300 sm:text-4xl lg:text-5xl">DevOps Automation</h2>
+              <h2 className="relative text-center text-xl font-bold tracking-tight text-purple-300 sm:text-3xl lg:text-5xl">DevOps Automation</h2>
             </div>
           </div>
 
@@ -336,37 +344,78 @@ export default function LandingPage() {
 
           <div className="grid gap-6 md:grid-cols-2">
             {products.map((product) => (
-              <Link
+              <div
                 key={product.name}
-                href={product.href}
-                className={`group rounded-xl border bg-white/5 p-6 transition hover:bg-white/10 ${
+                className={`rounded-xl border bg-white/5 p-4 sm:p-6 ${
                   product.color === "emerald" 
-                    ? "border-emerald-500/20 hover:border-emerald-500/40" 
-                    : "border-blue-500/20 hover:border-blue-500/40"
+                    ? "border-emerald-500/20" 
+                    : product.color === "purple"
+                    ? "border-purple-500/20"
+                    : "border-blue-500/20"
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className={`text-xs px-2 py-0.5 rounded ${
                     product.color === "emerald" 
                       ? "bg-emerald-500/20 text-emerald-300" 
+                      : product.color === "purple"
+                      ? "bg-purple-500/20 text-purple-300"
                       : "bg-blue-500/20 text-blue-300"
                   }`}>
                     {product.status}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-200 transition-colors">
+                <h3 className="text-xl font-bold text-white">
                   {product.name}
                 </h3>
                 <p className={`text-sm mt-1 ${
-                  product.color === "emerald" ? "text-emerald-400" : "text-blue-400"
+                  product.color === "emerald" 
+                    ? "text-emerald-400" 
+                    : product.color === "purple"
+                    ? "text-purple-400"
+                    : "text-blue-400"
                 }`}>
                   {product.tagline}
                 </p>
                 <p className="text-sm text-zinc-400 mt-3">{product.description}</p>
-                <span className="inline-block mt-4 text-sm text-zinc-500 group-hover:text-white transition-colors">
+                
+                {/* Bénéfices visibles */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {product.benefits.map((benefit, idx) => (
+                    <span key={idx} className={`text-xs ${
+                      product.color === "emerald" 
+                        ? "text-emerald-300" 
+                        : product.color === "purple"
+                        ? "text-purple-300"
+                        : "text-blue-300"
+                    }`}>
+                      ✓ {benefit}
+                      {idx < product.benefits.length - 1 && " •"}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Accordéon détails techniques */}
+                <TechAccordion
+                  title="Détails techniques"
+                  technologies={product.technologies}
+                  description={product.techDescription}
+                />
+
+                {/* CTA */}
+                <Link
+                  href={product.href}
+                  className={`inline-block mt-4 text-sm transition ${
+                    product.color === "emerald"
+                      ? "text-emerald-400 hover:text-emerald-300"
+                      : product.color === "purple"
+                      ? "text-purple-400 hover:text-purple-300"
+                      : "text-blue-400 hover:text-blue-300"
+                  }`}
+                >
                   Découvrir →
-                </span>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </motion.section>

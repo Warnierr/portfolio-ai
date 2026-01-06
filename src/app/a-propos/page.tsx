@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageContainer from "@/components/PageContainer";
+import TechAccordion from "@/components/TechAccordion";
 
 export const metadata: Metadata = {
   title: "À propos — Raouf Warnier | Data Engineer Freelance",
@@ -58,19 +59,21 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Sept - Déc 2025</span>
             </div>
-            <ul className="mt-4 space-y-2 text-zinc-300">
-              <li>• Migration d'ETL legacy vers architecture moderne Spark/Airflow</li>
-              <li>• Debugging de pipelines complexes sur flux financiers critiques</li>
-              <li>• Développement Scala, Spark SQL, automatisation Jenkins</li>
-              <li>• Documentation technique détaillée pour transfert de compétences</li>
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {["Scala", "Spark", "Airflow", "Jenkins", "SQL"].map((tech) => (
-                <span key={tech} className="text-xs bg-white/5 border border-white/10 rounded px-2 py-1 text-zinc-400">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            
+            {/* Résultat business visible */}
+            <p className="mt-3 text-white font-medium">
+              Migration de pipelines financiers critiques sans interruption de service
+            </p>
+            
+            {/* Détails techniques en accordéon */}
+            <TechAccordion
+              title="Détails mission"
+              technologies={["Scala", "Spark", "Airflow", "Jenkins", "SQL"]}
+              description={`• Migration d'ETL legacy vers architecture moderne Spark/Airflow
+• Debugging de pipelines complexes sur flux financiers critiques
+• Développement Scala, Spark SQL, automatisation Jenkins
+• Documentation technique détaillée pour transfert de compétences`}
+            />
           </div>
 
           <div className="border-l-4 border-blue-500/30 pl-6">
@@ -82,19 +85,21 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Depuis Août 2024</span>
             </div>
-            <ul className="mt-4 space-y-2 text-zinc-300">
-              <li>• Automatisation du déploiement des outils Big Data (Zeppelin, Airflow, Spark, Grafana)</li>
-              <li>• Playbooks Ansible pour déploiement reproductible et idempotent</li>
-              <li>• Migration de données critiques MariaDB → MSSQL avec zéro perte</li>
-              <li>• Monitoring Prometheus/Grafana, scripts Shell pour surveillance</li>
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {["Ansible", "Zeppelin", "Airflow", "Spark", "Grafana", "Linux"].map((tech) => (
-                <span key={tech} className="text-xs bg-white/5 border border-white/10 rounded px-2 py-1 text-zinc-400">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            
+            {/* Résultat business visible */}
+            <p className="mt-3 text-white font-medium">
+              Automatisation complète du déploiement Big Data, migration de données sans perte
+            </p>
+            
+            {/* Détails techniques en accordéon */}
+            <TechAccordion
+              title="Détails mission"
+              technologies={["Ansible", "Zeppelin", "Airflow", "Spark", "Grafana", "Linux"]}
+              description={`• Automatisation du déploiement des outils Big Data (Zeppelin, Airflow, Spark, Grafana)
+• Playbooks Ansible pour déploiement reproductible et idempotent
+• Migration de données critiques MariaDB → MSSQL avec zéro perte
+• Monitoring Prometheus/Grafana, scripts Shell pour surveillance`}
+            />
           </div>
 
           <div className="border-l-4 border-purple-500/30 pl-6">
@@ -106,19 +111,21 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Juin 2023 - Août 2024</span>
             </div>
-            <ul className="mt-4 space-y-2 text-zinc-300">
-              <li>• Développement de solutions data IoT avec ThingWorx (plateforme industrielle)</li>
-              <li>• Migration PostgreSQL vers MSSQL avec validation intégrité données</li>
-              <li>• Pipelines CI/CD GitLab avec PowerShell, tests automatisés Jest (85% couverture)</li>
-              <li>• Workshops internationaux en anglais, documentation technique</li>
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {["ThingWorx", "JavaScript", "SQL", "PostgreSQL", "MSSQL", "GitLab CI"].map((tech) => (
-                <span key={tech} className="text-xs bg-white/5 border border-white/10 rounded px-2 py-1 text-zinc-400">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            
+            {/* Résultat business visible */}
+            <p className="mt-3 text-white font-medium">
+              Plateforme IoT temps réel pour surveillance qualité aéronautique
+            </p>
+            
+            {/* Détails techniques en accordéon */}
+            <TechAccordion
+              title="Détails mission"
+              technologies={["ThingWorx", "JavaScript", "SQL", "PostgreSQL", "MSSQL", "GitLab CI"]}
+              description={`• Développement de solutions data IoT avec ThingWorx (plateforme industrielle)
+• Migration PostgreSQL vers MSSQL avec validation intégrité données
+• Pipelines CI/CD GitLab avec PowerShell, tests automatisés Jest (85% couverture)
+• Workshops internationaux en anglais, documentation technique`}
+            />
           </div>
 
           <div className="border-l-4 border-amber-500/30 pl-6">
@@ -130,19 +137,21 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Sept 2022 - Juin 2023</span>
             </div>
-            <ul className="mt-4 space-y-2 text-zinc-300">
-              <li>• Développement de pipelines Big Data (Spark, Hadoop, Airflow)</li>
-              <li>• Traitement de volumes massifs (TBs) pour données industrielles</li>
-              <li>• Ingestion MinIO → SQL via Airflow, optimisation performances</li>
-              <li>• Réduction des coûts de traitement de 40%, temps divisé par 3</li>
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {["Spark", "Hadoop", "Airflow", "MinIO", "Python", "SQL"].map((tech) => (
-                <span key={tech} className="text-xs bg-white/5 border border-white/10 rounded px-2 py-1 text-zinc-400">
-                  {tech}
-                </span>
-              ))}
-            </div>
+            
+            {/* Résultat business visible */}
+            <p className="mt-3 text-white font-medium">
+              Pipelines Big Data industriels : -40% coûts, temps de traitement divisé par 3
+            </p>
+            
+            {/* Détails techniques en accordéon */}
+            <TechAccordion
+              title="Détails mission"
+              technologies={["Spark", "Hadoop", "Airflow", "MinIO", "Python", "SQL"]}
+              description={`• Développement de pipelines Big Data (Spark, Hadoop, Airflow)
+• Traitement de volumes massifs (TBs) pour données industrielles
+• Ingestion MinIO → SQL via Airflow, optimisation performances
+• Réduction des coûts de traitement de 40%, temps divisé par 3`}
+            />
           </div>
         </div>
       </section>
