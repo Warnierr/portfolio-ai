@@ -28,16 +28,16 @@ model ChatLog {
 }
 
 model News {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   content     String
   summary     String?
   tag         String
   date        String
   category    String
-  status      String   @default("PENDING")
+  status      String    @default("PENDING")
   publishedAt DateTime?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
 }
 
 model Analytics {
@@ -47,4 +47,16 @@ model Analytics {
   userAgent String?
   referrer  String?
   createdAt DateTime @default(now())
+}
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  product   String // budget-ai, ai-act-auditor, etc.
+  source    String? // homepage, services, etc.
+  notified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([product])
+  @@index([notified])
 }

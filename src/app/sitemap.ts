@@ -65,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "monthly",
             priority: 0.8,
         },
+        {
+            url: `${baseUrl}/early-access`,
+            lastModified: now,
+            changeFrequency: "monthly",
+            priority: 0.7,
+        },
         
         // Applications /app/
         {

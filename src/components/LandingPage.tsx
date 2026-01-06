@@ -80,14 +80,15 @@ const products = [
     color: "emerald",
   },
   {
-    name: "AI Compliance Audit Tool",
+    name: "AI Act Auditor",
     tagline: "Conformité AI Act & RGPD",
-    description: "Outil d'audit pour évaluer la conformité de vos systèmes IA selon l'AI Act européen.",
-    benefits: ["Classification des risques", "Checklists réglementaires", "Rapports exportables"],
+    description: "Évaluez la conformité de vos systèmes IA selon le cadre européen. Classification des risques et rapports détaillés.",
+    benefits: ["Classification automatique", "Checklists réglementaires", "Rapports PDF"],
     technologies: ["Next.js 15", "TypeScript", "Prisma", "PDF Generation"],
-    techDescription: "Module automatisé d'audit avec base de connaissances AI Act intégrée.",
-    status: "Beta 2026",
-    href: "/projets/ai-compliance-audit-tool",
+    techDescription: "Questionnaire intelligent avec scoring et recommandations personnalisées.",
+    status: "En développement",
+    href: "https://ai-act-auditor.vercel.app/",
+    externalLink: true,
     color: "purple",
   },
 ];
@@ -405,6 +406,8 @@ export default function LandingPage() {
                 {/* CTA */}
                 <Link
                   href={product.href}
+                  target={product.externalLink ? "_blank" : undefined}
+                  rel={product.externalLink ? "noopener noreferrer" : undefined}
                   className={`inline-block mt-4 text-sm transition ${
                     product.color === "emerald"
                       ? "text-emerald-400 hover:text-emerald-300"
@@ -413,7 +416,7 @@ export default function LandingPage() {
                       : "text-blue-400 hover:text-blue-300"
                   }`}
                 >
-                  Découvrir →
+                  {product.externalLink ? "Visiter l'app →" : "Découvrir →"}
                 </Link>
               </div>
             ))}

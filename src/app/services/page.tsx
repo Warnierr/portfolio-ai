@@ -103,14 +103,16 @@ const products = [
         problem: "Transformez vos lignes de dépenses en conseils stratégiques. Prédictions de solde, détection d'abonnements et coaching IA en temps réel.",
         status: "Live Demo",
         eta: "Disponible",
+        externalLink: null,
     },
     {
-        slug: "invoice-ai",
-        name: "Invoice AI",
+        slug: "ai-act-auditor",
+        name: "AI Act Auditor",
         tagline: "Catégorisation automatique de factures",
         problem: "Uploadez vos factures, l'IA les catégorise. Préparez-vous à la facturation électronique obligatoire 2026 sans effort.",
         status: "En développement",
         eta: "Q1 2025",
+        externalLink: "https://ai-act-auditor.vercel.app/",
     },
 ];
 
@@ -194,7 +196,9 @@ export default function ServicesPage() {
                     {products.map((product) => (
                         <Link
                             key={product.slug}
-                            href={`/produits/${product.slug}`}
+                            href={product.externalLink || `/produits/${product.slug}`}
+                            target={product.externalLink ? "_blank" : undefined}
+                            rel={product.externalLink ? "noopener noreferrer" : undefined}
                             className="rounded-xl border border-white/10 bg-white/5 p-5 hover:border-purple-500/30 hover:bg-purple-500/5 transition group"
                         >
                             <div className="flex items-center justify-between mb-3">
@@ -206,14 +210,16 @@ export default function ServicesPage() {
                             <h3 className="font-bold text-white group-hover:text-purple-200">{product.name}</h3>
                             <p className="text-sm text-emerald-400 mb-2">{product.tagline}</p>
                             <p className="text-sm text-zinc-400 mb-3">{product.problem}</p>
-                            <span className="text-xs text-purple-400 group-hover:underline">Voir détails →</span>
+                            <span className="text-xs text-purple-400 group-hover:underline">
+                                {product.externalLink ? "Visiter l'app →" : "Voir détails →"}
+                            </span>
                         </Link>
                     ))}
                 </div>
 
                 <div className="mt-8 text-center">
                     <Link
-                        href="/contact"
+                        href="/early-access"
                         className="inline-flex items-center gap-2 rounded-full bg-purple-500/20 border border-purple-500/30 px-6 py-3 text-sm font-medium text-purple-300 hover:bg-purple-500/30 transition"
                     >
                         <span>🔔</span> M'informer du lancement
