@@ -47,7 +47,7 @@ export default function ContactPage() {
             30 minutes pour discuter de votre situation.
           </p>
           <a
-            href="https://cal.com/raouf-warnier"
+            href="https://cal.com/raouf-warnier-zatji4"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-block rounded-full bg-white px-6 py-3 font-medium text-black transition hover:bg-zinc-200"
