@@ -50,7 +50,7 @@ export default async function ArticleDetailPage({
 }) {
   const { slug } = await params;
   const article = await prisma.article.findUnique({
-    where: { slug: params.slug, status: "published" },
+    where: { slug, status: "published" },
   });
 
   if (!article) {
