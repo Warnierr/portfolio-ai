@@ -114,7 +114,10 @@ export const caseStudies: CaseStudy[] = [
       "Mode Multi-Worskapce (Budget Perso / Budget Pro).",
       "Application Mobile (via React Native ou PWA)."
     ],
-    links: [{ label: "🔴 Live Demo : Budget AI", href: "https://budget-ai-portfolio.vercel.app" }],
+    links: [
+      { label: "🔴 Live Demo : Budget AI", href: "https://budget-ai-portfolio.vercel.app" },
+      { label: "📱 Page de l'app", href: "/app/budget-ai" }
+    ],
   },
   {
     slug: "ai-compliance-audit-tool",
@@ -173,6 +176,7 @@ export const caseStudies: CaseStudy[] = [
       "Module RGPD complémentaire",
       "Multi-langue (EN/FR)",
     ],
+    links: [{ label: "📱 Page de l'app", href: "/app/ai-compliance" }],
     status: "prototype",
   },
   {

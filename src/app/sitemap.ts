@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-// Version 4.0 - Blog + articles SEO
+// Version 5.0 - /app/ routes for Budget AI & AI Compliance
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
@@ -64,6 +64,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: "monthly",
             priority: 0.8,
+        },
+        
+        // Applications /app/
+        {
+            url: `${baseUrl}/app/budget-ai`,
+            lastModified: now,
+            changeFrequency: "weekly",
+            priority: 0.85,
+        },
+        {
+            url: `${baseUrl}/app/ai-compliance`,
+            lastModified: now,
+            changeFrequency: "weekly",
+            priority: 0.85,
         },
         
         // Pages secondaires

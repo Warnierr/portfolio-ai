@@ -60,18 +60,33 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     "name": project.title,
     "description": project.tldr,
     "applicationCategory": project.type === "produit" ? "ProductivityApplication" : "BusinessApplication",
+    "applicationSubCategory": project.slug === "budget-ai" 
+      ? "FinanceApplication" 
+      : project.slug === "ai-compliance-audit-tool"
+      ? "ComplianceApplication"
+      : undefined,
     "operatingSystem": "Web",
+    "url": project.links?.[0]?.href || `https://kenshu.dev/projets/${slug}`,
     "author": {
       "@type": "Person",
       "name": "Raouf Warnier",
       "url": "https://kenshu.dev",
       "jobTitle": "Data Engineer, AI Product Builder, DevOps Specialist",
+      "sameAs": [
+        "https://github.com/warnierr",
+        "https://www.linkedin.com/in/raouf-warnier"
+      ]
     },
     "datePublished": `${project.context.year}-01-01`,
     "offers": project.type === "produit" ? {
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
+      "price": "0",
+      "priceCurrency": "EUR"
     } : undefined,
+    "featureList": project.delivered.join(", "),
+    "screenshot": project.media?.[0]?.url,
+    "softwareVersion": project.status === "prototype" ? "0.1" : "1.0",
     "programmingLanguage": project.stack.filter(tech => 
       ["Python", "TypeScript", "JavaScript", "Scala", "SQL"].includes(tech)
     ),
