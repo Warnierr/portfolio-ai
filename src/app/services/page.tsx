@@ -230,46 +230,56 @@ export default function ServicesPage() {
             {/* FAQ */}
             <section className="glass-panel p-8 md:p-10">
                 <h2 className="text-2xl font-bold text-white mb-6">Questions fréquentes</h2>
-                <div className="space-y-6">
-                    <div className="border-l-2 border-emerald-500/30 pl-6">
-                        <h3 className="text-lg font-semibold text-white mb-2">Quel est le TJM d'un Data Engineer freelance senior ?</h3>
-                        <p className="text-zinc-300">
+                <div className="space-y-4">
+                    <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+                        <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+                            Quel est le TJM d'un Data Engineer freelance senior ?
+                        </summary>
+                        <p className="mt-3 text-zinc-300">
                             450€ par jour pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie). 
                             Ce tarif inclut l'analyse, le développement, la documentation et le transfert de compétences.
                         </p>
-                    </div>
+                    </details>
 
-                    <div className="border-l-2 border-emerald-500/30 pl-6">
-                        <h3 className="text-lg font-semibold text-white mb-2">Quelles technologies utilisez-vous en production ?</h3>
-                        <p className="text-zinc-300">
+                    <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+                        <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+                            Quelles technologies utilisez-vous en production ?
+                        </summary>
+                        <p className="mt-3 text-zinc-300">
                             Stack principale : Apache Spark (Scala, PySpark), Apache Airflow, Python, PostgreSQL/MSSQL, Docker, Ansible, Jenkins/GitLab CI. 
                             Pour l'IA : n8n, OpenRouter, RAG, agents LLM. Infrastructure : Proxmox, NAS, Grafana/Prometheus.
                         </p>
-                    </div>
+                    </details>
 
-                    <div className="border-l-2 border-emerald-500/30 pl-6">
-                        <h3 className="text-lg font-semibold text-white mb-2">Intervenez-vous en environnement bancaire/réglementé ?</h3>
-                        <p className="text-zinc-300">
+                    <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+                        <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+                            Intervenez-vous en environnement bancaire/réglementé ?
+                        </summary>
+                        <p className="mt-3 text-zinc-300">
                             Oui, avec contraintes fortes : sécurité, traçabilité, RGPD, séparation des accès. 
                             Expérience récente chez BNP Paribas sur flux financiers critiques (migration ETL, debugging pipelines complexes).
                         </p>
-                    </div>
+                    </details>
 
-                    <div className="border-l-2 border-emerald-500/30 pl-6">
-                        <h3 className="text-lg font-semibold text-white mb-2">Quelle est la durée typique d'une mission ?</h3>
-                        <p className="text-zinc-300">
+                    <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+                        <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+                            Quelle est la durée typique d'une mission ?
+                        </summary>
+                        <p className="mt-3 text-zinc-300">
                             Missions freelance : 3 mois minimum (renouvelable). Projets sur-mesure : 1-3 mois selon la complexité. 
                             Produits SaaS : développement itératif avec livraisons mensuelles.
                         </p>
-                    </div>
+                    </details>
 
-                    <div className="border-l-2 border-emerald-500/30 pl-6">
-                        <h3 className="text-lg font-semibold text-white mb-2">Proposez-vous du remote ou uniquement du présentiel ?</h3>
-                        <p className="text-zinc-300">
+                    <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+                        <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+                            Proposez-vous du remote ou uniquement du présentiel ?
+                        </summary>
+                        <p className="mt-3 text-zinc-300">
                             Les deux : full remote (France/Europe), hybride ou présentiel (Île-de-France principalement). 
                             Flexibilité selon les besoins du projet et les contraintes de sécurité.
                         </p>
-                    </div>
+                    </details>
                 </div>
             </section>
 

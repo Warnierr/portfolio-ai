@@ -26,6 +26,9 @@ export default function AdminNav() {
             <Link href="/admin/chats" className="block rounded-lg px-4 py-2 hover:bg-white/5">
                 AI Analytics
             </Link>
+            <Link href="/admin/articles" className="block rounded-lg px-4 py-2 hover:bg-white/5">
+                Articles
+            </Link>
             <button
                 onClick={handleLogout}
                 className="w-full text-left block rounded-lg px-4 py-2 text-red-400 hover:bg-red-500/10 transition mt-4"

@@ -1,9 +1,33 @@
 import { MetadataRoute } from "next";
+import { prisma } from "@/lib/prisma";
+import { CATEGORY_LABELS } from "@/types/article";
+import type { ArticleCategory } from "@/types/article";
 
-// Version 5.0 - /app/ routes for Budget AI & AI Compliance
-export default function sitemap(): MetadataRoute.Sitemap {
+// Version 6.0 - Dynamic articles from database
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
+
+    // Fetch published articles
+    const articles = await prisma.article.findMany({
+        where: { status: "published" },
+        select: { slug: true, updatedAt: true },
+    });
+
+    const articleUrls = articles.map((article) => ({
+        url: `${baseUrl}/articles/${article.slug}`,
+        lastModified: article.updatedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+    }));
+
+    // Category URLs
+    const categoryUrls = Object.keys(CATEGORY_LABELS).map((category) => ({
+        url: `${baseUrl}/articles/categorie/${category}`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+    }));
 
     return [
         // Core pages (priority élevée)
@@ -118,24 +142,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.6,
         },
         
-        // Blog
+        // Articles (hub)
+        {
+            url: `${baseUrl}/articles`,
+            lastModified: now,
+            changeFrequency: "weekly",
+            priority: 0.85,
+        },
+        
+        // Blog legacy (redirect to articles)
         {
             url: `${baseUrl}/blog`,
             lastModified: now,
             changeFrequency: "weekly",
             priority: 0.85,
         },
-        {
-            url: `${baseUrl}/blog/5-erreurs-spark-production`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/blog/airflow-patterns-anti-fragiles`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
+        ...articleUrls,
+        ...categoryUrls,
     ];
 }

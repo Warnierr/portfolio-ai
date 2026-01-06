@@ -60,3 +60,38 @@ model Waitlist {
   @@index([product])
   @@index([notified])
 }
+
+model Article {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String
+  content     String    // Markdown ou HTML enrichi
+  coverImage  String?   // URL de l'image de couverture
+  
+  // Taxonomie
+  category    String    // data-engineering, dataops, llm-ia, devops-plateforme, conformite-ai-act-rgpd, retours-experience
+  tags        String    // JSON array : ["spark", "jenkins", "observabilite"]
+  
+  // Metadata
+  author      String    @default("Raouf Warnier")
+  authorType  String    @default("human") // human, ai, ai-assisted
+  readingTime Int       // en minutes
+  status      String    @default("draft") // draft, published, archived
+  featured    Boolean   @default(false)
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  canonical       String?
+  
+  // Timestamps
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([category])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([featured])
+}

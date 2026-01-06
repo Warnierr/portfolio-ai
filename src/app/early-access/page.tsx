@@ -61,7 +61,7 @@ export default function EarlyAccessPage() {
               id="product"
               value={product}
               onChange={(e) => setProduct(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-emerald-500/50 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [&>option]:text-black [&>option]:bg-white"
             >
               <option value="general">Tous les produits</option>
               <option value="budget-ai">Budget AI</option>

@@ -463,68 +463,82 @@ export default function AgentPage() {
       <section className="mt-16 glass-panel p-8 md:p-10">
         <h2 className="text-2xl font-bold text-white mb-6">Questions fréquentes sur mes services</h2>
         
-        <div className="space-y-6">
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Quelles sont vos compétences en Spark ?</h3>
-            <p className="text-zinc-300">
+        <div className="space-y-4">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Quelles sont vos compétences en Spark ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               Expert Spark depuis 7 ans (Scala et PySpark). Expérience en migration ETL legacy vers Spark, 
               optimisation de jobs (partitioning, broadcast joins, memory tuning), debugging de pipelines complexes. 
               Missions récentes chez BNP Paribas (migration ETL critiques), Orange (infrastructure Big Data), 
               ACC Industrie 4.0 (pipelines TBs).
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Intervenez-vous en environnement bancaire ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Intervenez-vous en environnement bancaire ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               Oui, avec contraintes fortes : sécurité renforcée, traçabilité complète, RGPD strict, 
               séparation des accès, validation par équipes sécurité. Expérience BNP Paribas (sept-déc 2025) 
               sur flux financiers critiques avec SLA stricts. Familier des processus de validation grands comptes.
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Maîtrisez-vous Airflow en production ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Maîtrisez-vous Airflow en production ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               Oui, niveau expert. Orchestration de pipelines complexes (Airflow 2.x), patterns anti-fragiles 
               (idempotence, retry intelligents, alerting), monitoring Grafana/Prometheus, intégration CI/CD. 
               Déploiement Ansible automatisé chez Orange (Zeppelin, Airflow, Spark). Stack complémentaire 
               avec n8n pour automatisations low-code.
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Proposez-vous de l'audit AI Act / RGPD ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Proposez-vous de l'audit AI Act / RGPD ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               Oui, service en développement pour 2026-2027. Classification des risques IA (inacceptable, élevé, 
               limité, minimal), checklists obligations high-risk, documentation réglementaire, rapport d'audit. 
               Outil prototype "AI Compliance Audit Tool" disponible pour early adopters. Veille active sur 
               calendrier AI Act (obligations progressives jusqu'en août 2027).
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Quels sont vos tarifs et modalités ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Quels sont vos tarifs et modalités ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               TJM 450€ pour missions freelance (Data Engineering, DevOps, Big Data). Projets sur-mesure à partir 
               de 2 000€ (sites web, agents IA, automatisations). Disponibilité immédiate, remote/hybride/présentiel 
               (IDF). Missions minimum 3 mois (renouvelable). Premier appel de 30 minutes gratuit pour diagnostic.
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Travaillez-vous avec des startups ou uniquement des grands comptes ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Travaillez-vous avec des startups ou uniquement des grands comptes ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               Les deux. Grands comptes : BNP Paribas, Orange, Safran (missions longues, environnements complexes). 
               Startups/PME : projets sur-mesure (sites web, agents IA, automatisations n8n/Make). 
               Méthodologie adaptée selon la maturité : industrialisation lourde pour grands comptes, 
               approche agile/lean pour startups.
             </p>
-          </div>
+          </details>
 
-          <div className="border-l-2 border-emerald-500/30 pl-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Stack technique complète ?</h3>
-            <p className="text-zinc-300">
+          <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
+            <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+              Stack technique complète ?
+            </summary>
+            <p className="mt-3 text-zinc-300">
               <strong>Big Data :</strong> Spark (Scala/PySpark), Airflow, Hadoop, MinIO. 
               <strong>Langages :</strong> Python, Scala, TypeScript, SQL, Shell. 
               <strong>BDD :</strong> PostgreSQL, MSSQL, MariaDB. 
@@ -533,7 +547,7 @@ export default function AgentPage() {
               <strong>IA/LLM :</strong> n8n, OpenRouter, RAG, agents autonomes. 
               <strong>Web :</strong> Next.js, React, Tailwind, Prisma.
             </p>
-          </div>
+          </details>
         </div>
 
         <div className="mt-8 text-center">
