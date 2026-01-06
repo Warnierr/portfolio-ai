@@ -4,11 +4,12 @@ import { prisma } from "@/lib/prisma";
 // GET /api/articles/[id] - Récupérer un article par ID
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const article = await prisma.article.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!article) {
@@ -20,7 +21,8 @@ export async function GET(
 
     return NextResponse.json(article);
   } catch (error) {
-    console.error(`GET /api/articles/${params.id} error:`, error);
+    const { id } = await params;
+    console.error(`GET /api/articles/${id} error:`, error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -31,19 +33,20 @@ export async function GET(
 // PATCH /api/articles/[id] - Mettre à jour un article (admin uniquement)
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // TODO: Ajouter vérification auth admin ici
     // const isAdmin = await checkAdminAuth(req);
     // if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const { id } = await params;
     const body = await req.json();
 
     // Si le status passe à "published" et publishedAt n'existe pas, le définir maintenant
     if (body.status === "published") {
       const existingArticle = await prisma.article.findUnique({
-        where: { id: params.id },
+        where: { id },
       });
 
       if (existingArticle && !existingArticle.publishedAt) {
@@ -52,13 +55,14 @@ export async function PATCH(
     }
 
     const article = await prisma.article.update({
-      where: { id: params.id },
+      where: { id },
       data: body,
     });
 
     return NextResponse.json(article);
   } catch (error) {
-    console.error(`PATCH /api/articles/${params.id} error:`, error);
+    const { id } = await params;
+    console.error(`PATCH /api/articles/${id} error:`, error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -69,20 +73,22 @@ export async function PATCH(
 // DELETE /api/articles/[id] - Supprimer un article (admin uniquement)
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // TODO: Ajouter vérification auth admin ici
     // const isAdmin = await checkAdminAuth(req);
     // if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const { id } = await params;
     await prisma.article.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`DELETE /api/articles/${params.id} error:`, error);
+    const { id } = await params;
+    console.error(`DELETE /api/articles/${id} error:`, error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

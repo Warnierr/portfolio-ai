@@ -17,10 +17,11 @@ import type { ArticleCategory } from "@/types/article";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
   const article = await prisma.article.findUnique({
-    where: { slug: params.slug, status: "published" },
+    where: { slug, status: "published" },
   });
 
   if (!article) {
@@ -45,8 +46,9 @@ export async function generateMetadata({
 export default async function ArticleDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const article = await prisma.article.findUnique({
     where: { slug: params.slug, status: "published" },
   });
