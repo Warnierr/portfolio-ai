@@ -28,13 +28,13 @@ export default function AProposPage() {
           Raouf Warnier — Data Engineer Freelance
         </h1>
         <p className="mt-6 max-w-3xl text-lg text-zinc-300">
-          7+ ans d'expérience en Data Engineering, Big Data et DevOps. 
-          Spécialisé en industrialisation de pipelines critiques pour grands comptes 
+          7+ ans d'expérience en Data Engineering, Big Data et DevOps.
+          Spécialisé en industrialisation de pipelines critiques pour grands comptes
           (BNP Paribas, Orange, Safran) et développement de produits Data/IA pour startups et PME.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-300">
-            TJM 450€
+            TJM 500€
           </span>
           <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm text-blue-300">
             Disponible immédiatement
@@ -48,7 +48,7 @@ export default function AProposPage() {
       {/* Parcours professionnel */}
       <section className="glass-panel p-8 md:p-12">
         <h2 className="text-2xl font-bold text-white mb-8">Parcours professionnel</h2>
-        
+
         <div className="space-y-8">
           <div className="border-l-4 border-emerald-500/30 pl-6">
             <div className="flex items-start justify-between flex-wrap gap-2">
@@ -59,12 +59,12 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Sept - Déc 2025</span>
             </div>
-            
+
             {/* Résultat business visible */}
             <p className="mt-3 text-white font-medium">
               Migration de pipelines financiers critiques sans interruption de service
             </p>
-            
+
             {/* Détails techniques en accordéon */}
             <TechAccordion
               title="Détails mission"
@@ -85,12 +85,12 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Depuis Août 2024</span>
             </div>
-            
+
             {/* Résultat business visible */}
             <p className="mt-3 text-white font-medium">
               Automatisation complète du déploiement Big Data, migration de données sans perte
             </p>
-            
+
             {/* Détails techniques en accordéon */}
             <TechAccordion
               title="Détails mission"
@@ -111,12 +111,12 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Juin 2023 - Août 2024</span>
             </div>
-            
+
             {/* Résultat business visible */}
             <p className="mt-3 text-white font-medium">
               Plateforme IoT temps réel pour surveillance qualité aéronautique
             </p>
-            
+
             {/* Détails techniques en accordéon */}
             <TechAccordion
               title="Détails mission"
@@ -137,12 +137,12 @@ export default function AProposPage() {
               </div>
               <span className="text-sm text-zinc-500">Sept 2022 - Juin 2023</span>
             </div>
-            
+
             {/* Résultat business visible */}
             <p className="mt-3 text-white font-medium">
               Pipelines Big Data industriels : -40% coûts, temps de traitement divisé par 3
             </p>
-            
+
             {/* Détails techniques en accordéon */}
             <TechAccordion
               title="Détails mission"
@@ -159,7 +159,7 @@ export default function AProposPage() {
       {/* Stack technique */}
       <section className="glass-panel p-8 md:p-12">
         <h2 className="text-2xl font-bold text-white mb-8">Stack Technique</h2>
-        
+
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-white/10 bg-white/5 p-6">
             <h3 className="text-lg font-semibold text-emerald-300 mb-4">Big Data & Pipelines</h3>
@@ -274,7 +274,7 @@ export default function AProposPage() {
           <div className="rounded-xl border border-white/10 bg-white/5 p-5">
             <p className="font-semibold text-white">Veille continue</p>
             <p className="text-sm text-zinc-400 mt-1">
-              AI Act, RGPD, DataOps best practices, Spark/Airflow évolutions, 
+              AI Act, RGPD, DataOps best practices, Spark/Airflow évolutions,
               architectures RAG, observabilité moderne
             </p>
           </div>
@@ -284,7 +284,7 @@ export default function AProposPage() {
       {/* Tarifs & Modalités */}
       <section className="glass-panel p-8 md:p-12">
         <h2 className="text-2xl font-bold text-white mb-6">Tarifs & Modalités</h2>
-        
+
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6">
             <p className="text-xs uppercase tracking-wider text-emerald-300">Freelance</p>
@@ -339,7 +339,7 @@ export default function AProposPage() {
       {/* Coordonnées */}
       <section className="glass-panel p-8 md:p-12">
         <h2 className="text-2xl font-bold text-white mb-6">Me contacter</h2>
-        
+
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-white/10 bg-white/5 p-6">
             <p className="text-sm text-zinc-400">Email</p>

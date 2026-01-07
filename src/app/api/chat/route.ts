@@ -68,7 +68,7 @@ Actuellement disponible en **freelance** pour des missions data et produit.
 - From prototype to production
 
 ## Tarifs Freelance
-- **TJM Mission longue durée** : 450€
+- **TJM Mission longue durée** : 500€
 - **Forfait pipeline/automatisation** : à partir de 2 000€
 - **Application web/SaaS** : sur devis
 
@@ -152,7 +152,7 @@ En tant qu'**Ingénieur Produit Data**, je conçois des systèmes data end-to-en
 - Applications data
 
 **Disponibilité** : immédiate  
-**TJM** : 450€ pour missions longues
+**TJM** : 500€ pour missions longues
 
 ### Prochaine étape
 Décrivez-moi votre besoin et je vous dis si je suis le bon profil. Sinon, contactez-moi directement :

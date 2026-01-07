@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const metrics = [
   { value: "100%", label: "automatisation flux", context: "Pipelines DataOps" },
-  { value: "450 €", label: "TJM Freelance", context: "Expertise Senior" },
+  { value: "500 €", label: "TJM Freelance", context: "Expertise Senior" },
   { value: "-75%", label: "coûts infra", context: "vs solutions Cloud" },
 ];
 

@@ -5,16 +5,16 @@ import SectionTitle from "@/components/SectionTitle";
 import ContentToggle from "@/components/ContentToggle";
 
 export const metadata: Metadata = {
-  title: "Services Data Engineering & IA | Kenshu",
-  description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS. TJM 450€.",
-  alternates: {
-    canonical: "/services",
-  },
-  openGraph: {
     title: "Services Data Engineering & IA | Kenshu",
-    description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",
-    url: "https://kenshu.dev/services",
-  },
+    description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS. TJM 500€.",
+    alternates: {
+        canonical: "/services",
+    },
+    openGraph: {
+        title: "Services Data Engineering & IA | Kenshu",
+        description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",
+        url: "https://kenshu.dev/services",
+    },
 };
 
 const services = [
@@ -39,7 +39,7 @@ const services = [
                 "Architecture Data Lake / Data Warehouse",
             ],
         },
-        pricing: "TJM 450€",
+        pricing: "TJM 500€",
         cta: "Discuter d'une mission",
         color: "emerald",
     },
@@ -236,7 +236,7 @@ export default function ServicesPage() {
                             Quel est le TJM d'un Data Engineer freelance senior ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            450€ par jour pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie). 
+                            450€ par jour pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie).
                             Ce tarif inclut l'analyse, le développement, la documentation et le transfert de compétences.
                         </p>
                     </details>
@@ -246,7 +246,7 @@ export default function ServicesPage() {
                             Quelles technologies utilisez-vous en production ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            Stack principale : Apache Spark (Scala, PySpark), Apache Airflow, Python, PostgreSQL/MSSQL, Docker, Ansible, Jenkins/GitLab CI. 
+                            Stack principale : Apache Spark (Scala, PySpark), Apache Airflow, Python, PostgreSQL/MSSQL, Docker, Ansible, Jenkins/GitLab CI.
                             Pour l'IA : n8n, OpenRouter, RAG, agents LLM. Infrastructure : Proxmox, NAS, Grafana/Prometheus.
                         </p>
                     </details>
@@ -256,7 +256,7 @@ export default function ServicesPage() {
                             Intervenez-vous en environnement bancaire/réglementé ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            Oui, avec contraintes fortes : sécurité, traçabilité, RGPD, séparation des accès. 
+                            Oui, avec contraintes fortes : sécurité, traçabilité, RGPD, séparation des accès.
                             Expérience récente chez BNP Paribas sur flux financiers critiques (migration ETL, debugging pipelines complexes).
                         </p>
                     </details>
@@ -266,7 +266,7 @@ export default function ServicesPage() {
                             Quelle est la durée typique d'une mission ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            Missions freelance : 3 mois minimum (renouvelable). Projets sur-mesure : 1-3 mois selon la complexité. 
+                            Missions freelance : 3 mois minimum (renouvelable). Projets sur-mesure : 1-3 mois selon la complexité.
                             Produits SaaS : développement itératif avec livraisons mensuelles.
                         </p>
                     </details>
@@ -276,7 +276,7 @@ export default function ServicesPage() {
                             Proposez-vous du remote ou uniquement du présentiel ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            Les deux : full remote (France/Europe), hybride ou présentiel (Île-de-France principalement). 
+                            Les deux : full remote (France/Europe), hybride ou présentiel (Île-de-France principalement).
                             Flexibilité selon les besoins du projet et les contraintes de sécurité.
                         </p>
                     </details>

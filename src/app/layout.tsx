@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
 export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
-    "Expert Data Engineering, AI Product Builder & DevOps. Pipelines Big Data, applications IA, audit AI Act & RGPD. TJM 450€. Disponible immédiatement en France et remote.",
+    "Expert Data Engineering, AI Product Builder & DevOps. Pipelines Big Data, applications IA, audit AI Act & RGPD. TJM 500€. Disponible immédiatement en France et remote.",
   metadataBase: new URL("https://kenshu.dev"),
   alternates: {
     canonical: "/",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     "Data Engineer Spark Scala",
     "Consultant Big Data BNP Paribas Orange Safran",
     "Freelance Data Engineering remote",
-    "TJM Data Engineer 450",
+    "TJM Data Engineer 500",
 
     // Mots-clés 2026
     "industrialisation IA souveraineté",
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps",
     description:
-      "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. TJM 450€. Disponible immédiatement.",
+      "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. TJM 500€. Disponible immédiatement.",
     url: "https://kenshu.dev",
     siteName: "Raouf Warnier - Data Engineering & AI",
     locale: "fr_FR",
@@ -191,8 +191,8 @@ export default function RootLayout({
         <AnalyticsTracker />
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-sm text-white sm:px-6">
-            <Link href="/" className="flex items-center gap-3 font-semibold tracking-wide hover:opacity-80 transition-opacity">
-              <div className="relative h-8 w-8 overflow-hidden rounded-full border border-white/10">
+            <Link href="/" className="flex items-center gap-3 font-semibold tracking-wide hover:opacity-80 transition-opacity group">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-emerald-500/20 shadow-sm transition-transform group-hover:scale-105">
                 <Image
                   src="/logo-kenshu.png"
                   alt="Kenshu Dev Logo"
@@ -305,7 +305,7 @@ export default function RootLayout({
                   currency: "EUR",
                   value: {
                     "@type": "QuantitativeValue",
-                    value: 450,
+                    value: 500,
                     unitText: "DAY"
                   }
                 }
@@ -344,7 +344,7 @@ export default function RootLayout({
               url: "https://kenshu.dev",
               telephone: "+33749416355",
               email: "rww.warnier@gmail.com",
-              priceRange: "450€/jour",
+              priceRange: "500€/jour",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "FR"
