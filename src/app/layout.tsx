@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
@@ -191,16 +190,8 @@ export default function RootLayout({
         <AnalyticsTracker />
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-sm text-white sm:px-6">
-            <Link href="/" className="flex items-center gap-3 font-semibold tracking-wide hover:opacity-80 transition-opacity group">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-emerald-500/20 shadow-sm transition-transform group-hover:scale-105 bg-white">
-                <Image
-                  src="/logo-kenshu.png"
-                  alt="Kenshu Dev Logo"
-                  fill
-                  className="object-cover scale-[2.0]"
-                />
-              </div>
-              <span>Kenshu Dev</span>
+            <Link href="/" className="font-semibold tracking-wide">
+              Kenshu Dev
             </Link>
             <div className="flex items-center gap-4">
               <nav className="hidden md:flex items-center gap-4">
