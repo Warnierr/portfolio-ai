@@ -197,7 +197,7 @@ export default function RootLayout({
                   src="/logo-kenshu.png"
                   alt="Kenshu Dev Logo"
                   fill
-                  className="object-cover scale-[2.0] translate-y-1"
+                  className="object-cover scale-[2.0]"
                 />
               </div>
               <span>Kenshu Dev</span>
