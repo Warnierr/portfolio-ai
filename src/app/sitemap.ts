@@ -3,23 +3,32 @@ import { prisma } from "@/lib/prisma";
 import { CATEGORY_LABELS } from "@/types/article";
 import type { ArticleCategory } from "@/types/article";
 
-// Version 6.0 - Dynamic articles from database
+// Force dynamic to avoid build-time database calls
+export const dynamic = "force-dynamic";
+
+// Version 6.1 - Dynamic articles from database with fallback
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = "https://kenshu.dev";
     const now = new Date();
 
-    // Fetch published articles
-    const articles = await prisma.article.findMany({
-        where: { status: "published" },
-        select: { slug: true, updatedAt: true },
-    });
+    // Fetch published articles with error handling
+    let articleUrls: MetadataRoute.Sitemap = [];
+    try {
+        const articles = await prisma.article.findMany({
+            where: { status: "published" },
+            select: { slug: true, updatedAt: true },
+        });
 
-    const articleUrls = articles.map((article) => ({
-        url: `${baseUrl}/articles/${article.slug}`,
-        lastModified: article.updatedAt,
-        changeFrequency: "monthly" as const,
-        priority: 0.8,
-    }));
+        articleUrls = articles.map((article) => ({
+            url: `${baseUrl}/articles/${article.slug}`,
+            lastModified: article.updatedAt,
+            changeFrequency: "monthly" as const,
+            priority: 0.8,
+        }));
+    } catch (error) {
+        console.error("[Sitemap] Database error, using static URLs only:", error);
+        // Continue with empty articleUrls - static pages will still be generated
+    }
 
     // Category URLs
     const categoryUrls = Object.keys(CATEGORY_LABELS).map((category) => ({
@@ -49,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "monthly",
             priority: 0.95,
         },
-        
+
         // Pages SEO long-tail (forte priorité conversion)
         {
             url: `${baseUrl}/freelance-data-engineer-spark-airflow`,
@@ -69,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "monthly",
             priority: 0.9,
         },
-        
+
         // Services & Projets
         {
             url: `${baseUrl}/projets`,
@@ -95,7 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "monthly",
             priority: 0.7,
         },
-        
+
         // Applications /app/
         {
             url: `${baseUrl}/app/budget-ai`,
@@ -109,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "weekly",
             priority: 0.85,
         },
-        
+
         // Pages secondaires
         {
             url: `${baseUrl}/agent`,
@@ -141,7 +150,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "daily",
             priority: 0.6,
         },
-        
+
         // Articles (hub)
         {
             url: `${baseUrl}/articles`,
@@ -149,7 +158,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "weekly",
             priority: 0.85,
         },
-        
+
         // Blog legacy (redirect to articles)
         {
             url: `${baseUrl}/blog`,
