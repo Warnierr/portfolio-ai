@@ -11,7 +11,7 @@ type StickyCTAProps = {
 };
 
 export default function StickyCTA({
-  text = "Réserver un appel gratuit",
+  text = "Disponible février 2026 • Discutons",
   href = "/contact",
   showAfterScroll = 400,
 }: StickyCTAProps) {

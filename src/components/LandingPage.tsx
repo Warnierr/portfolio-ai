@@ -9,6 +9,7 @@ import { caseStudies } from "@/data/projects";
 import BackgroundDecoration from "@/components/BackgroundDecoration";
 import IconGrid from "@/components/IconGrid";
 import TechAccordion from "@/components/TechAccordion";
+import AnimatedMetric from "@/components/AnimatedMetric";
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -255,6 +256,44 @@ export default function LandingPage() {
 
           {/* Technologies & Outils */}
           <IconGrid />
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════════════
+            MÉTRIQUES ANIMÉES - Résultats Concrets
+        ══════════════════════════════════════════════════════════════════ */}
+        <section className="relative">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Résultats Mesurables</h2>
+            <p className="mt-3 text-zinc-400">Impact concret sur vos projets data</p>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <AnimatedMetric
+              value={80}
+              suffix="%"
+              label="Réduction temps déploiement"
+              color="emerald"
+            />
+            <AnimatedMetric
+              value={75}
+              suffix="%"
+              label="Réduction coûts infrastructure"
+              color="blue"
+            />
+            <AnimatedMetric
+              value={99.9}
+              suffix="%"
+              decimals={1}
+              label="Uptime pipelines critiques"
+              color="purple"
+            />
+            <AnimatedMetric
+              value={100}
+              suffix="%"
+              label="Automatisation CI/CD"
+              color="orange"
+            />
+          </div>
         </section>
 
         {/* ══════════════════════════════════════════════════════════════════
