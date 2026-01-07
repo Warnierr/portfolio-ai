@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
@@ -50,33 +51,33 @@ export const metadata: Metadata = {
     "Data Engineer freelance",
     "Data Engineering France",
     "Ingénieur Data freelance Paris",
-    
+
     // Spécialités techniques
     "Apache Spark développeur",
     "Airflow ETL expert",
     "Big Data consultant",
     "DevOps Automation",
     "Ansible expert",
-    
+
     // Services & Solutions
     "Pipeline Big Data",
     "Plateforme Data Analytics",
     "Application IA sur-mesure",
     "Migration ETL",
     "Automatisation Data",
-    
+
     // AI & Product
     "AI Product Builder",
     "Développeur IA freelance",
     "SaaS Data Products",
     "Chatbot IA entreprise",
-    
+
     // Longue traîne SEO
     "Data Engineer Spark Scala",
     "Consultant Big Data BNP Paribas Orange Safran",
     "Freelance Data Engineering remote",
     "TJM Data Engineer 450",
-    
+
     // Mots-clés 2026
     "industrialisation IA souveraineté",
     "pipeline data on-premise france",
@@ -86,7 +87,7 @@ export const metadata: Metadata = {
     "n8n automation expert",
     "Modern Data Stack consultant",
     "Data Mesh architecture",
-    
+
     // AI Act & Compliance 2026-2027
     "ai act audit",
     "conformité rgpd freelance",
@@ -95,7 +96,7 @@ export const metadata: Metadata = {
     "gpai obligations france",
     "ai act readiness 2026",
     "audit systèmes ia",
-    
+
     // Nom
     "Raouf Warnier",
   ],
@@ -190,8 +191,16 @@ export default function RootLayout({
         <AnalyticsTracker />
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-sm text-white sm:px-6">
-            <Link href="/" className="font-semibold tracking-wide">
-              Kenshu Dev
+            <Link href="/" className="flex items-center gap-3 font-semibold tracking-wide hover:opacity-80 transition-opacity">
+              <div className="relative h-8 w-8 overflow-hidden rounded-full border border-white/10">
+                <Image
+                  src="/logo-kenshu.png"
+                  alt="Kenshu Dev Logo"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span>Kenshu Dev</span>
             </Link>
             <div className="flex items-center gap-4">
               <nav className="hidden md:flex items-center gap-4">
@@ -239,7 +248,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
-        
+
         {/* Schema.org JSON-LD Person */}
         <script
           type="application/ld+json"
@@ -322,7 +331,7 @@ export default function RootLayout({
             })
           }}
         />
-        
+
         {/* Schema.org JSON-LD ProfessionalService */}
         <script
           type="application/ld+json"
@@ -386,7 +395,7 @@ export default function RootLayout({
             })
           }}
         />
-        
+
         {/* Schema.org JSON-LD Organization */}
         <script
           type="application/ld+json"
@@ -409,7 +418,7 @@ export default function RootLayout({
             })
           }}
         />
-        
+
         {/* Schema.org JSON-LD SoftwareApplication */}
         <script
           type="application/ld+json"
@@ -434,7 +443,7 @@ export default function RootLayout({
             })
           }}
         />
-        
+
         {/* Schema.org JSON-LD BreadcrumbList */}
         <script
           type="application/ld+json"
