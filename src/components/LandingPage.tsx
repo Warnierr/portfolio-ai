@@ -10,6 +10,7 @@ import BackgroundDecoration from "@/components/BackgroundDecoration";
 import IconGrid from "@/components/IconGrid";
 import TechAccordion from "@/components/TechAccordion";
 import AnimatedMetric from "@/components/AnimatedMetric";
+import Testimonials from "@/components/Testimonials";
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -508,6 +509,11 @@ export default function LandingPage() {
             <span className="hover:text-white transition cursor-default">ACC</span>
           </div>
         </section>
+
+        {/* ══════════════════════════════════════════════════════════════════
+            TESTIMONIALS - Témoignages Clients
+        ══════════════════════════════════════════════════════════════════ */}
+        <Testimonials />
 
         {/* ══════════════════════════════════════════════════════════════════
             FEATURED PROJECTS - Focus impact

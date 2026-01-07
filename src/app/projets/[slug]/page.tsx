@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import PageContainer from "@/components/PageContainer";
+import MethodologyTimeline from "@/components/MethodologyTimeline";
 import { caseStudies } from "@/data/projects";
 
 type ProjectPageProps = {
@@ -337,6 +338,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         )}
 
         <p className="mt-4 text-zinc-300">{project.results.qualitative}</p>
+      </section>
+
+      {/* Méthodologie */}
+      <section className="glass-panel p-8 md:p-10">
+        <h2 className="mb-8 text-center text-xs uppercase tracking-[0.3em] text-zinc-500">
+          Méthodologie Appliquée
+        </h2>
+        <MethodologyTimeline />
       </section>
 
       {/* Rétrospective */}

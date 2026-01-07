@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PageContainer from "@/components/PageContainer";
+import TypingIndicator from "@/components/TypingIndicator";
+import LeadCaptureModal from "@/components/LeadCaptureModal";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -68,7 +70,27 @@ export default function AgentPage() {
   const [limitReached, setLimitReached] = useState(false);
   const [selectedModel, setSelectedModel] = useState(models[0].id);
   const [showModelSelector, setShowModelSelector] = useState(false);
+  const [showLeadCapture, setShowLeadCapture] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Charger l'historique depuis localStorage au montage
+  useEffect(() => {
+    const savedMessages = localStorage.getItem("chat_history");
+    if (savedMessages) {
+      try {
+        setMessages(JSON.parse(savedMessages));
+      } catch (e) {
+        console.error("Erreur lors du chargement de l'historique:", e);
+      }
+    }
+  }, []);
+
+  // Sauvegarder l'historique dans localStorage à chaque changement
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("chat_history", JSON.stringify(messages));
+    }
+  }, [messages]);
 
   // Lire le cookie au chargement pour restaurer le compteur
   useEffect(() => {
@@ -98,6 +120,7 @@ export default function AgentPage() {
     setMessages([]);
     setInput("");
     setIsLoading(false);
+    localStorage.removeItem("chat_history");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -167,6 +190,12 @@ export default function AgentPage() {
           return updated;
         });
       }
+      
+      // Afficher le modal de capture de leads après 3 échanges
+      const userMessageCount = newMessages.filter(m => m.role === "user").length;
+      if (userMessageCount === 3 && !localStorage.getItem("lead_captured")) {
+        setTimeout(() => setShowLeadCapture(true), 2000);
+      }
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Une erreur s'est produite";
       console.error("Erreur:", error);
@@ -179,6 +208,24 @@ export default function AgentPage() {
       ]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleLeadSubmit = async (email: string, name: string, message: string) => {
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name,
+          message,
+          source: "chat_agent",
+        }),
+      });
+      localStorage.setItem("lead_captured", "true");
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du lead:", error);
     }
   };
 
@@ -380,6 +427,10 @@ export default function AgentPage() {
                   )}
                 </div>
               ))}
+              
+              {/* Typing Indicator */}
+              {isLoading && <TypingIndicator />}
+              
               <div ref={messagesEndRef} />
             </div>
           )}
@@ -560,5 +611,12 @@ export default function AgentPage() {
         </div>
       </section>
     </PageContainer>
-  );
+
+    {/* Lead Capture Modal */}
+    <LeadCaptureModal
+      isOpen={showLeadCapture}
+      onClose={() => setShowLeadCapture(false)}
+      onSubmit={handleLeadSubmit}
+    />
+  </>;
 }
