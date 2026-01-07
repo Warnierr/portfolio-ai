@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: Props) {
                             href={product.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`rounded-full bg-${product.color}-500 text-white border border-${product.color}-400 px-6 py-3 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:bg-${product.color}-600 transition flex items-center gap-2`}
+                            className={`rounded-full bg-${product.color}-500 text-white border border-${product.color}-400 px-6 py-3 text-sm font-bold shadow-lg hover:bg-${product.color}-600 transition flex items-center gap-2`}
                         >
                             <span>🔴</span> Live Demo
                         </a>
@@ -89,7 +89,7 @@ export default async function ProductPage({ params }: Props) {
                     <div className="grid gap-2 md:grid-cols-2">
                         {product.painPoints.trends.map((trend, i) => (
                             <div key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                                <span className="text-emerald-400">📈</span>
+                                <span className={`text-${product.color}-400`}>📈</span>
                                 {trend}
                             </div>
                         ))}
@@ -114,17 +114,17 @@ export default async function ProductPage({ params }: Props) {
                 <h2 className="text-xl font-bold text-white mb-2">🎯 MVP & Features Core</h2>
                 <p className="text-zinc-400 mb-6">{product.mvp.description}</p>
 
-                <div className="bg-white/5 rounded-lg p-4 mb-6 border-l-4 border-emerald-500">
+                <div className={`bg-white/5 rounded-lg p-4 mb-6 border-l-4 border-${product.color}-500`}>
                     <p className="text-sm text-zinc-300 italic">"{product.mvp.userStory}"</p>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
                     <div>
-                        <h3 className="text-sm uppercase tracking-widest text-emerald-400 mb-3">Features MVP (V1)</h3>
+                        <h3 className={`text-sm uppercase tracking-widest text-${product.color}-400 mb-3`}>Features MVP (V1)</h3>
                         <ul className="space-y-2">
                             {product.mvp.coreFeatures.map((feature, i) => (
                                 <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                                    <span className="text-emerald-400 mt-0.5">✓</span>
+                                    <span className={`text-${product.color}-400 mt-0.5`}>✓</span>
                                     {feature}
                                 </li>
                             ))}
@@ -191,7 +191,7 @@ export default async function ProductPage({ params }: Props) {
                             <ul className="space-y-1">
                                 {plan.features.map((feature, i) => (
                                     <li key={i} className="text-sm text-zinc-400 flex items-start gap-2">
-                                        <span className="text-emerald-400">✓</span>
+                                        <span className={`text-${product.color}-400`}>✓</span>
                                         {feature}
                                     </li>
                                 ))}
@@ -220,7 +220,7 @@ export default async function ProductPage({ params }: Props) {
                         <ul className="space-y-1">
                             {product.validation.successMetrics.map((metric, i) => (
                                 <li key={i} className="text-sm text-zinc-300 flex items-start gap-2">
-                                    <span className="text-emerald-400">🎯</span>
+                                    <span className={`text-${product.color}-400`}>🎯</span>
                                     {metric}
                                 </li>
                             ))}

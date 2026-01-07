@@ -112,7 +112,7 @@ const products = [
         problem: "Uploadez vos factures, l'IA les catégorise. Préparez-vous à la facturation électronique obligatoire 2026 sans effort.",
         status: "En développement",
         eta: "Q1 2025",
-        externalLink: "https://aiact.kenshu.dev/",
+        externalLink: null,
     },
 ];
 

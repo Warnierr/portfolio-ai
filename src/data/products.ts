@@ -157,13 +157,14 @@ export const products: Product[] = [
     },
 
     {
-        slug: "invoice-ai",
-        name: "Invoice AI",
-        tagline: "Catégorisation automatique de factures pour freelances et TPE",
+        slug: "ai-act-auditor",
+        name: "AI Act Auditor",
+        tagline: "Catégorisation automatique de factures",
         status: "en-dev",
         eta: "Q1 2025",
         icon: "🧾",
         color: "purple",
+        demoUrl: "https://aiact.kenshu.dev",
 
         painPoints: {
             title: "Pourquoi la gestion des factures est un cauchemar pour les indépendants",
