@@ -89,7 +89,7 @@ const products = [
     technologies: ["Next.js 15", "TypeScript", "Prisma", "PDF Generation"],
     techDescription: "Questionnaire intelligent avec scoring et recommandations personnalisées.",
     status: "En développement",
-    href: "https://ai-act-auditor.vercel.app/",
+    href: "https://aiact.kenshu.dev/",
     externalLink: true,
     color: "purple",
   },
@@ -120,12 +120,12 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-center text-xl font-bold tracking-tight text-emerald-300 sm:text-3xl lg:text-5xl">Data Engineering</h2>
             </div>
-            
+
             <div className="w-full sm:w-auto group relative overflow-hidden rounded-3xl border border-blue-500/40 bg-gradient-to-br from-blue-500/20 to-blue-500/5 px-6 py-3 sm:px-10 sm:py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-center text-xl font-bold tracking-tight text-blue-300 sm:text-3xl lg:text-5xl">AI Product Builder</h2>
             </div>
-            
+
             <div className="w-full sm:w-auto group relative overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-500/20 to-purple-500/5 px-6 py-3 sm:px-10 sm:py-5 backdrop-blur-md transition-all hover:scale-105 hover:border-purple-500/60 hover:shadow-2xl hover:shadow-purple-500/25">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <h2 className="relative text-center text-xl font-bold tracking-tight text-purple-300 sm:text-3xl lg:text-5xl">DevOps Automation</h2>
@@ -143,7 +143,7 @@ export default function LandingPage() {
             {/* Changer la valeur ci-dessous pour modifier le statut */}
             {(() => {
               const status = 'soon'; // 'available' | 'soon' | 'unavailable'
-              
+
               const statusConfig = {
                 available: {
                   text: 'Disponible immédiatement',
@@ -164,9 +164,9 @@ export default function LandingPage() {
                   dotClassName: 'bg-red-500',
                 },
               };
-              
+
               const config = statusConfig[status];
-              
+
               return (
                 <div className={`inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 backdrop-blur-sm ${config.className}`}>
                   <span className={`h-2.5 w-2.5 rounded-full ${config.dotClassName}`} />
@@ -176,7 +176,7 @@ export default function LandingPage() {
             })()}
           </motion.div>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
@@ -185,7 +185,7 @@ export default function LandingPage() {
             Architecte DataOps & IA Industrialisée
           </motion.p>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.25 }}
@@ -195,7 +195,7 @@ export default function LandingPage() {
           </motion.p>
 
           {/* Tags orientés valeur (pas technos) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
@@ -215,7 +215,7 @@ export default function LandingPage() {
             </span>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.4 }}
@@ -236,7 +236,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Indicateur France / Remote */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
@@ -267,7 +267,7 @@ export default function LandingPage() {
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Résultats Mesurables</h2>
             <p className="mt-3 text-zinc-400">Impact concret sur vos projets data</p>
           </div>
-          
+
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <AnimatedMetric
               value={80}
@@ -300,7 +300,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════════════════════════
             WORK MODES - Modes d'intervention
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.section 
+        <motion.section
           className="glass-panel p-6 md:p-8"
           {...fadeUp}
         >
@@ -340,7 +340,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <motion.div 
+          <motion.div
             className="grid gap-4 md:grid-cols-2"
             variants={staggerContainer}
             initial="hidden"
@@ -371,7 +371,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════════════════════════
             PRODUCTS & SAAS - Capacité builder
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.section 
+        <motion.section
           className="glass-panel p-8 md:p-10"
           {...fadeUp}
         >
@@ -387,49 +387,45 @@ export default function LandingPage() {
             {products.map((product) => (
               <div
                 key={product.name}
-                className={`rounded-xl border bg-white/5 p-4 sm:p-6 ${
-                  product.color === "emerald" 
-                    ? "border-emerald-500/20" 
+                className={`rounded-xl border bg-white/5 p-4 sm:p-6 ${product.color === "emerald"
+                    ? "border-emerald-500/20"
                     : product.color === "purple"
-                    ? "border-purple-500/20"
-                    : "border-blue-500/20"
-                }`}
+                      ? "border-purple-500/20"
+                      : "border-blue-500/20"
+                  }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className={`text-xs px-2 py-0.5 rounded ${
-                    product.color === "emerald" 
-                      ? "bg-emerald-500/20 text-emerald-300" 
+                  <span className={`text-xs px-2 py-0.5 rounded ${product.color === "emerald"
+                      ? "bg-emerald-500/20 text-emerald-300"
                       : product.color === "purple"
-                      ? "bg-purple-500/20 text-purple-300"
-                      : "bg-blue-500/20 text-blue-300"
-                  }`}>
+                        ? "bg-purple-500/20 text-purple-300"
+                        : "bg-blue-500/20 text-blue-300"
+                    }`}>
                     {product.status}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold text-white">
                   {product.name}
                 </h3>
-                <p className={`text-sm mt-1 ${
-                  product.color === "emerald" 
-                    ? "text-emerald-400" 
+                <p className={`text-sm mt-1 ${product.color === "emerald"
+                    ? "text-emerald-400"
                     : product.color === "purple"
-                    ? "text-purple-400"
-                    : "text-blue-400"
-                }`}>
+                      ? "text-purple-400"
+                      : "text-blue-400"
+                  }`}>
                   {product.tagline}
                 </p>
                 <p className="text-sm text-zinc-400 mt-3">{product.description}</p>
-                
+
                 {/* Bénéfices visibles */}
                 <div className="mt-3 flex flex-wrap gap-2">
                   {product.benefits.map((benefit, idx) => (
-                    <span key={idx} className={`text-xs ${
-                      product.color === "emerald" 
-                        ? "text-emerald-300" 
+                    <span key={idx} className={`text-xs ${product.color === "emerald"
+                        ? "text-emerald-300"
                         : product.color === "purple"
-                        ? "text-purple-300"
-                        : "text-blue-300"
-                    }`}>
+                          ? "text-purple-300"
+                          : "text-blue-300"
+                      }`}>
                       ✓ {benefit}
                       {idx < product.benefits.length - 1 && " •"}
                     </span>
@@ -448,13 +444,12 @@ export default function LandingPage() {
                   href={product.href}
                   target={product.externalLink ? "_blank" : undefined}
                   rel={product.externalLink ? "noopener noreferrer" : undefined}
-                  className={`inline-block mt-4 text-sm transition ${
-                    product.color === "emerald"
+                  className={`inline-block mt-4 text-sm transition ${product.color === "emerald"
                       ? "text-emerald-400 hover:text-emerald-300"
                       : product.color === "purple"
-                      ? "text-purple-400 hover:text-purple-300"
-                      : "text-blue-400 hover:text-blue-300"
-                  }`}
+                        ? "text-purple-400 hover:text-purple-300"
+                        : "text-blue-400 hover:text-blue-300"
+                    }`}
                 >
                   {product.externalLink ? "Visiter l'app →" : "Découvrir →"}
                 </Link>
@@ -466,7 +461,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════════════════════════
             SYSTEMS & STRATEGY - Différenciant clé
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.section 
+        <motion.section
           className="glass-panel p-8 md:p-10 border-l-4 border-l-emerald-500/50"
           {...fadeUp}
         >
