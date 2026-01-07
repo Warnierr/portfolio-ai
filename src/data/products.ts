@@ -66,7 +66,7 @@ export const products: Product[] = [
         eta: "Disponible",
         icon: "💰",
         color: "emerald",
-        demoUrl: "https://budget-ai-portfolio.vercel.app",
+        demoUrl: "https://budget.kenshu.dev",
 
         painPoints: {
             title: "Pourquoi la gestion financière personnelle est cassée",

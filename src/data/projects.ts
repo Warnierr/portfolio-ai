@@ -115,7 +115,7 @@ export const caseStudies: CaseStudy[] = [
       "Application Mobile (via React Native ou PWA)."
     ],
     links: [
-      { label: "🔴 Live Demo : Budget AI", href: "https://budget-ai-portfolio.vercel.app" },
+      { label: "🔴 Live Demo : Budget AI", href: "https://budget.kenshu.dev" },
       { label: "📱 Page de l'app", href: "/app/budget-ai" }
     ],
   },

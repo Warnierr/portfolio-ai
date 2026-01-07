@@ -78,13 +78,13 @@ export default function BudgetAIAppPage() {
               Votre coach financier personnel, alimenté par l'IA
             </h2>
             <p className="text-lg text-zinc-300 mb-8">
-              Budget AI analyse vos dépenses, prédit votre solde futur et vous conseille en temps réel. 
+              Budget AI analyse vos dépenses, prédit votre solde futur et vous conseille en temps réel.
               <strong className="text-emerald-400"> Privacy-first</strong> : vos données restent anonymisées.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="https://budget-ai-portfolio.vercel.app"
+                href="https://budget.kenshu.dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-red-500 px-8 py-4 text-lg font-medium text-white hover:bg-red-600 transition shadow-[0_0_25px_rgba(239,68,68,0.4)]"
@@ -174,7 +174,7 @@ export default function BudgetAIAppPage() {
             Besoin d'une app similaire pour votre entreprise ?
           </h3>
           <p className="text-zinc-400 mb-6 max-w-2xl mx-auto">
-            Je développe des applications IA sur-mesure avec focus sur la performance, 
+            Je développe des applications IA sur-mesure avec focus sur la performance,
             la sécurité et l'expérience utilisateur.
           </p>
           <Link
