@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import MobileMenu from "@/components/MobileMenu";
+import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -147,6 +148,23 @@ export default function RootLayout({
 
   return (
     <html lang="fr">
+      <head>
+        {/* Préchargement des fonts critiques pour LCP */}
+        <link
+          rel="preload"
+          href="/_next/static/media/GeistSans.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/_next/static/media/GeistMono.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -165,6 +183,9 @@ export default function RootLayout({
             });
           `}
         </Script>
+
+        {/* Schema.org Structured Data */}
+        <StructuredData type="person" data={{}} />
 
         <AnalyticsTracker />
         <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">

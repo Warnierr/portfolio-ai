@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -220,12 +221,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {project.media.map((item, i) => (
             <div key={i} className="glass-panel overflow-hidden">
               {item.type === "image" ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={item.url}
-                  alt={item.caption || project.title}
-                  className="w-full object-cover"
-                />
+                <div className="relative h-96 w-full">
+                  <Image
+                    src={item.url}
+                    alt={item.caption || `${project.title} - Illustration ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
               ) : (
                 <video
                   src={item.url}
