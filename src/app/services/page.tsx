@@ -107,11 +107,11 @@ const products = [
     },
     {
         slug: "ai-act-auditor",
-        name: "AI Act Auditor",
-        tagline: "Catégorisation automatique de factures",
-        problem: "Uploadez vos factures, l'IA les catégorise. Préparez-vous à la facturation électronique obligatoire 2026 sans effort.",
-        status: "En développement",
-        eta: "Q1 2025",
+        name: "AI Act Audit",
+        tagline: "Audit de conformité AI Act",
+        problem: "Questionnaire interactif pour classifier vos systèmes IA, identifier vos obligations et générer un rapport de conformité AI Act exploitable.",
+        status: "Beta publique",
+        eta: "Disponible",
         externalLink: null,
     },
 ];
