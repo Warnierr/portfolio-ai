@@ -71,7 +71,11 @@ export default function AgentPage() {
   const [selectedModel, setSelectedModel] = useState(models[0].id);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [showLeadCapture, setShowLeadCapture] = useState(false);
+
+  // Refs pour le scroll intelligent
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
 
   // Charger l'historique depuis localStorage au montage
   useEffect(() => {
@@ -102,17 +106,35 @@ export default function AgentPage() {
     }
   }, []);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Gestion du scroll intelligent
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+      // Tolérance de 50px pour dire qu'on est en bas
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
+      shouldAutoScrollRef.current = isAtBottom;
+    }
+  };
+
+  const scrollToBottom = (instant = false) => {
+    if (shouldAutoScrollRef.current) {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: instant ? "auto" : "smooth",
+        block: "end"
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Scroll instantané pendant le chargement (pour éviter les saccades)
+    // Scroll smooth pour les nouveaux messages complets
+    scrollToBottom(isLoading);
   }, [messages, isLoading]);
 
   const handleSuggestion = (text: string) => {
     if (!limitReached) {
       setInput(text);
+      shouldAutoScrollRef.current = true; // Force scroll to bottom on new interaction
     }
   };
 
@@ -121,12 +143,14 @@ export default function AgentPage() {
     setInput("");
     setIsLoading(false);
     localStorage.removeItem("chat_history");
+    shouldAutoScrollRef.current = true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading || limitReached) return;
 
+    shouldAutoScrollRef.current = true; // Force scroll on user send
     const userMessage: Message = { role: "user", content: input };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
@@ -233,29 +257,29 @@ export default function AgentPage() {
 
   return (
     <>
-      <PageContainer className="gap-6">
+      <PageContainer className="gap-6 !py-6 md:!py-14">
         {/* Header */}
-        <section className="glass-panel p-6 md:p-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <section className="glass-panel p-4 md:p-8">
+          <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:items-start md:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
                 Ask Raouf
               </p>
-              <h1 className="mt-2 text-3xl font-semibold text-white md:text-4xl">
+              <h1 className="mt-1 text-2xl md:mt-2 md:text-3xl lg:text-4xl font-semibold text-white">
                 Décrivez votre projet
               </h1>
-              <p className="mt-2 text-zinc-400">
+              <p className="mt-1 md:mt-2 text-sm md:text-base text-zinc-400">
                 Je vous dis si je peux vous aider.
               </p>
             </div>
 
-            <div className="flex flex-col items-end gap-4">
-              <div className="flex items-center gap-4">
+            <div className="flex flex-col items-start md:items-end gap-3 md:gap-4">
+              <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-                  <span className="text-sm text-emerald-300">Agent en ligne</span>
+                  <span className="text-xs md:text-sm text-emerald-300">Agent en ligne</span>
                 </div>
-                <div className={`text-sm px-3 py-1 rounded-full border ${remaining > 5
+                <div className={`text-xs md:text-sm px-2 md:px-3 py-1 rounded-full border ${remaining > 5
                   ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
                   : remaining > 2
                     ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-300'
@@ -265,13 +289,14 @@ export default function AgentPage() {
                 </div>
               </div>
 
-              <div className="text-right text-xs text-zinc-500">
-                <p>Compétences</p>
-                <div className="mt-2 flex flex-wrap gap-2 justify-end">
+              {/* Compétences masquées sur mobile petit si on manque de place, sinon wrap */}
+              <div className="hidden sm:block text-right text-xs text-zinc-500">
+                <p className="mb-2">Compétences</p>
+                <div className="flex flex-wrap gap-2 justify-end">
                   {skills.map((skill) => (
                     <span
                       key={skill.label}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300"
+                      className="rounded-full border border-white/10 bg-white/5 px-2 md:px-3 py-0.5 md:py-1 text-zinc-300"
                     >
                       {skill.icon} {skill.label}
                     </span>
@@ -281,7 +306,7 @@ export default function AgentPage() {
 
               <Link
                 href="/contact"
-                className="rounded-full border border-white/20 bg-white/5 px-6 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+                className="rounded-full border border-white/20 bg-white/5 px-4 py-1.5 md:px-6 md:py-2 text-xs md:text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Prendre rendez-vous
               </Link>
@@ -290,23 +315,22 @@ export default function AgentPage() {
         </section>
 
         {/* Chat */}
-        <section className="glass-panel flex min-h-[500px] flex-col p-0">
+        <section className="glass-panel flex h-[70vh] min-h-[500px] flex-col p-0 overflow-hidden relative">
           {/* Header avec contrôles */}
-          <div className="border-b border-white/10 p-4 flex items-center justify-between">
+          <div className="border-b border-white/10 p-3 md:p-4 flex items-center justify-between bg-zinc-900/50 backdrop-blur-sm z-10">
             <div className="relative">
               <button
                 onClick={() => setShowModelSelector(!showModelSelector)}
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm text-zinc-300 transition hover:bg-white/10"
               >
                 <span>{currentModel.icon}</span>
-                <span className="font-medium text-white">{currentModel.name}</span>
-                <span className="text-xs text-zinc-500">•</span>
-                <span className="text-xs">{currentModel.description}</span>
+                <span className="font-medium text-white max-w-[80px] md:max-w-none truncate">{currentModel.name}</span>
+                <span className="text-xs text-zinc-500 hidden sm:inline">•</span>
                 <span className="text-zinc-500">▼</span>
               </button>
 
               {showModelSelector && (
-                <div className="absolute top-full left-0 mt-2 z-10 min-w-[280px] rounded-xl border border-white/10 bg-zinc-900/95 backdrop-blur-xl shadow-xl">
+                <div className="absolute top-full left-0 mt-2 z-20 min-w-[260px] md:min-w-[280px] rounded-xl border border-white/10 bg-zinc-900/95 backdrop-blur-xl shadow-xl">
                   {models.map((model) => (
                     <button
                       key={model.id}
@@ -338,19 +362,20 @@ export default function AgentPage() {
             {messages.length > 0 && (
               <button
                 onClick={handleNewConversation}
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white"
+                title="Nouvelle conversation"
               >
                 <span>🔄</span>
-                <span>Nouvelle conversation</span>
+                <span className="hidden sm:inline">Nouvelle conversation</span>
               </button>
             )}
           </div>
 
           {/* Loading bar */}
           {isLoading && (
-            <div className="h-1 w-full overflow-hidden bg-white/5">
+            <div className="absolute top-[52px] md:top-[64px] left-0 right-0 z-10 h-0.5 md:h-1 w-full overflow-hidden bg-transparent">
               <div
-                className="h-full bg-gradient-to-r from-emerald-400 to-blue-500"
+                className="h-full bg-gradient-to-r from-emerald-400 to-blue-500 blur-[1px]"
                 style={{
                   width: "30%",
                   animation: "loading 1.5s ease-in-out infinite"
@@ -360,10 +385,14 @@ export default function AgentPage() {
           )}
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div
+            className="flex-1 overflow-y-auto p-3 md:p-6 scroll-smooth"
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+          >
             {messages.length === 0 ? (
-              <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-2xl">
+              <div className="flex h-full flex-col items-center justify-center text-center px-4">
+                <div className="mb-4 md:mb-6 flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-xl md:text-2xl">
                   🤖
                 </div>
                 <p className="text-lg font-medium text-white">
@@ -379,7 +408,7 @@ export default function AgentPage() {
                     <button
                       key={s}
                       onClick={() => handleSuggestion(s)}
-                      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:border-emerald-400/30 hover:bg-emerald-400/5 hover:text-white"
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm text-zinc-300 transition hover:border-emerald-400/30 hover:bg-emerald-400/5 hover:text-white"
                     >
                       {s}
                     </button>
@@ -387,65 +416,65 @@ export default function AgentPage() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {messages.map((msg, i) => (
                   <div
                     key={i}
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     {msg.role === "assistant" && (
-                      <div className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-sm">
+                      <div className="mr-2 md:mr-3 flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-xs md:text-sm mt-1">
                         🤖
                       </div>
                     )}
                     <div
-                      className={`max-w-[85%] rounded-2xl px-5 py-4 ${msg.role === "user"
+                      className={`max-w-[90%] md:max-w-[85%] rounded-2xl px-4 py-3 md:px-5 md:py-4 text-sm md:text-base ${msg.role === "user"
                         ? "bg-emerald-500/20 text-white border border-emerald-500/30"
                         : "border border-white/10 bg-white/5"
                         }`}
                     >
                       {msg.role === "user" ? (
-                        <p className="text-white">{msg.content}</p>
+                        <p className="text-white whitespace-pre-wrap">{msg.content}</p>
                       ) : msg.content ? (
-                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white prose-headings:font-semibold prose-h1:text-xl prose-h2:text-lg prose-h3:text-base prose-p:text-zinc-300 prose-p:leading-relaxed prose-strong:text-white prose-strong:font-semibold prose-ul:text-zinc-300 prose-ol:text-zinc-300 prose-li:my-1 prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-white/10 prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline">
+                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-white prose-headings:font-semibold prose-h1:text-lg prose-h2:text-base prose-h3:text-sm prose-p:text-zinc-300 prose-p:leading-relaxed prose-strong:text-white prose-strong:font-semibold prose-ul:text-zinc-300 prose-ol:text-zinc-300 prose-li:my-1 prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[''] prose-code:after:content-[''] prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-white/10 prose-pre:p-3 prose-pre:text-xs md:prose-pre:text-sm prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {msg.content}
                           </ReactMarkdown>
                         </div>
                       ) : (
-                        <span className="inline-flex gap-1">
-                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" />
-                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.1s" }} />
-                          <span className="h-2 w-2 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.2s" }} />
+                        <span className="inline-flex gap-1 h-5 items-center">
+                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-400" />
+                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.1s" }} />
+                          <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-400" style={{ animationDelay: "0.2s" }} />
                         </span>
                       )}
                     </div>
                     {msg.role === "user" && (
-                      <div className="ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-400/10 text-sm">
+                      <div className="ml-2 md:ml-3 flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-400/10 text-xs md:text-sm mt-1">
                         👤
                       </div>
                     )}
                   </div>
                 ))}
 
-                {/* Typing Indicator */}
-                {isLoading && <TypingIndicator />}
+                {/* Typing Indicator if not streaming but waiting */}
+                {isLoading && !messages[messages.length - 1]?.content && <TypingIndicator />}
 
-                <div ref={messagesEndRef} />
+                <div ref={messagesEndRef} className="h-1" />
               </div>
             )}
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="border-t border-white/10 p-4">
+          <form onSubmit={handleSubmit} className="border-t border-white/10 p-3 md:p-4 bg-zinc-900/50 backdrop-blur-sm">
             {/* Compteur de messages */}
             {remaining <= 5 && remaining > 0 && (
-              <div className="mb-3 flex items-center justify-center gap-2 text-sm">
+              <div className="mb-2 flex items-center justify-center gap-2 text-xs">
                 <span className={`${remaining <= 2 ? 'text-orange-400' : 'text-zinc-400'}`}>
                   💬 {remaining} message{remaining > 1 ? 's' : ''} restant{remaining > 1 ? 's' : ''}
                 </span>
                 {remaining <= 2 && (
-                  <Link href="/contact" className="text-emerald-400 hover:underline text-xs">
+                  <Link href="/contact" className="text-emerald-400 hover:underline">
                     Continuer par email →
                   </Link>
                 )}
@@ -454,37 +483,34 @@ export default function AgentPage() {
 
             {/* Message limite atteinte */}
             {limitReached && (
-              <div className="mb-3 rounded-lg bg-orange-500/10 border border-orange-500/30 p-4 text-center">
-                <p className="text-orange-300 font-medium mb-2">
+              <div className="mb-3 rounded-lg bg-orange-500/10 border border-orange-500/30 p-3 md:p-4 text-center">
+                <p className="text-orange-300 font-medium mb-1 text-sm md:text-base">
                   ⚠️ Limite de messages gratuits atteinte
                 </p>
-                <p className="text-sm text-zinc-400 mb-3">
-                  Pour continuer notre échange, contactez-moi directement :
-                </p>
-                <div className="flex flex-wrap justify-center gap-3">
+                <div className="flex flex-wrap justify-center gap-2 mt-2">
                   <a
                     href="mailto:rww.warnier@gmail.com"
-                    className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300 hover:bg-emerald-500/30 transition"
+                    className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-500/30 transition"
                   >
-                    📧 rww.warnier@gmail.com
+                    📧 Email
                   </a>
                   <Link
                     href="/contact"
-                    className="rounded-full bg-white/10 border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/20 transition"
+                    className="rounded-full bg-white/10 border border-white/20 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20 transition"
                   >
-                    📅 Prendre rendez-vous
+                    📅 Rendez-vous
                   </Link>
                 </div>
               </div>
             )}
 
-            <div className="flex gap-3">
+            <div className="flex gap-2 md:gap-3">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={limitReached ? "Limite atteinte — Contactez-moi directement" : "Décrivez votre projet ou posez une question..."}
-                className={`flex-1 rounded-full border bg-white/5 px-6 py-3 text-white placeholder-zinc-500 outline-none transition ${limitReached
+                placeholder={limitReached ? "Limite atteinte..." : "Votre message..."}
+                className={`flex-1 rounded-full border bg-white/5 px-4 py-2.5 md:px-6 md:py-3 text-sm md:text-base text-white placeholder-zinc-500 outline-none transition ${limitReached
                   ? 'border-orange-500/30 cursor-not-allowed opacity-50'
                   : 'border-white/10 focus:border-emerald-400/50 focus:bg-white/10'
                   }`}
@@ -493,33 +519,40 @@ export default function AgentPage() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim() || limitReached}
-                className="rounded-full border border-emerald-400 bg-emerald-400/10 px-6 py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center rounded-full border border-emerald-400 bg-emerald-400/10 w-10 h-10 md:w-auto md:h-auto md:px-6 md:py-3 font-medium text-emerald-300 transition hover:bg-emerald-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "..." : "Envoyer"}
+                {isLoading ? (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-emerald-300 border-t-transparent" />
+                ) : (
+                  <>
+                    <span className="hidden md:inline">Envoyer</span>
+                    <span className="md:hidden">➤</span>
+                  </>
+                )}
               </button>
             </div>
           </form>
         </section>
 
         {/* Footer */}
-        <p className="text-center text-sm text-zinc-500">
-          Agent IA propulsé par {currentModel.name}.{" "}
+        <p className="text-center text-xs text-zinc-500 px-4">
+          IA expérimentale (peut faire des erreurs).{" "}
           <Link href="/contact" className="text-emerald-400 hover:underline">
-            Contactez-moi directement
-          </Link>{" "}
-          pour un échange plus approfondi.
+            Me contacter
+          </Link>
+          .
         </p>
 
         {/* Contenu statique indexable pour SEO */}
-        <section className="mt-16 glass-panel p-8 md:p-10">
-          <h2 className="text-2xl font-bold text-white mb-6">Questions fréquentes sur mes services</h2>
+        <section className="mt-8 md:mt-16 glass-panel p-6 md:p-10">
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Questions fréquentes</h2>
 
-          <div className="space-y-4">
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+          <div className="space-y-3 md:space-y-4">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Quelles sont vos compétences en Spark ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 Expert Spark depuis 7 ans (Scala et PySpark). Expérience en migration ETL legacy vers Spark,
                 optimisation de jobs (partitioning, broadcast joins, memory tuning), debugging de pipelines complexes.
                 Missions récentes chez BNP Paribas (migration ETL critiques), Orange (infrastructure Big Data),
@@ -527,22 +560,22 @@ export default function AgentPage() {
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Intervenez-vous en environnement bancaire ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 Oui, avec contraintes fortes : sécurité renforcée, traçabilité complète, RGPD strict,
                 séparation des accès, validation par équipes sécurité. Expérience BNP Paribas (sept-déc 2025)
                 sur flux financiers critiques avec SLA stricts. Familier des processus de validation grands comptes.
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Maîtrisez-vous Airflow en production ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 Oui, niveau expert. Orchestration de pipelines complexes (Airflow 2.x), patterns anti-fragiles
                 (idempotence, retry intelligents, alerting), monitoring Grafana/Prometheus, intégration CI/CD.
                 Déploiement Ansible automatisé chez Orange (Zeppelin, Airflow, Spark). Stack complémentaire
@@ -550,11 +583,11 @@ export default function AgentPage() {
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Proposez-vous de l'audit AI Act / RGPD ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 Oui, service en développement pour 2026-2027. Classification des risques IA (inacceptable, élevé,
                 limité, minimal), checklists obligations high-risk, documentation réglementaire, rapport d'audit.
                 Outil prototype "AI Compliance Audit Tool" disponible pour early adopters. Veille active sur
@@ -562,22 +595,22 @@ export default function AgentPage() {
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Quels sont vos tarifs et modalités ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 TJM 500€ pour missions freelance (Data Engineering, DevOps, Big Data). Projets sur-mesure à partir
                 de 2 000€ (sites web, agents IA, automatisations). Disponibilité immédiate, remote/hybride/présentiel
                 (IDF). Missions minimum 3 mois (renouvelable). Premier appel de 30 minutes gratuit pour diagnostic.
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Travaillez-vous avec des startups ou uniquement des grands comptes ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 Les deux. Grands comptes : BNP Paribas, Orange, Safran (missions longues, environnements complexes).
                 Startups/PME : projets sur-mesure (sites web, agents IA, automatisations n8n/Make).
                 Méthodologie adaptée selon la maturité : industrialisation lourde pour grands comptes,
@@ -585,11 +618,11 @@ export default function AgentPage() {
               </p>
             </details>
 
-            <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
-              <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
+            <details className="group rounded-xl border border-white/10 bg-white/5 p-4 md:p-6">
+              <summary className="cursor-pointer font-semibold text-white text-base md:text-lg hover:text-emerald-400 transition">
                 Stack technique complète ?
               </summary>
-              <p className="mt-3 text-zinc-300">
+              <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
                 <strong>Big Data :</strong> Spark (Scala/PySpark), Airflow, Hadoop, MinIO.
                 <strong>Langages :</strong> Python, Scala, TypeScript, SQL, Shell.
                 <strong>BDD :</strong> PostgreSQL, MSSQL, MariaDB.
@@ -601,10 +634,10 @@ export default function AgentPage() {
             </details>
           </div>
 
-          <div className="mt-8 text-center">
+          <div className="mt-6 md:mt-8 text-center">
             <Link
               href="/contact"
-              className="inline-block rounded-full bg-white px-8 py-3 font-medium text-black hover:bg-zinc-200 transition"
+              className="inline-block rounded-full bg-white px-6 py-2.5 md:px-8 md:py-3 text-sm md:text-base font-medium text-black hover:bg-zinc-200 transition"
             >
               Discuter de votre projet
             </Link>

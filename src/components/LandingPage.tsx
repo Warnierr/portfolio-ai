@@ -100,7 +100,7 @@ export default function LandingPage() {
 
   return (
     <>
-      <PageContainer className="gap-16">
+      <PageContainer className="gap-8 sm:gap-16">
         {/* ══════════════════════════════════════════════════════════════════
             HERO SECTION - Nouveau positionnement Ingénieur Produit Data
         ══════════════════════════════════════════════════════════════════ */}
@@ -222,10 +222,10 @@ export default function LandingPage() {
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
           >
             <Link
-              href="/projets"
+              href="#services"
               className="rounded-full bg-white px-8 py-4 font-bold text-black transition hover:bg-zinc-200"
             >
-              Voir mes réalisations →
+              Découvrir mes services →
             </Link>
             <Link
               href="/contact"
@@ -255,6 +255,37 @@ export default function LandingPage() {
             🔒 AI Compliance & Audit (AI Act, RGPD)
           </motion.div>
 
+          {/* Modes d'intervention - Moved here */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+            className="mt-12 mb-8 glass-panel p-6 max-w-4xl w-full"
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="text-left">
+                <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">Modes d&apos;intervention</p>
+                <h2 className="text-xl font-semibold text-white">Flexible selon vos besoins</h2>
+              </div>
+              <div className="flex flex-wrap gap-4 justify-center md:justify-end">
+                <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-3">
+                  <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <div>
+                    <p className="font-medium text-white text-left">Freelance</p>
+                    <p className="text-xs text-zinc-400">Missions data & produit</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/5 px-5 py-3">
+                  <div className="h-2 w-2 rounded-full bg-blue-400" />
+                  <div>
+                    <p className="font-medium text-white text-left">Long terme</p>
+                    <p className="text-xs text-zinc-400">CDI / Consulting</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Technologies & Outils */}
           <IconGrid />
         </section>
@@ -262,76 +293,17 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════════════════════════
             MÉTRIQUES ANIMÉES - Résultats Concrets
         ══════════════════════════════════════════════════════════════════ */}
-        <section className="relative">
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">Résultats Mesurables</h2>
-            <p className="mt-3 text-zinc-400">Impact concret sur vos projets data</p>
-          </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <AnimatedMetric
-              value={80}
-              suffix="%"
-              label="Réduction temps déploiement"
-              color="emerald"
-            />
-            <AnimatedMetric
-              value={75}
-              suffix="%"
-              label="Réduction coûts infrastructure"
-              color="blue"
-            />
-            <AnimatedMetric
-              value={99.9}
-              suffix="%"
-              decimals={1}
-              label="Uptime pipelines critiques"
-              color="purple"
-            />
-            <AnimatedMetric
-              value={100}
-              suffix="%"
-              label="Automatisation CI/CD"
-              color="orange"
-            />
-          </div>
-        </section>
 
         {/* ══════════════════════════════════════════════════════════════════
             WORK MODES - Modes d'intervention
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.section
-          className="glass-panel p-6 md:p-8"
-          {...fadeUp}
-        >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">Modes d&apos;intervention</p>
-              <h2 className="text-xl font-semibold text-white">Flexible selon vos besoins</h2>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-5 py-3">
-                <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <div>
-                  <p className="font-medium text-white">Freelance</p>
-                  <p className="text-xs text-zinc-400">Missions data & produit</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/5 px-5 py-3">
-                <div className="h-2 w-2 rounded-full bg-blue-400" />
-                <div>
-                  <p className="font-medium text-white">Long terme</p>
-                  <p className="text-xs text-zinc-400">CDI / Consulting</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
+
 
         {/* ══════════════════════════════════════════════════════════════════
             SERVICES - Orientés valeur, pas technos
         ══════════════════════════════════════════════════════════════════ */}
-        <section>
+        <section id="services" className="scroll-mt-24">
           <div className="mb-8 text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-2">Services</p>
             <h2 className="text-2xl font-semibold text-white md:text-3xl">Ce que je construis</h2>
