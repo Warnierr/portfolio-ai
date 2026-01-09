@@ -222,7 +222,7 @@ export default function LandingPage() {
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
           >
             <Link
-              href="#services"
+              href="/services"
               className="rounded-full bg-white px-8 py-4 font-bold text-black transition hover:bg-zinc-200"
             >
               Découvrir mes services →
