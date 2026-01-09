@@ -12,6 +12,7 @@ export type Product = {
     icon: string;
     color: string;
     demoUrl?: string;
+    githubUrl?: string;
 
     // Sections détaillées
     painPoints: {
