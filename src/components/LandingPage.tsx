@@ -10,7 +10,7 @@ import BackgroundDecoration from "@/components/BackgroundDecoration";
 import IconGrid from "@/components/IconGrid";
 import TechAccordion from "@/components/TechAccordion";
 import AnimatedMetric from "@/components/AnimatedMetric";
-import Testimonials from "@/components/Testimonials";
+
 
 const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 32 },
@@ -388,18 +388,18 @@ export default function LandingPage() {
               <div
                 key={product.name}
                 className={`rounded-xl border bg-white/5 p-4 sm:p-6 ${product.color === "emerald"
-                    ? "border-emerald-500/20"
-                    : product.color === "purple"
-                      ? "border-purple-500/20"
-                      : "border-blue-500/20"
+                  ? "border-emerald-500/20"
+                  : product.color === "purple"
+                    ? "border-purple-500/20"
+                    : "border-blue-500/20"
                   }`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className={`text-xs px-2 py-0.5 rounded ${product.color === "emerald"
-                      ? "bg-emerald-500/20 text-emerald-300"
-                      : product.color === "purple"
-                        ? "bg-purple-500/20 text-purple-300"
-                        : "bg-blue-500/20 text-blue-300"
+                    ? "bg-emerald-500/20 text-emerald-300"
+                    : product.color === "purple"
+                      ? "bg-purple-500/20 text-purple-300"
+                      : "bg-blue-500/20 text-blue-300"
                     }`}>
                     {product.status}
                   </span>
@@ -408,10 +408,10 @@ export default function LandingPage() {
                   {product.name}
                 </h3>
                 <p className={`text-sm mt-1 ${product.color === "emerald"
-                    ? "text-emerald-400"
-                    : product.color === "purple"
-                      ? "text-purple-400"
-                      : "text-blue-400"
+                  ? "text-emerald-400"
+                  : product.color === "purple"
+                    ? "text-purple-400"
+                    : "text-blue-400"
                   }`}>
                   {product.tagline}
                 </p>
@@ -421,10 +421,10 @@ export default function LandingPage() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   {product.benefits.map((benefit, idx) => (
                     <span key={idx} className={`text-xs ${product.color === "emerald"
-                        ? "text-emerald-300"
-                        : product.color === "purple"
-                          ? "text-purple-300"
-                          : "text-blue-300"
+                      ? "text-emerald-300"
+                      : product.color === "purple"
+                        ? "text-purple-300"
+                        : "text-blue-300"
                       }`}>
                       ✓ {benefit}
                       {idx < product.benefits.length - 1 && " •"}
@@ -445,10 +445,10 @@ export default function LandingPage() {
                   target={product.externalLink ? "_blank" : undefined}
                   rel={product.externalLink ? "noopener noreferrer" : undefined}
                   className={`inline-block mt-4 text-sm transition ${product.color === "emerald"
-                      ? "text-emerald-400 hover:text-emerald-300"
-                      : product.color === "purple"
-                        ? "text-purple-400 hover:text-purple-300"
-                        : "text-blue-400 hover:text-blue-300"
+                    ? "text-emerald-400 hover:text-emerald-300"
+                    : product.color === "purple"
+                      ? "text-purple-400 hover:text-purple-300"
+                      : "text-blue-400 hover:text-blue-300"
                     }`}
                 >
                   {product.externalLink ? "Visiter l'app →" : "Découvrir →"}
@@ -505,10 +505,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            TESTIMONIALS - Témoignages Clients
-        ══════════════════════════════════════════════════════════════════ */}
-        <Testimonials />
+
 
         {/* ══════════════════════════════════════════════════════════════════
             FEATURED PROJECTS - Focus impact

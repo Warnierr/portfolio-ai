@@ -158,13 +158,14 @@ export const products: Product[] = [
 
     {
         slug: "ai-act-auditor",
-        name: "AI Act Audit",
-        tagline: "Audit rapide de conformité à la loi européenne sur l'IA",
-        status: "beta",
-        eta: "Disponible en beta",
+        name: "AI Act Auditor",
+        tagline: "Audit your AI for EU Compliance",
+        status: "live",
+        eta: "Disponible",
         icon: "⚖️",
         color: "purple",
         demoUrl: "https://aiact.kenshu.dev",
+        githubUrl: "https://github.com/Warnierr/AI-Act-Auditor",
 
         painPoints: {
             title: "Pourquoi la conformité AI Act est un défi majeur pour les entreprises",
