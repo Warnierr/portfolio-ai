@@ -240,7 +240,7 @@ module.exports = {
 ## 📧 Email professionnel (IMPORTANT)
 
 ### Actuellement
-`rww.warnier@gmail.com` → ❌ Peu professionnel
+`contact@kenshu.dev` → ✅ Pro (domaine dédié)
 
 ### Après achat domaine
 `contact@raoufwarnier.com` → ✅ Professionnel
@@ -373,4 +373,4 @@ module.exports = {
 
 ---
 
-**Questions ?** Contacte-moi : rww.warnier@gmail.com | +33 7 49 41 63 55
+**Questions ?** Contacte-moi : contact@kenshu.dev | +33 7 49 41 63 55

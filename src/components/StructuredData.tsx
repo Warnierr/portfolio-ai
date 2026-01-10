@@ -19,7 +19,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         "https://github.com/Warnierr",
         "https://linkedin.com/in/raouf-warnier"
       ],
-      email: "rww.warnier@gmail.com",
+      email: "contact@kenshu.dev",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Paris",

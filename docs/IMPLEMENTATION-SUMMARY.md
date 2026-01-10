@@ -297,7 +297,7 @@ Déploiement : En cours sur Vercel
 ## 📞 Contact & Support
 
 **Développeur** : Raouf Warnier  
-**Email** : rww.warnier@gmail.com  
+**Email** : contact@kenshu.dev  
 **Téléphone** : +33 7 49 41 63 55  
 **Site** : [kenshu.dev](https://kenshu.dev)
 

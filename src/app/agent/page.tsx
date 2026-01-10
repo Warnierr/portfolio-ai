@@ -227,7 +227,7 @@ export default function AgentPage() {
         ...prev,
         {
           role: "assistant",
-          content: errorMessage || "Une erreur s'est produite. Contactez-moi directement : rww.warnier@gmail.com",
+          content: errorMessage || "Une erreur s'est produite. Contactez-moi directement : contact@kenshu.dev",
         },
       ]);
     } finally {
@@ -489,7 +489,7 @@ export default function AgentPage() {
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 mt-2">
                   <a
-                    href="mailto:rww.warnier@gmail.com"
+                    href="mailto:contact@kenshu.dev"
                     className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-500/30 transition"
                   >
                     📧 Email

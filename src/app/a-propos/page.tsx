@@ -343,8 +343,8 @@ export default function AProposPage() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-white/10 bg-white/5 p-6">
             <p className="text-sm text-zinc-400">Email</p>
-            <a href="mailto:rww.warnier@gmail.com" className="text-lg font-medium text-white hover:text-emerald-300 transition">
-              rww.warnier@gmail.com
+            <a href="mailto:contact@kenshu.dev" className="text-lg font-medium text-white hover:text-emerald-300 transition">
+              contact@kenshu.dev
             </a>
           </div>
 
@@ -392,7 +392,7 @@ export default function AProposPage() {
             "jobTitle": "Data Engineer, AI Product Builder, DevOps Specialist",
             "description": "Expert Data Engineering, AI Product Builder & DevOps Automation avec 7+ ans d'expérience. Spécialisé en pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS et automatisation.",
             "url": "https://kenshu.dev",
-            "email": "rww.warnier@gmail.com",
+            "email": "contact@kenshu.dev",
             "telephone": "+33749416355",
             "address": {
               "@type": "PostalAddress",

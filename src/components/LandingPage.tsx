@@ -557,10 +557,10 @@ export default function LandingPage() {
               Me contacter
             </Link>
             <a
-              href="mailto:rww.warnier@gmail.com"
+              href="mailto:contact@kenshu.dev"
               className="text-sm text-zinc-400 hover:text-white transition"
             >
-              rww.warnier@gmail.com
+              contact@kenshu.dev
             </a>
           </div>
         </motion.section>

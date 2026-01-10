@@ -61,7 +61,7 @@ Experience: 7+ years in production environments
 - Web: Next.js, React, Tailwind, Prisma
 
 ## Contact
-Email: rww.warnier@gmail.com
+Email: contact@kenshu.dev
 Phone: +33 7 49 41 63 55
 Website: https://kenshu.dev
 LinkedIn: https://linkedin.com/in/raouf-warnier

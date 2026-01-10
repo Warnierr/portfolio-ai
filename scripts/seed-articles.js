@@ -189,7 +189,7 @@ Chez BNP Paribas, cette approche nous a permis de réduire les incidents de 80% 
 ---
 
 **Besoin d'aide pour industrialiser vos pipelines Spark ?**  
-Contactez-moi : rww.warnier@gmail.com | +33 7 49 41 63 55`,
+Contactez-moi : contact@kenshu.dev | +33 7 49 41 63 55`,
     category: "data_engineering",
     tags: ["spark", "big-data", "devops", "production"],
     status: "published",
@@ -347,7 +347,7 @@ DataOps n'est pas qu'un buzzword. Chez Orange, nous avons prouvé qu'une approch
 ---
 
 **Vous voulez implémenter DataOps dans votre équipe ?**  
-Parlons-en : rww.warnier@gmail.com`,
+Parlons-en : contact@kenshu.dev`,
     category: "devops",
     tags: ["dataops", "ansible", "ci-cd", "automation"],
     status: "published",
@@ -572,7 +572,7 @@ L'AI Act n'est pas une contrainte, c'est une **opportunité** de construire des 
 **Besoin d'un audit de conformité AI Act ?**  
 J'ai développé un outil gratuit : [AI Act Auditor](https://kenshu.dev/ai-act-auditor)
 
-Contact : rww.warnier@gmail.com`,
+Contact : contact@kenshu.dev`,
     category: "ai_regulation",
     tags: ["ai-act", "rgpd", "compliance", "fairness"],
     status: "published",

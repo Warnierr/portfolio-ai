@@ -230,7 +230,7 @@ export async function GET() {
     },
     contact: {
       author: "Raouf Warnier",
-      email: "rww.warnier@gmail.com",
+      email: "contact@kenshu.dev",
       website: "https://kenshu.dev",
     },
   });

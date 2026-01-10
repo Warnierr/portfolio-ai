@@ -341,7 +341,7 @@ export default function FreelanceSparkAirflowPage() {
             "jobTitle": "Data Engineer Freelance — Apache Spark & Airflow Expert",
             "description": "Data Engineer freelance spécialisé Apache Spark (Scala, PySpark) et Apache Airflow. 7+ ans d'expérience en production chez BNP Paribas, Orange, Safran, ACC Industrie 4.0.",
             "url": "https://kenshu.dev/freelance-data-engineer-spark-airflow",
-            "email": "rww.warnier@gmail.com",
+            "email": "contact@kenshu.dev",
             "telephone": "+33749416355",
             "knowsAbout": [
               "Apache Spark",

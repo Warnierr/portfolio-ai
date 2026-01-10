@@ -38,7 +38,7 @@ Actuellement disponible en **freelance** pour des missions data et produit.
 - Éthique des données et qualité industrielle
 
 ## Contact
-- Email: rww.warnier@gmail.com
+- Email: contact@kenshu.dev
 - Téléphone: +33 7 49 41 63 55
 - LinkedIn: @raouf-warnier
 - Localisation: France (télétravail ou présentiel) + Europe
@@ -156,7 +156,7 @@ En tant qu'**Ingénieur Produit Data**, je conçois des systèmes data end-to-en
 
 ### Prochaine étape
 Décrivez-moi votre besoin et je vous dis si je suis le bon profil. Sinon, contactez-moi directement :
-- 📧 rww.warnier@gmail.com
+- 📧 contact@kenshu.dev
 - 📞 +33 7 49 41 63 55
 
 ## À éviter
@@ -193,7 +193,7 @@ export async function POST(req: Request) {
     return new Response(
       JSON.stringify({
         error: "limit_reached",
-        message: "Vous avez atteint la limite de messages gratuits. Contactez-moi directement : rww.warnier@gmail.com ou +33 7 49 41 63 55",
+        message: "Vous avez atteint la limite de messages gratuits. Contactez-moi directement : contact@kenshu.dev ou +33 7 49 41 63 55",
         remaining: 0,
       }),
       {
@@ -240,7 +240,7 @@ export async function POST(req: Request) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("[Chat API] OpenRouter error:", response.status, errorText);
-      return new Response(`Erreur temporaire. Contactez-moi directement : rww.warnier@gmail.com`, { status: 500 });
+      return new Response(`Erreur temporaire. Contactez-moi directement : contact@kenshu.dev`, { status: 500 });
     }
 
     console.log("[Chat API] Stream started successfully");
@@ -312,7 +312,7 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error("[Chat API] ERROR:", error.message || error);
-    return new Response(`Erreur technique. Contactez-moi : rww.warnier@gmail.com`, {
+    return new Response(`Erreur technique. Contactez-moi : contact@kenshu.dev`, {
       status: 500,
     });
   }

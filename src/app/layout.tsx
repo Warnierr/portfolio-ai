@@ -334,7 +334,7 @@ export default function RootLayout({
               description: "Services de Data Engineering, développement d'applications IA et automatisation DevOps. Pipelines Big Data, plateformes analytics, applications SaaS sur-mesure.",
               url: "https://kenshu.dev",
               telephone: "+33749416355",
-              email: "rww.warnier@gmail.com",
+              email: "contact@kenshu.dev",
               priceRange: "500€/jour",
               address: {
                 "@type": "PostalAddress",
