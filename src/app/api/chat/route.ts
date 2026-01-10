@@ -284,7 +284,7 @@ export async function POST(req: Request) {
           }
         }
 
-        // Log l'interaction
+        // Log l'interaction (non-bloquant : on ignore les erreurs DB pour ne pas casser la réponse)
         try {
           const { logInteraction } = await import("@/lib/db-utils");
           await logInteraction(
@@ -292,7 +292,10 @@ export async function POST(req: Request) {
             fullResponse
           );
         } catch (e) {
-          console.error("[Chat API] Log error:", e);
+          console.warn(
+            "[Chat API] Log error (ignored so response can complete):",
+            e
+          );
         }
 
         controller.close();
