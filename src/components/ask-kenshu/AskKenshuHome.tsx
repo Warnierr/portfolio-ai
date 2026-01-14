@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import ProfileSelector from "./ProfileSelector";
 
 type CardKey = "web" | "apps" | "automation" | "data";
 
@@ -384,17 +385,46 @@ export default function AskKenshuHome() {
                         {msg.role === "user" ? (
                           <p className="text-white whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                         ) : msg.content ? (
-                          <div className="prose prose-invert prose-base max-w-none 
-                            prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
-                            prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
-                            prose-strong:text-emerald-300 prose-strong:font-bold
-                            prose-ul:text-zinc-300 prose-ul:my-4 prose-li:my-2
-                            prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                            prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:text-emerald-300 prose-a:transition-colors">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                              {msg.content}
-                            </ReactMarkdown>
-                          </div>
+                          <>
+                            {msg.content.includes("@@@PROFILE_SELECTOR@@@") ? (
+                              <div>
+                                <div className="prose prose-invert prose-base max-w-none 
+                                  prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
+                                  prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
+                                  prose-strong:text-emerald-300 prose-strong:font-bold">
+                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {msg.content.split("@@@PROFILE_SELECTOR@@@")[0]}
+                                  </ReactMarkdown>
+                                </div>
+
+                                <ProfileSelector onSelect={(id, label) => {
+                                  // Trigger send automatically
+                                  onSend(`Je suis ${label.toLowerCase()} ${id === 'curious' ? 'et je découvre' : ''}`);
+                                }} />
+
+                                <div className="prose prose-invert prose-base max-w-none 
+                                  prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
+                                  prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
+                                  prose-strong:text-emerald-300 prose-strong:font-bold">
+                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {msg.content.split("@@@PROFILE_SELECTOR@@@")[1]}
+                                  </ReactMarkdown>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="prose prose-invert prose-base max-w-none 
+                                prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
+                                prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
+                                prose-strong:text-emerald-300 prose-strong:font-bold
+                                prose-ul:text-zinc-300 prose-ul:my-4 prose-li:my-2
+                                prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
+                                prose-a:inline-flex prose-a:items-center prose-a:gap-2 prose-a:px-4 prose-a:py-2 prose-a:my-2 prose-a:rounded-lg prose-a:bg-white/5 prose-a:border prose-a:border-white/10 prose-a:text-emerald-400 prose-a:no-underline prose-a:font-medium prose-a:transition-all hover:prose-a:bg-emerald-500/10 hover:prose-a:border-emerald-500/30 hover:prose-a:scale-[1.02] hover:prose-a:shadow-lg hover:prose-a:shadow-emerald-500/10">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                  {msg.content}
+                                </ReactMarkdown>
+                              </div>
+                            )}
+                          </>
                         ) : (
                           <span className="inline-flex gap-1 h-5 items-center">
                             <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-500/50" />

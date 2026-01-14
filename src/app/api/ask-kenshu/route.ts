@@ -17,14 +17,7 @@ Raouf est un **développeur passionné** par la création de projets innovants e
 
 Pour mieux vous guider, j'aimerais savoir qui vous êtes 😊
 
-
-**Êtes-vous :**
-
-- 👨‍💻 **Développeur** ou tech lead ?
-- 🚀 **Entrepreneur** ou porteur de projet ?
-- 💼 **Recruteur** ou responsable RH ?
-- 🤔 **Juste curieux** de découvrir le portfolio ?
-
+@@@PROFILE_SELECTOR@@@
 
 N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
 }
@@ -155,7 +148,7 @@ Termine TOUJOURS par des boutons formatés avec emoji :
 `;
 
 
-const MAX_REQUESTS = 10;
+const MAX_REQUESTS = 50;
 const COOKIE_NAME = "chat_requests";
 const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 hours
 
