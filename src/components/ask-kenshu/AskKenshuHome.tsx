@@ -274,9 +274,9 @@ export default function AskKenshuHome() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
       {/* Main Content */}
-      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-6 lg:grid-cols-12 lg:py-10">
+      <main className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8">
         {/* Chat Section */}
-        <section className="lg:col-span-7">
+        <section className="lg:col-span-8">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-6 shadow-2xl backdrop-blur-sm">
             {/* Chat Header */}
             <div className="mb-4 flex items-start justify-between">
@@ -455,7 +455,7 @@ export default function AskKenshuHome() {
         </section>
 
         {/* Cards Section */}
-        <aside className="lg:col-span-5">
+        <aside className="lg:col-span-4">
           <div className="mb-4">
             <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">
               Ce que je fais

@@ -6,7 +6,7 @@ import ContentToggle from "@/components/ContentToggle";
 
 export const metadata: Metadata = {
     title: "Services Data Engineering & IA | Kenshu",
-    description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS. TJM 500€.",
+    description: "Missions freelance, projets sur-mesure et produits IA. Data Engineering, DevOps, automatisation et applications SaaS.",
     alternates: {
         canonical: "/services",
     },
@@ -39,7 +39,7 @@ const services = [
                 "Architecture Data Lake / Data Warehouse",
             ],
         },
-        pricing: "TJM 500€",
+        pricing: "Sur devis",
         cta: "Discuter d'une mission",
         color: "emerald",
     },
@@ -64,7 +64,7 @@ const services = [
                 "Chatbots et agents IA conversationnels",
             ],
         },
-        pricing: "À partir de 2 000€",
+        pricing: "Sur devis",
         cta: "Demander un devis",
         color: "blue",
     },
@@ -233,11 +233,11 @@ export default function ServicesPage() {
                 <div className="space-y-4">
                     <details className="group rounded-xl border border-white/10 bg-white/5 p-6">
                         <summary className="cursor-pointer font-semibold text-white text-lg hover:text-emerald-400 transition">
-                            Quel est le TJM d'un Data Engineer freelance senior ?
+                            Comment fonctionne la tarification ?
                         </summary>
                         <p className="mt-3 text-zinc-300">
-                            450€ par jour pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie).
-                            Ce tarif inclut l'analyse, le développement, la documentation et le transfert de compétences.
+                            Chaque projet est unique. Je propose un devis détaillé après un premier échange pour bien comprendre vos besoins.
+                            Ce devis inclut l'analyse, le développement, la documentation et le transfert de compétences.
                         </p>
                     </details>
 
@@ -307,10 +307,10 @@ export default function ServicesPage() {
                         "mainEntity": [
                             {
                                 "@type": "Question",
-                                "name": "Quel est le TJM d'un Data Engineer freelance senior ?",
+                                "name": "Comment fonctionne la tarification ?",
                                 "acceptedAnswer": {
                                     "@type": "Answer",
-                                    "text": "450€ par jour pour un profil senior avec expertise DataOps/IA et expérience en environnements critiques (Banque, Telecom, Industrie). Ce tarif inclut l'analyse, le développement, la documentation et le transfert de compétences."
+                                    "text": "Chaque projet est unique. Je propose un devis détaillé après un premier échange pour bien comprendre vos besoins. Ce devis inclut l'analyse, le développement, la documentation et le transfert de compétences."
                                 }
                             },
                             {

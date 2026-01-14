@@ -37,7 +37,7 @@ const navItems: NavItem[] = [
 export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
-    "Expert Data Engineering, AI Product Builder & DevOps. Pipelines Big Data, applications IA, audit AI Act & RGPD. TJM 500€. Disponible immédiatement en France et remote.",
+    "Expert Data Engineering, AI Product Builder & DevOps. Pipelines Big Data, applications IA, audit AI Act & RGPD. Disponible immédiatement en France et remote.",
   metadataBase: new URL("https://kenshu.dev"),
   alternates: {
     canonical: "/",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     "Data Engineer Spark Scala",
     "Consultant Big Data BNP Paribas Orange Safran",
     "Freelance Data Engineering remote",
-    "TJM Data Engineer 500",
+    "Data Engineer Spark Scala",
 
     // Mots-clés 2026
     "industrialisation IA souveraineté",
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps",
     description:
-      "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. TJM 500€. Disponible immédiatement.",
+      "Expert Data Engineering, AI & DevOps. Pipelines Big Data, applications IA, plateformes SaaS. Disponible immédiatement.",
     url: "https://kenshu.dev",
     siteName: "Raouf Warnier - Data Engineering & AI",
     locale: "fr_FR",

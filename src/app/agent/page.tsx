@@ -600,8 +600,7 @@ export default function AgentPage() {
                 Quels sont vos tarifs et modalités ?
               </summary>
               <p className="mt-2 md:mt-3 text-sm md:text-base text-zinc-300">
-                TJM 500€ pour missions freelance (Data Engineering, DevOps, Big Data). Projets sur-mesure à partir
-                de 2 000€ (sites web, agents IA, automatisations). Disponibilité immédiate, remote/hybride/présentiel
+                Tarification sur devis selon le projet. Disponibilité immédiate, remote/hybride/présentiel
                 (IDF). Missions minimum 3 mois (renouvelable). Premier appel de 30 minutes gratuit pour diagnostic.
               </p>
             </details>

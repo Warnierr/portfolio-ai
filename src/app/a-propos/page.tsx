@@ -34,7 +34,7 @@ export default function AProposPage() {
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-300">
-            TJM 500€
+            Freelance
           </span>
           <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm text-blue-300">
             Disponible immédiatement
@@ -288,8 +288,8 @@ export default function AProposPage() {
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6">
             <p className="text-xs uppercase tracking-wider text-emerald-300">Freelance</p>
-            <p className="text-3xl font-bold text-white mt-2">450€</p>
-            <p className="text-sm text-zinc-400 mt-1">par jour (TJM)</p>
+            <p className="text-2xl font-bold text-white mt-2">Sur devis</p>
+            <p className="text-sm text-zinc-400 mt-1">selon le projet</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-300">
               <li>• Missions Data Engineering</li>
               <li>• Infrastructure DevOps</li>
@@ -300,8 +300,8 @@ export default function AProposPage() {
 
           <div className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-6">
             <p className="text-xs uppercase tracking-wider text-blue-300">Projets sur-mesure</p>
-            <p className="text-3xl font-bold text-white mt-2">2 000€</p>
-            <p className="text-sm text-zinc-400 mt-1">à partir de</p>
+            <p className="text-2xl font-bold text-white mt-2">Sur devis</p>
+            <p className="text-sm text-zinc-400 mt-1">selon la complexité</p>
             <ul className="mt-4 space-y-2 text-sm text-zinc-300">
               <li>• Sites web (Next.js)</li>
               <li>• Agents IA & chatbots</li>
@@ -349,9 +349,9 @@ export default function AProposPage() {
           </div>
 
           <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <p className="text-sm text-zinc-400">Téléphone</p>
-            <a href="tel:+33749416355" className="text-lg font-medium text-white hover:text-emerald-300 transition">
-              +33 7 49 41 63 55
+            <p className="text-sm text-zinc-400">Calendrier</p>
+            <a href="https://cal.com/raouf-warnier-zatji4" target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-white hover:text-emerald-300 transition">
+              Réserver un appel
             </a>
           </div>
 
@@ -393,7 +393,6 @@ export default function AProposPage() {
             "description": "Expert Data Engineering, AI Product Builder & DevOps Automation avec 7+ ans d'expérience. Spécialisé en pipelines Big Data (Spark, Airflow), applications IA, plateformes SaaS et automatisation.",
             "url": "https://kenshu.dev",
             "email": "contact@kenshu.dev",
-            "telephone": "+33749416355",
             "address": {
               "@type": "PostalAddress",
               "addressCountry": "FR",
@@ -441,15 +440,6 @@ export default function AProposPage() {
               "@type": "Occupation",
               "name": "Data Engineer",
               "occupationalCategory": "15-1254.00",
-              "estimatedSalary": {
-                "@type": "MonetaryAmount",
-                "currency": "EUR",
-                "value": {
-                  "@type": "QuantitativeValue",
-                  "value": 450,
-                  "unitText": "DAY"
-                }
-              },
               "experienceRequirements": "7+ years",
               "skills": "Apache Spark, Apache Airflow, Python, Scala, DevOps, Big Data"
             },

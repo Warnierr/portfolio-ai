@@ -304,9 +304,9 @@ export default function AIActAuditPage() {
           <div className="border-l-2 border-amber-500/30 pl-6">
             <h3 className="text-lg font-semibold text-white mb-2">Combien coûte un audit AI Act ?</h3>
             <p className="text-zinc-300">
-              Selon complexité : audit léger (1 système simple) = 3-5 jours freelance (1 350-2 250€).
-              Audit complet avec roadmap = 2-3 semaines (4 500-6 750€).
-              Accompagnement complet (audit + mise en conformité) = plusieurs mois, mission freelance classique (TJM 500€).
+              Tarification sur devis selon la complexité du système à auditer.
+              Accompagnement complet (audit + mise en conformité) = plusieurs mois.
+              Premier diagnostic gratuit (30 min) pour évaluer vos besoins.
             </p>
           </div>
 
