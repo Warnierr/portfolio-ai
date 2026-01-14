@@ -151,13 +151,13 @@ export async function POST(req: Request) {
                 "X-Title": "Ask Kenshu - Portfolio Navigation",
             },
             body: JSON.stringify({
-                model: "anthropic/claude-3.5-sonnet",
+                model: "google/gemini-2.0-flash-exp:free",
                 messages: [
                     { role: "system", content: SYSTEM_PROMPT },
                     ...messages,
                 ],
                 stream: true,
-                temperature: 0.7,
+                temperature: 0.8,
             }),
         });
 
