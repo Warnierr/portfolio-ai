@@ -68,8 +68,7 @@ ${buildNavigationContext()}
 ### Boutons & Liens (FORMAT SPÉCIAL - TRÈS IMPORTANT)
 Pour TOUS les liens, utilise le format avec emoji + gras + markdown :
 
-EXEMPLE PARFAIT de bouton :
-👉 **[Me contacter](/contact)**
+EXEMPLE PARFAIT de bouton : 👉 **[Me contacter](/contact)**
 
 Pour plusieurs boutons, ajoute un titre :
 
