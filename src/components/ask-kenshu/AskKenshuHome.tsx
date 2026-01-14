@@ -21,7 +21,7 @@ const CARDS: Array<{
       key: "web",
       title: "Création de sites web",
       subtitle: "Sites vitrines, landing pages, SEO",
-      href: "/services#web",
+      href: "/services",
       imgSrc: "/ask-kenshu/web.png",
       color: "emerald",
     },
@@ -29,7 +29,7 @@ const CARDS: Array<{
       key: "apps",
       title: "Développement d'apps",
       subtitle: "MVP, outils internes, produits digitaux",
-      href: "/services#apps",
+      href: "/services",
       imgSrc: "/ask-kenshu/apps.png",
       color: "blue",
     },
@@ -37,7 +37,7 @@ const CARDS: Array<{
       key: "automation",
       title: "Automatisation (n8n)",
       subtitle: "Process, CRM, emails, intégrations",
-      href: "/services#automation",
+      href: "/services",
       imgSrc: "/ask-kenshu/n8n.png",
       color: "purple",
     },
@@ -52,6 +52,22 @@ const CARDS: Array<{
   ];
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
+
+const WELCOME_MESSAGE = `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
+
+Je fonctionne avec **Grok 4.1-fast** par xAI pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
+
+Raouf est un **développeur passionné** par la création de projets innovants en **Data Engineering** et **Intelligence Artificielle**. Je peux vous parler de :
+
+- 🏢 **Ses expériences professionnelles** : BNP Paribas, Orange, Safran, ACC
+- 💻 **Ses projets en cours** : Budget AI, AI Compliance Tool, automatisations
+- 🎯 **Comment il peut vous aider** sur votre projet data ou web
+
+Pour mieux vous guider, j'aimerais savoir qui vous êtes 😊
+
+@@@PROFILE_SELECTOR@@@
+
+N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
 
 const MAX_REQUESTS = 10;
 const COOKIE_NAME = "chat_requests";
@@ -88,7 +104,7 @@ export default function AskKenshuHome() {
     []
   );
 
-  // Load history from localStorage OR fetch welcome message
+  // Load history from localStorage OR use welcome message
   useEffect(() => {
     const savedMessages = localStorage.getItem("ask_kenshu_history");
     if (savedMessages) {
@@ -99,33 +115,12 @@ export default function AskKenshuHome() {
         console.error("Error loading chat history:", e);
       }
     } else {
-      // First visit - fetch welcome message
-      fetchWelcomeMessage();
+      // First visit - use local welcome message
+      setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
     }
   }, []);
 
-  const fetchWelcomeMessage = async () => {
-    try {
-      const response = await fetch("/api/ask-kenshu", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [] }), // Empty array triggers welcome message
-      });
 
-      if (response.ok) {
-        const welcomeText = await response.text();
-        setMessages([{ role: "assistant", content: welcomeText }]);
-
-        // Update remaining count from header
-        const remainingHeader = response.headers.get("X-Requests-Remaining");
-        if (remainingHeader) {
-          setRemaining(parseInt(remainingHeader, 10));
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching welcome message:", error);
-    }
-  };
 
   // Save history to localStorage
   useEffect(() => {
@@ -278,7 +273,7 @@ export default function AskKenshuHome() {
   }
 
   function handleNewConversation() {
-    setMessages([]);
+    setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
     setInput("");
     localStorage.removeItem("ask_kenshu_history");
     shouldAutoScrollRef.current = true;
@@ -512,83 +507,87 @@ export default function AskKenshuHome() {
         </section>
 
         {/* Cards Section */}
-        <aside className="lg:col-span-4">
-          <div className="mb-4">
-            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">
-              Ce que je fais
-            </p>
-            <h2 className="text-xl font-semibold text-white">
-              Services & Expertise
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {CARDS.map((c) => (
-              <Link
-                key={c.key}
-                href={c.href}
-                className={`group rounded-2xl border bg-white/5 p-3 shadow-lg transition-all hover:bg-white/10 hover:shadow-xl ${getCardColorClasses(c.color)}`}
-              >
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950/50 aspect-[4/3]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={c.imgSrc}
-                    alt={c.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    onError={(e) => {
-                      // Fallback if image doesn't exist
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                </div>
-                <div className="mt-3">
-                  <div className="text-sm font-semibold text-white group-hover:text-emerald-200 transition-colors">
-                    {c.title}
-                  </div>
-                  <div className="mt-1 text-xs text-zinc-400">
-                    {c.subtitle}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* Additional Info Card */}
-          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-sm font-medium text-white">Disponible bientôt</span>
+        <aside className="lg:col-span-4 flex flex-col h-full justify-between">
+          <div>
+            <div className="mb-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">
+                Ce que je fais
+              </p>
+              <h2 className="text-xl font-semibold text-white">
+                Services & Expertise
+              </h2>
             </div>
-            <p className="text-sm text-zinc-400">
-              Freelance Data Engineer & AI Product Builder. Disponible pour missions courtes ou longues.
-            </p>
-            <div className="mt-3 flex gap-2">
-              <Link
-                href="/projets"
-                className="text-xs text-zinc-400 hover:text-white transition"
-              >
-                Voir mes projets →
-              </Link>
-              <span className="text-zinc-600">•</span>
-              <Link
-                href="/contact"
-                className="text-xs text-emerald-400 hover:text-emerald-300 transition"
-              >
-                Me contacter
-              </Link>
+
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {CARDS.map((c) => (
+                <Link
+                  key={c.key}
+                  href={c.href}
+                  className={`group rounded-2xl border bg-white/5 p-3 shadow-lg transition-all hover:bg-white/10 hover:shadow-xl ${getCardColorClasses(c.color)}`}
+                >
+                  <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950/50 aspect-[4/3]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={c.imgSrc}
+                      alt={c.title}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback if image doesn't exist
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  </div>
+                  <div className="mt-3">
+                    <div className="text-sm font-semibold text-white group-hover:text-emerald-200 transition-colors">
+                      {c.title}
+                    </div>
+                    <div className="mt-1 text-xs text-zinc-400">
+                      {c.subtitle}
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Clients */}
-          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
-              Environnements critiques
-            </p>
-            <div className="flex flex-wrap gap-3 text-sm text-zinc-400">
-              <span className="hover:text-white transition">BNP Paribas</span>
-              <span className="hover:text-white transition">Orange</span>
-              <span className="hover:text-white transition">Safran</span>
-              <span className="hover:text-white transition">ACC</span>
+          <div className="flex flex-col gap-4">
+            {/* Additional Info Card */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-sm font-medium text-white">Disponible bientôt</span>
+              </div>
+              <p className="text-sm text-zinc-400">
+                Freelance Data Engineer & AI Product Builder. Disponible pour missions courtes ou longues.
+              </p>
+              <div className="mt-3 flex gap-2">
+                <Link
+                  href="/projets"
+                  className="text-xs text-zinc-400 hover:text-white transition"
+                >
+                  Voir mes projets →
+                </Link>
+                <span className="text-zinc-600">•</span>
+                <Link
+                  href="/contact"
+                  className="text-xs text-emerald-400 hover:text-emerald-300 transition"
+                >
+                  Me contacter
+                </Link>
+              </div>
+            </div>
+
+            {/* Clients */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
+                Environnements critiques
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm text-zinc-400">
+                <span className="hover:text-white transition">BNP Paribas</span>
+                <span className="hover:text-white transition">Orange</span>
+                <span className="hover:text-white transition">Safran</span>
+                <span className="hover:text-white transition">ACC</span>
+              </div>
             </div>
           </div>
         </aside>
