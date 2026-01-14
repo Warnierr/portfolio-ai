@@ -201,8 +201,28 @@ export default function AgentPage() {
       }
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Erreur API");
+        // Try to parse JSON error response
+        const contentType = response.headers.get("content-type");
+        let errorMessage = "Une erreur s'est produite.";
+
+        if (contentType?.includes("application/json")) {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || errorMessage;
+          console.error("[Agent] API Error:", errorData);
+        } else {
+          const errorText = await response.text();
+          errorMessage = errorText || errorMessage;
+          console.error("[Agent] API Error (text):", errorText);
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: `❌ ${errorMessage}\n\nVeuillez réessayer ou me contacter directement : contact@kenshu.dev`,
+          },
+        ]);
+        return;
       }
 
       const reader = response.body?.getReader();

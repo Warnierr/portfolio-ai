@@ -310,10 +310,22 @@ export async function POST(req: Request) {
       },
     });
 
-  } catch (error: any) {
-    console.error("[Chat API] ERROR:", error.message || error);
-    return new Response(`Erreur technique. Contactez-moi : contact@kenshu.dev`, {
-      status: 500,
-    });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("[Chat API] ERROR:", errorMessage);
+    console.error("[Chat API] Full error:", error);
+
+    // Return a more helpful error message
+    return new Response(
+      JSON.stringify({
+        error: "api_error",
+        message: "Une erreur s'est produite lors de la communication avec l'IA. Veuillez réessayer dans quelques instants.",
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      }
+    );
   }
 }
