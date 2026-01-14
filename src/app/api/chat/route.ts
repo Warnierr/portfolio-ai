@@ -66,10 +66,10 @@ Actuellement disponible en **freelance** pour des missions data et produit.
 - Stack : Next.js, React, TypeScript, Tailwind
 - From prototype to production
 
-## Tarifs Freelance
-- **TJM Mission longue durée** : 500€
-- **Forfait pipeline/automatisation** : à partir de 2 000€
-- **Application web/SaaS** : sur devis
+## Modes d'intervention
+- **Mission longue durée** : Intégration dans vos équipes
+- **Forfait** : Pour projets à périmètre défini (pipeline, automatisation)
+- **Application web/SaaS** : Devis sur mesure
 
 ## Disponibilité
 ✅ Disponible immédiatement pour des missions freelance et consulting long terme.
@@ -150,8 +150,7 @@ En tant qu'**Ingénieur Produit Data**, je conçois des systèmes data end-to-en
 - Plateformes analytics
 - Applications data
 
-**Disponibilité** : immédiate  
-**TJM** : 500€ pour missions longues
+**Disponibilité** : immédiate
 
 ### Prochaine étape
 Décrivez-moi votre besoin et je vous dis si je suis le bon profil. Sinon, contactez-moi directement :

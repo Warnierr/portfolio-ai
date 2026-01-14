@@ -28,14 +28,14 @@ Disponible en freelance pour missions data et produit.
 - **Sites web** : Vitrines, landing pages, SEO, performance
 - **Applications** : MVP, outils internes, produits digitaux
 - **Automatisation n8n** : Process, CRM, emails, reporting, intégrations
-- Projets sur-mesure à partir de 2 000€
+- Projets sur-mesure adaptés à votre budget
 
 ### Pour les Entreprises / Grands Groupes
 - **Data Engineering** : Pipelines ETL/ELT, Spark, Airflow, migration legacy
 - **DevOps** : CI/CD, monitoring, automatisation déploiements
 - **Plateformes Data** : Data Warehouse, Data Lake, analytics
 - **AI Compliance** : Audit AI Act, RGPD, classification des risques
-- TJM 500€ pour missions longues
+- Disponible pour missions longues (freelance)
 
 ## Projets récents
 ${projectsList}

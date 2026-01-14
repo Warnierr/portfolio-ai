@@ -6,7 +6,7 @@ import ContactForm from "@/components/ContactForm";
 const faqItems = [
   {
     question: "Combien coûte un projet ?",
-    answer: "Entre 2 000€ et 15 000€ selon la complexité. Devis précis après le diagnostic gratuit.",
+    answer: "Sur devis uniquement, selon la complexité et le périmètre. Diagnostic gratuit pour estimer le budget.",
   },
   {
     question: "Quel délai pour un premier livrable ?",
