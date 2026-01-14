@@ -1,81 +1,27 @@
-import { prisma } from "@/lib/prisma";
-import AdminDashboardClient from "@/components/admin/AdminDashboardClient";
+import QuickStats from "@/components/dashboard/QuickStats";
+import LeadsPipeline from "@/components/dashboard/LeadsPipeline";
+import ProjectsTable from "@/components/dashboard/ProjectsTable";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminDashboard() {
-    let statsData: any[] = [], recentLeadsData: any[] = [], topThemesData: any[] = [];
-    let error = null;
+export default function AdminDashboard() {
+  return (
+    <div className="min-h-screen bg-zinc-950 p-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+          <p className="mt-1 text-zinc-400">
+            Vue d'ensemble business en temps réel
+          </p>
+        </div>
 
-    try {
-        const [leadCount, chatCount, pendingNewsCount, recentLeads, topThemes, totalViews] = await Promise.all([
-            prisma.lead.count(),
-            prisma.chatLog.count(),
-            prisma.news.count({ where: { status: "PENDING" } }),
-            prisma.lead.findMany({
-                orderBy: { createdAt: "desc" },
-                take: 5,
-            }),
-            prisma.chatLog.groupBy({
-                by: ["theme"],
-                _count: {
-                    _all: true,
-                },
-                orderBy: {
-                    _count: {
-                        theme: "desc",
-                    },
-                },
-                take: 5,
-            }),
-            prisma.analytics.count(),
-        ]);
+        <QuickStats />
 
-        statsData = [
-            { label: "Vues (total)", value: totalViews.toString(), change: "Trafic enregistré", color: "text-blue-400" },
-            { label: "Nouveaux Leads", value: leadCount.toString(), change: "Depuis le début", color: "text-emerald-400" },
-            { label: "Messages AI", value: chatCount.toString(), change: "Interactions", color: "text-purple-400" },
-            { label: "News en attente", value: pendingNewsCount.toString(), change: "Action requise", color: "text-amber-400" },
-        ];
-        recentLeadsData = recentLeads;
-        topThemesData = topThemes;
-
-    } catch (e: any) {
-        console.error("Admin Dashboard DB Error:", e);
-        error = e.message || "Erreur de connexion base de données";
-        // Fallback data
-        statsData = [
-            { label: "Erreur", value: "0", change: "DB Connection", color: "text-red-400" }
-        ];
-        recentLeadsData = [];
-        topThemesData = [];
-    }
-
-    const formattedThemes = topThemesData.map(t => ({
-        theme: t.theme || "Inconnu",
-        count: t._count._all
-    }));
-
-    if (error) {
-        return (
-            <div className="p-8 text-white">
-                <h1 className="text-2xl font-bold text-red-400 mb-4">Erreur Base de Données</h1>
-                <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-lg">
-                    <p className="font-mono text-sm whitespace-pre-wrap">{error}</p>
-                </div>
-            </div>
-        );
-    }
-
-    return (
-        <AdminDashboardClient
-            stats={statsData}
-            recentLeads={recentLeadsData.map(l => ({
-                name: l.name,
-                email: l.email,
-                date: l.createdAt.toLocaleDateString("fr-FR", { hour: "2-digit", minute: "2-digit" })
-            }))}
-            topThemes={formattedThemes}
-        />
-    );
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <LeadsPipeline />
+          <ProjectsTable />
+        </div>
+      </div>
+    </div>
+  );
 }

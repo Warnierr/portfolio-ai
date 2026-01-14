@@ -1,5 +1,5 @@
-import LandingPage from "@/components/LandingPage";
+import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
 
 export default function Home() {
-  return <LandingPage />;
+  return <AskKenshuHome />;
 }

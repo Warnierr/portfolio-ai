@@ -54,9 +54,7 @@ export default function ContactPage() {
           >
             📅 Choisir un créneau
           </a>
-          <p className="mt-3 text-xs text-zinc-500">
-            Ou appelez : <a href="tel:+33749416355" className="text-emerald-400 hover:underline">+33 7 49 41 63 55</a>
-          </p>
+
         </div>
 
         <div className="glass-panel p-8">

@@ -39,7 +39,6 @@ Actuellement disponible en **freelance** pour des missions data et produit.
 
 ## Contact
 - Email: contact@kenshu.dev
-- Téléphone: +33 7 49 41 63 55
 - LinkedIn: @raouf-warnier
 - Localisation: France (télétravail ou présentiel) + Europe
 
@@ -157,7 +156,6 @@ En tant qu'**Ingénieur Produit Data**, je conçois des systèmes data end-to-en
 ### Prochaine étape
 Décrivez-moi votre besoin et je vous dis si je suis le bon profil. Sinon, contactez-moi directement :
 - 📧 contact@kenshu.dev
-- 📞 +33 7 49 41 63 55
 
 ## À éviter
 - ❌ Ne réponds PAS aux questions hors sujet (politique, médical, etc.)
@@ -193,7 +191,7 @@ export async function POST(req: Request) {
     return new Response(
       JSON.stringify({
         error: "limit_reached",
-        message: "Vous avez atteint la limite de messages gratuits. Contactez-moi directement : contact@kenshu.dev ou +33 7 49 41 63 55",
+        message: "Vous avez atteint la limite de messages gratuits. Contactez-moi directement : contact@kenshu.dev",
         remaining: 0,
       }),
       {

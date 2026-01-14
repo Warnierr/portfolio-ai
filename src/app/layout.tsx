@@ -147,7 +147,7 @@ export default function RootLayout({
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-PM3SYTQ39Y";
 
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <head>
         {/* Préchargement des fonts critiques pour LCP */}
         <link
