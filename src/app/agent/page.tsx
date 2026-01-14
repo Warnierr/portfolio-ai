@@ -31,16 +31,22 @@ const models = [
     icon: "🚀"
   },
   {
+    id: "x-ai/grok-4.1-fast",
+    name: "Grok 4.1 Fast",
+    description: "Bavard, fun, agentique (payant)",
+    icon: "⚡"
+  },
+  {
     id: "anthropic/claude-3.5-haiku",
     name: "Claude Haiku",
     description: "Rapide et efficace",
-    icon: "⚡"
+    icon: "✨"
   },
   {
     id: "anthropic/claude-3.5-sonnet",
     name: "Claude Sonnet",
     description: "Équilibré et précis",
-    icon: "✨"
+    icon: "🎯"
   },
   {
     id: "openai/gpt-4o",

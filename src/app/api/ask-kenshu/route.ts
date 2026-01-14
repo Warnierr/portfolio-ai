@@ -187,13 +187,13 @@ export async function POST(req: Request) {
                 "X-Title": "Ask Kenshu - Portfolio Navigation",
             },
             body: JSON.stringify({
-                model: "google/gemini-2.0-flash-exp:free",
+                model: "x-ai/grok-4.1-fast",
                 messages: [
                     { role: "system", content: SYSTEM_PROMPT },
                     ...messages,
                 ],
                 stream: true,
-                temperature: 0.8,
+                temperature: 0.9,
             }),
         });
 
