@@ -1,6 +1,36 @@
 import { caseStudies } from "@/data/projects";
 
+function generateWelcomeMessage(): string {
+    return `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
+
+
+Je fonctionne avec **Grok 4.1-fast** par xAI pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
+
+
+Raouf est un **développeur passionné** par la création de projets innovants en **Data Engineering** et **Intelligence Artificielle**. Je peux vous parler de :
+
+
+- 🏢 **Ses expériences professionnelles** : BNP Paribas, Orange, Safran, ACC
+- 💻 **Ses projets en cours** : Budget AI, AI Compliance Tool, automatisations
+- 🎯 **Comment il peut vous aider** sur votre projet data ou web
+
+
+Pour mieux vous guider, j'aimerais savoir qui vous êtes 😊
+
+
+**Êtes-vous :**
+
+- 👨‍💻 **Développeur** ou tech lead ?
+- 🚀 **Entrepreneur** ou porteur de projet ?
+- 💼 **Recruteur** ou responsable RH ?
+- 🤔 **Juste curieux** de découvrir le portfolio ?
+
+
+N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
+}
+
 function buildNavigationContext(): string {
+
     const projectsList = caseStudies
         .slice(0, 5)
         .map((p) => `- ${p.title} (${p.context.client}): ${p.tldr}`)
@@ -175,6 +205,27 @@ export async function POST(req: Request) {
 
     try {
         const { messages } = await req.json();
+
+        // Check if this is the first message (empty conversation)
+        const isFirstInteraction = !messages || messages.length === 0;
+
+        if (isFirstInteraction) {
+            console.log("[Ask Kenshu API] First interaction detected - sending welcome message");
+
+            const welcomeMessage = generateWelcomeMessage();
+
+            // Return welcome message directly without API call
+            const newCount = currentCount + 1;
+            const newRemaining = MAX_REQUESTS - newCount;
+
+            return new Response(welcomeMessage, {
+                headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                    "Set-Cookie": `${COOKIE_NAME}=${newCount}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax`,
+                    "X-Requests-Remaining": String(newRemaining),
+                },
+            });
+        }
 
         console.log("[Ask Kenshu API] Calling OpenRouter...");
 

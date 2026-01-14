@@ -87,17 +87,44 @@ export default function AskKenshuHome() {
     []
   );
 
-  // Load history from localStorage
+  // Load history from localStorage OR fetch welcome message
   useEffect(() => {
     const savedMessages = localStorage.getItem("ask_kenshu_history");
     if (savedMessages) {
       try {
-        setMessages(JSON.parse(savedMessages));
+        const parsedMessages = JSON.parse(savedMessages);
+        setMessages(parsedMessages);
       } catch (e) {
         console.error("Error loading chat history:", e);
       }
+    } else {
+      // First visit - fetch welcome message
+      fetchWelcomeMessage();
     }
   }, []);
+
+  const fetchWelcomeMessage = async () => {
+    try {
+      const response = await fetch("/api/ask-kenshu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [] }), // Empty array triggers welcome message
+      });
+
+      if (response.ok) {
+        const welcomeText = await response.text();
+        setMessages([{ role: "assistant", content: welcomeText }]);
+
+        // Update remaining count from header
+        const remainingHeader = response.headers.get("X-Requests-Remaining");
+        if (remainingHeader) {
+          setRemaining(parseInt(remainingHeader, 10));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching welcome message:", error);
+    }
+  };
 
   // Save history to localStorage
   useEffect(() => {
