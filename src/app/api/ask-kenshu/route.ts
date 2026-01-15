@@ -200,7 +200,7 @@ Termine TOUJOURS par des boutons formatés avec emoji :
 `;
 
 
-const MAX_REQUESTS = 50;
+const MAX_REQUESTS = 1000;
 const COOKIE_NAME = "chat_requests";
 const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 hours
 
