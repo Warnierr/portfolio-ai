@@ -345,7 +345,7 @@ export default function AskKenshuHome() {
             <div
               ref={chatRef}
               onScroll={handleScroll}
-              className="h-[500px] md:h-[600px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
+              className="h-[500px] md:h-[650px] lg:h-[700px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
@@ -583,35 +583,25 @@ export default function AskKenshuHome() {
                 Projets du moment
               </p>
               <div className="flex flex-col gap-3">
-                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-emerald-500/30">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-xl group-hover:scale-110 transition-transform">
+                <a href="https://budget.kenshu.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-xl bg-white/5 p-4 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-emerald-500/30">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500/20 text-2xl group-hover:scale-110 transition-transform">
                     💰
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white group-hover:text-emerald-300">Budget AI</div>
-                    <div className="text-xs text-zinc-400">Assistant financier personnel</div>
+                    <div className="text-base font-semibold text-white group-hover:text-emerald-300">Budget AI</div>
+                    <div className="text-sm text-zinc-400">Assistant financier personnel</div>
                   </div>
-                </Link>
+                </a>
 
-                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-blue-500/30">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 text-xl group-hover:scale-110 transition-transform">
+                <a href="https://aiact.kenshu.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-xl bg-white/5 p-4 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-blue-500/30">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/20 text-2xl group-hover:scale-110 transition-transform">
                     🛡️
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white group-hover:text-blue-300">AI Compliance</div>
-                    <div className="text-xs text-zinc-400">Audit RGPD & AI Act</div>
+                    <div className="text-base font-semibold text-white group-hover:text-blue-300">AI Compliance</div>
+                    <div className="text-sm text-zinc-400">Audit RGPD & AI Act</div>
                   </div>
-                </Link>
-
-                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-purple-500/30">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20 text-xl group-hover:scale-110 transition-transform">
-                    🏦
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-white group-hover:text-purple-300">Big Data BNP</div>
-                    <div className="text-xs text-zinc-400">Migration Cloud & Spark</div>
-                  </div>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -632,14 +622,14 @@ export default function AskKenshuHome() {
       </main>
 
       {/* Footer Note */}
-      <div className="text-center pb-6 px-4">
+      < div className="text-center pb-6 px-4" >
         <p className="text-xs text-zinc-500">
           IA expérimentale (peut faire des erreurs).{" "}
           <Link href="/agent" className="text-zinc-400 hover:text-white transition">
             Version complète de l&apos;agent →
           </Link>
         </p>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
