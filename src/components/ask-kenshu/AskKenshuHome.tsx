@@ -781,6 +781,9 @@ export default function AskKenshuHome() {
               </div>
             </div>
           </div>
+
+          {/* Hidden Debug Dashboard (Press Shift+D to toggle) */}
+          <DebugDashboard onAction={handleAction} />
         </aside>
       </main>
 
@@ -791,5 +794,53 @@ export default function AskKenshuHome() {
         </p>
       </div>
     </div >
+  );
+}
+
+function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === "D") {
+        setIsVisible((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  if (!isVisible) return null;
+
+  const actions = [
+    { label: "🎉 Confetti", action: { type: "CONFETTI" } },
+    { label: "🌧️ Money", action: { type: "EMOJI_RAIN", emoji: "💸" } },
+    { label: "🌧️ Fire", action: { type: "EMOJI_RAIN", emoji: "🔥" } },
+    { label: "🌧️ Love", action: { type: "EMOJI_RAIN", emoji: "❤️" } },
+    { label: "✨ Sparkles", action: { type: "SPARKLES" } },
+    { label: "📳 Shake", action: { type: "SHAKE" } },
+    { label: "💫 Pulse", action: { type: "PULSE" } },
+    { label: "🎆 Fireworks", action: { type: "FIREWORKS" } },
+  ];
+
+  return (
+    <div className="fixed bottom-4 right-4 z-[100] rounded-xl border border-pink-500/30 bg-black/90 p-4 shadow-2xl backdrop-blur-xl">
+      <div className="mb-2 flex items-center justify-between text-pink-400">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider">Debug FX Dashboard</span>
+        <button onClick={() => setIsVisible(false)} className="text-white hover:text-pink-400">✕</button>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {actions.map((act, i) => (
+          <button
+            key={i}
+            onClick={() => onAction(act.action)}
+            className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white transition hover:bg-pink-500/20 hover:border-pink-500/50 hover:scale-105 active:scale-95"
+          >
+            {act.label}
+          </button>
+        ))}
+      </div>
+      <p className="mt-2 text-[10px] text-zinc-500 text-center">Appuyez sur Shift+D pour masquer</p>
+    </div>
   );
 }
