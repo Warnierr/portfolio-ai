@@ -74,6 +74,14 @@ N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
 const MAX_REQUESTS = 10;
 const COOKIE_NAME = "chat_requests";
 
+const THEMES = [
+  { id: 'default', label: 'App ⚪' },
+  { id: 'matrix', label: 'Matrix 🟢' },
+  { id: 'cyberpunk', label: 'City OS 🟣' },
+  { id: 'retro', label: 'Retro 👾' },
+  { id: 'zen', label: 'Zen ✒️' },
+] as const;
+
 function getCookieValue(name: string): number {
   if (typeof document === "undefined") return 0;
   const cookies = document.cookie.split(";").map((c) => c.trim());
@@ -90,7 +98,9 @@ export default function AskKenshuHome() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [remaining, setRemaining] = useState(MAX_REQUESTS);
   const [limitReached, setLimitReached] = useState(false);
-  const [theme, setTheme] = useState<'default' | 'matrix'>('default'); // Theme State
+
+  const [theme, setTheme] = useState<'default' | 'matrix' | 'cyberpunk' | 'retro' | 'zen'>('default');
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
 
   const chatRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -508,7 +518,12 @@ export default function AskKenshuHome() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white ${theme === 'matrix' ? 'theme-matrix' : ''}`}>
+    <div className={`min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white transition-colors duration-500
+      ${theme === 'matrix' ? 'theme-matrix' : ''}
+      ${theme === 'cyberpunk' ? 'theme-cyberpunk' : ''}
+      ${theme === 'retro' ? 'theme-retro' : ''}
+      ${theme === 'zen' ? 'theme-zen' : ''}
+    `}>
       {/* Main Content */}
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8">
         {/* Chat Section */}
@@ -528,15 +543,37 @@ export default function AskKenshuHome() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setTheme((t) => (t === "default" ? "matrix" : "default"))}
-                  className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${theme === "matrix"
-                    ? "bg-black text-[#00ff41] border border-[#00ff41] shadow-[0_0_8px_rgba(0,255,65,0.4)]"
-                    : "bg-white/5 text-zinc-500 hover:text-zinc-300 border border-white/5 hover:border-white/10"
-                    }`}
-                >
-                  {theme === "matrix" ? "🟢 SYSTEM" : "⚪ APP"}
-                </button>
+                <div className="relative z-50">
+                  <button
+                    onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
+                    className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all border ${theme === 'matrix' ? 'bg-black text-[#00ff41] border-[#00ff41]' :
+                        theme === 'cyberpunk' ? 'bg-[#0f0518] text-[#22d3ee] border-[#d946ef]' :
+                          theme === 'retro' ? 'bg-[#0f380f] text-[#9bbc0f] border-[#8bac0f]' :
+                            theme === 'zen' ? 'bg-[#1a1a1a] text-[#ff5252] border-[#ff5252]' :
+                              'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10'
+                      }`}
+                  >
+                    {THEMES.find(t => t.id === theme)?.label || 'THEME'} ▾
+                  </button>
+
+                  {isThemeMenuOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-32 flex flex-col gap-1 rounded-lg border border-white/10 bg-zinc-900/95 p-1 backdrop-blur-xl shadow-xl">
+                      {THEMES.map((t) => (
+                        <button
+                          key={t.id}
+                          onClick={() => {
+                            setTheme(t.id as any);
+                            setIsThemeMenuOpen(false);
+                          }}
+                          className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors hover:bg-white/10 ${theme === t.id ? 'bg-white/5 text-white font-medium' : 'text-zinc-400'
+                            }`}
+                        >
+                          {t.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                   <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5

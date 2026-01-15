@@ -150,3 +150,140 @@ body {
 .theme-matrix ::-webkit-scrollbar-track {
   background: #001100;
 }
+
+/* --- THEME CYBERPUNK --- */
+.theme-cyberpunk {
+  --color-background: #0f0518;
+  /* Deep Void Purple */
+  background-color: #0f0518 !important;
+  color: #e879f9 !important;
+  /* Neon Fuchsia */
+  font-family: 'Outfit', sans-serif !important;
+  /* Si dispo, sinon defaut */
+}
+
+.theme-cyberpunk * {
+  border-color: #d946ef !important;
+  /* Neon Fuchsia borders */
+}
+
+.theme-cyberpunk .glass-panel,
+.theme-cyberpunk .glass-card,
+.theme-cyberpunk button {
+  background: rgba(20, 0, 40, 0.8) !important;
+  border: 1px solid #d946ef !important;
+  box-shadow: 0 0 15px rgba(217, 70, 239, 0.3), inset 0 0 10px rgba(6, 182, 212, 0.1);
+  border-radius: 4px !important;
+  /* Look anguleux tech */
+}
+
+.theme-cyberpunk h1,
+.theme-cyberpunk h2,
+.theme-cyberpunk strong {
+  color: #22d3ee !important;
+  /* Neon Cyan */
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+  letter-spacing: 1px;
+}
+
+.theme-cyberpunk button:hover {
+  background: #2a0a38 !important;
+  box-shadow: 0 0 20px #d946ef, 0 0 40px #22d3ee;
+  transform: scale(1.02);
+}
+
+.theme-cyberpunk input,
+.theme-cyberpunk textarea {
+  background: #1a0524 !important;
+  color: #22d3ee !important;
+  border: 1px solid #22d3ee !important;
+  box-shadow: 0 0 5px rgba(34, 211, 238, 0.4);
+}
+
+.theme-cyberpunk ::selection {
+  background: #d946ef;
+  color: #fff;
+}
+
+/* Scrollbar Cyberpunk */
+.theme-cyberpunk ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #d946ef, #22d3ee);
+}
+
+.theme-cyberpunk ::-webkit-scrollbar-track {
+  background: #0f0518;
+}
+
+/* --- THEME RETRO (Gameboy) --- */
+.theme-retro {
+  --color-background: #0f380f;
+  background-color: #0f380f !important;
+  /* Sombre Gameboy */
+  color: #9bbc0f !important;
+  /* Clair Gameboy */
+  font-family: 'Courier New', monospace !important;
+  letter-spacing: -0.5px;
+}
+
+.theme-retro * {
+  border-color: #306230 !important;
+}
+
+.theme-retro .glass-panel,
+.theme-retro .glass-card,
+.theme-retro button,
+.theme-retro input {
+  background: #0f380f !important;
+  border: 4px solid #8bac0f !important;
+  box-shadow: 4px 4px 0px #306230 !important;
+  /* Ombre pixel */
+  border-radius: 0 !important;
+}
+
+.theme-retro button:hover {
+  background: #8bac0f !important;
+  color: #0f380f !important;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #306230 !important;
+}
+
+/* --- THEME ZEN (Ink) --- */
+.theme-zen {
+  --color-background: #1a1a1a;
+  background-color: #1a1a1a !important;
+  /* Charcoal */
+  color: #e0e0e0 !important;
+  /* Off-white */
+  font-family: serif !important;
+}
+
+.theme-zen * {
+  border-color: #444 !important;
+}
+
+.theme-zen .glass-panel,
+.theme-zen .glass-card,
+.theme-zen button {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  box-shadow: none !important;
+}
+
+.theme-zen h1,
+.theme-zen h2,
+.theme-zen strong {
+  color: #ff5252 !important;
+  /* Red Stamp color */
+  font-weight: normal !important;
+  font-style: italic;
+}
+
+.theme-zen button {
+  border: 1px solid #ff5252 !important;
+  color: #ff5252 !important;
+}
+
+.theme-zen button:hover {
+  background: #ff5252 !important;
+  color: #fff !important;
+}
