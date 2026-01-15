@@ -113,12 +113,15 @@ export default function AskKenshuHome() {
       try {
         const parsedMessages = JSON.parse(savedMessages);
         setMessages(parsedMessages);
+        // Scroll to bottom after loading messages
+        setTimeout(() => scrollToBottom(true), 100);
       } catch (e) {
         console.error("Error loading chat history:", e);
       }
     } else {
       // First visit - use local welcome message
       setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
+      setTimeout(() => scrollToBottom(true), 100);
     }
   }, []);
 
@@ -384,6 +387,20 @@ export default function AskKenshuHome() {
                   {c.label}
                 </button>
               ))}
+              <button
+                onClick={() => {
+                  confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#10b981', '#3b82f6', '#8b5cf6']
+                  });
+                }}
+                className="rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 text-xs text-purple-300 transition hover:border-purple-500/50 hover:bg-purple-500/20"
+                title="Tester les confettis"
+              >
+                🎉 Test confetti
+              </button>
             </div>
 
             {/* Messages Container */}
