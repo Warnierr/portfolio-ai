@@ -33,7 +33,6 @@ body {
   backdrop-filter: blur(12px);
 }
 
-/* Animation de chargement pour le chat IA */
 @keyframes loading {
   0% {
     transform: translateX(-100%);
@@ -45,5 +44,30 @@ body {
 
   100% {
     transform: translateX(300%);
+  }
+}
+
+/* Shake animation for surprise effects */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+/* Pulse animation for attention */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 }

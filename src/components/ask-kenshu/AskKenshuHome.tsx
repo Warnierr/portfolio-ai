@@ -162,13 +162,24 @@ export default function AskKenshuHome() {
     }
   };
 
+  const scrollToTop = () => {
+    if (chatRef.current) {
+      chatRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  };
+
   const handleAction = (action: any) => {
     console.log("Executing Action:", action);
 
+    // Navigation
     if (action.type === "NAVIGATE" && action.path) {
       router.push(action.path);
     }
 
+    // Confetti 🎉
     if (action.type === "CONFETTI") {
       confetti({
         particleCount: 150,
@@ -176,6 +187,110 @@ export default function AskKenshuHome() {
         origin: { y: 0.6 },
         colors: ['#10b981', '#3b82f6', '#8b5cf6'] // Emerald, Blue, Purple
       });
+    }
+
+    // Emoji Rain 🌧️
+    if (action.type === "EMOJI_RAIN") {
+      const emoji = action.emoji || "🎉";
+      const duration = 3000;
+      const count = 30;
+
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          confetti({
+            particleCount: 1,
+            startVelocity: 0,
+            ticks: 300,
+            origin: {
+              x: Math.random(),
+              y: 0
+            },
+            shapes: ['text'],
+            shapeOptions: {
+              text: {
+                value: emoji
+              }
+            },
+            gravity: 0.5,
+            scalar: 2,
+          } as any);
+        }, Math.random() * duration);
+      }
+    }
+
+    // Sparkles ✨
+    if (action.type === "SPARKLES") {
+      const defaults = {
+        spread: 360,
+        ticks: 100,
+        gravity: 0,
+        decay: 0.94,
+        startVelocity: 30,
+      };
+
+      function shoot() {
+        confetti({
+          ...defaults,
+          particleCount: 30,
+          scalar: 1.2,
+          shapes: ['star'],
+          colors: ['#FFE400', '#FFBD00', '#E89400', '#FFCA6C', '#FDFFB8']
+        });
+      }
+
+      setTimeout(shoot, 0);
+      setTimeout(shoot, 100);
+      setTimeout(shoot, 200);
+    }
+
+    // Shake Screen 📳
+    if (action.type === "SHAKE") {
+      const body = document.body;
+      body.style.animation = 'shake 0.5s';
+      setTimeout(() => {
+        body.style.animation = '';
+      }, 500);
+    }
+
+    // Pulse Effect 💫
+    if (action.type === "PULSE") {
+      if (chatRef.current) {
+        chatRef.current.style.animation = 'pulse 0.6s ease-in-out';
+        setTimeout(() => {
+          if (chatRef.current) chatRef.current.style.animation = '';
+        }, 600);
+      }
+    }
+
+    // Fireworks 🎆
+    if (action.type === "FIREWORKS") {
+      const duration = 3 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval: any = setInterval(function () {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        });
+        confetti({
+          ...defaults,
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        });
+      }, 250);
     }
 
     if (action.type === "OPEN_MODAL") {
@@ -393,7 +508,7 @@ export default function AskKenshuHome() {
             <div
               ref={chatRef}
               onScroll={handleScroll}
-              className="h-[60vh] md:h-[650px] lg:h-[700px] min-h-[400px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
+              className="h-[75vh] md:h-[650px] lg:h-[700px] min-h-[500px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
