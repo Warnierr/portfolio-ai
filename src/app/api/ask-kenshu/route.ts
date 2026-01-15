@@ -380,9 +380,17 @@ export async function POST(req: Request) {
 
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
+        const errorStack = error instanceof Error ? error.stack : "";
         console.error("[Ask Kenshu API] ERROR:", errorMessage);
-        return new Response("Erreur technique. Contactez-moi : contact@kenshu.dev", {
+        console.error("[Ask Kenshu API] ERROR STACK:", errorStack);
+
+        return new Response(JSON.stringify({
+            error: "server_error",
+            message: "Une erreur s'est produite lors de la communication avec l'IA. Veuillez réessayer.",
+            details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+        }), {
             status: 500,
+            headers: { "Content-Type": "application/json" }
         });
     }
 }
