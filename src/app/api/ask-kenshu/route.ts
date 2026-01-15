@@ -5,7 +5,7 @@ function generateWelcomeMessage(): string {
     return `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
 
 
-Je fonctionne avec **Grok 4.1-fast** par xAI pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
+Je fonctionne avec **${AI_CONFIG.displayName}** par ${AI_CONFIG.provider} pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
 
 
 Raouf est un **développeur passionné** par la création de projets innovants en **Data Engineering** et **Intelligence Artificielle**. Je peux vous parler de :
@@ -277,23 +277,24 @@ export async function POST(req: Request) {
             });
         }
 
-        // --- MODEL FAILOVER LOGIC ---
-        // Try primary model, then backup model if primary fails
-        // Use logic OR to force backup model if backupModelId is undefined
-        const modelsToTry = [AI_CONFIG.modelId];
-        if (AI_CONFIG.backupModelId) {
-            modelsToTry.push(AI_CONFIG.backupModelId);
-        } else {
-            // Fallback default backup just in case
-            modelsToTry.push("meta-llama/llama-3-8b-instruct:free");
-        }
+        // --- MULTI-MODEL FAILOVER SYSTEM ---
+        // Tries all configured models in priority order: Primary → Backups → Static Fallback
+        const modelsToTry = AI_CONFIG.allModels;
 
         let response;
         let usedModel = "";
+        let lastError = "";
+
+        console.log(`[Ask Kenshu API] Starting failover chain with ${modelsToTry.length} models`);
 
         for (const model of modelsToTry) {
             try {
-                console.log(`[Ask Kenshu API] Attempting processing with model: ${model}`);
+                console.log(`[Ask Kenshu API] Attempting model: ${model}`);
+                const modelInfo = AI_CONFIG.getModelInfo(model);
+                console.log(`[Ask Kenshu API] Model info: ${modelInfo.name} by ${modelInfo.provider}`);
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), AI_CONFIG.retryConfig.timeoutMs);
 
                 response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
@@ -313,18 +314,30 @@ export async function POST(req: Request) {
                         temperature: 0.7,
                         max_tokens: 1000,
                     }),
+                    signal: controller.signal,
                 });
+
+                clearTimeout(timeoutId);
 
                 if (response.ok) {
                     usedModel = model;
-                    console.log(`[Ask Kenshu API] Success with model: ${model}`);
+                    console.log(`[Ask Kenshu API] ✅ SUCCESS with model: ${model}`);
                     break; // Exit loop on success
                 } else {
                     const errText = await response.text();
-                    console.warn(`[Ask Kenshu API] Failed with model ${model}. Status: ${response.status}. Msg: ${errText.substring(0, 100)}...`);
+                    lastError = `${response.status}: ${errText.substring(0, 150)}`;
+                    console.warn(`[Ask Kenshu API] ❌ FAILED with model ${model}. ${lastError}`);
+
+                    // Small delay before trying next model
+                    await new Promise(resolve => setTimeout(resolve, 500));
                 }
             } catch (err) {
-                console.error(`[Ask Kenshu API] Network error with model ${model}:`, err);
+                const errorMsg = err instanceof Error ? err.message : String(err);
+                lastError = errorMsg;
+                console.error(`[Ask Kenshu API] ❌ Network/Timeout error with model ${model}: ${errorMsg}`);
+
+                // Small delay before trying next model
+                await new Promise(resolve => setTimeout(resolve, 500));
             }
         }
 
