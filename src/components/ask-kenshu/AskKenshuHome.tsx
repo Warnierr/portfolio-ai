@@ -153,6 +153,38 @@ export default function AskKenshuHome() {
     }
   };
 
+  // Idle Timer Warning 😴 (5 min)
+  useEffect(() => {
+    const IDLE_TIMEOUT = 5 * 60 * 1000;
+    let timeoutId: NodeJS.Timeout;
+
+    const resetIdleTimer = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        // Trigger Wake Up Sequence
+        handleAction({ type: "SHAKE" });
+        setMessages((prev) => {
+          // Avoid duplicate wake-up messages
+          if (prev[prev.length - 1]?.content.includes("Héhooo")) return prev;
+          return [
+            ...prev,
+            { role: "assistant", content: "Héhooo ? Toujours là ? 😴 Je m'ennuie un peu..." }
+          ];
+        });
+        setTimeout(() => scrollToBottom(), 100);
+      }, IDLE_TIMEOUT);
+    };
+
+    const events = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
+    events.forEach(event => window.addEventListener(event, resetIdleTimer));
+    resetIdleTimer();
+
+    return () => {
+      clearTimeout(timeoutId);
+      events.forEach(event => window.removeEventListener(event, resetIdleTimer));
+    };
+  }, []);
+
   const scrollToBottom = (instant = false) => {
     if (shouldAutoScrollRef.current) {
       messagesEndRef.current?.scrollIntoView({
@@ -188,29 +220,36 @@ export default function AskKenshuHome() {
     if (action.type === "EMOJI_RAIN") {
       const emoji = action.emoji || "🎉";
       const duration = 3000;
-      const count = 30;
+      const end = Date.now() + duration;
 
-      for (let i = 0; i < count; i++) {
-        setTimeout(() => {
-          confetti({
-            particleCount: 1,
-            startVelocity: 0,
-            ticks: 300,
-            origin: {
-              x: Math.random(),
-              y: 0
-            },
-            shapes: ['text'],
-            shapeOptions: {
-              text: {
-                value: emoji
-              }
-            },
-            gravity: 0.5,
-            scalar: 2,
-          } as any);
-        }, Math.random() * duration);
-      }
+      (function frame() {
+        // Launch a few confetti from the left edge
+        confetti({
+          particleCount: 2,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          shapes: ['text'] as any,
+          shapeOptions: { text: { value: emoji } },
+          scalar: 4, // GROSSIR L'EMOJI !
+        } as any);
+
+        // and a few from the right edge
+        confetti({
+          particleCount: 2,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          shapes: ['text'] as any,
+          shapeOptions: { text: { value: emoji } },
+          scalar: 4, // GROSSIR L'EMOJI !
+        } as any);
+
+        // Keep going until we run out of time
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
     }
 
     // Sparkles ✨
@@ -247,25 +286,15 @@ export default function AskKenshuHome() {
       }, 500);
     }
 
-    // Pulse Effect 💫
-    if (action.type === "PULSE") {
-      if (chatRef.current) {
-        chatRef.current.style.animation = 'pulse 0.6s ease-in-out';
-        setTimeout(() => {
-          if (chatRef.current) chatRef.current.style.animation = '';
-        }, 600);
-      }
-    }
 
-    // Fireworks 🎆
+
+    // Fireworks (Grand Final) 🎆
     if (action.type === "FIREWORKS") {
-      const duration = 3 * 1000;
+      const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-      function randomInRange(min: number, max: number) {
-        return Math.random() * (max - min) + min;
-      }
+      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
       const interval: any = setInterval(function () {
         const timeLeft = animationEnd - Date.now();
@@ -275,16 +304,31 @@ export default function AskKenshuHome() {
         }
 
         const particleCount = 50 * (timeLeft / duration);
+
+        // Fireworks explosions
         confetti({
           ...defaults,
           particleCount,
           origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-        });
+        } as any);
         confetti({
           ...defaults,
           particleCount,
           origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-        });
+        } as any);
+
+        // Random Confetti Rain
+        if (Math.random() > 0.6) {
+          confetti({
+            particleCount: 5,
+            angle: 90,
+            spread: 180,
+            origin: { x: 0.5, y: 0 },
+            colors: ['#10b981', '#3b82f6', '#8b5cf6', '#F59E0B'],
+            gravity: 0.8,
+            scalar: 1.2
+          });
+        }
       }, 250);
     }
 
@@ -793,7 +837,7 @@ export default function AskKenshuHome() {
 }
 
 function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -814,7 +858,6 @@ function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
     { label: "🌧️ Love", action: { type: "EMOJI_RAIN", emoji: "❤️" } },
     { label: "✨ Sparkles", action: { type: "SPARKLES" } },
     { label: "📳 Shake", action: { type: "SHAKE" } },
-    { label: "💫 Pulse", action: { type: "PULSE" } },
     { label: "🎆 Fireworks", action: { type: "FIREWORKS" } },
   ];
 
