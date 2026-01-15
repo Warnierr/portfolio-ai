@@ -527,7 +527,7 @@ export default function AskKenshuHome() {
       {/* Main Content */}
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8">
         {/* Chat Section */}
-        <section className="lg:col-span-8">
+        <section className="lg:col-span-8 w-full">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-6 shadow-2xl backdrop-blur-sm">
             {/* Chat Header */}
             <div className="mb-4 flex items-start justify-between">
@@ -547,10 +547,10 @@ export default function AskKenshuHome() {
                   <button
                     onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
                     className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all border ${theme === 'matrix' ? 'bg-black text-[#00ff41] border-[#00ff41]' :
-                        theme === 'cyberpunk' ? 'bg-[#0f0518] text-[#22d3ee] border-[#d946ef]' :
-                          theme === 'retro' ? 'bg-[#0f380f] text-[#9bbc0f] border-[#8bac0f]' :
-                            theme === 'zen' ? 'bg-[#1a1a1a] text-[#ff5252] border-[#ff5252]' :
-                              'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10'
+                      theme === 'cyberpunk' ? 'bg-[#0f0518] text-[#22d3ee] border-[#d946ef]' :
+                        theme === 'retro' ? 'bg-[#0f380f] text-[#9bbc0f] border-[#8bac0f]' :
+                          theme === 'zen' ? 'bg-[#1a1a1a] text-[#ff5252] border-[#ff5252]' :
+                            'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10'
                       }`}
                   >
                     {THEMES.find(t => t.id === theme)?.label || 'THEME'} ▾
@@ -767,8 +767,8 @@ export default function AskKenshuHome() {
           </div>
         </section>
 
-        {/* Cards Section */}
-        <aside className="lg:col-span-4 flex flex-col h-full justify-between">
+        {/* Cards Section - Hidden on mobile for full-width chat experience */}
+        <aside className="hidden lg:flex lg:col-span-4 flex-col h-full justify-between">
           <div>
             <div className="mb-4">
               <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">
@@ -824,16 +824,15 @@ export default function AskKenshuHome() {
               <div className="mt-3 flex gap-2">
                 <Link
                   href="/projets"
-                  className="text-xs text-zinc-400 hover:text-white transition"
+                  className="flex-1 text-center rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-xs text-zinc-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all font-medium"
                 >
-                  Voir mes projets →
+                  👉 Voir les projets
                 </Link>
-                <span className="text-zinc-600">•</span>
                 <Link
                   href="/contact"
-                  className="text-xs text-emerald-400 hover:text-emerald-300 transition"
+                  className="flex-1 text-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-2 text-xs text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all font-medium"
                 >
-                  Me contacter
+                  📅 Me contacter
                 </Link>
               </div>
             </div>
@@ -896,7 +895,7 @@ export default function AskKenshuHome() {
 }
 
 function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -912,9 +911,6 @@ function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
 
   const actions = [
     { label: "🎉 Confetti", action: { type: "CONFETTI" } },
-    { label: "🌧️ Money", action: { type: "EMOJI_RAIN", emoji: "💸" } },
-    { label: "🌧️ Fire", action: { type: "EMOJI_RAIN", emoji: "🔥" } },
-    { label: "🌧️ Love", action: { type: "EMOJI_RAIN", emoji: "❤️" } },
     { label: "✨ Sparkles", action: { type: "SPARKLES" } },
     { label: "📳 Shake", action: { type: "SHAKE" } },
     { label: "🎆 Fireworks", action: { type: "FIREWORKS" } },

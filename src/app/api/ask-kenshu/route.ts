@@ -119,16 +119,19 @@ Pour TOUS les liens, utilise le format avec emoji + gras + markdown :
 
 EXEMPLE PARFAIT de bouton : 👉 **[Me contacter](/contact)**
 
-Pour plusieurs boutons, ajoute un titre :
+Pour plusieurs boutons, ajoute un titre et un texte explicatif :
 
-🎯 **Actions recommandées :**
+🎯 **Clique ici pour aller :**
 
 👉 **[Voir les projets](/projets)**
+
 👉 **[Découvrir les services](/services)**
+
 👉 **[Me contacter](/contact)**
 
 JAMAIS : "Voir les projets : /projets" ❌
-TOUJOURS : "👉 **[Voir les projets](/projets)**" ✅
+TOUJOURS : Ajoute un saut de ligne avant chaque bouton !
+EXEMPLE : "\n\n👉 **[Voir les projets](/projets)**" ✅
 
 ## 2. Comportement
 Tu aides les visiteurs à trouver la bonne page. Tu es friendly, pro et enthousiaste.
@@ -192,20 +195,28 @@ Pour ce type de besoin, je peux intervenir sur **deux axes** :
 
 Je vous conseille de regarder mes projets similaires 🎯
 
+Clique ici pour aller :
 
 👉 **[Voir mes projets](/projets)**
 
 
 On peut aussi en discuter de vive voix ! 📞
 
+Clique ici pour aller :
 
 👉 **[Me contacter](/contact)**"
 
 ## Actions suggérées
-Termine TOUJOURS par des boutons formatés avec emoji :
-- 👉 **[Voir les projets](/projets)**
-- 👉 **[Découvrir les services](/services)**
-- 👉 **[Me contacter](/contact)**
+Termine TOUJOURS par des boutons formatés avec emoji.
+Ajoute "Clique ici pour aller :" avant les boutons et un saut de ligne avant chaque bouton :
+
+Clique ici pour aller :
+
+👉 **[Voir les projets](/projets)**
+
+👉 **[Découvrir les services](/services)**
+
+👉 **[Me contacter](/contact)**
 
 ## À éviter
 - ❌ Les blocs de texte pavés sans saut de ligne
@@ -440,16 +451,16 @@ Exemple :
             console.log("[Ask Kenshu API] Using Fallback Response due to API Error");
 
             const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
-            let fallbackContent = "Je rencontre actuellement une petite surcharge cognitive (IA indisponible momentanément). 😅\n\nNéanmoins, je peux vous guider vers les sections principales :\n\n👉 **[Voir les projets](/projets)**\n👉 **[Découvrir les services](/services)**\n👉 **[Me contacter](/contact)**";
+            let fallbackContent = "Je rencontre actuellement une petite surcharge cognitive (IA indisponible momentanément). 😅\n\nNéanmoins, je peux vous guider vers les sections principales.\n\nClique ici pour aller :\n\n👉 **[Voir les projets](/projets)**\n\n👉 **[Découvrir les services](/services)**\n\n👉 **[Me contacter](/contact)**";
 
             if (lastUserMessage.includes("projet") || lastUserMessage.includes("réalis") || lastUserMessage.includes("portfol")) {
-                fallbackContent = "Pour découvrir mes projets, je vous invite à visiter la page dédiée. Vous y trouverez des cas concrets comme Budget AI ou AI Compliance Tool. 🚀\n\n👉 **[Voir les projets](/projets)**";
+                fallbackContent = "Pour découvrir mes projets, je vous invite à visiter la page dédiée. Vous y trouverez des cas concrets comme Budget AI ou AI Compliance Tool. 🚀\n\nClique ici pour aller :\n\n👉 **[Voir les projets](/projets)**";
             } else if (lastUserMessage.includes("service") || lastUserMessage.includes("offre") || lastUserMessage.includes("compétence")) {
-                fallbackContent = "Je propose des services en Data Engineering, Développement Web et Intelligence Artificielle. \n\n👉 **[Découvrir les services](/services)**\n\nN'hésitez pas à me contacter pour en discuter !";
+                fallbackContent = "Je propose des services en Data Engineering, Développement Web et Intelligence Artificielle.\n\nClique ici pour aller :\n\n👉 **[Découvrir les services](/services)**\n\nN'hésitez pas à me contacter pour en discuter !";
             } else if (lastUserMessage.includes("contact") || lastUserMessage.includes("mail") || lastUserMessage.includes("dispo") || lastUserMessage.includes("rendez-vous")) {
-                fallbackContent = "Le meilleur moyen de me joindre est via le formulaire de contact. Je suis généralement très réactif ! ⚡\n\n👉 **[Me contacter](/contact)**";
+                fallbackContent = "Le meilleur moyen de me joindre est via le formulaire de contact. Je suis généralement très réactif ! ⚡\n\nClique ici pour aller :\n\n👉 **[Me contacter](/contact)**";
             } else if (lastUserMessage.includes("tarif") || lastUserMessage.includes("prix") || lastUserMessage.includes("coût")) {
-                fallbackContent = "Mes tarifs sont ajustables selon la nature du projet :\n\n- **Freelance** : 500-700€/jour\n- **Projet au forfait** : sur devis (à partir de 2000€)\n\n👉 **[Demander un devis](/contact)**";
+                fallbackContent = "Mes tarifs sont ajustables selon la nature du projet :\n\n- **Freelance** : 500-700€/jour\n- **Projet au forfait** : sur devis (à partir de 2000€)\n\nClique ici pour aller :\n\n👉 **[Demander un devis](/contact)**";
             }
 
             // Return the fallback response as a stream (to simulate AI behavior)
