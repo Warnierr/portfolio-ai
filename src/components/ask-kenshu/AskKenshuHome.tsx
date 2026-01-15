@@ -205,8 +205,22 @@ export default function AskKenshuHome() {
         return;
       }
 
-      if (!res.ok || !res.body) {
-        throw new Error("Erreur API");
+      if (!res.ok) {
+        let errorMessage = "Erreur API";
+        try {
+          const errorData = await res.json();
+          errorMessage = errorData.message || errorData.error || errorMessage;
+          if (errorData.details) console.warn("API Error Details:", errorData.details);
+        } catch {
+          try {
+            errorMessage = await res.text() || errorMessage;
+          } catch { }
+        }
+        throw new Error(errorMessage);
+      }
+
+      if (!res.body) {
+        throw new Error("Pas de flux de réponse");
       }
 
       // Stream response
@@ -257,13 +271,13 @@ export default function AskKenshuHome() {
           // Ignore if not parsable
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Une erreur s'est produite. Contactez-moi directement : contact@kenshu.dev",
+          content: error.message || "Une erreur s'est produite. Contactez-moi directement : contact@kenshu.dev",
         },
       ]);
     } finally {
@@ -345,7 +359,7 @@ export default function AskKenshuHome() {
             <div
               ref={chatRef}
               onScroll={handleScroll}
-              className="h-[500px] md:h-[650px] lg:h-[700px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
+              className="h-[60vh] md:h-[650px] lg:h-[700px] min-h-[400px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
@@ -622,14 +636,11 @@ export default function AskKenshuHome() {
       </main>
 
       {/* Footer Note */}
-      < div className="text-center pb-6 px-4" >
+      <div className="text-center pb-6 px-4">
         <p className="text-xs text-zinc-500">
-          IA expérimentale (peut faire des erreurs).{" "}
-          <Link href="/agent" className="text-zinc-400 hover:text-white transition">
-            Version complète de l&apos;agent →
-          </Link>
+          IA expérimentale (peut faire des erreurs).
         </p>
-      </div >
+      </div>
     </div >
   );
 }

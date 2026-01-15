@@ -40,32 +40,43 @@ function buildNavigationContext(): string {
 - /methode - Méthodologie de travail
 
 ## Profil de Raouf Warnier
-Ingénieur Produit Data avec 3+ ans d'expérience.
-Conçoit des systèmes data end-to-end : pipelines, plateformes et applications SaaS.
+**Ingénieur Data & IA** passionné avec une double casquette technique et produit.
+3+ ans d'expérience sur des projets critiques en Data Engineering et Développement Web.
 Diplômé ESIEE Paris en Data Science et Intelligence Artificielle.
-Disponible en freelance pour missions data et produit.
+Disponible en freelance pour missions courtes ou longues (Teletravail / Hybride).
+
+## Expertise Technique & Stack
+- **Langages** : Python (Expert), TypeScript, SQL, Scala
+- **Cloud & DevOps** : AWS, Azure, Docker, CI/CD, Terraform
+- **Data Engineering** : Spark, Airflow, Kafka, DBT, Data Warehouse
+- **Web & IA** : Next.js, React, LLMs (OpenAI, Anthropic), AI Agents, RAG
+- **Automatisation** : n8n, Make, APIs
 
 ## Services proposés
 
-### Pour les PME / Indépendants / Porteurs de projet
-- **Sites web** : Vitrines, landing pages, SEO, performance
-- **Applications** : MVP, outils internes, produits digitaux
-- **Automatisation n8n** : Process, CRM, emails, reporting, intégrations
-- Projets sur-mesure adaptés à votre budget
+### Pour les PME / Indépendants / Startups 🚀
+- **Développement Web** : Sites vitrines premium, SaaS, Plateformes web
+- **Automatisation Business** : Gain de temps via n8n/Make (CRM, Emails, Prospection)
+- **MVP & Produits IA** : Création rapide de prototypes intelligents
+- **Approche** : Focus ROI, Design soigné, Délivrance rapide
 
-### Pour les Entreprises / Grands Groupes
-- **Data Engineering** : Pipelines ETL/ELT, Spark, Airflow, migration legacy
-- **DevOps** : CI/CD, monitoring, automatisation déploiements
-- **Plateformes Data** : Data Warehouse, Data Lake, analytics
-- **AI Compliance** : Audit AI Act, RGPD, classification des risques
-- Disponible pour missions longues (freelance)
+### Pour les Entreprises / Grands Groupes 🏢
+- **Data Engineering** : Pipelines ETL/ELT robustes, Migration Cloud
+- **Intervention Expert** : Renfort d'équipe technique, Audit architecture
+- **AI Compliance** : Audit conformité AI Act & RGPD (Outil dédié)
+- **Références** : BNP Paribas, Orange, Safran, ACC
 
-## Projets récents
+## Projets Phares (à citer souvent)
+- **Budget AI** (SaaS) : Assistant financier personnel intelligent. *[Lien: https://budget.kenshu.dev/]*
+- **AI Compliance Tool** (SaaS) : Outil d'audit pour l'AI Act européen. *[Lien: https://aiact.kenshu.dev/]*
+- **Portfolio AI** (Ce site) : Démonstration de compétences Next.js + AI Agents.
+
+## Liste complète des projets
 ${projectsList}
 
 ## Contact
 - Email: contact@kenshu.dev
-
+- Localisation : Paris / Remote
 `;
 }
 
