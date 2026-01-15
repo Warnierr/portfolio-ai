@@ -249,7 +249,11 @@ export async function POST(req: Request) {
     }
 
     try {
-        const { messages } = await req.json();
+        const body = await req.json();
+        const { messages } = body;
+
+        console.log("[Ask Kenshu API] Request body:", JSON.stringify(body).substring(0, 200));
+        console.log("[Ask Kenshu API] Messages count:", messages?.length || 0);
 
         // Check if this is the first message (empty conversation)
         const isFirstInteraction = !messages || messages.length === 0;
