@@ -29,8 +29,6 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Projets", href: "/projets" },
   { label: "Services", href: "/services" },
-  { label: "Méthode", href: "/methode" },
-  { label: "Kenshu IA 🤖", href: "/agent" },
   { label: "Contact", href: "/contact", highlighted: true },
 ];
 
@@ -290,16 +288,7 @@ export default function RootLayout({
               hasOccupation: {
                 "@type": "Occupation",
                 name: "Data Engineer",
-                occupationalCategory: "15-1254.00",
-                estimatedSalary: {
-                  "@type": "MonetaryAmount",
-                  currency: "EUR",
-                  value: {
-                    "@type": "QuantitativeValue",
-                    value: 500,
-                    unitText: "DAY"
-                  }
-                }
+                occupationalCategory: "15-1254.00"
               },
               worksFor: [
                 {
@@ -335,7 +324,6 @@ export default function RootLayout({
               url: "https://kenshu.dev",
               telephone: "+33749416355",
               email: "contact@kenshu.dev",
-              priceRange: "500€/jour",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "FR"
@@ -452,24 +440,18 @@ export default function RootLayout({
                 {
                   "@type": "ListItem",
                   position: 2,
-                  name: "Méthode",
-                  item: "https://kenshu.dev/methode"
-                },
-                {
-                  "@type": "ListItem",
-                  position: 3,
                   name: "Projets",
                   item: "https://kenshu.dev/projets"
                 },
                 {
                   "@type": "ListItem",
-                  position: 4,
+                  position: 3,
                   name: "Services",
                   item: "https://kenshu.dev/services"
                 },
                 {
                   "@type": "ListItem",
-                  position: 5,
+                  position: 4,
                   name: "Contact",
                   item: "https://kenshu.dev/contact"
                 }

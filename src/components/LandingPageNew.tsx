@@ -7,9 +7,9 @@ import PageContainer from "@/components/PageContainer";
 import SectionTitle from "@/components/SectionTitle";
 
 const heroActions = [
-  { label: "Écosystèmes IA", href: "/ecosystemes", variant: "primary" },
+  { label: "Écosystèmes IA", href: "/ecosystèmes", variant: "primary" },
   { label: "Voir les projets", href: "/projets", variant: "ghost" },
-  { label: "Parler à l’agent", href: "/agent", variant: "outline" },
+  { label: "Me contacter", href: "/contact", variant: "outline" },
 ];
 
 const entryCards = [
@@ -100,13 +100,12 @@ export default function LandingPage() {
               <Link
                 key={action.label}
                 href={action.href}
-                className={`rounded-full px-5 py-3 text-sm font-medium transition ${
-                  action.variant === "primary"
+                className={`rounded-full px-5 py-3 text-sm font-medium transition ${action.variant === "primary"
                     ? "bg-white text-black hover:bg-zinc-200"
                     : action.variant === "ghost"
                       ? "bg-white/5 text-white hover:bg-white/10"
                       : "border border-white/30 text-white hover:bg-white/10"
-                }`}
+                  }`}
               >
                 {action.label}
               </Link>

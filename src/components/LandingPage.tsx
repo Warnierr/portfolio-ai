@@ -566,7 +566,7 @@ export default function LandingPage() {
         </motion.section>
       </PageContainer>
 
-      <StickyCTA text="Parler à l'agent" href="/agent" />
+      <StickyCTA text="Me contacter" href="/contact" />
     </>
   );
 }

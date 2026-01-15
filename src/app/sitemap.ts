@@ -52,12 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "monthly",
             priority: 0.95,
         },
-        {
-            url: `${baseUrl}/methode`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.95,
-        },
+
 
         // Pages SEO long-tail (forte priorité conversion)
         {
@@ -120,12 +115,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
 
         // Pages secondaires
-        {
-            url: `${baseUrl}/agent`,
-            lastModified: now,
-            changeFrequency: "monthly",
-            priority: 0.6,
-        },
+
         {
             url: `${baseUrl}/stack`,
             lastModified: now,
