@@ -552,7 +552,7 @@ export default function AskKenshuHome() {
 
           <div className="flex flex-col gap-4">
             {/* Additional Info Card */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex-1">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <div className="flex items-center gap-3 mb-3">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-sm font-medium text-white">Disponible bientôt</span>
@@ -573,6 +573,44 @@ export default function AskKenshuHome() {
                   className="text-xs text-emerald-400 hover:text-emerald-300 transition"
                 >
                   Me contacter
+                </Link>
+              </div>
+            </div>
+
+            {/* Projets du moment */}
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex-1">
+              <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
+                Projets du moment
+              </p>
+              <div className="flex flex-col gap-3">
+                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-emerald-500/30">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-xl group-hover:scale-110 transition-transform">
+                    💰
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white group-hover:text-emerald-300">Budget AI</div>
+                    <div className="text-xs text-zinc-400">Assistant financier personnel</div>
+                  </div>
+                </Link>
+
+                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-blue-500/30">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 text-xl group-hover:scale-110 transition-transform">
+                    🛡️
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white group-hover:text-blue-300">AI Compliance</div>
+                    <div className="text-xs text-zinc-400">Audit RGPD & AI Act</div>
+                  </div>
+                </Link>
+
+                <Link href="/projets" className="group flex items-center gap-3 rounded-xl bg-white/5 p-2 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-purple-500/30">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20 text-xl group-hover:scale-110 transition-transform">
+                    🏦
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white group-hover:text-purple-300">Big Data BNP</div>
+                    <div className="text-xs text-zinc-400">Migration Cloud & Spark</div>
+                  </div>
                 </Link>
               </div>
             </div>

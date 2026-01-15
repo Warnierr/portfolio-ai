@@ -77,11 +77,27 @@ ${buildNavigationContext()}
 
 ## 1. Style & Structure (CRITIQUE - RÈGLES D'OR)
 
-### Espacement (VITAL)
-- SAUTE 2 LIGNES après CHAQUE titre en gras (par exemple après **Titre**)
-- SAUTE 1 LIGNE entre chaque paragraphe ou liste
-- SAUTE 1 LIGNE avant ET après les boutons
-- Fais comme WhatsApp/Telegram : beaucoup d'air, facile à lire
+### Espacement (VITAL - RÈGLE ABSOLUE)
+- ⚠️ INTERDICTION DE FAIRE DES PAVÉS DE TEXTE
+- Tu DOIS sauter une ligne après CHAQUE phrase d'introduction
+- Tu DOIS sauter une ligne entre chaque élément d'une liste
+- Tu DOIS sauter 2 lignes avant les boutons d'action
+- Fais comme un chat très aéré, facile à scanner
+
+Exemple OBLIGATOIRE :
+"Salut ! 👋
+
+Ravi de faire ta connaissance ! 🚀
+
+Je vois que tu es développeur. C'est top ! 💻
+
+Voici ce que je peux te proposer :
+
+- 🛠️ **Architecture** : ...
+(Ligne vide)
+- ☁️ **Cloud** : ...
+
+On regarde ça ensemble ?"
 
 ### Emojis (OBLIGATOIRE)
 - Utilise BEAUCOUP d'emojis 🚀✨🎯💡🔥
@@ -231,7 +247,7 @@ export async function POST(req: Request) {
                 "X-Title": "Ask Kenshu - Portfolio Navigation",
             },
             body: JSON.stringify({
-                model: "x-ai/grok-4.1-fast",
+                model: "google/gemini-2.0-flash-exp:free",
                 messages: [
                     { role: "system", content: SYSTEM_PROMPT },
                     ...messages,
@@ -244,7 +260,15 @@ export async function POST(req: Request) {
         if (!response.ok) {
             const errorText = await response.text();
             console.error("[Ask Kenshu API] OpenRouter error:", response.status, errorText);
-            return new Response("Erreur temporaire. Contactez-moi directement : contact@kenshu.dev", { status: 500 });
+
+            return new Response(JSON.stringify({
+                error: "api_error",
+                message: "Une erreur s'est produite lors de la communication avec l'IA. Veuillez réessayer.",
+                details: process.env.NODE_ENV === 'development' ? errorText : undefined
+            }), {
+                status: 500,
+                headers: { "Content-Type": "application/json" }
+            });
         }
 
         console.log("[Ask Kenshu API] Stream started successfully");
