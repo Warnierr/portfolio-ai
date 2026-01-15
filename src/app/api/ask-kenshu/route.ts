@@ -151,15 +151,10 @@ L'utilisateur ne verra pas ce code, mais le site réagira !
    Exemple : "Pas de souci, allons voir mes services !"
    @@@ACTION@@@{"type":"NAVIGATE","path":"/services"}
 
-2. **Célébration / Confetti** (Si l'utilisateur est content, te félicite, ou valide un projet) 🎉
-   Exemple : "Super nouvelle ! On part là-dessus !"
-   @@@ACTION@@@{"type":"CONFETTI"}
-
 ⚠️ **RÈGLES IMPORTANTES** :
 - Mets l'action TOUJOURS à la toute fin du message.
 - Le JSON doit être valide (attention aux guillemets).
 - N'invente pas d'autres types d'actions.
-- Utilise "CONFETTI" avec parcimonie (pour marquer le coup).
 
 ## 4. Format de réponse attendu (Exemple PARFAIT)
 
@@ -282,36 +277,70 @@ export async function POST(req: Request) {
 
         console.log(`[Ask Kenshu API] Calling OpenRouter with model: ${AI_CONFIG.modelId}`);
 
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`,
-                "HTTP-Referer": "https://kenshu.dev",
-                "X-Title": "Ask Kenshu - Portfolio Navigation",
-            },
-            body: JSON.stringify({
-                model: AI_CONFIG.modelId,
-                messages: [
-                    { role: "system", content: SYSTEM_PROMPT },
-                    ...messages,
-                ],
-                stream: true,
-                temperature: 0.9,
-            }),
-        });
+        let response;
+        try {
+            response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`,
+                    "HTTP-Referer": "https://kenshu.dev",
+                    "X-Title": "Ask Kenshu - Portfolio Navigation",
+                },
+                body: JSON.stringify({
+                    model: AI_CONFIG.modelId,
+                    messages: [
+                        { role: "system", content: SYSTEM_PROMPT },
+                        ...messages,
+                    ],
+                    stream: true,
+                    temperature: 0.9,
+                }),
+            });
+            console.log("[Ask Kenshu API] OpenRouter responded with status:", response.status);
+        } catch (fetchError) {
+            console.error("[Ask Kenshu API] FETCH ERROR:", fetchError);
+            throw fetchError; // Re-throw to be caught by outer catch
+        }
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error("[Ask Kenshu API] OpenRouter error:", response.status, errorText);
+            console.error("[Ask Kenshu API] OpenRouter error body:", errorText);
 
-            return new Response(JSON.stringify({
-                error: "api_error",
-                message: "Une erreur s'est produite lors de la communication avec l'IA. Veuillez réessayer.",
-                details: process.env.NODE_ENV === 'development' ? errorText : undefined
-            }), {
-                status: 500,
-                headers: { "Content-Type": "application/json" }
+            // FALLBACK SYSTEM: Return a static response instead of 500 error
+            console.log("[Ask Kenshu API] Using Fallback Response due to API Error");
+
+            const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
+            let fallbackContent = "Je rencontre actuellement une petite surcharge cognitive (IA indisponible momentanément). 😅\n\nNéanmoins, je peux vous guider vers les sections principales :\n\n👉 **[Voir les projets](/projets)**\n👉 **[Découvrir les services](/services)**\n👉 **[Me contacter](/contact)**";
+
+            if (lastUserMessage.includes("projet") || lastUserMessage.includes("réalis") || lastUserMessage.includes("portfol")) {
+                fallbackContent = "Pour découvrir mes projets, je vous invite à visiter la page dédiée. Vous y trouverez des cas concrets comme Budget AI ou AI Compliance Tool. 🚀\n\n👉 **[Voir les projets](/projets)**";
+            } else if (lastUserMessage.includes("service") || lastUserMessage.includes("offre") || lastUserMessage.includes("compétence")) {
+                fallbackContent = "Je propose des services en Data Engineering, Développement Web et Intelligence Artificielle. \n\n👉 **[Découvrir les services](/services)**\n\nN'hésitez pas à me contacter pour en discuter !";
+            } else if (lastUserMessage.includes("contact") || lastUserMessage.includes("mail") || lastUserMessage.includes("dispo") || lastUserMessage.includes("rendez-vous")) {
+                fallbackContent = "Le meilleur moyen de me joindre est via le formulaire de contact. Je suis généralement très réactif ! ⚡\n\n👉 **[Me contacter](/contact)**";
+            } else if (lastUserMessage.includes("tarif") || lastUserMessage.includes("prix") || lastUserMessage.includes("coût")) {
+                fallbackContent = "Mes tarifs sont ajustables selon la nature du projet :\n\n- **Freelance** : 500-700€/jour\n- **Projet au forfait** : sur devis (à partir de 2000€)\n\n👉 **[Demander un devis](/contact)**";
+            }
+
+            // Return the fallback response as a stream (to simulate AI behavior)
+            const encoder = new TextEncoder();
+            const stream = new ReadableStream({
+                start(controller) {
+                    controller.enqueue(encoder.encode(fallbackContent));
+                    controller.close();
+                }
+            });
+
+            const newCount = currentCount + 1;
+            const newRemaining = MAX_REQUESTS - newCount;
+
+            return new Response(stream, {
+                headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                    "Set-Cookie": `${COOKIE_NAME}=${newCount}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax`,
+                    "X-Requests-Remaining": String(newRemaining),
+                },
             });
         }
 
@@ -330,30 +359,35 @@ export async function POST(req: Request) {
 
                 let fullResponse = "";
 
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
+                try {
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
 
-                    const chunk = decoder.decode(value);
-                    const lines = chunk.split("\n");
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split("\n");
 
-                    for (const line of lines) {
-                        if (line.startsWith("data: ")) {
-                            const data = line.slice(6);
-                            if (data === "[DONE]") continue;
+                        for (const line of lines) {
+                            if (line.startsWith("data: ")) {
+                                const data = line.slice(6);
+                                if (data === "[DONE]") continue;
 
-                            try {
-                                const parsed = JSON.parse(data);
-                                const content = parsed.choices?.[0]?.delta?.content;
-                                if (content) {
-                                    fullResponse += content;
-                                    controller.enqueue(encoder.encode(content));
+                                try {
+                                    const parsed = JSON.parse(data);
+                                    const content = parsed.choices?.[0]?.delta?.content;
+                                    if (content) {
+                                        fullResponse += content;
+                                        controller.enqueue(encoder.encode(content));
+                                    }
+                                } catch {
+                                    // Ignore parsing errors
                                 }
-                            } catch {
-                                // Ignore parsing errors for incomplete chunks
                             }
                         }
                     }
+                } catch (streamError) {
+                    console.error("[Ask Kenshu API] Stream reading error:", streamError);
+                    controller.error(streamError);
                 }
 
                 // Log interaction (non-blocking)
