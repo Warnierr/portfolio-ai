@@ -4,7 +4,7 @@ const MODEL_INFO: Record<string, { name: string; provider: string }> = {
     "anthropic/claude-3.5-sonnet": { name: "Claude 3.5 Sonnet", provider: "Anthropic" },
 };
 
-const CURRENT_MODEL = "google/gemini-2.0-flash-thinking-exp:free";
+const CURRENT_MODEL = "google/gemini-2.0-flash-exp:free";
 
 export const AI_CONFIG = {
     modelId: CURRENT_MODEL,
