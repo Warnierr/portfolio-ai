@@ -1,4 +1,5 @@
 import { caseStudies } from "@/data/projects";
+import { AI_CONFIG } from "@/lib/ai-config";
 
 function generateWelcomeMessage(): string {
     return `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
@@ -258,7 +259,7 @@ export async function POST(req: Request) {
                 "X-Title": "Ask Kenshu - Portfolio Navigation",
             },
             body: JSON.stringify({
-                model: "google/gemini-2.0-flash-exp:free",
+                model: AI_CONFIG.modelId,
                 messages: [
                     { role: "system", content: SYSTEM_PROMPT },
                     ...messages,

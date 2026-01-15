@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ProfileSelector from "./ProfileSelector";
+import { AI_CONFIG } from "@/lib/ai-config";
 
 type CardKey = "web" | "apps" | "automation" | "data";
 
@@ -55,7 +56,7 @@ type ChatMsg = { role: "user" | "assistant"; content: string };
 
 const WELCOME_MESSAGE = `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
 
-Je fonctionne avec **Grok 4.1-fast** par xAI pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
+Je fonctionne avec **${AI_CONFIG.displayName}** par ${AI_CONFIG.provider} pour vous offrir une expérience conversationnelle naturelle et dynamique 🚀
 
 Raouf est un **développeur passionné** par la création de projets innovants en **Data Engineering** et **Intelligence Artificielle**. Je peux vous parler de :
 
