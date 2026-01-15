@@ -174,11 +174,6 @@ export default function AskKenshuHome() {
   const handleAction = (action: any) => {
     console.log("Executing Action:", action);
 
-    // Navigation
-    if (action.type === "NAVIGATE" && action.path) {
-      router.push(action.path);
-    }
-
     // Confetti 🎉
     if (action.type === "CONFETTI") {
       confetti({
