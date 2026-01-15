@@ -206,46 +206,50 @@ export default function AskKenshuHome() {
   const handleAction = (action: any) => {
     console.log("Executing Action:", action);
 
-    // Confetti 🎉
+    // Confetti 🎉 (Classique : carrés/cercles festifs)
     if (action.type === "CONFETTI") {
       confetti({
         particleCount: 150,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#10b981', '#3b82f6', '#8b5cf6'] // Emerald, Blue, Purple
+        colors: ['#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b'],
+        shapes: ['square', 'circle'] as any
       });
     }
 
-    // Emoji Rain 🌧️
+    // Emoji Rain 🌧️ -> Thematic Circle Rain
     if (action.type === "EMOJI_RAIN") {
-      const emoji = action.emoji || "🎉";
+      const emojiContext = action.emoji || "🎉";
       const duration = 3000;
       const end = Date.now() + duration;
 
+      // Colors based on context
+      let colors = ['#10b981', '#3b82f6'];
+      if (emojiContext === "🔥") colors = ['#ef4444', '#f97316', '#eab308', '#7f1d1d']; // Fire colors
+      if (emojiContext === "💸") colors = ['#10b981', '#059669', '#fbbf24', '#d97706']; // Money colors
+      if (emojiContext === "❤️") colors = ['#ec4899', '#db2777', '#dc2626', '#f43f5e']; // Love colors
+
       (function frame() {
-        // Launch a few confetti from the left edge
         confetti({
           particleCount: 2,
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          shapes: ['text'] as any,
-          shapeOptions: { text: { value: emoji } },
-          scalar: 4, // GROSSIR L'EMOJI !
+          colors: colors,
+          shapes: ['circle'] as any,
+          scalar: 2,
         } as any);
 
-        // and a few from the right edge
         confetti({
           particleCount: 2,
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          shapes: ['text'] as any,
-          shapeOptions: { text: { value: emoji } },
-          scalar: 4, // GROSSIR L'EMOJI !
+          colors: colors,
+          shapes: ['circle'] as any,
+          scalar: 2,
         } as any);
 
-        // Keep going until we run out of time
         if (Date.now() < end) {
           requestAnimationFrame(frame);
         }
@@ -309,12 +313,16 @@ export default function AskKenshuHome() {
         confetti({
           ...defaults,
           particleCount,
-          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+          shapes: ['circle', 'star'] as any,
+          colors: ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#3b82f6', '#ec4899']
         } as any);
         confetti({
           ...defaults,
           particleCount,
-          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+          shapes: ['circle', 'star'] as any,
+          colors: ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#3b82f6', '#ec4899']
         } as any);
 
         // Random Confetti Rain
@@ -326,7 +334,8 @@ export default function AskKenshuHome() {
             origin: { x: 0.5, y: 0 },
             colors: ['#10b981', '#3b82f6', '#8b5cf6', '#F59E0B'],
             gravity: 0.8,
-            scalar: 1.2
+            scalar: 1.2,
+            shapes: ['circle'] as any
           });
         }
       }, 250);
