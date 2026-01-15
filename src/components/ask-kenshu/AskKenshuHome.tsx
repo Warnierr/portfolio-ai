@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import confetti from "canvas-confetti";
 import ProfileSelector from "./ProfileSelector";
 import { AI_CONFIG } from "@/lib/ai-config";
 
@@ -158,6 +159,28 @@ export default function AskKenshuHome() {
     }
   };
 
+  const handleAction = (action: any) => {
+    console.log("Executing Action:", action);
+
+    if (action.type === "NAVIGATE" && action.path) {
+      router.push(action.path);
+    }
+
+    if (action.type === "CONFETTI") {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#10b981', '#3b82f6', '#8b5cf6'] // Emerald, Blue, Purple
+      });
+    }
+
+    if (action.type === "OPEN_MODAL") {
+      // TODO: Implement Modal
+      console.log("Open Modal:", action.modal);
+    }
+  };
+
   useEffect(() => {
     scrollToBottom(isStreaming);
   }, [messages, isStreaming]);
@@ -249,27 +272,34 @@ export default function AskKenshuHome() {
       }
 
       // Check for navigation directive at end
-      const marker = "\n\n@@@";
-      const idx = assistantText.lastIndexOf(marker);
-      if (idx !== -1) {
-        const jsonStr = assistantText.slice(idx + marker.length).trim();
+      // Check for ACTION marker
+      const actionMarker = "@@@ACTION@@@";
+      const actionIdx = assistantText.lastIndexOf(actionMarker);
+
+      if (actionIdx !== -1) {
+        const jsonStr = assistantText.slice(actionIdx + actionMarker.length).trim();
+
+        // Clean up the message in UI (remove the hidden command)
+        setMessages((m) => {
+          const copy = [...m];
+          const last = copy[copy.length - 1];
+          if (last?.role === "assistant") {
+            last.content = assistantText.slice(0, actionIdx).trim();
+          }
+          return copy;
+        });
+
         try {
-          const directive = JSON.parse(jsonStr) as { navigate?: string };
-          if (directive.navigate) {
-            // Clean up the message (remove the directive)
-            setMessages((m) => {
-              const copy = [...m];
-              const last = copy[copy.length - 1];
-              if (last?.role === "assistant") {
-                last.content = assistantText.slice(0, idx).trim();
-              }
-              return copy;
-            });
-            // Navigate after a short delay
-            setTimeout(() => router.push(directive.navigate!), 1500);
+          // Attempt to parse incomplete JSON as it streams? No, wait for end usually better but let's try
+          // If it's at the end of stream, it's safer. 
+          // But here we are inside while(true), so we might catch it early.
+          // Let's rely on valid JSON closure.
+          if (jsonStr.endsWith("}")) {
+            const action = JSON.parse(jsonStr);
+            handleAction(action);
           }
         } catch {
-          // Ignore if not parsable
+          // Ignore parse errors while streaming
         }
       }
     } catch (error: any) {

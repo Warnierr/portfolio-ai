@@ -34,11 +34,13 @@
   "devDependencies": {
     "@prisma/client": "5.22.0",
     "@tailwindcss/postcss": "^4",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/rss": "^0.0.32",
     "babel-plugin-react-compiler": "1.0.0",
+    "canvas-confetti": "^1.9.4",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "prisma": "5.22.0",
