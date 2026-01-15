@@ -256,7 +256,7 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { messages } = body;
 
-        console.log("[Ask Kenshu API] Request body:", JSON.stringify(body).substring(0, 200));
+        console.log("[Ask Kenshu API] Request body length:", JSON.stringify(body).length);
         console.log("[Ask Kenshu API] Messages count:", messages?.length || 0);
 
         // Check if this is the first message (empty conversation)
@@ -264,10 +264,7 @@ export async function POST(req: Request) {
 
         if (isFirstInteraction) {
             console.log("[Ask Kenshu API] First interaction detected - sending welcome message");
-
             const welcomeMessage = generateWelcomeMessage();
-
-            // Return welcome message directly without API call
             const newCount = currentCount + 1;
             const newRemaining = MAX_REQUESTS - newCount;
 
@@ -280,37 +277,60 @@ export async function POST(req: Request) {
             });
         }
 
-        console.log(`[Ask Kenshu API] Calling OpenRouter with model: ${AI_CONFIG.modelId}`);
-
-        let response;
-        try {
-            response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${apiKey}`,
-                    "HTTP-Referer": "https://kenshu.dev",
-                    "X-Title": "Ask Kenshu - Portfolio Navigation",
-                },
-                body: JSON.stringify({
-                    model: AI_CONFIG.modelId,
-                    messages: [
-                        { role: "system", content: SYSTEM_PROMPT },
-                        ...messages,
-                    ],
-                    stream: true,
-                    temperature: 0.9,
-                }),
-            });
-            console.log("[Ask Kenshu API] OpenRouter responded with status:", response.status);
-        } catch (fetchError) {
-            console.error("[Ask Kenshu API] FETCH ERROR:", fetchError);
-            throw fetchError; // Re-throw to be caught by outer catch
+        // --- MODEL FAILOVER LOGIC ---
+        // Try primary model, then backup model if primary fails
+        // Use logic OR to force backup model if backupModelId is undefined
+        const modelsToTry = [AI_CONFIG.modelId];
+        if (AI_CONFIG.backupModelId) {
+            modelsToTry.push(AI_CONFIG.backupModelId);
+        } else {
+            // Fallback default backup just in case
+            modelsToTry.push("meta-llama/llama-3-8b-instruct:free");
         }
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("[Ask Kenshu API] OpenRouter error body:", errorText);
+        let response;
+        let usedModel = "";
+
+        for (const model of modelsToTry) {
+            try {
+                console.log(`[Ask Kenshu API] Attempting processing with model: ${model}`);
+
+                response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`,
+                        "HTTP-Referer": "https://kenshu.dev",
+                        "X-Title": "Ask Kenshu - Portfolio Navigation",
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [
+                            { role: "system", content: SYSTEM_PROMPT },
+                            ...messages,
+                        ],
+                        stream: true,
+                        temperature: 0.7,
+                        max_tokens: 1000,
+                    }),
+                });
+
+                if (response.ok) {
+                    usedModel = model;
+                    console.log(`[Ask Kenshu API] Success with model: ${model}`);
+                    break; // Exit loop on success
+                } else {
+                    const errText = await response.text();
+                    console.warn(`[Ask Kenshu API] Failed with model ${model}. Status: ${response.status}. Msg: ${errText.substring(0, 100)}...`);
+                }
+            } catch (err) {
+                console.error(`[Ask Kenshu API] Network error with model ${model}:`, err);
+            }
+        }
+
+        // If all models failed (response is undefined or not ok)
+        if (!response || !response.ok) {
+            console.error("[Ask Kenshu API] ALL MODELS FAILED. Engaging Static Fallback.");
 
             // FALLBACK SYSTEM: Return a static response instead of 500 error
             console.log("[Ask Kenshu API] Using Fallback Response due to API Error");
@@ -399,7 +419,7 @@ export async function POST(req: Request) {
                 try {
                     const { logInteraction } = await import("@/lib/db-utils");
                     await logInteraction(
-                        messages[messages.length - 1]?.content || "",
+                        (messages[messages.length - 1]?.content || "") + ` [Model: ${usedModel}]`,
                         fullResponse
                     );
                 } catch (e) {
@@ -423,14 +443,11 @@ export async function POST(req: Request) {
 
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
-        const errorStack = error instanceof Error ? error.stack : "";
-        console.error("[Ask Kenshu API] ERROR:", errorMessage);
-        console.error("[Ask Kenshu API] ERROR STACK:", errorStack);
+        console.error("[Ask Kenshu API] FATAL ERROR:", errorMessage);
 
         return new Response(JSON.stringify({
             error: "server_error",
-            message: "Une erreur s'est produite lors de la communication avec l'IA. Veuillez réessayer.",
-            details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+            message: "Une erreur critique s'est produite. Veuillez réessayer.",
         }), {
             status: 500,
             headers: { "Content-Type": "application/json" }

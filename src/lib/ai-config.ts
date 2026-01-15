@@ -5,9 +5,11 @@ const MODEL_INFO: Record<string, { name: string; provider: string }> = {
 };
 
 const CURRENT_MODEL = "google/gemini-2.0-flash-lite-preview-02-05:free";
+const BACKUP_MODEL = "meta-llama/llama-3-8b-instruct:free";
 
 export const AI_CONFIG = {
     modelId: CURRENT_MODEL,
+    backupModelId: BACKUP_MODEL,
     displayName: MODEL_INFO[CURRENT_MODEL]?.name || CURRENT_MODEL,
     provider: MODEL_INFO[CURRENT_MODEL]?.provider || "AI Provider"
 };
