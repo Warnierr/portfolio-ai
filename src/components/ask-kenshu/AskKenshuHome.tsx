@@ -90,6 +90,7 @@ export default function AskKenshuHome() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [remaining, setRemaining] = useState(MAX_REQUESTS);
   const [limitReached, setLimitReached] = useState(false);
+  const [theme, setTheme] = useState<'default' | 'matrix'>('default'); // Theme State
 
   const chatRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -368,6 +369,7 @@ export default function AskKenshuHome() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
+          theme,
         }),
       });
 
@@ -506,7 +508,7 @@ export default function AskKenshuHome() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
+    <div className={`min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white ${theme === 'matrix' ? 'theme-matrix' : ''}`}>
       {/* Main Content */}
       <main className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8">
         {/* Chat Section */}
@@ -525,16 +527,27 @@ export default function AskKenshuHome() {
                   Dis-moi ton besoin — je te guide vers les bons services et projets.
                 </p>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-                <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5
-                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                  : remaining > 2
-                    ? "border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
-                    : "border-orange-500/30 bg-orange-500/10 text-orange-300"
-                  }`}>
-                  💬 {remaining}/{MAX_REQUESTS}
-                </span>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setTheme((t) => (t === "default" ? "matrix" : "default"))}
+                  className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${theme === "matrix"
+                    ? "bg-black text-[#00ff41] border border-[#00ff41] shadow-[0_0_8px_rgba(0,255,65,0.4)]"
+                    : "bg-white/5 text-zinc-500 hover:text-zinc-300 border border-white/5 hover:border-white/10"
+                    }`}
+                >
+                  {theme === "matrix" ? "🟢 SYSTEM" : "⚪ APP"}
+                </button>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                  <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                    : remaining > 2
+                      ? "border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
+                      : "border-orange-500/30 bg-orange-500/10 text-orange-300"
+                    }`}>
+                    💬 {remaining}/{MAX_REQUESTS}
+                  </span>
+                </div>
               </div>
             </div>
 

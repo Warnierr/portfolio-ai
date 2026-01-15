@@ -49,25 +49,104 @@ body {
 
 /* Shake animation for surprise effects */
 @keyframes shake {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-10px);
   }
-  20%, 40%, 60%, 80% {
+
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(10px);
   }
 }
 
 /* Pulse animation for attention */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.05);
     opacity: 0.9;
   }
+}
+
+/* --- THEME MATRIX --- */
+.theme-matrix {
+  --color-background: #000000;
+  --color-foreground: #00ff41;
+  /* Cyber Green */
+  --font-mono: 'Courier New', monospace;
+  background-color: #000000 !important;
+  color: #00ff41 !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+.theme-matrix * {
+  border-color: #003b00 !important;
+  /* Bordures vert sombre */
+}
+
+.theme-matrix .glass-panel,
+.theme-matrix .glass-card {
+  background: rgba(0, 20, 0, 0.9) !important;
+  border: 1px solid #00ff41 !important;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+  border-radius: 0 !important;
+  /* Pas de coins ronds en Matrix ! */
+}
+
+.theme-matrix h1,
+.theme-matrix h2,
+.theme-matrix h3,
+.theme-matrix strong {
+  color: #00ff41 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  font-weight: bold;
+}
+
+.theme-matrix button {
+  border-radius: 0 !important;
+  border: 1px solid #00ff41 !important;
+  color: #00ff41 !important;
+  text-transform: uppercase;
+  background: black !important;
+}
+
+.theme-matrix button:hover {
+  background: #003300 !important;
+  box-shadow: 0 0 15px #00ff41;
+}
+
+.theme-matrix input,
+.theme-matrix textarea {
+  background: #000 !important;
+  color: #00ff41 !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 0 !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+/* Scrollbar Matrix */
+.theme-matrix ::-webkit-scrollbar-thumb {
+  background: #00ff41;
+}
+
+.theme-matrix ::-webkit-scrollbar-track {
+  background: #001100;
 }

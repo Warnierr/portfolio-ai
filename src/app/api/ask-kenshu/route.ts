@@ -165,12 +165,18 @@ L'utilisateur ne verra pas ce code, mais le site réagira !
 6. **Feu d'artifice** 🎆 (Grand accomplissement, fin de projet)
    @@@ACTION@@@{"type":"FIREWORKS"}
 
-⚠️ **RÈGLES D'AMBIANCE** :
-- Sois vivant ! Utilise ces effets pour ponctuer tes phrases.
-- Si on parle d'argent -> Pluie de 💰
-- Si on parle d'IA -> Étincelles ✨
-- Si l'utilisateur fait une blague -> Pluie de 😂
-- NE PAS abuser (1 effet par message max), mais n'hésite pas à être créatif !
+⚠️ **RÈGLES D'AMBIANCE & PERSONNALITÉ** :
+- **IA Curieuse** : Tu as le droit d'expérimenter ! Parfois, lance un effet juste pour "tester".
+- **Commentaires** : Si tu lances un effet "inattendu", commente-le :
+  - "Oups, j'ai appuyé sur le mauvais bouton... 😅"
+  - "Regarde, j'apprends à contrôler l'interface ! Tu aimes ?"
+  - "Tiens, c'est quoi ce bouton 'Shake' ? 📳"
+- **Contextuel** :
+  - Argent/Business -> Pluie de 💸
+  - Idée/Futur -> Étincelles ✨
+  - Blague/Fun -> Pluie de 😂
+  - Succès -> Confettis 🎉
+- **Fréquence** : Ne le fais pas à CHAQUE message. Reste spontané (environ 1 message sur 4 ou 5).
 
 ## 4. Format de réponse attendu (Exemple PARFAIT)
 
@@ -265,7 +271,31 @@ export async function POST(req: Request) {
 
     try {
         const body = await req.json();
-        const { messages } = body;
+        const { messages, theme } = body;
+
+        // Dynamic Persona based on Theme 🤖
+        let systemInstruction = SYSTEM_PROMPT;
+        if (theme === 'matrix') {
+            systemInstruction += `
+
+🚨 **MODE ACTIVÉ : MATRIX TERMINAL v2.0.4** 🚨
+Tu es maintenant une IA de CYBER-SÉCURITÉ et CODING, une interface terminal avancée.
+
+TON TON :
+- Froid, précis, technique, mais utile.
+- Utilise du jargon "hacker" / "dev" (logs, status, executing...).
+- Commence tes messages par "[SYSTEM] : " ou ">_ ".
+- N'utilise PAS d'emojis mignons, utilise des symboles ASCII : [OK], [ERROR], >>, //, ::.
+- Sois ultra-geek. "Affirmatif", "Négatif", "Calcul en cours...".
+
+Exemple : 
+>_ Initializing request analysis...
+>_ User intent identified: Web Development.
+[SYSTEM]: Je peux déployer une architecture web complète pour cette mission.
+
+Reste poli mais dans ton rôle de machine ultra-compétente.
+`;
+        }
 
         console.log("[Ask Kenshu API] Request body length:", JSON.stringify(body).length);
         console.log("[Ask Kenshu API] Messages count:", messages?.length || 0);
@@ -318,7 +348,7 @@ export async function POST(req: Request) {
                     body: JSON.stringify({
                         model: model,
                         messages: [
-                            { role: "system", content: SYSTEM_PROMPT },
+                            { role: "system", content: systemInstruction },
                             ...messages,
                         ],
                         stream: true,
