@@ -272,7 +272,7 @@ export async function POST(req: Request) {
             });
         }
 
-        console.log("[Ask Kenshu API] Calling OpenRouter...");
+        console.log(`[Ask Kenshu API] Calling OpenRouter with model: ${AI_CONFIG.modelId}`);
 
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
