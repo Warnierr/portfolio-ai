@@ -96,7 +96,8 @@ body {
   color: #1c1917 !important;
 }
 
-.theme-light * {
+/* Force background colors */
+.theme-light *:not(svg):not(path):not(circle):not(rect) {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
@@ -108,21 +109,51 @@ body {
   backdrop-filter: blur(16px);
 }
 
+/* Headings & Strong */
 .theme-light h1,
 .theme-light h2,
 .theme-light h3,
+.theme-light h4,
+.theme-light h5,
+.theme-light h6,
 .theme-light strong {
   color: #111 !important;
   font-weight: 700;
 }
 
+/* Text color override for all zinc/gray classes */
 .theme-light .text-zinc-500,
 .theme-light .text-zinc-400,
-.theme-light .text-zinc-300 {
+.theme-light .text-zinc-300,
+.theme-light .text-zinc-600,
+.theme-light .text-gray-500,
+.theme-light .text-gray-400 {
   color: #57534e !important;
   /* Warm Gray */
 }
 
+.theme-light .text-white {
+  color: #1c1917 !important;
+  /* Dark text instead of white */
+}
+
+/* Backgrounds - Force override */
+.theme-light [class*="bg-black"],
+.theme-light [class*="bg-zinc-900"],
+.theme-light [class*="bg-zinc-800"] {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.theme-light [class*="bg-white/"] {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.theme-light [class*="bg-emerald"] {
+  /* Keep emerald colors visible */
+  filter: brightness(0.85) saturate(1.2);
+}
+
+/* Buttons */
 .theme-light button {
   background: white !important;
   color: #1c1917 !important;
@@ -136,11 +167,66 @@ body {
   transform: translateY(-1px);
 }
 
+/* Specific: Modal/Dialog backgrounds */
+.theme-light [class*="fixed"][class*="inset"],
+.theme-light [class*="modal"],
+.theme-light [class*="backdrop"] {
+  background-color: rgba(253, 251, 247, 0.95) !important;
+}
+
+/* Chat modal specific */
+.theme-light [class*="max-w-2xl"][class*="rounded"] {
+  background: #fdfbf7 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Profile cards in chat */
+.theme-light [class*="grid"][class*="gap"]>div {
+  background: white !important;
+  color: #1c1917 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Input fields */
 .theme-light input,
 .theme-light textarea {
   background: white !important;
   color: #1c1917 !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.theme-light input::placeholder,
+.theme-light textarea::placeholder {
+  color: #a8a29e !important;
+}
+
+/* Links */
+.theme-light a {
+  color: #0369a1 !important;
+  /* Blue for visibility */
+}
+
+.theme-light a:hover {
+  color: #0284c7 !important;
+}
+
+/* Prose (markdown content) */
+.theme-light .prose {
+  color: #1c1917 !important;
+}
+
+.theme-light .prose strong {
+  color: #0c0a09 !important;
+}
+
+.theme-light .prose code {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #dc2626 !important;
+}
+
+.theme-light .prose pre {
+  background: #292524 !important;
+  color: #fafaf9 !important;
 }
 
 /* Scrollbar Light */
@@ -151,6 +237,13 @@ body {
 
 .theme-light ::-webkit-scrollbar-track {
   background: #fdfbf7;
+}
+
+/* Override any remaining text-white */
+.theme-light span[class*="text-white"],
+.theme-light p[class*="text-white"],
+.theme-light div[class*="text-white"]:not([class*="bg-emerald"]):not([class*="bg-blue"]) {
+  color: #1c1917 !important;
 }
 
 
