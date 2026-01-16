@@ -536,37 +536,6 @@ export default function AskKenshuHome() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="relative z-50">
-                  <button
-                    onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
-                    className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all border ${theme === 'matrix' ? 'bg-black text-[#00ff41] border-[#00ff41]' :
-                      theme === 'cyberpunk' ? 'bg-[#0f0518] text-[#22d3ee] border-[#d946ef]' :
-                        theme === 'retro' ? 'bg-[#0f380f] text-[#9bbc0f] border-[#8bac0f]' :
-                          theme === 'zen' ? 'bg-[#1a1a1a] text-[#ff5252] border-[#ff5252]' :
-                            'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10'
-                      }`}
-                  >
-                    {THEMES.find(t => t.id === theme)?.label || 'THEME'} ▾
-                  </button>
-
-                  {isThemeMenuOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-32 flex flex-col gap-1 rounded-lg border border-white/10 bg-zinc-900/95 p-1 backdrop-blur-xl shadow-xl">
-                      {THEMES.map((t) => (
-                        <button
-                          key={t.id}
-                          onClick={() => {
-                            setTheme(t.id as any);
-                            setIsThemeMenuOpen(false);
-                          }}
-                          className={`w-full rounded px-2 py-1.5 text-left text-xs transition-colors hover:bg-white/10 ${theme === t.id ? 'bg-white/5 text-white font-medium' : 'text-zinc-400'
-                            }`}
-                        >
-                          {t.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                   <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5
