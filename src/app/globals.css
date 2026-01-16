@@ -3,34 +3,37 @@
 /* Configuration manuelle des sources pour forcer le scan en v4 */
 @source "../**/*.{js,ts,jsx,tsx,mdx}";
 
+/* Import des variables de thèmes générées automatiquement */
+@import "../styles/generated/theme-variables.css";
+
 @theme {
   --color-background: #000;
   --color-foreground: #fff;
 }
 
-:root {
-  --background: 0 0% 0%;
-  --foreground: 0 0% 100%;
-}
-
+/* Utilisation native des CSS variables pour le theming */
 body {
-  background-color: black;
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* On utilise des classes standard pour éviter @apply le temps du fix du build */
+/* Glass effects utilisant les tokens */
 .glass-panel {
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
   backdrop-filter: blur(24px);
+  box-shadow: var(--shadow);
 }
 
 .glass-card {
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
   backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
 }
 
 @keyframes loading {
@@ -86,365 +89,75 @@ body {
   }
 }
 
-/* --- THEME LIGHT (Beige) --- */
-.theme-light {
-  --color-background: #fdfbf7;
-  /* Cream/Beige clair */
-  --color-foreground: #1c1917;
-  /* Warm Black */
-  background-color: #fdfbf7 !important;
-  color: #1c1917 !important;
+/* ========================================
+   UNIVERSAL THEME UTILITIES
+   These work with ALL themes via CSS variables
+   ======================================== */
+
+/* Scrollbar (adapts to theme) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Force background colors */
-.theme-light *:not(svg):not(path):not(circle):not(rect) {
-  border-color: rgba(0, 0, 0, 0.08) !important;
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
 }
 
-.theme-light .glass-panel,
-.theme-light .glass-card {
-  background: rgba(255, 255, 255, 0.6) !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(16px);
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
 }
 
-/* Headings & Strong */
-.theme-light h1,
-.theme-light h2,
-.theme-light h3,
-.theme-light h4,
-.theme-light h5,
-.theme-light h6,
-.theme-light strong {
-  color: #111 !important;
-  font-weight: 700;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
-/* Text color override for all zinc/gray classes */
-.theme-light .text-zinc-500,
-.theme-light .text-zinc-400,
-.theme-light .text-zinc-300,
-.theme-light .text-zinc-600,
-.theme-light .text-gray-500,
-.theme-light .text-gray-400 {
-  color: #57534e !important;
-  /* Warm Gray */
+/* Custom scrollbar for specific containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
 }
 
-.theme-light .text-white {
-  color: #1c1917 !important;
-  /* Dark text instead of white */
-}
-
-/* Backgrounds - Force override */
-.theme-light [class*="bg-black"],
-.theme-light [class*="bg-zinc-900"],
-.theme-light [class*="bg-zinc-800"] {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.theme-light [class*="bg-white/"] {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.theme-light [class*="bg-emerald"] {
-  /* Keep emerald colors visible */
-  filter: brightness(0.85) saturate(1.2);
-}
-
-/* Buttons */
-.theme-light button {
-  background: white !important;
-  color: #1c1917 !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.theme-light button:hover {
-  background: #f5f5f4 !important;
-  border-color: rgba(0, 0, 0, 0.2) !important;
-  transform: translateY(-1px);
-}
-
-/* Specific: Modal/Dialog backgrounds */
-.theme-light [class*="fixed"][class*="inset"],
-.theme-light [class*="modal"],
-.theme-light [class*="backdrop"] {
-  background-color: rgba(253, 251, 247, 0.95) !important;
-}
-
-/* Chat modal specific */
-.theme-light [class*="max-w-2xl"][class*="rounded"] {
-  background: #fdfbf7 !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Profile cards in chat */
-.theme-light [class*="grid"][class*="gap"]>div {
-  background: white !important;
-  color: #1c1917 !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Input fields */
-.theme-light input,
-.theme-light textarea {
-  background: white !important;
-  color: #1c1917 !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-.theme-light input::placeholder,
-.theme-light textarea::placeholder {
-  color: #a8a29e !important;
-}
-
-/* Links */
-.theme-light a {
-  color: #0369a1 !important;
-  /* Blue for visibility */
-}
-
-.theme-light a:hover {
-  color: #0284c7 !important;
-}
-
-/* Prose (markdown content) */
-.theme-light .prose {
-  color: #1c1917 !important;
-}
-
-.theme-light .prose strong {
-  color: #0c0a09 !important;
-}
-
-.theme-light .prose code {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: #dc2626 !important;
-}
-
-.theme-light .prose pre {
-  background: #292524 !important;
-  color: #fafaf9 !important;
-}
-
-/* Scrollbar Light */
-.theme-light ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
   border-radius: 99px;
 }
 
-.theme-light ::-webkit-scrollbar-track {
-  background: #fdfbf7;
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-/* Override any remaining text-white */
-.theme-light span[class*="text-white"],
-.theme-light p[class*="text-white"],
-.theme-light div[class*="text-white"]:not([class*="bg-emerald"]):not([class*="bg-blue"]) {
-  color: #1c1917 !important;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-
-/* --- THEME MATRIX --- */
-.theme-matrix {
-  --color-background: #000000;
-  --color-foreground: #00ff41;
-  /* Cyber Green */
-  --font-mono: 'Courier New', monospace;
-  background-color: #000000 !important;
-  color: #00ff41 !important;
-  font-family: 'Courier New', monospace !important;
+/* Text utilities */
+.text-balance {
+  text-wrap: balance;
 }
 
-.theme-matrix * {
-  border-color: #003b00 !important;
-  /* Bordures vert sombre */
+/* Selection colors (adapts to theme accent) */
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
-.theme-matrix .glass-panel,
-.theme-matrix .glass-card {
-  background: rgba(0, 20, 0, 0.9) !important;
-  border: 1px solid #00ff41 !important;
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
-  border-radius: 0 !important;
-  /* Pas de coins ronds en Matrix ! */
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.theme-matrix h1,
-.theme-matrix h2,
-.theme-matrix h3,
-.theme-matrix strong {
-  color: #00ff41 !important;
-  text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-  font-weight: bold;
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
-.theme-matrix button {
-  border-radius: 0 !important;
-  border: 1px solid #00ff41 !important;
-  color: #00ff41 !important;
-  text-transform: uppercase;
-  background: black !important;
-}
-
-.theme-matrix button:hover {
-  background: #003300 !important;
-  box-shadow: 0 0 15px #00ff41;
-}
-
-.theme-matrix input,
-.theme-matrix textarea {
-  background: #000 !important;
-  color: #00ff41 !important;
-  border: 1px solid #00ff41 !important;
-  border-radius: 0 !important;
-  font-family: 'Courier New', monospace !important;
-}
-
-/* Scrollbar Matrix */
-.theme-matrix ::-webkit-scrollbar-thumb {
-  background: #00ff41;
-}
-
-.theme-matrix ::-webkit-scrollbar-track {
-  background: #001100;
-}
-
-/* --- THEME CYBERPUNK --- */
-.theme-cyberpunk {
-  --color-background: #0f0518;
-  /* Deep Void Purple */
-  background-color: #0f0518 !important;
-  color: #e879f9 !important;
-  /* Neon Fuchsia */
-  font-family: 'Outfit', sans-serif !important;
-  /* Si dispo, sinon defaut */
-}
-
-.theme-cyberpunk * {
-  border-color: #d946ef !important;
-  /* Neon Fuchsia borders */
-}
-
-.theme-cyberpunk .glass-panel,
-.theme-cyberpunk .glass-card,
-.theme-cyberpunk button {
-  background: rgba(20, 0, 40, 0.8) !important;
-  border: 1px solid #d946ef !important;
-  box-shadow: 0 0 15px rgba(217, 70, 239, 0.3), inset 0 0 10px rgba(6, 182, 212, 0.1);
-  border-radius: 4px !important;
-  /* Look anguleux tech */
-}
-
-.theme-cyberpunk h1,
-.theme-cyberpunk h2,
-.theme-cyberpunk strong {
-  color: #22d3ee !important;
-  /* Neon Cyan */
-  text-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
-  letter-spacing: 1px;
-}
-
-.theme-cyberpunk button:hover {
-  background: #2a0a38 !important;
-  box-shadow: 0 0 20px #d946ef, 0 0 40px #22d3ee;
-  transform: scale(1.02);
-}
-
-.theme-cyberpunk input,
-.theme-cyberpunk textarea {
-  background: #1a0524 !important;
-  color: #22d3ee !important;
-  border: 1px solid #22d3ee !important;
-  box-shadow: 0 0 5px rgba(34, 211, 238, 0.4);
-}
-
-.theme-cyberpunk ::selection {
-  background: #d946ef;
-  color: #fff;
-}
-
-/* Scrollbar Cyberpunk */
-.theme-cyberpunk ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #d946ef, #22d3ee);
-}
-
-.theme-cyberpunk ::-webkit-scrollbar-track {
-  background: #0f0518;
-}
-
-/* --- THEME RETRO (Gameboy) --- */
-.theme-retro {
-  --color-background: #0f380f;
-  background-color: #0f380f !important;
-  /* Sombre Gameboy */
-  color: #9bbc0f !important;
-  /* Clair Gameboy */
-  font-family: 'Courier New', monospace !important;
-  letter-spacing: -0.5px;
-}
-
-.theme-retro * {
-  border-color: #306230 !important;
-}
-
-.theme-retro .glass-panel,
-.theme-retro .glass-card,
-.theme-retro button,
-.theme-retro input {
-  background: #0f380f !important;
-  border: 4px solid #8bac0f !important;
-  box-shadow: 4px 4px 0px #306230 !important;
-  /* Ombre pixel */
-  border-radius: 0 !important;
-}
-
-.theme-retro button:hover {
-  background: #8bac0f !important;
-  color: #0f380f !important;
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #306230 !important;
-}
-
-/* --- THEME ZEN (Ink) --- */
-.theme-zen {
-  --color-background: #1a1a1a;
-  background-color: #1a1a1a !important;
-  /* Charcoal */
-  color: #e0e0e0 !important;
-  /* Off-white */
-  font-family: serif !important;
-}
-
-.theme-zen * {
-  border-color: #444 !important;
-}
-
-.theme-zen .glass-panel,
-.theme-zen .glass-card,
-.theme-zen button {
-  background: #1a1a1a !important;
-  border: 1px solid #333 !important;
-  box-shadow: none !important;
-}
-
-.theme-zen h1,
-.theme-zen h2,
-.theme-zen strong {
-  color: #ff5252 !important;
-  /* Red Stamp color */
-  font-weight: normal !important;
-  font-style: italic;
-}
-
-.theme-zen button {
-  border: 1px solid #ff5252 !important;
-  color: #ff5252 !important;
-}
-
-.theme-zen button:hover {
-  background: #ff5252 !important;
-  color: #fff !important;
+/* Disable transitions on theme change for instant feedback */
+html[data-theme-transitioning="true"] * {
+  transition: none !important;
 }

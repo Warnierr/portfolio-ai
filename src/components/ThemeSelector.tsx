@@ -1,8 +1,19 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useTheme, THEMES } from "@/contexts/ThemeContext";
+import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
+
+// Theme list matching our JSON definitions
+const THEMES = [
+    { id: 'dark', label: 'Dark 🌑', description: 'Interface sombre standard' },
+    { id: 'light', label: 'Light ☀️', description: 'Mode clair / Beige Notion' },
+    { id: 'neon', label: 'Neon Dev 💻', description: 'Terminal hacker avec effets glow' },
+    { id: 'matrix', label: 'Matrix 🟢', description: 'Terminal Hacker style' },
+    { id: 'cyberpunk', label: 'Cyberpunk 🟣', description: 'Néon futuriste fuchsia/cyan' },
+    { id: 'retro', label: 'Retro 👾', description: 'Game Boy nostalgie' },
+    { id: 'zen', label: 'Zen ✒️', description: 'Minimaliste japonais' },
+] as const;
 
 export default function ThemeSelector() {
     const { theme, setTheme } = useTheme();
@@ -28,10 +39,10 @@ export default function ThemeSelector() {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute bottom-16 left-0 mb-2 w-72 rounded-2xl border border-white/10 bg-black/90 p-4 shadow-2xl backdrop-blur-xl"
+                        className="absolute bottom-16 left-0 mb-2 w-72 rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-4 shadow-2xl backdrop-blur-xl"
                     >
                         <div className="mb-3 flex items-center justify-between px-2">
-                            <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+                            <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]">
                                 Choisir un thème
                             </span>
                         </div>
@@ -42,11 +53,11 @@ export default function ThemeSelector() {
                                     key={t.id}
                                     onClick={() => {
                                         setTheme(t.id);
-                                        // On garde ouvert pour voir l'effet immédiat
+                                        // Keep open to see instant effect
                                     }}
                                     className={`w-full rounded-xl px-3 py-2 text-left transition-all flex items-center justify-between group ${theme === t.id
-                                            ? "bg-white/10 border border-white/20 text-white shadow-lg"
-                                            : "text-zinc-400 hover:bg-white/5 hover:text-white border border-transparent"
+                                            ? "bg-[var(--bg-elevated)] border border-[var(--border-strong)] text-[var(--text-primary)] shadow-lg"
+                                            : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent"
                                         }`}
                                 >
                                     <div className="flex flex-col">
@@ -54,7 +65,11 @@ export default function ThemeSelector() {
                                         <span className="text-[10px] opacity-60">{t.description}</span>
                                     </div>
                                     {theme === t.id && (
-                                        <motion.div layoutId="active-theme" className="w-2 h-2 rounded-full bg-emerald-500 box-shadow-glow" />
+                                        <motion.div
+                                            layoutId="active-theme"
+                                            className="w-2 h-2 rounded-full bg-[var(--accent)]"
+                                            style={{ boxShadow: '0 0 8px var(--accent)' }}
+                                        />
                                     )}
                                 </button>
                             ))}
@@ -67,7 +82,7 @@ export default function ThemeSelector() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white shadow-lg backdrop-blur-md hover:bg-white/10 transition-colors"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-primary)] shadow-lg backdrop-blur-md hover:bg-[var(--bg-elevated)] transition-colors"
                 title="Changer de thème"
             >
                 <span className="text-xl">🎨</span>

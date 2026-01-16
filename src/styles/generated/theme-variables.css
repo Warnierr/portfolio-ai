@@ -1,0 +1,129 @@
+/* Auto-generated theme variables - DO NOT EDIT MANUALLY */
+/* Generated at: 2026-01-16T22:05:58.804Z */
+
+/* Theme: Cyberpunk 🟣 - Néon futuriste fuchsia/cyan */
+[data-theme="cyberpunk"] {
+  --bg-primary: #0f0518;
+  --bg-secondary: #1a0524;
+  --bg-card: #2a0a38;
+  --bg-elevated: #1f0829;
+  --text-primary: #e879f9;
+  --text-secondary: #22d3ee;
+  --text-muted: #94a3b8;
+  --accent: #d946ef;
+  --accent-foreground: #ffffff;
+  --border: rgba(217, 70, 239, 0.3);
+  --border-strong: rgba(217, 70, 239, 0.5);
+  --shadow: 0 0 15px rgba(217, 70, 239, 0.3), 0 0 30px rgba(34, 211, 238, 0.1);
+  --font-main: 'Outfit', sans-serif;
+  --font-mono: 'Monaco', monospace;
+}
+
+/* Theme: Dark 🌑 - Interface sombre standard */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-card: #121212;
+  --bg-elevated: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+  --accent: #10b981;
+  --accent-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --font-main: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Theme: Light ☀️ - Mode clair élégant / Beige Notion */
+[data-theme="light"] {
+  --bg-primary: #faf8f3;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #f5f5f4;
+  --text-primary: #37352f;
+  --text-secondary: #787774;
+  --text-muted: #9b9a97;
+  --accent: #0369a1;
+  --accent-foreground: #ffffff;
+  --border: rgba(55, 53, 47, 0.09);
+  --border-strong: rgba(55, 53, 47, 0.16);
+  --shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  --font-main: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Theme: Matrix 🟢 - Terminal Hacker style */
+[data-theme="matrix"] {
+  --bg-primary: #000000;
+  --bg-secondary: #001100;
+  --bg-card: #003b00;
+  --bg-elevated: #002200;
+  --text-primary: #00ff41;
+  --text-secondary: #00cc33;
+  --text-muted: #008822;
+  --accent: #00ff41;
+  --accent-foreground: #000000;
+  --border: rgba(0, 255, 65, 0.3);
+  --border-strong: rgba(0, 255, 65, 0.6);
+  --shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+  --font-main: 'Courier New', monospace;
+  --font-mono: 'Courier New', monospace;
+}
+
+/* Theme: Neon Dev 💻 - Terminal hacker avec effets glow */
+[data-theme="neon"] {
+  --bg-primary: #0a0e27;
+  --bg-secondary: #1a1f3a;
+  --bg-card: #0f1629;
+  --bg-elevated: #141937;
+  --text-primary: #00ff9f;
+  --text-secondary: #7dd3fc;
+  --text-muted: #64748b;
+  --accent: #ff00ff;
+  --accent-foreground: #ffffff;
+  --border: rgba(0, 255, 159, 0.3);
+  --border-strong: rgba(0, 255, 159, 0.5);
+  --shadow: 0 0 10px rgba(0, 255, 159, 0.4), 0 0 20px rgba(0, 255, 159, 0.2);
+  --font-main: 'Monaco', 'Courier New', monospace;
+  --font-mono: 'Monaco', 'Courier New', monospace;
+}
+
+/* Theme: Retro 👾 - Game Boy nostalgie */
+[data-theme="retro"] {
+  --bg-primary: #0f380f;
+  --bg-secondary: #0f380f;
+  --bg-card: #0f380f;
+  --bg-elevated: #1a4d1a;
+  --text-primary: #9bbc0f;
+  --text-secondary: #8bac0f;
+  --text-muted: #306230;
+  --accent: #8bac0f;
+  --accent-foreground: #0f380f;
+  --border: rgba(139, 172, 15, 0.4);
+  --border-strong: rgba(139, 172, 15, 0.8);
+  --shadow: 4px 4px 0px #306230;
+  --font-main: 'Courier New', monospace;
+  --font-mono: 'Courier New', monospace;
+}
+
+/* Theme: Zen ✒️ - Minimaliste japonais */
+[data-theme="zen"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #1a1a1a;
+  --bg-elevated: #222222;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #707070;
+  --accent: #ff5252;
+  --accent-foreground: #ffffff;
+  --border: rgba(68, 68, 68, 0.5);
+  --border-strong: rgba(68, 68, 68, 1);
+  --shadow: none;
+  --font-main: 'Merriweather', serif;
+  --font-mono: 'Courier New', monospace;
+}
+

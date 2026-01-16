@@ -1,0 +1,25 @@
+{
+    "id": "matrix",
+    "label": "Matrix 🟢",
+    "description": "Terminal Hacker style",
+    "tokens": {
+        "--bg-primary": "#000000",
+        "--bg-secondary": "#001100",
+        "--bg-card": "#003b00",
+        "--bg-elevated": "#002200",
+        "--text-primary": "#00ff41",
+        "--text-secondary": "#00cc33",
+        "--text-muted": "#008822",
+        "--accent": "#00ff41",
+        "--accent-foreground": "#000000",
+        "--border": "rgba(0, 255, 65, 0.3)",
+        "--border-strong": "rgba(0, 255, 65, 0.6)",
+        "--shadow": "0 0 10px rgba(0, 255, 65, 0.2)",
+        "--font-main": "'Courier New', monospace",
+        "--font-mono": "'Courier New', monospace"
+    },
+    "contrast": {
+        "bg-primary vs text-primary": "16.8:1",
+        "bg-card vs text-secondary": "7.2:1"
+    }
+}

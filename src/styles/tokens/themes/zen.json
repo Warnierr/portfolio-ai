@@ -1,0 +1,25 @@
+{
+    "id": "zen",
+    "label": "Zen ✒️",
+    "description": "Minimaliste japonais",
+    "tokens": {
+        "--bg-primary": "#1a1a1a",
+        "--bg-secondary": "#1a1a1a",
+        "--bg-card": "#1a1a1a",
+        "--bg-elevated": "#222222",
+        "--text-primary": "#e0e0e0",
+        "--text-secondary": "#b0b0b0",
+        "--text-muted": "#707070",
+        "--accent": "#ff5252",
+        "--accent-foreground": "#ffffff",
+        "--border": "rgba(68, 68, 68, 0.5)",
+        "--border-strong": "rgba(68, 68, 68, 1)",
+        "--shadow": "none",
+        "--font-main": "'Merriweather', serif",
+        "--font-mono": "'Courier New', monospace"
+    },
+    "contrast": {
+        "bg-primary vs text-primary": "12.6:1",
+        "bg-card vs accent": "5.1:1"
+    }
+}

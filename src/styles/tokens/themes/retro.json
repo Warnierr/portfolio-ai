@@ -1,0 +1,25 @@
+{
+    "id": "retro",
+    "label": "Retro 👾",
+    "description": "Game Boy nostalgie",
+    "tokens": {
+        "--bg-primary": "#0f380f",
+        "--bg-secondary": "#0f380f",
+        "--bg-card": "#0f380f",
+        "--bg-elevated": "#1a4d1a",
+        "--text-primary": "#9bbc0f",
+        "--text-secondary": "#8bac0f",
+        "--text-muted": "#306230",
+        "--accent": "#8bac0f",
+        "--accent-foreground": "#0f380f",
+        "--border": "rgba(139, 172, 15, 0.4)",
+        "--border-strong": "rgba(139, 172, 15, 0.8)",
+        "--shadow": "4px 4px 0px #306230",
+        "--font-main": "'Courier New', monospace",
+        "--font-mono": "'Courier New', monospace"
+    },
+    "contrast": {
+        "bg-primary vs text-primary": "8.9:1",
+        "bg-card vs text-secondary": "7.5:1"
+    }
+}

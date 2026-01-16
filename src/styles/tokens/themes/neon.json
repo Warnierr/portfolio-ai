@@ -1,0 +1,25 @@
+{
+    "id": "neon",
+    "label": "Neon Dev 💻",
+    "description": "Terminal hacker avec effets glow",
+    "tokens": {
+        "--bg-primary": "#0a0e27",
+        "--bg-secondary": "#1a1f3a",
+        "--bg-card": "#0f1629",
+        "--bg-elevated": "#141937",
+        "--text-primary": "#00ff9f",
+        "--text-secondary": "#7dd3fc",
+        "--text-muted": "#64748b",
+        "--accent": "#ff00ff",
+        "--accent-foreground": "#ffffff",
+        "--border": "rgba(0, 255, 159, 0.3)",
+        "--border-strong": "rgba(0, 255, 159, 0.5)",
+        "--shadow": "0 0 10px rgba(0, 255, 159, 0.4), 0 0 20px rgba(0, 255, 159, 0.2)",
+        "--font-main": "'Monaco', 'Courier New', monospace",
+        "--font-mono": "'Monaco', 'Courier New', monospace"
+    },
+    "contrast": {
+        "bg-primary vs text-primary": "14.2:1",
+        "bg-card vs text-secondary": "8.1:1"
+    }
+}

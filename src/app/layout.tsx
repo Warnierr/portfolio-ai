@@ -6,7 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import StructuredData from "@/components/StructuredData";
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeProvider } from "next-themes";
 import ThemeSelector from "@/components/ThemeSelector";
 import "./globals.css";
 
@@ -173,7 +173,14 @@ export default function RootLayout({
         {/* Schema.org Structured Data */}
         <StructuredData type="person" data={{}} />
 
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="dark"
+          themes={['dark', 'light', 'neon', 'matrix', 'cyberpunk', 'retro', 'zen']}
+          enableSystem={false}
+          storageKey="kenshu-theme"
+          disableTransitionOnChange={false}
+        >
           <AnalyticsTracker />
           <ThemeSelector />
           <ConditionalHeader />
