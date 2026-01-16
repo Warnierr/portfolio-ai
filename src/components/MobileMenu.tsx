@@ -8,14 +8,15 @@ type NavItem = {
   label: string;
   href: string;
   badge?: string;
-  highlighted?: boolean;
+  isButton?: boolean;
 };
 
 type MobileMenuProps = {
   navItems: NavItem[];
+  onAskAI?: () => void;
 };
 
-export default function MobileMenu({ navItems }: MobileMenuProps) {
+export default function MobileMenu({ navItems, onAskAI }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -50,7 +51,7 @@ export default function MobileMenu({ navItems }: MobileMenuProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 top-[73px] z-40 bg-black/80 backdrop-blur-sm"
+              className="fixed inset-0 top-[60px] z-40 bg-black/80 backdrop-blur-sm"
             />
 
             {/* Menu Panel */}
@@ -59,38 +60,37 @@ export default function MobileMenu({ navItems }: MobileMenuProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-[73px] z-50 h-[calc(100vh-73px)] w-[280px] border-l border-white/10 bg-black/95 backdrop-blur-xl"
+              className="fixed right-0 top-[60px] z-50 h-[calc(100vh-60px)] w-[280px] border-l border-white/10 bg-black/95 backdrop-blur-xl"
             >
               <nav className="flex flex-col gap-2 p-6">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={
-                      item.highlighted
-                        ? "flex items-center justify-center rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300 font-medium transition hover:bg-emerald-500/20 hover:border-emerald-500/60"
-                        : "group flex items-center justify-between rounded-lg px-4 py-3 text-zinc-300 transition hover:bg-white/5 hover:text-white"
-                    }
-                  >
-                    <span>{item.label}</span>
-                    {item.badge && !item.highlighted && (
-                      <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-300">
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
+                  item.isButton ? (
+                    <button
+                      key={item.label}
+                      onClick={() => {
+                        setIsOpen(false);
+                        onAskAI?.();
+                      }}
+                      className="flex items-center justify-center rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-emerald-300 font-medium transition hover:bg-emerald-500/20 hover:border-emerald-500/60"
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center justify-between rounded-lg px-4 py-3 text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                    >
+                      <span>{item.label}</span>
+                      {item.badge && (
+                        <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-300">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  )
                 ))}
-
-                {/* Phone CTA */}
-                <a
-                  href="tel:+33749416355"
-                  onClick={() => setIsOpen(false)}
-                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-white px-4 py-3 font-medium text-black transition hover:bg-zinc-200"
-                >
-                  <span>📞</span>
-                  <span className="text-sm">Appeler</span>
-                </a>
               </nav>
             </motion.div>
           </>

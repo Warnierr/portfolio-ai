@@ -203,7 +203,9 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
       const res = await fetch("/api/ask-kenshu", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history: messages }),
+        body: JSON.stringify({
+          messages: [...messages, userMsg]
+        }),
       });
 
       if (!res.ok) throw new Error(`API Error: ${res.status}`);
