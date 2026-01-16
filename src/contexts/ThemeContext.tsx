@@ -21,7 +21,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setThemeState] = useState<ThemeId>('default');
-    const [mounted, setMounted] = useState(false);
 
     // Load theme from localStorage on mount
     useEffect(() => {
@@ -29,7 +28,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         if (savedTheme && THEMES.find(t => t.id === savedTheme)) {
             setThemeState(savedTheme);
         }
-        setMounted(true);
     }, []);
 
     // Save theme to localStorage when it changes
@@ -40,8 +38,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     // Apply theme classes to document body
     useEffect(() => {
-        if (!mounted) return;
-
         // Remove all theme classes
         document.body.classList.remove('theme-matrix', 'theme-cyberpunk', 'theme-retro', 'theme-zen');
 
@@ -49,11 +45,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         if (theme !== 'default') {
             document.body.classList.add(`theme-${theme}`);
         }
-    }, [theme, mounted]);
-
-    if (!mounted) {
-        return <>{children}</>;
-    }
+    }, [theme]);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
