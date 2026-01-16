@@ -1,71 +1,77 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme, THEMES } from "@/contexts/ThemeContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function ThemeSelector() {
     const { theme, setTheme } = useTheme();
-    const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
+    // Close on click outside
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            // Ctrl+T pour toggle le theme selector
-            if (e.ctrlKey && e.key === "t") {
-                e.preventDefault();
-                setIsVisible((v) => !v);
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
             }
         };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    if (!isVisible) return null;
-
     return (
-        <div className="fixed bottom-4 left-4 z-[100] rounded-2xl border border-purple-500/30 bg-black/95 p-6 shadow-2xl backdrop-blur-xl max-w-sm">
-            <div className="mb-4 flex items-center justify-between">
-                <div>
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-purple-400">
-                        🎨 Theme Selector
-                    </h3>
-                    <p className="mt-1 text-xs text-zinc-400">
-                        Change le thème pour tout le site
-                    </p>
-                </div>
-                <button
-                    onClick={() => setIsVisible(false)}
-                    className="text-white hover:text-purple-400 transition"
-                >
-                    ✕
-                </button>
-            </div>
-
-            <div className="space-y-2">
-                {THEMES.map((t) => (
-                    <button
-                        key={t.id}
-                        onClick={() => setTheme(t.id)}
-                        className={`w-full rounded-lg px-4 py-3 text-left transition-all ${theme === t.id
-                                ? "bg-purple-500/20 border-2 border-purple-500/50 scale-[1.02]"
-                                : "bg-white/5 border-2 border-white/10 hover:bg-white/10 hover:border-white/20"
-                            }`}
+        <div className="fixed bottom-6 left-6 z-[90]" ref={menuRef}>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute bottom-16 left-0 mb-2 w-72 rounded-2xl border border-white/10 bg-black/90 p-4 shadow-2xl backdrop-blur-xl"
                     >
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <div className="text-sm font-medium text-white">{t.label}</div>
-                                <div className="text-xs text-zinc-400">{t.description}</div>
-                            </div>
-                            {theme === t.id && (
-                                <div className="text-purple-400">✓</div>
-                            )}
+                        <div className="mb-3 flex items-center justify-between px-2">
+                            <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+                                Choisir un thème
+                            </span>
                         </div>
-                    </button>
-                ))}
-            </div>
 
-            <p className="mt-4 text-center text-[10px] text-zinc-500">
-                Appuyez sur <kbd className="rounded bg-white/10 px-1.5 py-0.5">Ctrl+T</kbd> pour masquer
-            </p>
+                        <div className="space-y-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                            {THEMES.map((t) => (
+                                <button
+                                    key={t.id}
+                                    onClick={() => {
+                                        setTheme(t.id);
+                                        // On garde ouvert pour voir l'effet immédiat
+                                    }}
+                                    className={`w-full rounded-xl px-3 py-2 text-left transition-all flex items-center justify-between group ${theme === t.id
+                                            ? "bg-white/10 border border-white/20 text-white shadow-lg"
+                                            : "text-zinc-400 hover:bg-white/5 hover:text-white border border-transparent"
+                                        }`}
+                                >
+                                    <div className="flex flex-col">
+                                        <span className="text-sm font-bold">{t.label}</span>
+                                        <span className="text-[10px] opacity-60">{t.description}</span>
+                                    </div>
+                                    {theme === t.id && (
+                                        <motion.div layoutId="active-theme" className="w-2 h-2 rounded-full bg-emerald-500 box-shadow-glow" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white shadow-lg backdrop-blur-md hover:bg-white/10 transition-colors"
+                title="Changer de thème"
+            >
+                <span className="text-xl">🎨</span>
+            </motion.button>
         </div>
     );
 }

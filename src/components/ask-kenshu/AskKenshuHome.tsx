@@ -67,7 +67,7 @@ Pour mieux vous guider vers les bons projets et services, j'aimerais savoir qui 
 N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
 
 // On remet les points à 10 pour le style
-const MAX_REQUESTS = 10;
+const MAX_REQUESTS = process.env.NODE_ENV === "development" ? 9999 : 10;
 const COOKIE_NAME = "chat_requests";
 
 function getCookieValue(name: string): number {
@@ -184,6 +184,46 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
     })();
   };
 
+  const throwFireworks = () => {
+    const duration = 3000;
+    const end = Date.now() + duration;
+    const colors = ["#ff0000", "#ffa500", "#ffff00", "#00ff00", "#00ffff", "#ff00ff"];
+
+    (function frame() {
+      confetti({
+        particleCount: 7,
+        angle: 60,
+        spread: 100,
+        origin: { x: 0, y: 0.8 },
+        colors: colors,
+        startVelocity: 45,
+        gravity: 1.2,
+        ticks: 300,
+      });
+      confetti({
+        particleCount: 7,
+        angle: 120,
+        spread: 100,
+        origin: { x: 1, y: 0.8 },
+        colors: colors,
+        startVelocity: 45,
+        gravity: 1.2,
+        ticks: 300,
+      });
+      confetti({
+        particleCount: 5,
+        angle: 90,
+        spread: 120,
+        origin: { x: 0.5, y: 0.9 },
+        colors: colors,
+        startVelocity: 50,
+        gravity: 1,
+        ticks: 350,
+      });
+      if (Date.now() < end) setTimeout(frame, 200);
+    })();
+  };
+
   const onSend = async (manualInput?: string) => {
     const text = manualInput || input;
     if (!text.trim() || isStreaming || limitReached) return;
@@ -235,6 +275,7 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
           return newArr;
         });
         if (chunk.includes("CONFETTI")) throwConfetti();
+        if (chunk.includes("FIREWORKS")) throwFireworks();
       }
     } catch (err) {
       console.error(err);
@@ -359,7 +400,7 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                             <>
                               <div className="prose prose-invert prose-sm max-w-none">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                  {msg.content.replace('@@@PROFILE_SELECTOR@@@', '')}
+                                  {msg.content.replace('@@@PROFILE_SELECTOR@@@', '').replace(/@@@ACTION@@@\{.*?\}/g, "")}
                                 </ReactMarkdown>
                               </div>
                               <div className="mt-6 not-prose">
@@ -369,7 +410,7 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                           ) : (
                             <div className="prose prose-invert prose-sm max-w-none">
                               <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                {msg.content}
+                                {msg.content.replace(/@@@ACTION@@@\{.*?\}/g, "")}
                               </ReactMarkdown>
                             </div>
                           )}

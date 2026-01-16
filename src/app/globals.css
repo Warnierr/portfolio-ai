@@ -86,6 +86,74 @@ body {
   }
 }
 
+/* --- THEME LIGHT (Beige) --- */
+.theme-light {
+  --color-background: #fdfbf7;
+  /* Cream/Beige clair */
+  --color-foreground: #1c1917;
+  /* Warm Black */
+  background-color: #fdfbf7 !important;
+  color: #1c1917 !important;
+}
+
+.theme-light * {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.theme-light .glass-panel,
+.theme-light .glass-card {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.theme-light h1,
+.theme-light h2,
+.theme-light h3,
+.theme-light strong {
+  color: #111 !important;
+  font-weight: 700;
+}
+
+.theme-light .text-zinc-500,
+.theme-light .text-zinc-400,
+.theme-light .text-zinc-300 {
+  color: #57534e !important;
+  /* Warm Gray */
+}
+
+.theme-light button {
+  background: white !important;
+  color: #1c1917 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.theme-light button:hover {
+  background: #f5f5f4 !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+.theme-light input,
+.theme-light textarea {
+  background: white !important;
+  color: #1c1917 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Scrollbar Light */
+.theme-light ::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 99px;
+}
+
+.theme-light ::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+
+
 /* --- THEME MATRIX --- */
 .theme-matrix {
   --color-background: #000000;

@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-export type ThemeId = 'default' | 'matrix' | 'cyberpunk' | 'retro' | 'zen';
+export type ThemeId = 'default' | 'light' | 'matrix' | 'cyberpunk' | 'retro' | 'zen';
 
 export const THEMES = [
-    { id: 'default' as ThemeId, label: 'App ⚪', description: 'Interface moderne et épurée' },
+    { id: 'default' as ThemeId, label: 'Dark 🌑', description: 'Interface sombre standard' },
+    { id: 'light' as ThemeId, label: 'Light ☀️', description: 'Mode clair / Beige' },
     { id: 'matrix' as ThemeId, label: 'Matrix 🟢', description: 'Terminal Hacker' },
     { id: 'cyberpunk' as ThemeId, label: 'City OS 🟣', description: 'Néon futuriste' },
     { id: 'retro' as ThemeId, label: 'Retro 👾', description: 'Game Boy nostalgie' },
@@ -39,7 +40,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // Apply theme classes to document body
     useEffect(() => {
         // Remove all theme classes
-        document.body.classList.remove('theme-matrix', 'theme-cyberpunk', 'theme-retro', 'theme-zen');
+        document.body.classList.remove('theme-light', 'theme-matrix', 'theme-cyberpunk', 'theme-retro', 'theme-zen');
 
         // Add current theme class if not default
         if (theme !== 'default') {
