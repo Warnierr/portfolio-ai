@@ -232,7 +232,7 @@ Recommande toujours de **me contacter directement** pour une estimation personna
 `;
 
 
-const MAX_REQUESTS = 1000;
+const MAX_REQUESTS = 10000;
 const COOKIE_NAME = "chat_requests";
 const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 hours
 

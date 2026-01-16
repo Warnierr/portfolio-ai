@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import confetti from "canvas-confetti";
 import ProfileSelector from "./ProfileSelector";
 import { AI_CONFIG } from "@/lib/ai-config";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type CardKey = "web" | "apps" | "automation" | "data";
 
@@ -92,15 +93,13 @@ function getCookieValue(name: string): number {
 }
 
 export default function AskKenshuHome() {
+  const { theme } = useTheme();
   const router = useRouter();
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [remaining, setRemaining] = useState(MAX_REQUESTS);
   const [limitReached, setLimitReached] = useState(false);
-
-  const [theme, setTheme] = useState<'default' | 'matrix' | 'cyberpunk' | 'retro' | 'zen'>('default');
-  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
 
   const chatRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -532,12 +531,6 @@ export default function AskKenshuHome() {
             {/* Chat Header */}
             <div className="mb-4 flex items-start justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-1">
-                  Assistant IA
-                </p>
-                <h1 className="text-2xl font-bold text-white md:text-3xl">
-                  Ask Kenshu
-                </h1>
                 <p className="mt-1 text-sm text-zinc-400">
                   Dis-moi ton besoin — je te guide vers les bons services et projets.
                 </p>
