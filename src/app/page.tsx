@@ -1,5 +1,5 @@
-import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
+import HomeMinimal from "@/components/HomeMinimal";
 
 export default function Home() {
-  return <AskKenshuHome />;
+  return <HomeMinimal />;
 }

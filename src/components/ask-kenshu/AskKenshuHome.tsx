@@ -72,16 +72,8 @@ Pour mieux vous guider, j'aimerais savoir qui vous êtes 😊
 
 N'hésitez pas à me poser vos questions ! Je suis là pour vous orienter 🎯`;
 
-const MAX_REQUESTS = 10;
+const MAX_REQUESTS = 10000;
 const COOKIE_NAME = "chat_requests";
-
-const THEMES = [
-  { id: 'default', label: 'App ⚪' },
-  { id: 'matrix', label: 'Matrix 🟢' },
-  { id: 'cyberpunk', label: 'City OS 🟣' },
-  { id: 'retro', label: 'Retro 👾' },
-  { id: 'zen', label: 'Zen ✒️' },
-] as const;
 
 function getCookieValue(name: string): number {
   if (typeof document === "undefined") return 0;
@@ -92,7 +84,13 @@ function getCookieValue(name: string): number {
   return isNaN(value) ? 0 : value;
 }
 
-export default function AskKenshuHome() {
+interface AskKenshuHomeProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  compactMode?: boolean;
+}
+
+export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: AskKenshuHomeProps) {
   const { theme } = useTheme();
   const router = useRouter();
   const [messages, setMessages] = useState<ChatMsg[]>([]);
@@ -116,390 +114,166 @@ export default function AskKenshuHome() {
     []
   );
 
-  // Load history from localStorage OR use welcome message
   useEffect(() => {
-    const savedMessages = localStorage.getItem("ask_kenshu_history");
-    if (savedMessages) {
-      try {
-        const parsedMessages = JSON.parse(savedMessages);
-        setMessages(parsedMessages);
-        // Scroll to bottom after loading messages
-        setTimeout(() => scrollToBottom(true), 100);
-      } catch (e) {
-        console.error("Error loading chat history:", e);
-      }
-    } else {
-      // First visit - use local welcome message
-      setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
-      setTimeout(() => scrollToBottom(true), 100);
+    // Check local storage / cookies
+    const saved = localStorage.getItem("ask_kenshu_history");
+    const count = getCookieValue(COOKIE_NAME);
+    setRemaining(Math.max(0, MAX_REQUESTS - count));
+    if (count >= MAX_REQUESTS) {
+      setLimitReached(true);
     }
+
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+          setTimeout(scrollToBottom, 100);
+          return;
+        }
+      } catch (e) {
+        console.error("Error parsing history", e);
+      }
+    }
+
+    // Default welcome message
+    setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
   }, []);
 
-
-
-  // Save history to localStorage
   useEffect(() => {
     if (messages.length > 0) {
       localStorage.setItem("ask_kenshu_history", JSON.stringify(messages));
     }
   }, [messages]);
 
-  // Load rate limit from cookie
   useEffect(() => {
-    const usedCount = getCookieValue(COOKIE_NAME);
-    const currentRemaining = MAX_REQUESTS - usedCount;
-    setRemaining(currentRemaining);
-    if (currentRemaining <= 0) {
-      setLimitReached(true);
-    }
-  }, []);
-
-  // Handle scroll
-  const handleScroll = () => {
-    if (chatRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
-      const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
-      shouldAutoScrollRef.current = isAtBottom;
-    }
-  };
-
-  // Idle Timer Warning 😴 (5 min)
-  useEffect(() => {
-    const IDLE_TIMEOUT = 5 * 60 * 1000;
-    let timeoutId: NodeJS.Timeout;
-
-    const resetIdleTimer = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        // Trigger Wake Up Sequence
-        handleAction({ type: "SHAKE" });
-        setMessages((prev) => {
-          // Avoid duplicate wake-up messages
-          if (prev[prev.length - 1]?.content.includes("Héhooo")) return prev;
-          return [
-            ...prev,
-            { role: "assistant", content: "Héhooo ? Toujours là ? 😴 Je m'ennuie un peu..." }
-          ];
-        });
-        setTimeout(() => scrollToBottom(), 100);
-      }, IDLE_TIMEOUT);
-    };
-
-    const events = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
-    events.forEach(event => window.addEventListener(event, resetIdleTimer));
-    resetIdleTimer();
-
-    return () => {
-      clearTimeout(timeoutId);
-      events.forEach(event => window.removeEventListener(event, resetIdleTimer));
-    };
-  }, []);
-
-  const scrollToBottom = (instant = false) => {
-    if (shouldAutoScrollRef.current) {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: instant ? "auto" : "smooth",
-        block: "end",
-      });
-    }
-  };
-
-  const scrollToTop = () => {
-    if (chatRef.current) {
-      chatRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-  };
-
-  const handleAction = (action: any) => {
-    console.log("Executing Action:", action);
-
-    // Confetti 🎉 (Classique : carrés/cercles festifs)
-    if (action.type === "CONFETTI") {
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b'],
-        shapes: ['square', 'circle'] as any
-      });
-    }
-
-    // Emoji Rain 🌧️ -> Thematic Circle Rain
-    if (action.type === "EMOJI_RAIN") {
-      const emojiContext = action.emoji || "🎉";
-      const duration = 3000;
-      const end = Date.now() + duration;
-
-      // Colors based on context
-      let colors = ['#10b981', '#3b82f6'];
-      if (emojiContext === "🔥") colors = ['#ef4444', '#f97316', '#eab308', '#7f1d1d']; // Fire colors
-      if (emojiContext === "💸") colors = ['#10b981', '#059669', '#fbbf24', '#d97706']; // Money colors
-      if (emojiContext === "❤️") colors = ['#ec4899', '#db2777', '#dc2626', '#f43f5e']; // Love colors
-
-      (function frame() {
-        confetti({
-          particleCount: 2,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: colors,
-          shapes: ['circle'] as any,
-          scalar: 2,
-        } as any);
-
-        confetti({
-          particleCount: 2,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: colors,
-          shapes: ['circle'] as any,
-          scalar: 2,
-        } as any);
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
-    }
-
-    // Sparkles ✨
-    if (action.type === "SPARKLES") {
-      const defaults = {
-        spread: 360,
-        ticks: 100,
-        gravity: 0,
-        decay: 0.94,
-        startVelocity: 30,
-      };
-
-      function shoot() {
-        confetti({
-          ...defaults,
-          particleCount: 30,
-          scalar: 1.2,
-          shapes: ['star'],
-          colors: ['#FFE400', '#FFBD00', '#E89400', '#FFCA6C', '#FDFFB8']
-        });
-      }
-
-      setTimeout(shoot, 0);
-      setTimeout(shoot, 100);
-      setTimeout(shoot, 200);
-    }
-
-    // Shake Screen 📳
-    if (action.type === "SHAKE") {
-      const body = document.body;
-      body.style.animation = 'shake 0.5s';
-      setTimeout(() => {
-        body.style.animation = '';
-      }, 500);
-    }
-
-
-
-    // Fireworks (Grand Final) 🎆
-    if (action.type === "FIREWORKS") {
-      const duration = 5 * 1000;
-      const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
-
-      const interval: any = setInterval(function () {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
-        }
-
-        const particleCount = 50 * (timeLeft / duration);
-
-        // Fireworks explosions
-        confetti({
-          ...defaults,
-          particleCount,
-          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-          shapes: ['circle', 'star'] as any,
-          colors: ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#3b82f6', '#ec4899']
-        } as any);
-        confetti({
-          ...defaults,
-          particleCount,
-          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-          shapes: ['circle', 'star'] as any,
-          colors: ['#ff0000', '#ffa500', '#ffff00', '#00ff00', '#3b82f6', '#ec4899']
-        } as any);
-
-        // Random Confetti Rain
-        if (Math.random() > 0.6) {
-          confetti({
-            particleCount: 5,
-            angle: 90,
-            spread: 180,
-            origin: { x: 0.5, y: 0 },
-            colors: ['#10b981', '#3b82f6', '#8b5cf6', '#F59E0B'],
-            gravity: 0.8,
-            scalar: 1.2,
-            shapes: ['circle'] as any
-          });
-        }
-      }, 250);
-    }
-
-    if (action.type === "OPEN_MODAL") {
-      // TODO: Implement Modal
-      console.log("Open Modal:", action.modal);
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom(isStreaming);
+    if (!shouldAutoScrollRef.current) return;
+    scrollToBottom();
   }, [messages, isStreaming]);
 
-  async function onSend(text?: string) {
-    const content = (text ?? input).trim();
-    if (!content || isStreaming || limitReached) return;
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleScroll = () => {
+    if (!chatRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
+    const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
+    shouldAutoScrollRef.current = isAtBottom;
+  };
+
+  const throwConfetti = () => {
+    const end = Date.now() + 1000;
+    const colors = ["#34d399", "#60a5fa", "#fbbf24", "#ffffff"];
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  };
+
+  const onSend = async (manualInput?: string) => {
+    const text = manualInput || input;
+    if (!text.trim() || isStreaming || limitReached) return;
+
+    // Check UI actions immediately
+    const lowerInput = text.toLowerCase();
+
+    // CONFETTI
+    if (lowerInput.includes("confetti") || lowerInput.includes("fête") || lowerInput.includes("bravo")) {
+      throwConfetti();
+    }
+
+    // NAVIGATION
+    if (lowerInput.includes("projet")) {
+      router.prefetch('/projets');
+    }
+    if (lowerInput.includes("contact")) {
+      router.prefetch('/contact');
+    }
 
     setInput("");
-    shouldAutoScrollRef.current = true;
-    const userMessage: ChatMsg = { role: "user", content };
-    const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
+    const userMsg: ChatMsg = { role: "user", content: text };
+    setMessages((prev) => [...prev, userMsg]);
     setIsStreaming(true);
+    shouldAutoScrollRef.current = true;
 
     try {
       const res = await fetch("/api/ask-kenshu", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: newMessages,
-          theme,
-        }),
+        body: JSON.stringify({ message: text, history: messages }),
       });
 
-      // Get remaining count from headers
-      const remainingHeader = res.headers.get("X-Requests-Remaining");
-      if (remainingHeader) {
-        const newRemaining = parseInt(remainingHeader, 10);
-        setRemaining(newRemaining);
-        if (newRemaining <= 0) {
-          setLimitReached(true);
-        }
-      }
-
-      if (res.status === 429) {
-        const errorData = await res.json();
-        setLimitReached(true);
-        setRemaining(0);
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "assistant",
-            content: errorData.message || "Limite de messages atteinte. Contactez-moi directement !",
-          },
-        ]);
-        return;
-      }
-
       if (!res.ok) {
-        let errorMessage = "Erreur API";
-        try {
-          const errorData = await res.json();
-          errorMessage = errorData.message || errorData.error || errorMessage;
-          if (errorData.details) console.warn("API Error Details:", errorData.details);
-        } catch {
-          try {
-            errorMessage = await res.text() || errorMessage;
-          } catch { }
-        }
-        throw new Error(errorMessage);
+        throw new Error(`API Error: ${res.status}`);
       }
 
-      if (!res.body) {
-        throw new Error("Pas de flux de réponse");
+      // Update remaining count from headers
+      const used = res.headers.get("X-RateLimit-Used");
+      if (used) {
+        const val = parseInt(used, 10);
+        const newRemaining = Math.max(0, MAX_REQUESTS - val);
+        setRemaining(newRemaining);
+        if (newRemaining === 0) setLimitReached(true);
       }
 
-      // Stream response
+      if (!res.body) throw new Error("No body");
+
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let assistantText = "";
+      let assistantMsg: ChatMsg = { role: "assistant", content: "" };
 
-      setMessages((m) => [...m, { role: "assistant", content: "" }]);
-      scrollToBottom();
+      setMessages((prev) => [...prev, assistantMsg]);
 
       while (true) {
-        const { value, done } = await reader.read();
+        const { done, value } = await reader.read();
         if (done) break;
-
         const chunk = decoder.decode(value, { stream: true });
-        assistantText += chunk;
-
-        setMessages((m) => {
-          const copy = [...m];
-          const last = copy[copy.length - 1];
-          if (last?.role === "assistant") last.content = assistantText;
-          return copy;
-        });
-        scrollToBottom();
-      }
-
-      // Check for navigation directive at end
-      // Check for ACTION marker
-      const actionMarker = "@@@ACTION@@@";
-      const actionIdx = assistantText.lastIndexOf(actionMarker);
-
-      if (actionIdx !== -1) {
-        const jsonStr = assistantText.slice(actionIdx + actionMarker.length).trim();
-
-        // Clean up the message in UI (remove the hidden command)
-        setMessages((m) => {
-          const copy = [...m];
-          const last = copy[copy.length - 1];
-          if (last?.role === "assistant") {
-            last.content = assistantText.slice(0, actionIdx).trim();
-          }
-          return copy;
+        assistantMsg.content += chunk;
+        setMessages((prev) => {
+          const newArr = [...prev];
+          newArr[newArr.length - 1] = { ...assistantMsg };
+          return newArr;
         });
 
-        try {
-          // Attempt to parse incomplete JSON as it streams? No, wait for end usually better but let's try
-          // If it's at the end of stream, it's safer. 
-          // But here we are inside while(true), so we might catch it early.
-          // Let's rely on valid JSON closure.
-          if (jsonStr.endsWith("}")) {
-            const action = JSON.parse(jsonStr);
-            handleAction(action);
-          }
-        } catch {
-          // Ignore parse errors while streaming
+        // Check for triggers in the streaming response
+        if (chunk.includes("CONFETTI")) {
+          throwConfetti();
         }
       }
-    } catch (error: any) {
-      console.error("Error:", error);
+    } catch (err) {
+      console.error(err);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: error.message || "Une erreur s'est produite. Contactez-moi directement : contact@kenshu.dev",
+          content: "⚠️ Une erreur s'est produite. Veuillez réessayer.",
         },
       ]);
     } finally {
       setIsStreaming(false);
-      scrollToBottom();
     }
-  }
+  };
 
-  function handleNewConversation() {
-    setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
-    setInput("");
-    localStorage.removeItem("ask_kenshu_history");
-    shouldAutoScrollRef.current = true;
-  }
+  // Profile Selector Handler
+  const handleProfileSelect = (profile: string) => {
+    // Remove the profile selector from messages by filtering it out from the last message content
+    // Or simpler: just send a message as the user
+    onSend(`Je suis ${profile}`);
+  };
 
   const getCardColorClasses = (color: string) => {
     switch (color) {
@@ -517,46 +291,67 @@ export default function AskKenshuHome() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white transition-colors duration-500
+    <div className={`text-white transition-colors duration-500
+      ${!compactMode ? 'min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950' : 'h-full flex flex-col'}
       ${theme === 'matrix' ? 'theme-matrix' : ''}
       ${theme === 'cyberpunk' ? 'theme-cyberpunk' : ''}
       ${theme === 'retro' ? 'theme-retro' : ''}
       ${theme === 'zen' ? 'theme-zen' : ''}
     `}>
       {/* Main Content */}
-      <main className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8">
+      <main className={`mx-auto ${compactMode ? 'flex-1 flex flex-col overflow-hidden' : 'grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8'}`}>
+
         {/* Chat Section */}
-        <section className="lg:col-span-8 w-full">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-6 shadow-2xl backdrop-blur-sm">
-            {/* Chat Header */}
-            <div className="mb-4 flex items-start justify-between">
-              <div>
-                <p className="mt-1 text-sm text-zinc-400">
-                  Dis-moi ton besoin — je te guide vers les bons services et projets.
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-                  <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5
-                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                    : remaining > 2
-                      ? "border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
-                      : "border-orange-500/30 bg-orange-500/10 text-orange-300"
-                    }`}>
-                    💬 {remaining}/{MAX_REQUESTS}
-                  </span>
+        <section className={`${compactMode ? 'flex-1 flex flex-col overflow-hidden min-h-0' : 'lg:col-span-8 w-full'}`}>
+          <div className={`${compactMode ? 'flex-1 flex flex-col overflow-hidden bg-zinc-900/50' : 'rounded-3xl border border-white/10 bg-white/5 p-4 md:p-6 shadow-2xl backdrop-blur-sm'}`}>
+
+            {/* Chat Header (only visible if not compact or if needed) */}
+            {!compactMode && (
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Dis-moi ton besoin — je te guide vers les bons services et projets.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                    <span className={`text-xs px-2 py-1 rounded-full border ${remaining > 5
+                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                      : remaining > 2
+                        ? "border-yellow-500/30 bg-yellow-500/10 text-yellow-300"
+                        : "border-orange-500/30 bg-orange-500/10 text-orange-300"
+                      }`}>
+                      💬 {remaining}/{MAX_REQUESTS}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+
+            {/* In compact mode, maybe just a simpler header or none if handled by modal */}
+            {compactMode && (
+              <div className="flex items-center justify-between p-4 border-b border-white/5 shrink-0">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-lg">🤖</div>
+                  <div>
+                    <h3 className="font-semibold text-white">Ask Kenshu</h3>
+                    <p className="text-[10px] text-zinc-400">AI Assistant • Powered by Grok Beta</p>
+                  </div>
+                </div>
+                {onClose && (
+                  <button onClick={onClose} className="p-2 text-zinc-400 hover:text-white transition">✕</button>
+                )}
+              </div>
+            )}
 
             {/* Quick Chips */}
-            <div className="mb-4 flex flex-wrap gap-2">
+            <div className={`flex flex-wrap gap-2 shrink-0 ${compactMode ? 'p-4 pb-2 overflow-x-auto no-scrollbar' : 'mb-4'}`}>
               {quickChips.map((c) => (
                 <button
                   key={c.label}
                   onClick={() => onSend(c.value)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300 transition hover:border-emerald-400/30 hover:bg-emerald-400/5 hover:text-white"
+                  className={`rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-zinc-300 transition hover:border-emerald-400/30 hover:bg-emerald-400/5 hover:text-white whitespace-nowrap`}
                   disabled={isStreaming || limitReached}
                 >
                   {c.label}
@@ -568,7 +363,7 @@ export default function AskKenshuHome() {
             <div
               ref={chatRef}
               onScroll={handleScroll}
-              className="h-[75vh] md:h-[650px] lg:h-[700px] min-h-[500px] overflow-auto rounded-2xl border border-white/10 bg-zinc-950/50 p-4"
+              className={`overflow-auto ${compactMode ? 'flex-1 p-4' : 'h-[75vh] md:h-[650px] lg:h-[700px] min-h-[500px] rounded-2xl border border-white/10 bg-zinc-950/50 p-4'}`}
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
@@ -579,7 +374,7 @@ export default function AskKenshuHome() {
                     Bonjour, je suis Ask Kenshu !
                   </p>
                   <p className="mt-2 max-w-sm text-sm text-zinc-400">
-                    Décris-moi ton projet ou clique sur une suggestion pour commencer.
+                    Je suis là pour répondre à toutes tes questions sur le profil de Raouf, ses projets et ses disponibilités.
                   </p>
                 </div>
               ) : (
@@ -600,302 +395,162 @@ export default function AskKenshuHome() {
                           : "border border-white/10 bg-white/5"
                           }`}
                       >
-                        {msg.role === "user" ? (
-                          <p className="text-white whitespace-pre-wrap leading-relaxed">{msg.content}</p>
-                        ) : msg.content ? (
+                        {/* Render Profile Selector if marker present */}
+                        {msg.content.includes('@@@PROFILE_SELECTOR@@@') ? (
                           <>
-                            {msg.content.includes("@@@PROFILE_SELECTOR@@@") ? (
-                              <div>
-                                <div className="prose prose-invert prose-base max-w-none 
-                                  prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
-                                  prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
-                                  prose-strong:text-emerald-300 prose-strong:font-bold">
-                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {msg.content.split("@@@PROFILE_SELECTOR@@@")[0]}
-                                  </ReactMarkdown>
-                                </div>
-
-                                <ProfileSelector onSelect={(id, label) => {
-                                  // Trigger send automatically
-                                  onSend(`Je suis ${label.toLowerCase()} ${id === 'curious' ? 'et je découvre' : ''}`);
-                                }} />
-
-                                <div className="prose prose-invert prose-base max-w-none 
-                                  prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
-                                  prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
-                                  prose-strong:text-emerald-300 prose-strong:font-bold">
-                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {msg.content.split("@@@PROFILE_SELECTOR@@@")[1]}
-                                  </ReactMarkdown>
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="prose prose-invert prose-base max-w-none 
-                                prose-p:leading-loose prose-p:text-zinc-200 prose-p:mb-4 
-                                prose-headings:text-white prose-headings:font-semibold prose-headings:mb-3 prose-headings:mt-6
-                                prose-strong:text-emerald-300 prose-strong:font-bold
-                                prose-ul:text-zinc-300 prose-ul:my-4 prose-li:my-2
-                                prose-code:text-emerald-300 prose-code:bg-emerald-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                                prose-a:inline-flex prose-a:items-center prose-a:gap-2 prose-a:px-4 prose-a:py-2 prose-a:my-2 prose-a:rounded-lg prose-a:bg-white/5 prose-a:border prose-a:border-white/10 prose-a:text-emerald-400 prose-a:no-underline prose-a:font-medium prose-a:transition-all hover:prose-a:bg-emerald-500/10 hover:prose-a:border-emerald-500/30 hover:prose-a:scale-[1.02] hover:prose-a:shadow-lg hover:prose-a:shadow-emerald-500/10">
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                  {msg.content}
-                                </ReactMarkdown>
-                              </div>
-                            )}
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                              {msg.content.replace('@@@PROFILE_SELECTOR@@@', '')}
+                            </ReactMarkdown>
+                            <div className="mt-4 not-prose">
+                              <ProfileSelector onSelect={handleProfileSelect} />
+                            </div>
                           </>
                         ) : (
-                          <span className="inline-flex gap-1 h-5 items-center">
-                            <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-500/50" />
-                            <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-500/50" style={{ animationDelay: "0.1s" }} />
-                            <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-500/50" style={{ animationDelay: "0.2s" }} />
-                          </span>
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {msg.content}
+                          </ReactMarkdown>
                         )}
                       </div>
-                      {msg.role === "user" && (
-                        <div className="ml-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-400/10 text-sm mt-1">
-                          👤
-                        </div>
-                      )}
                     </div>
                   ))}
-                  <div ref={messagesEndRef} className="h-1" />
+                  {isStreaming && (
+                    <div className="flex justify-start">
+                      <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-400/10 text-sm mt-1">
+                        🤖
+                      </div>
+                      <div className="flex items-center gap-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-400" />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-400 delay-100" />
+                        <span className="h-2 w-2 animate-bounce rounded-full bg-emerald-400 delay-200" />
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
                 </div>
               )}
             </div>
 
-            {/* Rate Limit Warning */}
-            {limitReached && (
-              <div className="mt-3 rounded-lg bg-orange-500/10 border border-orange-500/30 p-3 text-center">
-                <p className="text-orange-300 font-medium text-sm mb-2">
-                  ⚠️ Limite de messages gratuits atteinte
-                </p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  <a
-                    href="mailto:contact@kenshu.dev"
-                    className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-500/30 transition"
-                  >
-                    📧 Email
-                  </a>
-                  <Link
-                    href="/contact"
-                    className="rounded-full bg-white/10 border border-white/20 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/20 transition"
-                  >
-                    📅 Rendez-vous
-                  </Link>
-                </div>
-              </div>
-            )}
-
             {/* Input Area */}
-            <div className="mt-4 flex gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    onSend();
-                  }
+            <div className={`relative shrink-0 ${compactMode ? 'p-4 border-t border-white/5' : 'mt-4'}`}>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSend();
                 }}
-                placeholder={limitReached ? "Limite atteinte..." : "Ex: Je veux automatiser mes emails..."}
-                className={`flex-1 rounded-2xl border bg-zinc-950/50 px-4 py-3 text-sm outline-none transition placeholder:text-zinc-500 ${limitReached
-                  ? "border-orange-500/30 cursor-not-allowed opacity-50"
-                  : "border-white/10 focus:border-emerald-400/50 focus:bg-white/5"
-                  }`}
-                disabled={isStreaming || limitReached}
-              />
-              <button
-                onClick={() => onSend()}
-                className="rounded-2xl bg-emerald-500/20 border border-emerald-500/40 px-5 py-3 text-sm font-medium text-emerald-300 transition hover:bg-emerald-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={isStreaming || !input.trim() || limitReached}
+                className="relative"
               >
-                {isStreaming ? (
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-emerald-300 border-t-transparent inline-block" />
-                ) : (
-                  "Envoyer"
-                )}
-              </button>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={
+                    limitReached
+                      ? "Limite atteinte. Contacte-moi !"
+                      : "Pose ta question... (ex: TJM, dispo, stack technique)"
+                  }
+                  disabled={isStreaming || limitReached}
+                  className="w-full rounded-xl border border-white/10 bg-zinc-900/50 py-3.5 pl-4 pr-12 text-sm text-white placeholder:text-zinc-500 focus:border-emerald-500/50 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isStreaming || limitReached}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-white/10 p-1.5 text-zinc-400 transition hover:bg-emerald-500 hover:text-white disabled:pointer-events-none disabled:opacity-50"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </button>
+              </form>
+              <p className={`mt-2 text-center text-[10px] text-zinc-600 ${compactMode ? 'mb-0' : ''}`}>
+                IA expérimentale (peut faire des erreurs).
+              </p>
             </div>
-
-            {/* New Conversation Button */}
-            {messages.length > 0 && (
-              <button
-                onClick={handleNewConversation}
-                className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 py-2 text-xs text-zinc-400 transition hover:bg-white/10 hover:text-white"
-              >
-                🔄 Nouvelle conversation
-              </button>
-            )}
           </div>
         </section>
 
-        {/* Cards Section - Hidden on mobile for full-width chat experience */}
-        <aside className="hidden lg:flex lg:col-span-4 flex-col h-full justify-between">
-          <div>
-            <div className="mb-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-2">
+        {/* Sidebar - Hidden in compact mode */}
+        {!compactMode && (
+          <aside className="lg:col-span-4 w-full space-y-6">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Ce que je fais
               </p>
-              <h2 className="text-xl font-semibold text-white">
+              <h2 className="mb-6 text-xl font-bold text-white">
                 Services & Expertise
               </h2>
-            </div>
 
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {CARDS.map((c) => (
-                <Link
-                  key={c.key}
-                  href={c.href}
-                  className={`group rounded-2xl border bg-white/5 p-3 shadow-lg transition-all hover:bg-white/10 hover:shadow-xl ${getCardColorClasses(c.color)}`}
-                >
-                  <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-950/50 aspect-[4/3]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={c.imgSrc}
-                      alt={c.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      onError={(e) => {
-                        // Fallback if image doesn't exist
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  </div>
-                  <div className="mt-3">
-                    <div className="text-sm font-semibold text-white group-hover:text-emerald-200 transition-colors">
-                      {c.title}
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                {CARDS.map((card) => (
+                  <Link
+                    key={card.key}
+                    href={card.href}
+                    className={`group relative overflow-hidden rounded-2xl border bg-gradient-to-br p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${getCardColorClasses(
+                      card.color
+                    )}`}
+                  >
+                    <div className="relative z-10 flex items-start gap-4">
+                      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-black/20">
+                        <img
+                          src={card.imgSrc}
+                          alt=""
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white transition group-hover:text-emerald-300">
+                          {card.title}
+                        </h3>
+                        <p className="mt-1 text-xs text-zinc-400">
+                          {card.subtitle}
+                        </p>
+                      </div>
                     </div>
-                    <div className="mt-1 text-xs text-zinc-400">
-                      {c.subtitle}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            {/* Additional Info Card */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm font-medium text-white">Disponible bientôt</span>
+                  </Link>
+                ))}
               </div>
-              <p className="text-sm text-zinc-400">
+            </div>
+
+            {/* Dispo Card */}
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-sm font-semibold text-white">Disponible bientôt</span>
+              </div>
+              <p className="text-xs text-zinc-400 mb-4 leading-relaxed">
                 Freelance Data Engineer & AI Product Builder. Disponible pour missions courtes ou longues.
               </p>
-              <div className="mt-3 flex gap-2">
+              <div className="flex items-center gap-2">
                 <Link
                   href="/projets"
-                  className="flex-1 text-center rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-xs text-zinc-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all font-medium"
+                  className="flex-1 rounded-lg bg-amber-500/10 px-3 py-2 text-center text-xs font-medium text-amber-300 hover:bg-amber-500/20 transition border border-amber-500/20"
                 >
                   👉 Voir les projets
                 </Link>
                 <Link
                   href="/contact"
-                  className="flex-1 text-center rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-2 text-xs text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all font-medium"
+                  className="flex-1 rounded-lg bg-emerald-500/10 px-3 py-2 text-center text-xs font-medium text-emerald-300 hover:bg-emerald-500/20 transition border border-emerald-500/20"
                 >
-                  📅 Me contacter
+                  📝 Me contacter
                 </Link>
               </div>
             </div>
-
-            {/* Projets du moment */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 flex-1">
-              <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
-                Projets du moment
-              </p>
-              <div className="flex flex-col gap-3">
-                <a href="https://budget.kenshu.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-xl bg-white/5 p-4 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-emerald-500/30">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500/20 text-2xl group-hover:scale-110 transition-transform">
-                    💰
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold text-white group-hover:text-emerald-300">Budget AI</div>
-                    <div className="text-sm text-zinc-400">Assistant financier personnel</div>
-                  </div>
-                </a>
-
-                <a href="https://aiact.kenshu.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-xl bg-white/5 p-4 transition hover:bg-white/10 hover:shadow-lg border border-transparent hover:border-blue-500/30">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/20 text-2xl group-hover:scale-110 transition-transform">
-                    🛡️
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold text-white group-hover:text-blue-300">AI Compliance</div>
-                    <div className="text-sm text-zinc-400">Audit RGPD & AI Act</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Clients */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
-                Environnements critiques
-              </p>
-              <div className="flex flex-wrap gap-3 text-sm text-zinc-400">
-                <span className="hover:text-white transition">BNP Paribas</span>
-                <span className="hover:text-white transition">Orange</span>
-                <span className="hover:text-white transition">Safran</span>
-                <span className="hover:text-white transition">ACC</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Hidden Debug Dashboard (Press Shift+D to toggle) */}
-          <DebugDashboard onAction={handleAction} />
-        </aside>
+          </aside>
+        )}
       </main>
-
-      {/* Footer Note */}
-      <div className="text-center pb-6 px-4">
-        <p className="text-xs text-zinc-500">
-          IA expérimentale (peut faire des erreurs).
-        </p>
-      </div>
-    </div >
-  );
-}
-
-function DebugDashboard({ onAction }: { onAction: (action: any) => void }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.shiftKey && e.key === "D") {
-        setIsVisible((v) => !v);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  if (!isVisible) return null;
-
-  const actions = [
-    { label: "🎉 Confetti", action: { type: "CONFETTI" } },
-    { label: "✨ Sparkles", action: { type: "SPARKLES" } },
-    { label: "📳 Shake", action: { type: "SHAKE" } },
-    { label: "🎆 Fireworks", action: { type: "FIREWORKS" } },
-  ];
-
-  return (
-    <div className="fixed bottom-4 right-4 z-[100] rounded-xl border border-pink-500/30 bg-black/90 p-4 shadow-2xl backdrop-blur-xl">
-      <div className="mb-2 flex items-center justify-between text-pink-400">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider">Debug FX Dashboard</span>
-        <button onClick={() => setIsVisible(false)} className="text-white hover:text-pink-400">✕</button>
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        {actions.map((act, i) => (
-          <button
-            key={i}
-            onClick={() => onAction(act.action)}
-            className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-white transition hover:bg-pink-500/20 hover:border-pink-500/50 hover:scale-105 active:scale-95"
-          >
-            {act.label}
-          </button>
-        ))}
-      </div>
-      <p className="mt-2 text-[10px] text-zinc-500 text-center">Appuyez sur Shift+D pour masquer</p>
     </div>
   );
 }
