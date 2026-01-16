@@ -44,7 +44,7 @@ export default function ExperienceItem({ data }: { data: Experience }) {
                     }`}
             >
                 <span className="text-base">✨</span>
-                <span>{isOpen ? "Hide AI Context" : "View AI Context"}</span>
+                <span>{isOpen ? "Masquer le contexte IA" : "Voir le contexte IA"}</span>
                 <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}

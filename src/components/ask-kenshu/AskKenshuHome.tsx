@@ -284,7 +284,9 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <p className="text-[10px] text-zinc-400">Online</p>
+                    <p className="text-[10px] text-zinc-400">
+                      Online <span className="text-zinc-600">•</span> Powered by {AI_CONFIG.displayName}
+                    </p>
                   </div>
                 </div>
               </div>
