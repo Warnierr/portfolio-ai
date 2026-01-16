@@ -353,17 +353,21 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                           {/* Render Profile Selector if marker present */}
                           {msg.content.includes('@@@PROFILE_SELECTOR@@@') ? (
                             <>
-                              <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose prose-invert prose-sm max-w-none">
-                                {msg.content.replace('@@@PROFILE_SELECTOR@@@', '')}
-                              </ReactMarkdown>
+                              <div className="prose prose-invert prose-sm max-w-none">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                  {msg.content.replace('@@@PROFILE_SELECTOR@@@', '')}
+                                </ReactMarkdown>
+                              </div>
                               <div className="mt-6 not-prose">
                                 <ProfileSelector onSelect={handleProfileSelect} />
                               </div>
                             </>
                           ) : (
-                            <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose prose-invert prose-sm max-w-none">
-                              {msg.content}
-                            </ReactMarkdown>
+                            <div className="prose prose-invert prose-sm max-w-none">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {msg.content}
+                              </ReactMarkdown>
+                            </div>
                           )}
                         </div>
                       </div>
