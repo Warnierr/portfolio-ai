@@ -1,10 +1,10 @@
+import ConditionalHeader from "@/components/ConditionalHeader";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
-import MobileMenu from "@/components/MobileMenu";
 import StructuredData from "@/components/StructuredData";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -19,20 +19,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-// Navigation V1 (6 liens)
-type NavItem = {
-  label: string;
-  href: string;
-  badge?: string;
-  highlighted?: boolean;
-};
-
-const navItems: NavItem[] = [
-  { label: "Projets", href: "/projets" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact", highlighted: true },
-];
 
 export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
@@ -190,36 +176,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AnalyticsTracker />
           <ThemeSelector />
-          <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
-            <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-sm text-white sm:px-6">
-              <Link href="/" className="font-semibold tracking-wide">
-                Kenshu Dev
-              </Link>
-              <div className="flex items-center gap-4">
-                <nav className="hidden md:flex items-center gap-4">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={
-                        item.highlighted
-                          ? "rounded-full border border-emerald-500/40 bg-emerald-500/10 px-5 py-2 text-emerald-300 font-medium transition hover:bg-emerald-500/20 hover:border-emerald-500/60 hover:shadow-lg hover:shadow-emerald-500/20"
-                          : "text-zinc-300 transition hover:text-white relative"
-                      }
-                    >
-                      {item.label}
-                      {item.badge && (
-                        <span className="absolute -top-1 -right-2 text-[9px] uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full border border-emerald-500/30">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </nav>
-                <MobileMenu navItems={navItems} />
-              </div>
-            </div>
-          </header>
+          <ConditionalHeader />
 
           <PageTransition>{children}</PageTransition>
 
@@ -227,15 +184,15 @@ export default function RootLayout({
             <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
               <div className="flex flex-col items-center justify-between gap-4 text-sm text-zinc-500 md:flex-row">
                 <div className="flex gap-6">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="transition hover:text-white"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  <Link href="/projets" className="transition hover:text-white">
+                    Projets
+                  </Link>
+                  <Link href="/services" className="transition hover:text-white">
+                    Services
+                  </Link>
+                  <Link href="/contact" className="transition hover:text-white">
+                    Contact
+                  </Link>
                 </div>
                 <p>© 2025 — Data Engineering & Product Development</p>
               </div>

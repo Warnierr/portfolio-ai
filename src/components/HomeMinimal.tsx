@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
 import ExperienceItem from "@/components/ExperienceItem";
 import { experiences, products } from "@/data/experiences";
+import { CURRENT_AVAILABILITY, AVAILABILITY_CONFIG } from "@/config/availability";
 
 export default function HomeMinimal() {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -18,6 +19,9 @@ export default function HomeMinimal() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Configuration dynamique de disponibilité
+    const availability = AVAILABILITY_CONFIG[CURRENT_AVAILABILITY];
 
     return (
         <>
@@ -43,13 +47,14 @@ export default function HomeMinimal() {
                 {/* HERO SECTION */}
                 <section className="mx-auto max-w-3xl px-6 pt-32 pb-20 md:pt-48 md:pb-32">
 
+                    {/* Badge de Disponibilité Dynamique */}
                     <div className="flex items-center gap-3 mb-8">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${availability.pingColor} opacity-75`}></span>
+                            <span className={`relative inline-flex rounded-full h-2 w-2 ${availability.dotColor}`}></span>
                         </span>
-                        <span className="text-[10px] font-bold text-emerald-500 tracking-widest uppercase">
-                            Disponible ASAP
+                        <span className={`text-[10px] font-bold ${availability.textColor} tracking-widest uppercase`}>
+                            {availability.text}
                         </span>
                     </div>
 
@@ -60,6 +65,24 @@ export default function HomeMinimal() {
                     <h2 className="text-xl md:text-2xl font-light mb-12 max-w-xl leading-relaxed text-zinc-400">
                         <span className="text-amber-100">Data Engineer</span> <span className="text-zinc-600">&</span> <span className="text-amber-100">AI Product Builder</span>.
                     </h2>
+
+                    {/* CTAs Hero (Restaurés) */}
+                    <div className="flex flex-wrap items-center gap-4 mb-20">
+                        <button
+                            onClick={() => setIsChatOpen(true)}
+                            className="group relative inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.2)] hover:shadow-[0_0_30px_rgba(52,211,153,0.4)]"
+                        >
+                            <span>✨ Discuter avec mon IA</span>
+                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        </button>
+
+                        <a
+                            href="#experience"
+                            className="rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-white/10 hover:text-white hover:border-white/20"
+                        >
+                            Explorer mes expériences
+                        </a>
+                    </div>
 
                     {/* PRODUCTS SHOWCASE - "Subdomain" Style */}
                     <div id="products" className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
