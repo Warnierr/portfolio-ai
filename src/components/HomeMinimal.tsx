@@ -4,15 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
-import { caseStudies } from "@/data/projects";
-
-const FEATURED_PROJECTS = caseStudies.filter(p => p.type === "produit" || p.slug === "data-engineer-bnpp").slice(0, 2);
-
-const SERVICES = [
-    { title: "Data Engineering", desc: "Pipelines Spark/Airflow robustes", icon: "🛠️" },
-    { title: "AI Product Building", desc: "SaaS & Chatbots intelligents", icon: "🤖" },
-    { title: "DevOps & Cloud", desc: "Infrastructure as Code & CI/CD", icon: "☁️" },
-];
+import ExperienceItem from "@/components/ExperienceItem";
+import { experiences, products } from "@/data/experiences";
 
 export default function HomeMinimal() {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -28,127 +21,100 @@ export default function HomeMinimal() {
 
     return (
         <>
-            <div className="min-h-screen bg-black text-white font-sans selection:bg-emerald-500/30">
+            <div className="min-h-screen bg-[#050505] text-zinc-100 font-sans selection:bg-amber-500/30">
+
+                {/* NAV BAR Minimal */}
+                <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-6 md:px-12 pointer-events-none">
+                    <div className="pointer-events-auto">
+                        {/* Logo or Name placeholder if needed, otherwise empty */}
+                    </div>
+                    <div className="pointer-events-auto flex items-center gap-6 text-xs font-medium tracking-wide uppercase">
+                        <a href="#experience" className="text-zinc-500 hover:text-white transition-colors">Experience</a>
+                        <a href="#products" className="text-zinc-500 hover:text-white transition-colors">Produits</a>
+                        <button
+                            onClick={() => setIsChatOpen(true)}
+                            className="px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all hover:scale-105"
+                        >
+                            Ask AI
+                        </button>
+                    </div>
+                </nav>
 
                 {/* HERO SECTION */}
-                <section className="mx-auto max-w-4xl px-6 pt-32 pb-20 md:pt-48 md:pb-32">
+                <section className="mx-auto max-w-3xl px-6 pt-32 pb-20 md:pt-48 md:pb-32">
 
                     <div className="flex items-center gap-3 mb-8">
-                        <span className="relative flex h-2.5 w-2.5">
+                        <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        <span className="text-sm font-medium text-emerald-400/90 tracking-wide uppercase text-[11px]">
-                            Disponible pour missions freelance
+                        <span className="text-[10px] font-bold text-emerald-500 tracking-widest uppercase">
+                            Disponible ASAP
                         </span>
                     </div>
 
-                    <h1 className="text-6xl md:text-8xl font-serif font-medium tracking-tight mb-6 text-white leading-[1.1]">
+                    <h1 className="text-5xl md:text-7xl font-serif font-medium tracking-tight mb-6 text-white leading-[1.1]">
                         Raouf Warnier
                     </h1>
 
-                    <h2 className="text-xl md:text-2xl text-zinc-400 font-light mb-12 max-w-2xl leading-relaxed">
-                        Data Engineer & AI Product Builder.
+                    <h2 className="text-xl md:text-2xl font-light mb-12 max-w-xl leading-relaxed text-zinc-400">
+                        <span className="text-amber-100">Data Engineer</span> <span className="text-zinc-600">&</span> <span className="text-amber-100">AI Product Builder</span>.
                     </h2>
 
-                    <div className="flex flex-wrap items-center gap-4">
-                        <button
-                            onClick={() => setIsChatOpen(true)}
-                            className="group relative inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:pr-8"
-                        >
-                            <span>✨ Discuter avec mon IA</span>
-                            <span className="absolute right-3 opacity-0 transition-all group-hover:opacity-100">→</span>
-                        </button>
-
-                        <Link
-                            href="/projets"
-                            className="rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
-                        >
-                            Voir mes projets
-                        </Link>
-                    </div>
-
-                    {/* BADGES / STACK (Minimalist) */}
-                    <div className="mt-16 flex flex-wrap gap-3 text-sm text-zinc-500 font-mono">
-                        <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">Spark/Scala</span>
-                        <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">Python</span>
-                        <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">Next.js</span>
-                        <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">AWS/Azure</span>
-                    </div>
-
-                </section>
-
-                {/* SELECTED WORK SECTION */}
-                <section className="mx-auto max-w-4xl px-6 py-20 border-t border-white/5">
-                    <div className="flex items-center justify-between mb-12">
-                        <h3 className="text-xl font-medium">Sélection de projets</h3>
-                        <Link href="/projets" className="text-sm text-zinc-500 hover:text-white transition">Tout voir →</Link>
-                    </div>
-
-                    <div className="grid gap-8">
-                        {FEATURED_PROJECTS.map((project) => (
+                    {/* PRODUCTS SHOWCASE - "Subdomain" Style */}
+                    <div id="products" className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-20">
+                        {products.map((p) => (
                             <Link
-                                key={project.slug}
-                                href={`/projets/${project.slug}`}
-                                className="group block"
+                                key={p.name}
+                                href={p.internalLink}
+                                className="group block p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-amber-500/30 transition-all hover:-translate-y-1"
                             >
-                                <article className="flex flex-col md:flex-row gap-6 md:items-center p-6 rounded-2xl border border-white/5 bg-white/[0.02] transition hover:bg-white/[0.05] hover:border-white/10">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <h4 className="text-lg font-medium text-white group-hover:text-emerald-300 transition">{project.title}</h4>
-                                            <span className="px-2 py-0.5 rounded text-[10px] uppercase border border-white/10 text-zinc-400 bg-white/5">{project.type}</span>
-                                        </div>
-                                        <p className="text-sm text-zinc-400 line-clamp-2 mb-4">{project.tldr}</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {/* Stack slice */}
-                                            {project.stack.slice(0, 3).map(t => (
-                                                <span key={t} className="text-xs text-zinc-500 font-mono">{t}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="md:w-32 flex-shrink-0 flex items-center gap-2 text-sm text-zinc-600 group-hover:text-emerald-400 justify-end">
-                                        Explorer <span className="group-hover:translate-x-1 transition">→</span>
-                                    </div>
-                                </article>
+                                <div className="flex items-start justify-between mb-2">
+                                    <span className="text-2xl">{p.icon}</span>
+                                    <span className="text-[10px] uppercase tracking-wider text-zinc-500 group-hover:text-emerald-400 transition-colors">
+                                        Live App ↗
+                                    </span>
+                                </div>
+                                <h3 className="text-lg font-serif text-white mb-1 group-hover:text-amber-200 transition-colors">{p.name}</h3>
+                                <p className="text-xs text-zinc-500 mb-3">{p.tagline}</p>
+                                <div className="inline-block text-[10px] font-mono text-zinc-600 bg-black/30 px-2 py-1 rounded border border-white/5 group-hover:border-emerald-500/20 group-hover:text-emerald-500/70 transition-colors">
+                                    {p.url.replace('https://', '')}
+                                </div>
                             </Link>
                         ))}
                     </div>
+
                 </section>
 
-                {/* SERVICES / EXPERTISE */}
-                <section className="mx-auto max-w-4xl px-6 py-20 border-t border-white/5">
-                    <h3 className="text-xl font-medium mb-12">Expertise Technique</h3>
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {SERVICES.map((s, i) => (
-                            <div key={i} className="p-6 rounded-2xl bg-zinc-900/30 border border-white/5">
-                                <div className="text-3xl mb-4">{s.icon}</div>
-                                <h4 className="font-medium text-white mb-2">{s.title}</h4>
-                                <p className="text-sm text-zinc-400">{s.desc}</p>
-                            </div>
+                {/* EXPERIENCE SECTION (Lovable Style) */}
+                <section id="experience" className="mx-auto max-w-3xl px-6 pb-32">
+                    <h3 className="text-3xl font-serif font-medium text-white mb-2">Experience</h3>
+                    <p className="text-sm text-zinc-500 mb-12 max-w-lg leading-relaxed">
+                        Chaque rôle inclut un contexte IA interrogeable — la vraie histoire derrière les bullet points.
+                    </p>
+
+                    <div className="space-y-6">
+                        {experiences.map((exp, index) => (
+                            <ExperienceItem key={index} data={exp} />
                         ))}
                     </div>
                 </section>
 
                 {/* FOOTER CTA */}
-                <section className="mx-auto max-w-4xl px-6 py-32 text-center">
-                    <h2 className="text-3xl md:text-5xl font-serif font-medium mb-8">
-                        Prêt à collaborer ?
+                <section className="mx-auto max-w-3xl px-6 py-20 text-center border-t border-white/5">
+                    <h2 className="text-2xl md:text-4xl font-serif font-medium mb-8 text-white">
+                        Un projet en tête ?
                     </h2>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button
                             onClick={() => setIsChatOpen(true)}
-                            className="text-white bg-zinc-800 hover:bg-zinc-700 px-8 py-4 rounded-full font-medium transition"
+                            className="text-black bg-emerald-400 hover:bg-emerald-300 px-8 py-3 rounded-full font-medium transition shadow-[0_0_20px_rgba(52,211,153,0.3)] hover:shadow-[0_0_30px_rgba(52,211,153,0.5)]"
                         >
-                            Parler à l'IA
+                            Discuter avec l'IA
                         </button>
-                        <Link
-                            href="/contact"
-                            className="text-black bg-white hover:bg-zinc-200 px-8 py-4 rounded-full font-medium transition"
-                        >
-                            Me contacter direct
-                        </Link>
                     </div>
                 </section>
+
             </div>
 
             {/* FLOATING CHAT BUTTON */}
@@ -159,13 +125,9 @@ export default function HomeMinimal() {
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0, opacity: 0 }}
                         onClick={() => setIsChatOpen(true)}
-                        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl hover:bg-emerald-400 hover:scale-110 transition-all"
+                        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#151515] border border-white/10 text-emerald-400 shadow-2xl hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-all group"
                     >
-                        <span className="text-2xl">🤖</span>
-                        <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-black"></span>
-                        </span>
+                        <span className="text-xl group-hover:scale-110 transition-transform">✨</span>
                     </motion.button>
                 )}
             </AnimatePresence>
@@ -177,7 +139,7 @@ export default function HomeMinimal() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 md:p-6"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-6"
                         onClick={() => setIsChatOpen(false)}
                     >
                         <motion.div
@@ -185,7 +147,7 @@ export default function HomeMinimal() {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl relative bg-zinc-950 border border-white/10"
+                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl relative bg-[#0a0a0a] border border-white/10 ring-1 ring-white/5"
                         >
                             <AskKenshuHome
                                 isOpen={isChatOpen}
