@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
 import { caseStudies } from "@/data/projects";
 
-// Sélectionner 2 projets phares pour l'accueil
 const FEATURED_PROJECTS = caseStudies.filter(p => p.type === "produit" || p.slug === "data-engineer-bnpp").slice(0, 2);
 
 const SERVICES = [
@@ -17,6 +16,15 @@ const SERVICES = [
 
 export default function HomeMinimal() {
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [showFloatingButton, setShowFloatingButton] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowFloatingButton(window.scrollY > 300);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <>
@@ -40,8 +48,7 @@ export default function HomeMinimal() {
                     </h1>
 
                     <h2 className="text-xl md:text-2xl text-zinc-400 font-light mb-12 max-w-2xl leading-relaxed">
-                        Data Engineer & AI Product Builder.<br />
-                        Je construis des systèmes data résilients et des produits IA innovants.
+                        Data Engineer & AI Product Builder.
                     </h2>
 
                     <div className="flex flex-wrap items-center gap-4">
@@ -67,7 +74,6 @@ export default function HomeMinimal() {
                         <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">Python</span>
                         <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">Next.js</span>
                         <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">AWS/Azure</span>
-                        <span className="px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50 text-emerald-500/80 items-center justify-center flex">+8 ans d'exp.</span>
                     </div>
 
                 </section>
@@ -94,6 +100,7 @@ export default function HomeMinimal() {
                                         </div>
                                         <p className="text-sm text-zinc-400 line-clamp-2 mb-4">{project.tldr}</p>
                                         <div className="flex flex-wrap gap-2">
+                                            {/* Stack slice */}
                                             {project.stack.slice(0, 3).map(t => (
                                                 <span key={t} className="text-xs text-zinc-500 font-mono">{t}</span>
                                             ))}
@@ -142,8 +149,26 @@ export default function HomeMinimal() {
                         </Link>
                     </div>
                 </section>
-
             </div>
+
+            {/* FLOATING CHAT BUTTON */}
+            <AnimatePresence>
+                {showFloatingButton && !isChatOpen && (
+                    <motion.button
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        onClick={() => setIsChatOpen(true)}
+                        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl hover:bg-emerald-400 hover:scale-110 transition-all"
+                    >
+                        <span className="text-2xl">🤖</span>
+                        <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-black"></span>
+                        </span>
+                    </motion.button>
+                )}
+            </AnimatePresence>
 
             {/* MODAL CHAT */}
             <AnimatePresence>
@@ -159,8 +184,8 @@ export default function HomeMinimal() {
                             initial={{ scale: 0.95, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            onClick={(e) => e.stopPropagation()} // Prevent close on click inside
-                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl relative"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl relative bg-zinc-950 border border-white/10"
                         >
                             <AskKenshuHome
                                 isOpen={isChatOpen}
