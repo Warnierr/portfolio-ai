@@ -65,6 +65,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 export function useTheme() {
     const context = useContext(ThemeContext);
     if (context === undefined) {
+        // Pendant le SSR, retourner une valeur par défaut pour éviter les erreurs de build
+        if (typeof window === 'undefined') {
+            return { theme: 'default' as ThemeId, setTheme: () => { } };
+        }
         throw new Error('useTheme must be used within a ThemeProvider');
     }
     return context;
