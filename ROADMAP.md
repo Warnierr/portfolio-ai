@@ -14,13 +14,13 @@
 - [x] Mobile UX pour widget œil
 - **Résultat** : 6 thèmes fonctionnels et distincts
 
-### 1.2 Typography Par Thème (0%)
-- [ ] Dark: Outfit moderne, sans-serif
-- [ ] Zen: Merriweather serif + parchemin
-- [ ] Cyberpunk: Outfit bold + effets néon
-- [ ] Midnight: Sans-serif océanique
-- [ ] Neon: Fira Code monospace hacker
-- [ ] Matrix: Courier New + glitch
+### 1.2 Typography Par Thème (100% - TERMINÉ)
+- [x] Dark: Outfit moderne, sans-serif
+- [x] Zen: Merriweather serif + parchemin
+- [x] Cyberpunk: Outfit bold + effets néon
+- [x] Midnight: Sans-serif océanique (Outfit)
+- [x] Neon: Fira Code monospace hacker
+- [x] Matrix: Courier New + glitch (Fira Code)
 
 ---
 
@@ -121,7 +121,7 @@
 
 ---
 
-## 🏗️ Phase 7: Architecture Refactoring (20%)
+## 🏗️ Phase 7: Architecture Refactoring (40%)
 
 ### 7.1 Feature-Based Structure (20%)
 - [x] `features/analytics/` (créé)
@@ -129,10 +129,10 @@
 - [ ] `features/themes/` (migration)
 - [ ] `features/documents/` (nouveau)
 
-### 7.2 Code Cleanup (0%)
-- [ ] Archiver composants obsolètes
-- [ ] Update tous les imports
-- [ ] Supprimer dead code
+### 7.2 Code Cleanup (60%)
+- [x] Archiver composants obsolètes (Admin, Legacy APIs)
+- [x] Update tous les imports (Fixed builds)
+- [ ] Supprimer dead code (reste quelques utils)
 - [ ] Lint fixes
 
 ---
