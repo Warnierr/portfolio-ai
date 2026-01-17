@@ -10,6 +10,7 @@ import { ThemeProvider } from "next-themes";
 import ThemeSelector from "@/components/ThemeSelector";
 import EyeComfortControl from "@/components/EyeComfortControl";
 import ThemeBackground from "@/components/ThemeBackground";
+import ConsentWidget from "@/features/analytics/components/ConsentWidget";
 import "./globals.css";
 
 // Default fonts (Geist)
@@ -207,6 +208,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <ThemeBackground />
+          <ConsentWidget />
           <AnalyticsTracker />
           <EyeComfortControl />
           <ThemeSelector />
