@@ -298,36 +298,32 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
       case "blue": return "border-blue-500/30 hover:border-blue-500/50 hover:shadow-blue-500/10";
       case "purple": return "border-purple-500/30 hover:border-purple-500/50 hover:shadow-purple-500/10";
       case "amber": return "border-amber-500/30 hover:border-amber-500/50 hover:shadow-amber-500/10";
-      default: return "border-white/10 hover:border-white/20";
+      default: return "border-[var(--border)] hover:border-[var(--border-strong)]";
     }
   };
 
   return (
-    <div className={`text-white transition-colors duration-500 h-full flex flex-col
-      ${!compactMode ? 'min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950' : ''}
-      ${theme === 'matrix' ? 'theme-matrix' : ''}
-      ${theme === 'cyberpunk' ? 'theme-cyberpunk' : ''}
-      ${theme === 'retro' ? 'theme-retro' : ''}
-      ${theme === 'zen' ? 'theme-zen' : ''}
+    <div className={`text-[var(--text-primary)] transition-colors duration-500 h-full flex flex-col
+      ${!compactMode ? 'min-h-screen bg-[var(--bg-primary)]' : ''}
     `}>
       <main className={`mx-auto w-full h-full ${compactMode ? 'flex flex-col' : 'grid max-w-7xl grid-cols-1 gap-8 px-4 py-6 lg:grid-cols-12 lg:py-8'}`}>
 
         {/* Chat Section */}
         <section className={`w-full h-full flex flex-col ${compactMode ? '' : 'lg:col-span-8'}`}>
-          <div className={`flex-1 flex flex-col overflow-hidden ${compactMode ? 'bg-[#0a0a0a]' : 'rounded-3xl border border-white/10 bg-white/5 p-4 md:p-6 shadow-2xl backdrop-blur-sm'}`}>
+          <div className={`flex-1 flex flex-col overflow-hidden bg-[var(--bg-card)] ${compactMode ? '' : 'rounded-3xl border border-[var(--border)] shadow-2xl backdrop-blur-sm'}`}>
 
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 shrink-0 bg-[#0a0a0a]">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--border)] shrink-0 bg-[var(--bg-card)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xl">🤖</div>
                 <div>
-                  <h3 className="font-semibold text-white text-sm">Ask Kenshu</h3>
+                  <h3 className="font-semibold text-[var(--text-primary)] text-sm">Ask Kenshu</h3>
                   <div className="flex items-center gap-2">
                     <span className="flex h-2 w-2 relative">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
-                    <p className="text-[10px] text-zinc-400">
+                    <p className="text-[10px] text-[var(--text-muted)]">
                       Online <span className="text-zinc-600">•</span> Powered by {AI_CONFIG.displayName}
                     </p>
                   </div>
@@ -335,28 +331,28 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
               </div>
               <div className="flex items-center gap-3">
                 {/* Compteur Points */}
-                <span className={`text-[10px] px-2 py-0.5 rounded-full border border-white/10 bg-white/5 text-zinc-400`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] text-[var(--text-muted)]`}>
                   {remaining}/10
                 </span>
 
                 {/* Refresh Button */}
-                <button onClick={clearHistory} className="p-2 text-zinc-500 hover:text-white transition" title="Nouvelle conversation">
+                <button onClick={clearHistory} className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition" title="Nouvelle conversation">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
                 </button>
 
                 {onClose && (
-                  <button onClick={onClose} className="p-2 text-zinc-500 hover:text-white transition">✕</button>
+                  <button onClick={onClose} className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition">✕</button>
                 )}
               </div>
             </div>
 
             {/* Quick Chips */}
-            <div className={`flex flex-wrap gap-2 shrink-0 p-4 border-b border-white/5 bg-[#0a0a0a]`}>
+            <div className={`flex flex-wrap gap-2 shrink-0 p-4 border-b border-[var(--border)] bg-[var(--bg-card)]`}>
               {quickChips.map((c) => (
                 <button
                   key={c.label}
                   onClick={() => onSend(c.value)}
-                  className={`rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-zinc-400 transition hover:border-emerald-500/30 hover:bg-emerald-500/10 hover:text-emerald-400 whitespace-nowrap`}
+                  className={`rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] px-3 py-1.5 text-[11px] text-[var(--text-secondary)] transition hover:border-emerald-500/30 hover:bg-emerald-500/10 hover:text-emerald-400 whitespace-nowrap`}
                   disabled={isStreaming || limitReached}
                 >
                   {c.label}
@@ -368,12 +364,12 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
             <div
               ref={chatRef}
               onScroll={handleScroll}
-              className={`flex-1 overflow-auto p-4 space-y-6 ${compactMode ? 'bg-[#0a0a0a]' : 'rounded-2xl border border-white/10 bg-zinc-950/50'}`}
+              className={`flex-1 overflow-auto p-4 space-y-6 bg-[var(--bg-card)]`}
             >
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center p-8">
                   <div className="mb-4 text-4xl opacity-20">💬</div>
-                  <p className="text-zinc-500">Commencez une conversation...</p>
+                  <p className="text-[var(--text-muted)]">Commencez une conversation...</p>
                 </div>
               ) : (
                 <div className="space-y-6 pb-4">
@@ -391,14 +387,14 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                       <div className={`max-w-[85%] ${msg.role === 'user' ? 'ml-12' : ''}`}>
                         <div
                           className={`rounded-2xl px-5 py-3.5 text-sm shadow-sm ${msg.role === "user"
-                            ? "bg-zinc-800 text-white border border-white/5"
-                            : "bg-transparent text-zinc-300 border border-white/5 bg-zinc-900/40"
+                            ? "bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border)]"
+                            : "bg-transparent text-[var(--text-secondary)] border border-[var(--border)] bg-[var(--bg-secondary)]"
                             }`}
                         >
                           {/* Render Profile Selector if marker present */}
                           {msg.content.includes('@@@PROFILE_SELECTOR@@@') ? (
                             <>
-                              <div className="prose prose-invert prose-sm max-w-none">
+                              <div className="prose prose-invert prose-sm max-w-none font-[family-name:var(--font-main)]">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                   {msg.content.replace('@@@PROFILE_SELECTOR@@@', '').replace(/@@@ACTION@@@\{.*?\}/g, "")}
                                 </ReactMarkdown>
@@ -408,7 +404,7 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                               </div>
                             </>
                           ) : (
-                            <div className="prose prose-invert prose-sm max-w-none">
+                            <div className="prose prose-invert prose-sm max-w-none font-[family-name:var(--font-main)]">
                               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                 {msg.content.replace(/@@@ACTION@@@\{.*?\}/g, "")}
                               </ReactMarkdown>
@@ -424,10 +420,10 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                       <div className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/20 text-sm mt-1">
                         🤖
                       </div>
-                      <div className="flex items-center gap-1 rounded-2xl border border-white/5 bg-zinc-900/40 px-4 py-3">
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-500" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-500 delay-100" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-500 delay-200" />
+                      <div className="flex items-center gap-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-3">
+                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[var(--text-muted)]" />
+                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[var(--text-muted)] delay-100" />
+                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[var(--text-muted)] delay-200" />
                       </div>
                     </div>
                   )}
@@ -437,7 +433,7 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
             </div>
 
             {/* Input Area */}
-            <div className={`relative shrink-0 p-4 border-t border-white/10 bg-[#0a0a0a]`}>
+            <div className={`relative shrink-0 p-4 border-t border-[var(--border)] bg-[var(--bg-card)]`}>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -455,12 +451,12 @@ export default function AskKenshuHome({ isOpen, onClose, compactMode = false }: 
                       : "Pose ta question... (ex: TJM, dispo, stack technique)"
                   }
                   disabled={isStreaming || limitReached}
-                  className="flex-1 rounded-xl border border-white/10 bg-zinc-900/50 py-3.5 pl-4 pr-12 text-sm text-white placeholder:text-zinc-600 focus:border-emerald-500/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/30 disabled:opacity-50 transition-all"
+                  className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] py-3.5 pl-4 pr-12 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-emerald-500/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/30 disabled:opacity-50 transition-all font-[family-name:var(--font-main)]"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isStreaming || limitReached}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-zinc-400 hover:text-emerald-400 transition-colors disabled:opacity-50"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-[var(--text-muted)] hover:text-emerald-400 transition-colors disabled:opacity-50"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

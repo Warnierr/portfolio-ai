@@ -1,5 +1,5 @@
 /* Auto-generated theme variables - DO NOT EDIT MANUALLY */
-/* Generated at: 2026-01-16T22:05:58.804Z */
+/* Generated at: 2026-01-17T02:02:37.871Z */
 
 /* Theme: Cyberpunk 🟣 - Néon futuriste fuchsia/cyan */
 [data-theme="cyberpunk"] {
@@ -37,20 +37,20 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Theme: Light ☀️ - Mode clair élégant / Beige Notion */
+/* Theme: Light ☀️ - Chaleureux & Naturel */
 [data-theme="light"] {
-  --bg-primary: #faf8f3;
+  --bg-primary: #f7f6f3;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
-  --bg-elevated: #f5f5f4;
+  --bg-elevated: #edece9;
   --text-primary: #37352f;
   --text-secondary: #787774;
   --text-muted: #9b9a97;
-  --accent: #0369a1;
+  --accent: #d9730d;
   --accent-foreground: #ffffff;
-  --border: rgba(55, 53, 47, 0.09);
-  --border-strong: rgba(55, 53, 47, 0.16);
-  --shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  --border: #e1dfdd;
+  --border-strong: #d4d2cf;
+  --shadow: 0 2px 4px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05);
   --font-main: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -73,6 +73,24 @@
   --font-mono: 'Courier New', monospace;
 }
 
+/* Theme: Midnight 🌌 - Bleu profond & Élégance */
+[data-theme="midnight"] {
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --bg-card: #1e293b;
+  --bg-elevated: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent: #38bdf8;
+  --accent-foreground: #0f172a;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --font-main: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 /* Theme: Neon Dev 💻 - Terminal hacker avec effets glow */
 [data-theme="neon"] {
   --bg-primary: #0a0e27;
@@ -91,39 +109,21 @@
   --font-mono: 'Monaco', 'Courier New', monospace;
 }
 
-/* Theme: Retro 👾 - Game Boy nostalgie */
-[data-theme="retro"] {
-  --bg-primary: #0f380f;
-  --bg-secondary: #0f380f;
-  --bg-card: #0f380f;
-  --bg-elevated: #1a4d1a;
-  --text-primary: #9bbc0f;
-  --text-secondary: #8bac0f;
-  --text-muted: #306230;
-  --accent: #8bac0f;
-  --accent-foreground: #0f380f;
-  --border: rgba(139, 172, 15, 0.4);
-  --border-strong: rgba(139, 172, 15, 0.8);
-  --shadow: 4px 4px 0px #306230;
-  --font-main: 'Courier New', monospace;
-  --font-mono: 'Courier New', monospace;
-}
-
-/* Theme: Zen ✒️ - Minimaliste japonais */
+/* Theme: Zen ✒️ - Minimaliste Japonais (Washi) */
 [data-theme="zen"] {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #1a1a1a;
-  --bg-card: #1a1a1a;
-  --bg-elevated: #222222;
-  --text-primary: #e0e0e0;
-  --text-secondary: #b0b0b0;
-  --text-muted: #707070;
-  --accent: #ff5252;
+  --bg-primary: #fcfcfc;
+  --bg-secondary: #f4f4f4;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #595959;
+  --text-muted: #8c8c8c;
+  --accent: #cc3300;
   --accent-foreground: #ffffff;
-  --border: rgba(68, 68, 68, 0.5);
-  --border-strong: rgba(68, 68, 68, 1);
+  --border: #e6e6e6;
+  --border-strong: #1a1a1a;
   --shadow: none;
-  --font-main: 'Merriweather', serif;
-  --font-mono: 'Courier New', monospace;
+  --font-main: Georgia, 'Times New Roman', Times, serif;
+  --font-mono: 'Courier New', Courier, monospace;
 }
 

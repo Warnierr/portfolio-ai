@@ -7,12 +7,12 @@ import { AnimatePresence, motion } from "framer-motion";
 // Theme list matching our JSON definitions
 const THEMES = [
     { id: 'dark', label: 'Dark 🌑', description: 'Interface sombre standard' },
-    { id: 'light', label: 'Light ☀️', description: 'Mode clair / Beige Notion' },
+    { id: 'light', label: 'Light ☀️', description: 'Chaleureux & Naturel' },
     { id: 'neon', label: 'Neon Dev 💻', description: 'Terminal hacker avec effets glow' },
     { id: 'matrix', label: 'Matrix 🟢', description: 'Terminal Hacker style' },
     { id: 'cyberpunk', label: 'Cyberpunk 🟣', description: 'Néon futuriste fuchsia/cyan' },
-    { id: 'retro', label: 'Retro 👾', description: 'Game Boy nostalgie' },
-    { id: 'zen', label: 'Zen ✒️', description: 'Minimaliste japonais' },
+    { id: 'midnight', label: 'Midnight 🌌', description: 'Bleu profond & élégance' },
+    { id: 'zen', label: 'Zen ✒️', description: 'Minimaliste (Papier & Encre)' },
 ] as const;
 
 export default function ThemeSelector() {
@@ -56,8 +56,8 @@ export default function ThemeSelector() {
                                         // Keep open to see instant effect
                                     }}
                                     className={`w-full rounded-xl px-3 py-2 text-left transition-all flex items-center justify-between group ${theme === t.id
-                                            ? "bg-[var(--bg-elevated)] border border-[var(--border-strong)] text-[var(--text-primary)] shadow-lg"
-                                            : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent"
+                                        ? "bg-[var(--bg-elevated)] border border-[var(--border-strong)] text-[var(--text-primary)] shadow-lg"
+                                        : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent"
                                         }`}
                                 >
                                     <div className="flex flex-col">

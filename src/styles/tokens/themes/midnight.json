@@ -1,0 +1,25 @@
+{
+    "id": "midnight",
+    "label": "Midnight 🌌",
+    "description": "Bleu profond & Élégance",
+    "tokens": {
+        "--bg-primary": "#020617",
+        "--bg-secondary": "#0f172a",
+        "--bg-card": "#1e293b",
+        "--bg-elevated": "#334155",
+        "--text-primary": "#f8fafc",
+        "--text-secondary": "#94a3b8",
+        "--text-muted": "#64748b",
+        "--accent": "#38bdf8",
+        "--accent-foreground": "#0f172a",
+        "--border": "#1e293b",
+        "--border-strong": "#334155",
+        "--shadow": "0 4px 6px -1px rgba(0, 0, 0, 0.5)",
+        "--font-main": "var(--font-geist-sans)",
+        "--font-mono": "var(--font-geist-mono)"
+    },
+    "contrast": {
+        "bg-primary vs text-primary": "16:1",
+        "bg-card vs accent": "5:1"
+    }
+}

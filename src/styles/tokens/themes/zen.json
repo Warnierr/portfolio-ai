@@ -1,25 +1,25 @@
 {
     "id": "zen",
     "label": "Zen ✒️",
-    "description": "Minimaliste japonais",
+    "description": "Minimaliste Japonais (Washi)",
     "tokens": {
-        "--bg-primary": "#1a1a1a",
-        "--bg-secondary": "#1a1a1a",
-        "--bg-card": "#1a1a1a",
-        "--bg-elevated": "#222222",
-        "--text-primary": "#e0e0e0",
-        "--text-secondary": "#b0b0b0",
-        "--text-muted": "#707070",
-        "--accent": "#ff5252",
+        "--bg-primary": "#fcfcfc",
+        "--bg-secondary": "#f4f4f4",
+        "--bg-card": "#ffffff",
+        "--bg-elevated": "#ffffff",
+        "--text-primary": "#1a1a1a",
+        "--text-secondary": "#595959",
+        "--text-muted": "#8c8c8c",
+        "--accent": "#cc3300",
         "--accent-foreground": "#ffffff",
-        "--border": "rgba(68, 68, 68, 0.5)",
-        "--border-strong": "rgba(68, 68, 68, 1)",
+        "--border": "#e6e6e6",
+        "--border-strong": "#1a1a1a",
         "--shadow": "none",
-        "--font-main": "'Merriweather', serif",
-        "--font-mono": "'Courier New', monospace"
+        "--font-main": "Georgia, 'Times New Roman', Times, serif",
+        "--font-mono": "'Courier New', Courier, monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "12.6:1",
-        "bg-card vs accent": "5.1:1"
+        "bg-primary vs text-primary": "18:1",
+        "bg-card vs accent": "6:1"
     }
 }

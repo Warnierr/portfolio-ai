@@ -54,7 +54,7 @@ export default function ProfileSelector({ onSelect }: ProfileSelectorProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => onSelect(profile.id, profile.label)}
-                    className="relative group p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 text-left overflow-hidden"
+                    className="relative group p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] hover:border-[var(--border-strong)] transition-all duration-300 text-left overflow-hidden"
                 >
                     {/* Background Gradient on Hover */}
                     <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br ${profile.gradient} transition-opacity duration-300`} />
@@ -64,10 +64,10 @@ export default function ProfileSelector({ onSelect }: ProfileSelectorProps) {
                             {profile.icon}
                         </span>
                         <div>
-                            <div className="font-bold text-sm text-white/90 group-hover:text-white">
+                            <div className="font-bold text-sm text-[var(--text-primary)] group-hover:text-[var(--text-primary)]">
                                 {profile.label}
                             </div>
-                            <div className="text-xs text-white/50 group-hover:text-white/70">
+                            <div className="text-xs text-[var(--text-muted)] group-hover:text-[var(--text-secondary)]">
                                 {profile.description}
                             </div>
                         </div>
