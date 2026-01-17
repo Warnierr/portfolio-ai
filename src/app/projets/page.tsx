@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 export default function ExperiencesPage() {
   return (
     <PageContainer>
-      <div className="min-h-screen bg-transparent text-[var(--text-primary)] py-20">
+      <div className="min-h-screen bg-transparent text-[var(--text-primary)] pt-32 pb-20">
         <div className="mx-auto max-w-4xl px-6">
 
           {/* Header */}

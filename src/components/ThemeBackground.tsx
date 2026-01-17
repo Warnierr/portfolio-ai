@@ -316,7 +316,7 @@ function MidnightWaves() {
     );
 }
 
-// 🎋 ZEN AMBIENT (Paper texture + Gentle Clouds)
+// 🎋 ZEN AMBIENT (Gentle Wind & Floating Elements)
 function ZenAmbient() {
     const [inkDrop, setInkDrop] = useState(false);
 
@@ -345,27 +345,43 @@ function ZenAmbient() {
                 )}
             </AnimatePresence>
 
-            {/* Paper Texture (SVG Noise) */}
-            <svg className="absolute inset-0 w-full h-full opacity-60 pointer-events-none mix-blend-multiply">
-                <filter id="noise">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-                </filter>
-                <rect width="100%" height="100%" filter="url(#noise)" />
-            </svg>
+            {/* Gentle Gradient Clouds (像雲一樣) */}
+            <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-[#e8ddc8] rounded-full blur-[120px] opacity-40 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] right-[-5%] w-[60vw] h-[60vh] bg-[#f0e5d3] rounded-full blur-[100px] opacity-30"></div>
 
-            {/* Fiber overlay for Washi paper look */}
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+            {/* Floating Leaves (Gentle Wind Effect) */}
+            <div className="absolute inset-0 pointer-events-none">
+                {[...Array(8)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ x: '-10vw', y: `${Math.random() * 80}vh`, opacity: 0 }}
+                        animate={{
+                            x: '110vw',
+                            y: [`${Math.random() * 80}vh`, `${Math.random() * 80 + 10}vh`, `${Math.random() * 80}vh`],
+                            opacity: [0, 0.3, 0],
+                            rotate: [0, 360]
+                        }}
+                        transition={{
+                            duration: 20 + Math.random() * 15,
+                            repeat: Infinity,
+                            delay: i * 3,
+                            ease: "linear"
+                        }}
+                        className="absolute w-6 h-6"
+                    >
+                        <svg viewBox="0 0 24 24" className="w-full h-full fill-[#a89074] opacity-50">
+                            <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+                        </svg>
+                    </motion.div>
+                ))}
+            </div>
 
-            {/* Subtle Gradient Breaths */}
+            {/* Subtle Light Breaths */}
             <motion.div
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 bg-gradient-radial from-white via-transparent to-[#e6dbc0] opacity-50"
+                animate={{ opacity: [0.2, 0.4, 0.2] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-radial from-white/20 via-transparent to-transparent"
             />
-
-            {/* Ink wash clouds */}
-            <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vh] bg-[#dcd0b0] rounded-full blur-[100px] opacity-40 animate-pulse"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vh] bg-[#e8deca] rounded-full blur-[120px] opacity-40"></div>
 
             {/* TEST EVENT BTN */}
             <button

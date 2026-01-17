@@ -14,17 +14,32 @@ export default function EyeComfortControl() {
     const [isVisible, setIsVisible] = useState(false);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
-    // Auto-activate filter for Zen theme
+    // Load saved config from localStorage on mount
     useEffect(() => {
-        if (theme === 'zen') {
+        const saved = localStorage.getItem('eye-comfort-config');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                setConfig(parsed);
+                if (parsed.intensity > 0) setIsVisible(true);
+            } catch (e) {
+                console.error('Failed to parse eye comfort config', e);
+            }
+        }
+    }, []);
+
+    // Save config to localStorage when it changes
+    useEffect(() => {
+        localStorage.setItem('eye-comfort-config', JSON.stringify(config));
+    }, [config]);
+
+    // Auto-activate filter for Zen theme (but respect saved settings)
+    useEffect(() => {
+        if (theme === 'zen' && config.intensity === 0) {
             setConfig({ color: '255, 179, 71', intensity: 0.15, mode: 'warm' });
             setIsVisible(true);
-        } else {
-            setConfig(prev => ({ ...prev, intensity: 0 }));
-            setIsVisible(false);
-            setIsPanelOpen(false); // Reset panel state when leaving Zen
         }
-    }, [theme]);
+    }, [theme, config.intensity]);
 
     const handlePreset = (mode: 'soft' | 'warm' | 'intense') => {
         switch (mode) {

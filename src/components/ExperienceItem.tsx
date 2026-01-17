@@ -10,7 +10,7 @@ export default function ExperienceItem({ data }: { data: Experience }) {
     const { theme } = useTheme();
 
     // Theme-specific styling logic
-    const accentClass = theme === 'zen' ? 'text-[#5c4935] font-bold tracking-widest' : // Darker brown for Zen
+    const accentClass = theme === 'zen' ? 'text-[#2c241b] font-extrabold tracking-widest' : // Much darker for Zen
         theme === 'neon' ? 'text-[#39ff14] drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]' :
             theme === 'cyberpunk' ? 'text-[#ff00ff] font-bold drop-shadow-[0_0_2px_#00ffff]' :
                 theme === 'matrix' ? 'text-[#0F0] font-mono' :

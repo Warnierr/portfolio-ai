@@ -62,11 +62,10 @@ const ThemeAwareTitle = () => {
         return (
             <h1
                 onMouseEnter={handleMatrixHover}
-                className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#0F0] leading-[1.1] font-mono cursor-pointer transition-all flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-4 whitespace-nowrap"
+                className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-6 text-[#0F0] leading-[1.1] font-mono cursor-pointer transition-all whitespace-nowrap"
             >
-                <span className="hidden md:inline opacity-50">&gt;</span>
-                <span className="flex items-center gap-2">
-                    {raoufPart} <span className="text-[#003300] bg-[#0F0] px-1">{warnierPart}</span>
+                <span className="inline-flex items-center gap-1">
+                    {raoufPart} <span className="text-[#003300] bg-[#0F0] px-2">{warnierPart}</span>
                     <span className="animate-pulse">_</span>
                 </span>
             </h1>
