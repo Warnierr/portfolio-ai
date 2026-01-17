@@ -60,7 +60,7 @@ type ChatMsg = { role: "user" | "assistant"; content: string };
 // NOUVEAU MESSAGE DE BIENVENUE ÉPURÉ
 const WELCOME_MESSAGE = `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
 
-Pour mieux vous guider vers les bons projets et services, j'aimerais savoir qui vous êtes 😊
+Pour mieux vous guider, j'aimerais savoir qui vous êtes 😊
 
 @@@PROFILE_SELECTOR@@@
 

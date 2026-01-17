@@ -5,6 +5,7 @@
 
 /* Import des variables de thèmes générées automatiquement */
 @import "../styles/generated/theme-variables.css";
+/* Force rebuild - Theme system v2.1 */
 
 @theme {
   --color-background: #000;
