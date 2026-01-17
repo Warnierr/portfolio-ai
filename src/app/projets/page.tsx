@@ -49,7 +49,7 @@ export default function ExperiencesPage() {
 
           {/* Header */}
           <div className="mb-16 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-[var(--text-primary)]">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-6 text-[var(--text-primary)]">
               Expériences Professionnelles
             </h1>
             <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">

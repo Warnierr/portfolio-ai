@@ -32,7 +32,7 @@ export default function ConditionalHeader() {
                     </Link>
 
                     {/* Navigation Unifiée (Mobile & Desktop) - Sans Burger */}
-                    <div className="flex items-center gap-2 md:gap-4 text-[10px] md:text-xs font-semibold tracking-wide uppercase">
+                    <div className="flex items-center gap-2 md:gap-4 text-[11px] md:text-xs font-semibold tracking-wide uppercase">
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}
