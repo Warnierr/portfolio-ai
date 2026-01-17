@@ -14,12 +14,29 @@ function generateThemeCSS() {
     let css = `/* Auto-generated theme variables - DO NOT EDIT MANUALLY */\n`;
     css += `/* Generated at: ${new Date().toISOString()} */\n\n`;
 
+    // Find dark theme for :root fallback
+    const darkThemeFile = themeFiles.find(f => f === 'dark.json');
+    let darkTheme = null;
+
+    if (darkThemeFile) {
+        darkTheme = JSON.parse(fs.readFileSync(path.join(themesDir, darkThemeFile), 'utf-8'));
+
+        // Generate :root as fallback (default values)
+        css += `/* Default fallback values (Dark theme) */\n`;
+        css += `:root {\n`;
+        Object.entries(darkTheme.tokens).forEach(([key, value]) => {
+            css += `  ${key}: ${value};\n`;
+        });
+        css += `}\n\n`;
+    }
+
+    // Generate all themes with [data-theme="X"] selector (INCLUDING dark)
     themeFiles.forEach(file => {
         const themePath = path.join(themesDir, file);
         const theme = JSON.parse(fs.readFileSync(themePath, 'utf-8'));
 
-        // dark.json devient le :root par défaut
-        const selector = theme.id === 'dark' ? ':root' : `[data-theme="${theme.id}"]`;
+        // ALL themes use [data-theme="X"] selector now
+        const selector = `[data-theme="${theme.id}"]`;
 
         css += `/* Theme: ${theme.label} - ${theme.description} */\n`;
         css += `${selector} {\n`;
