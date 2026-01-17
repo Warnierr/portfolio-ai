@@ -1,123 +1,101 @@
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// ANALYTICS & DATA COLLECTION (RGPD 2026)
+// ========================================
+
+/// Session de chat anonyme (sans données personnelles)
+model ChatSession {
+  id           String   @id @default(cuid())
+  sessionId    String   @unique
+  profile      String?  // "recruiter" | "dev" | "founder" | "association" | "curious"
+  createdAt    DateTime @default(now())
+  endedAt      DateTime?
+  duration     Int?     // durée en secondes
+  messageCount Int      @default(0)
+  
+  // Relations
+  messages     ChatMessage[]
+  consents     ConsentLog[]
+  
+  // Métadonnées analytics (anonymes)
+  referrer     String?  // d'où vient l'user
+  userAgent    String?  // navigateur
+  
+  @@index([createdAt])
+  @@index([profile])
+}
+
+/// Message de conversation (stocké uniquement si consentement)
+model ChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String
+  role      String   // "user" | "assistant"
+  content   String?  @db.Text // NULL si pas de consentement
+  category  String?  // "technical" | "commercial" | "availability" | "general"
+  timestamp DateTime @default(now())
+  
+  // Relations
+  session   ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  
+  @@index([sessionId])
+  @@index([category])
+}
+
+/// Log de consentement RGPD
+model ConsentLog {
+  id        String   @id @default(uuid())
+  sessionId String
+  granted   Boolean  // true = opt-in, false = opt-out
+  level     String   // "session" | "persistent" | "none"
+  timestamp DateTime @default(now())
+  
+  // Relations
+  session   ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  
+  @@index([sessionId])
+}
+
+// ========================================
+// LEADS & CONTACTS
+// ========================================
+
+/// Lead généré (formulaire ou chat)
 model Lead {
-  id        String   @id @default(cuid())
-  name      String
+  id        String   @id @default(uuid())
   email     String
-  message   String
-  status    String   @default("NEW")
-  source      String?   // linkedin, website, referral, cold-email
-  score       Int?      // 0-100 lead scoring
-  assignedTo  String?   // admin user
-  lastContactAt DateTime?
-  convertedAt DateTime?
-  convertedToProjectId String?
+  name      String?
+  company   String?
+  message   String?  @db.Text
+  source    String   // "chat" | "contact_form" | "service_page"
+  profile   String?  // Type de profil
   createdAt DateTime @default(now())
+  
+  @@index([createdAt])
+  @@index([source])
 }
 
-model ChatLog {
-  id          String   @id @default(cuid())
-  userMessage String
-  aiResponse  String?
-  tokens      Int?
-  feedback    Int?
-  theme       String?
-  sentiment   String?
-  createdAt   DateTime @default(now())
-}
+// ========================================
+// ANALYTICS GLOBALES
+// ========================================
 
-model News {
-  id          String    @id @default(cuid())
-  title       String
-  content     String
-  summary     String?
-  tag         String
-  date        String
-  category    String
-  status      String    @default("PENDING")
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-}
-
+/// Page views et événements
 model Analytics {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   page      String
-  visitorId String?
+  event     String?  // "page_view" | "cta_click" | "theme_change", etc.
+  metadata  Json?    // Données supplémentaires
   userAgent String?
   referrer  String?
   createdAt DateTime @default(now())
-}
-
-model Waitlist {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  product   String // budget-ai, ai-act-auditor, etc.
-  source    String? // homepage, services, etc.
-  notified  Boolean  @default(false)
-  createdAt DateTime @default(now())
-
-  @@index([product])
-  @@index([notified])
-}
-
-model Article {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  excerpt     String
-  content     String    // Markdown ou HTML enrichi
-  coverImage  String?   // URL de l'image de couverture
   
-  // Taxonomie
-  category    String    // data-engineering, dataops, llm-ia, devops-plateforme, conformite-ai-act-rgpd, retours-experience
-  tags        String    // JSON array : ["spark", "jenkins", "observabilite"]
-  
-  // Metadata
-  author      String    @default("Raouf Warnier")
-  authorType  String    @default("human") // human, ai, ai-assisted
-  readingTime Int       // en minutes
-  status      String    @default("draft") // draft, published, archived
-  featured    Boolean   @default(false)
-  
-  // SEO
-  metaTitle       String?
-  metaDescription String?
-  canonical       String?
-  
-  // Timestamps
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
-  @@index([category])
-  @@index([status])
-  @@index([publishedAt])
-  @@index([featured])
-}
-
-model Project {
-  id          String    @id @default(cuid())
-  name        String
-  clientName  String
-  status      String    @default("active") // active, paused, completed, cancelled
-  priority    String    @default("normal") // low, normal, high, urgent
-  progress    Int       @default(0) // 0-100
-  mrr         Float?    // Monthly Recurring Revenue
-  startDate   DateTime
-  deadline    DateTime?
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
-  @@index([status])
-  @@index([priority])
-  @@index([deadline])
+  @@index([page])
+  @@index([createdAt])
 }
