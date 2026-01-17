@@ -73,7 +73,7 @@ const ThemeAwareTitle = () => {
 
     if (theme === 'neon') {
         return (
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#39ff14] leading-[1.1] cursor-default font-mono uppercase hover:animate-pulse shadow-green-500 drop-shadow-[0_0_15px_rgba(57,255,20,0.5)] transition-all">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#39ff14] leading-[1.1] cursor-default font-mono uppercase shadow-green-500 drop-shadow-[0_0_15px_rgba(57,255,20,0.5)] transition-all animate-pulse duration-[3000ms]">
                 Raouf Warnier
             </h1>
         );
@@ -81,7 +81,7 @@ const ThemeAwareTitle = () => {
 
     if (theme === 'zen') {
         return (
-            <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1] cursor-default font-serif transition-colors duration-1000 hover:text-[#cc3300]">
+            <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-6 text-[#2c241b] leading-[1.1] cursor-default font-serif transition-colors duration-1000 opacity-90 hover:opacity-100">
                 Raouf Warnier
             </h1>
         );
@@ -96,6 +96,7 @@ const ThemeAwareTitle = () => {
 };
 
 export default function HomeMinimal() {
+    const { theme } = useTheme(); // FIX: theme is now accessible for the cards below
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [showFloatingButton, setShowFloatingButton] = useState(false);
 
@@ -192,28 +193,28 @@ export default function HomeMinimal() {
                     <div className="mt-20">
                         <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-6">Expériences Significatives</div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-emerald-500/30 transition-all">
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-emerald-500/30'}`}>
                                 <Image src="/projects/bnp-pipeline.png" alt="BNP Pipeline" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Data Engineer Big Data</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">BNP Paribas</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-orange-500/30 transition-all">
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-orange-500/30'}`}>
                                 <Image src="/projects/orange-infra.png" alt="Orange Infrastructure" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Cloud Infrastructure</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">Orange</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-blue-500/30 transition-all">
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-blue-500/30'}`}>
                                 <Image src="/projects/safran-data.png" alt="Safran Tech Lead" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Tech Lead Data</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">Safran</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-green-500/30 transition-all">
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-green-500/30'}`}>
                                 <Image src="/projects/acc-battery.png" alt="ACC Industry 4.0" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Industrie 4.0 & Data</h4>
