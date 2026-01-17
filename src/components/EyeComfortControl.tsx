@@ -73,7 +73,7 @@ export default function EyeComfortControl() {
                         )}
                     </AnimatePresence>
 
-                    <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-2 group">
+                    <div className="fixed bottom-24 left-6 z-50 flex flex-col items-start gap-2 group">
                         {/* Mobile Panel (onClick toggle) */}
                         <AnimatePresence>
                             {isPanelOpen && (
@@ -88,8 +88,8 @@ export default function EyeComfortControl() {
                                         <label className="text-xs font-serif font-bold text-[#6d5a4b] flex justify-between items-center border-b border-[#d2c0a9]/50 pb-2">
                                             <span>Confort des Yeux</span>
                                             <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full ${config.mode === 'soft' ? 'bg-blue-100 text-blue-800' :
-                                                    config.mode === 'warm' ? 'bg-orange-100 text-orange-800' :
-                                                        'bg-red-100 text-red-800'
+                                                config.mode === 'warm' ? 'bg-orange-100 text-orange-800' :
+                                                    'bg-red-100 text-red-800'
                                                 }`}>
                                                 {config.mode === 'soft' ? 'Lin' : config.mode === 'warm' ? 'Doré' : 'Sanguine'}
                                             </span>
@@ -140,8 +140,8 @@ export default function EyeComfortControl() {
                                 <label className="text-xs font-serif font-bold text-[#6d5a4b] flex justify-between items-center border-b border-[#d2c0a9]/50 pb-2">
                                     <span>Confort des Yeux</span>
                                     <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full ${config.mode === 'soft' ? 'bg-blue-100 text-blue-800' :
-                                            config.mode === 'warm' ? 'bg-orange-100 text-orange-800' :
-                                                'bg-red-100 text-red-800'
+                                        config.mode === 'warm' ? 'bg-orange-100 text-orange-800' :
+                                            'bg-red-100 text-red-800'
                                         }`}>
                                         {config.mode === 'soft' ? 'Lin' : config.mode === 'warm' ? 'Doré' : 'Sanguine'}
                                     </span>
@@ -193,7 +193,7 @@ export default function EyeComfortControl() {
                         >
                             <span className="text-lg">👁️</span>
                             <span className={`absolute top-0 right-0 w-3 h-3 rounded-full border border-white ${config.mode === 'soft' ? 'bg-[#a8c0ff]' :
-                                    config.mode === 'warm' ? 'bg-[#ffb347]' : 'bg-[#8b2f2f]'
+                                config.mode === 'warm' ? 'bg-[#ffb347]' : 'bg-[#8b2f2f]'
                                 }`}></span>
                         </button>
                     </div>

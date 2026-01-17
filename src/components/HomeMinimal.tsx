@@ -52,11 +52,11 @@ const ThemeAwareTitle = () => {
 
     if (theme === 'cyberpunk') {
         return (
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--accent)] leading-[1.1] relative group cursor-default italic select-none">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1] relative group cursor-default transition-all duration-300 hover:text-[var(--accent)] hover:italic select-none">
                 <span className="relative inline-block group-hover:hidden">Raouf Warnier</span>
-                <span className="hidden group-hover:inline-block relative animate-glitch-1">Raouf Warnier</span>
+                <span className="hidden group-hover:inline-block relative animate-glitch-1 text-[var(--accent)]">Raouf Warnier</span>
 
-                {/* Calques Glitch (visibles au hover) */}
+                {/* Calques Glitch (visibles seulement au hover) */}
                 <span className="absolute top-0 left-0 -z-10 text-cyan-500 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] group-hover:animate-glitch-2">Raouf Warnier</span>
                 <span className="absolute top-0 left-0 -z-10 text-red-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] group-hover:animate-glitch-3">Raouf Warnier</span>
             </h1>
@@ -254,21 +254,24 @@ export default function HomeMinimal() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--bg-primary)]/80 backdrop-blur-md p-4 md:p-6"
+                        className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-[var(--bg-primary)]/80 backdrop-blur-md md:p-6"
                         onClick={() => setIsChatOpen(false)}
                     >
                         <motion.div
-                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            initial={{ scale: 0.95, opacity: 0, y: "100%" }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            exit={{ scale: 0.95, opacity: 0, y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl bg-[var(--bg-card)] border border-[var(--border)]"
+                            className="w-full h-[90vh] md:h-[800px] md:max-w-2xl overflow-hidden rounded-t-3xl md:rounded-3xl shadow-2xl bg-[var(--bg-card)] border-t md:border border-[var(--border)] flex flex-col"
                         >
-                            <AskKenshuHome
-                                isOpen={isChatOpen}
-                                onClose={() => setIsChatOpen(false)}
-                                compactMode={true}
-                            />
+                            <div className="flex-1 overflow-hidden relative">
+                                <AskKenshuHome
+                                    isOpen={isChatOpen}
+                                    onClose={() => setIsChatOpen(false)}
+                                    compactMode={true}
+                                />
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
