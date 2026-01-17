@@ -177,7 +177,7 @@ function MatrixDataBursts() {
             {/* DEV TRIGGER BUTTON */}
             <button
                 onClick={addBurst}
-                className="fixed bottom-20 left-6 z-[100] bg-black/80 border border-[#0F0] text-[#0F0] px-3 py-1 text-[10px] font-mono font-bold rounded hover:bg-[#0F0] hover:text-black transition-colors cursor-pointer active:scale-95"
+                className="hidden md:block fixed bottom-20 left-6 z-[100] bg-black/80 border border-[#0F0] text-[#0F0] px-3 py-1 text-[10px] font-mono font-bold rounded hover:bg-[#0F0] hover:text-black transition-colors cursor-pointer active:scale-95"
             >
                 [TEST_EVENT]
             </button>
@@ -249,7 +249,7 @@ function CyberpunkGrid() {
             {/* TEST EVENT BTN */}
             <button
                 onClick={triggerGlitch}
-                className="fixed bottom-20 left-6 z-[100] bg-yellow-400 text-black border-2 border-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-red-600 hover:border-red-600 transition-all cursor-pointer shadow-[4px_4px_0px_#000]"
+                className="hidden md:block fixed bottom-20 left-6 z-[100] bg-yellow-400 text-black border-2 border-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-red-600 hover:border-red-600 transition-all cursor-pointer shadow-[4px_4px_0px_#000]"
             >
                 [BREACH_SYSTEM]
             </button>
@@ -339,7 +339,7 @@ function MidnightWaves() {
             {/* TEST EVENT BTN */}
             <button
                 onClick={triggerShootingStar}
-                className="fixed bottom-20 left-6 z-[100] bg-blue-900/50 border border-blue-400/30 text-blue-200 px-3 py-1 text-[10px] font-bold rounded backdrop-blur hover:bg-blue-500/30 hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                className="hidden md:block fixed bottom-20 left-6 z-[100] bg-blue-900/50 border border-blue-400/30 text-blue-200 px-3 py-1 text-[10px] font-bold rounded backdrop-blur hover:bg-blue-500/30 hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)]"
             >
                 [EVENT: SHOOTING_STAR]
             </button>
@@ -435,7 +435,7 @@ function ZenAmbient() {
             {/* TEST EVENT BTN */}
             <button
                 onClick={triggerInk}
-                className="fixed bottom-20 left-6 z-[100] bg-[#2c241b]/10 border border-[#2c241b]/20 text-[#2c241b] px-3 py-1 text-[10px] font-serif italic rounded hover:bg-[#2c241b] hover:text-[#f4ebd0] transition-all cursor-pointer backdrop-blur-sm"
+                className="hidden md:block fixed bottom-20 left-6 z-[100] bg-[#2c241b]/10 border border-[#2c241b]/20 text-[#2c241b] px-3 py-1 text-[10px] font-serif italic rounded hover:bg-[#2c241b] hover:text-[#f4ebd0] transition-all cursor-pointer backdrop-blur-sm"
             >
                 墨 Ink Drop
             </button>
@@ -470,7 +470,7 @@ function NeonPulse() {
                 {[0, 1, 2, 3].map(i => <motion.div key={`right-${i}`} animate={{ opacity: [0.4, 0.8, 0.4] }} transition={{ duration: 3.5 + i, repeat: Infinity, delay: i * 0.6, ease: "easeInOut" }} className="w-3 h-32 bg-[#ff1493] rounded-full opacity-60" style={{ filter: 'blur(1px)', boxShadow: '0 0 15px rgba(255,20,147,0.6)' }} />)}
             </div>
             <div className="absolute inset-0 bg-gradient-radial from-[#39ff14]/5 via-transparent to-[#ff1493]/5"></div>
-            <button onClick={triggerFlash} className="fixed bottom-20 left-6 z-[100] bg-black border-2 border-[#39ff14] text-[#39ff14] px-3 py-1 text-[10px] font-bold uppercase tracking-widest hover:bg-[#39ff14] hover:text-black transition-all cursor-pointer shadow-[0_0_20px_rgba(57,255,20,0.5)]">⚡ FLASH</button>
+            <button onClick={triggerFlash} className="hidden md:block fixed bottom-20 left-6 z-[100] bg-black border-2 border-[#39ff14] text-[#39ff14] px-3 py-1 text-[10px] font-bold uppercase tracking-widest hover:bg-[#39ff14] hover:text-black transition-all cursor-pointer shadow-[0_0_20px_rgba(57,255,20,0.5)]">⚡ FLASH</button>
         </motion.div>
     );
 }
