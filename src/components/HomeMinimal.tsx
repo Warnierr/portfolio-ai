@@ -55,10 +55,20 @@ const ThemeAwareTitle = () => {
     };
 
     if (theme === 'matrix') {
+        // Split text to style "Warnier" differently even during animation
+        const raoufPart = text.split(" ")[0] || "Raouf";
+        const warnierPart = text.split(" ")[1] || "Warnier";
+
         return (
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#0F0] leading-[1.1] font-mono cursor-pointer hover:animate-pulse transition-all">
-                <span className="hidden md:inline">&gt; </span>
-                Raouf <span className="text-[#003300] bg-[#0F0] px-1 animate-pulse">Warnier</span>_
+            <h1
+                onMouseEnter={handleMatrixHover}
+                className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#0F0] leading-[1.1] font-mono cursor-pointer transition-all flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-4 whitespace-nowrap"
+            >
+                <span className="hidden md:inline opacity-50">&gt;</span>
+                <span className="flex items-center gap-2">
+                    {raoufPart} <span className="text-[#003300] bg-[#0F0] px-1">{warnierPart}</span>
+                    <span className="animate-pulse">_</span>
+                </span>
             </h1>
         );
     }
