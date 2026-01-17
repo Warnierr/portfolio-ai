@@ -10,7 +10,7 @@ export default function PageContainer({
   className,
 }: PageContainerProps) {
   return (
-    <div className="backdrop-grid min-h-screen w-full px-4 py-10 sm:px-6 md:py-14">
+    <div className="backdrop-grid min-h-screen w-full px-4 pt-32 pb-10 sm:px-6 md:pb-14">
       <main
         className={`relative z-10 mx-auto flex max-w-6xl flex-col gap-12 text-[var(--text-primary)] ${className ?? ""}`}
       >

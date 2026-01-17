@@ -1,26 +1,26 @@
 {
     "id": "zen",
-    "label": "Zen 📜",
-    "description": "Papier d'Art & Encre (Anti-Lumière Bleue)",
+    "label": "Zen 📖",
+    "description": "Élégance littéraire classique",
     "tokens": {
-        "--bg-primary": "#f2e8dc",
-        "--bg-secondary": "#e6d7c3",
-        "--bg-card": "#fbf7f0",
-        "--bg-elevated": "#efe5d5",
-        "--text-primary": "#4a3c31",
-        "--text-secondary": "#6d5a4b",
-        "--text-muted": "#96816d",
-        "--accent": "#d97706",
-        "--text-accent": "#b45309",
-        "--accent-foreground": "#fdf8f3",
-        "--border": "#d2c0a9",
-        "--border-strong": "#bfa588",
-        "--shadow": "0 2px 4px rgba(74, 60, 49, 0.08), 0 8px 24px rgba(74, 60, 49, 0.06)",
-        "--font-main": "var(--font-merriweather)",
-        "--font-mono": "var(--font-geist-mono)"
+        "--bg-primary": "#fefdfb",
+        "--bg-secondary": "#f8f6f2",
+        "--bg-card": "#ffffff",
+        "--bg-elevated": "#f5f3ee",
+        "--text-primary": "#1a1512",
+        "--text-secondary": "#4a4137",
+        "--text-muted": "#7d7165",
+        "--accent": "#8b5a3c",
+        "--text-accent": "#6d4428",
+        "--accent-foreground": "#fefdfb",
+        "--border": "#e6dfd6",
+        "--border-strong": "#cdc3b5",
+        "--shadow": "0 1px 3px rgba(26, 21, 18, 0.04), 0 4px 12px rgba(26, 21, 18, 0.08)",
+        "--font-main": "'Merriweather', 'Georgia', serif",
+        "--font-mono": "'Courier New', monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "10:1",
-        "bg-card vs accent": "5.5:1"
+        "bg-primary vs text-primary": "16.2:1",
+        "bg-card vs text-secondary": "8.4:1"
     }
 }
