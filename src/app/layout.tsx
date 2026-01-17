@@ -9,6 +9,7 @@ import StructuredData from "@/components/StructuredData";
 import { ThemeProvider } from "next-themes";
 import ThemeSelector from "@/components/ThemeSelector";
 import EyeComfortControl from "@/components/EyeComfortControl";
+import ThemeBackground from "@/components/ThemeBackground";
 import "./globals.css";
 
 // Default fonts (Geist)
@@ -205,6 +206,7 @@ export default function RootLayout({
           storageKey="kenshu-theme"
           disableTransitionOnChange={false}
         >
+          <ThemeBackground />
           <AnalyticsTracker />
           <EyeComfortControl />
           <ThemeSelector />

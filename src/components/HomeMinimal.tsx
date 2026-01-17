@@ -4,9 +4,96 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 import AskKenshuHome from "@/components/ask-kenshu/AskKenshuHome";
 import ServiceExplorer from "@/components/ServiceExplorer";
 import { CURRENT_AVAILABILITY, AVAILABILITY_CONFIG } from "@/config/availability";
+
+// --- COMPOSANT TITRE DYNAMIQUE ---
+const ThemeAwareTitle = () => {
+    const { theme } = useTheme();
+    const [text, setText] = useState("Raouf Warnier");
+    const fullText = "Raouf Warnier";
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    // EFFET MATRIX DECODING
+    const handleMatrixHover = () => {
+        let iteration = 0;
+        const interval = setInterval(() => {
+            setText(
+                fullText
+                    .split("")
+                    .map((letter, index) => {
+                        if (index < iteration) {
+                            return fullText[index];
+                        }
+                        return letters[Math.floor(Math.random() * 26)];
+                    })
+                    .join("")
+            );
+
+            if (iteration >= fullText.length) {
+                clearInterval(interval);
+            }
+            iteration += 1 / 3;
+        }, 30);
+    };
+
+    if (theme === 'matrix') {
+        return (
+            <h1
+                onMouseEnter={handleMatrixHover}
+                className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#00ff41] leading-[1.1] cursor-default font-mono transition-none"
+            >
+                {text}
+            </h1>
+        );
+    }
+
+    if (theme === 'cyberpunk') {
+        return (
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--accent)] leading-[1.1] relative group cursor-default italic select-none">
+                <span className="relative inline-block group-hover:hidden">Raouf Warnier</span>
+                <span className="hidden group-hover:inline-block relative animate-glitch-1">Raouf Warnier</span>
+
+                {/* Calques Glitch (visibles au hover) */}
+                <span className="absolute top-0 left-0 -z-10 text-cyan-500 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] group-hover:animate-glitch-2">Raouf Warnier</span>
+                <span className="absolute top-0 left-0 -z-10 text-red-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] group-hover:animate-glitch-3">Raouf Warnier</span>
+            </h1>
+        );
+    }
+
+    if (theme === 'midnight') {
+        return (
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-blue-400 to-cyan-300 leading-[1.1] cursor-default transition-all duration-700 hover:tracking-wide hover:blur-[1px] hover:scale-105">
+                Raouf Warnier
+            </h1>
+        );
+    }
+
+    if (theme === 'neon') {
+        return (
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#39ff14] leading-[1.1] cursor-default font-mono uppercase hover:animate-pulse shadow-green-500 drop-shadow-[0_0_15px_rgba(57,255,20,0.5)] transition-all">
+                Raouf Warnier
+            </h1>
+        );
+    }
+
+    if (theme === 'zen') {
+        return (
+            <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1] cursor-default font-serif transition-colors duration-1000 hover:text-[#cc3300]">
+                Raouf Warnier
+            </h1>
+        );
+    }
+
+    // Default
+    return (
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1]">
+            Raouf Warnier
+        </h1>
+    );
+};
 
 export default function HomeMinimal() {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -64,15 +151,15 @@ export default function HomeMinimal() {
                             </span>
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1]">
-                            Raouf Warnier
-                        </h1>
+                        {/* TITRE DYNAMIQUE SELON THEME */}
+                        <ThemeAwareTitle />
+
                         <h2 className="text-xl md:text-2xl font-normal mb-8 text-[var(--text-secondary)]">
-                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-orange-400 [html[data-theme='dark']_&]:via-amber-500 [html[data-theme='dark']_&]:to-orange-400 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#8b2f2f] [html[data-theme='zen']_&]:font-bold font-medium">
+                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-orange-400 [html[data-theme='dark']_&]:via-amber-500 [html[data-theme='dark']_&]:to-orange-400 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#cc3300] [html[data-theme='zen']_&]:font-bold font-medium">
                                 Data Engineer
                             </span>
                             {' & '}
-                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-orange-400 [html[data-theme='dark']_&]:via-amber-500 [html[data-theme='dark']_&]:to-orange-400 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#8b2f2f] [html[data-theme='zen']_&]:font-bold font-medium">
+                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-orange-400 [html[data-theme='dark']_&]:via-amber-500 [html[data-theme='dark']_&]:to-orange-400 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#cc3300] [html[data-theme='zen']_&]:font-bold font-medium">
                                 AI Product Builder
                             </span>
                         </h2>
