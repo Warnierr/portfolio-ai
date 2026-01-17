@@ -15,9 +15,14 @@ export default function ThemeBackground() {
     if (!mounted) return null;
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-colors duration-700 bg-[var(--bg-primary)]">
             <AnimatePresence mode="wait">
-                {theme === 'matrix' && <MatrixRain key="matrix" />}
+                {theme === 'matrix' && (
+                    <div key="matrix">
+                        <MatrixRain />
+                        <MatrixDataBursts />
+                    </div>
+                )}
                 {theme === 'midnight' && <MidnightWaves key="midnight" />}
                 {theme === 'cyberpunk' && <CyberpunkGrid key="cyberpunk" />}
                 {theme === 'zen' && <ZenAmbient key="zen" />}
@@ -117,7 +122,72 @@ function MatrixRain() {
     );
 }
 
-// 🔵 MIDNIGHT WAVES
+// 🟢 MATRIX DATA BURSTS (Event-driven background glitches)
+function MatrixDataBursts() {
+    const [bursts, setBursts] = useState<{ id: number, x: number, y: number, text: string }[]>([]);
+
+    useEffect(() => {
+        const texts = ["0x4F2A", "SYSTEM_CHECK", "CONNECTING...", "ENCRYPTED", "::ROOT_ACCESS::", "101101", "NULL_POINTER", "TRACE_COMPLETE"];
+
+        const interval = setInterval(() => {
+            if (Math.random() > 0.7) return; // Pas tout le temps
+
+            const id = Date.now();
+            const text = texts[Math.floor(Math.random() * texts.length)];
+            const x = Math.random() * 80 + 10; // 10% - 90%
+            const y = Math.random() * 80 + 10;
+
+            setBursts(prev => [...prev.slice(-4), { id, x, y, text }]); // Max 5 bursts simultanés
+
+            // Auto cleanup local
+            setTimeout(() => {
+                setBursts(prev => prev.filter(b => b.id !== id));
+            }, 2000);
+
+        }, 1500);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <AnimatePresence>
+                {bursts.map(b => (
+                    <motion.div
+                        key={b.id}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: [0, 0.2, 0], scale: 1 }} // Très subtil (max 0.2 opacity)
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        className="absolute font-mono text-xs text-emerald-500/40 tracking-widest whitespace-nowrap"
+                        style={{ left: `${b.x}%`, top: `${b.y}%` }}
+                    >
+                        {b.text}
+                    </motion.div>
+                ))}
+            </AnimatePresence>
+        </div>
+    );
+}
+
+// 🟣 CYBERPUNK GRID
+function CyberpunkGrid() {
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_2px,transparent_2px),linear-gradient(90deg,rgba(18,16,16,0)_2px,transparent_2px)] bg-[size:40px_40px] [background-position:center] [mask-image:linear-gradient(to_bottom,transparent,black)]"
+        >
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+
+            {/* Vignette douce */}
+            <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[var(--bg-primary)] opacity-60"></div>
+        </motion.div>
+    );
+}
+
+// 🌊 MIDNIGHT WAVE & STARS
 function MidnightWaves() {
     return (
         <motion.div
@@ -126,17 +196,10 @@ function MidnightWaves() {
             exit={{ opacity: 0 }}
             className="absolute inset-0 overflow-hidden"
         >
-            <div className="absolute -bottom-[400px] left-0 right-0 h-[600px] opacity-30 bg-gradient-to-t from-blue-900 via-transparent to-transparent animate-pulse" />
-
-            {/* Vague 1 */}
-            <div className="absolute bottom-0 left-0 w-[200%] h-[300px] bg-gradient-to-r from-transparent via-blue-900/10 to-transparent animate-[wave_15s_linear_infinite]"
-                style={{ transform: "translateX(-50%)" }} />
-
-            {/* Particules flottantes (bulles/plancton) */}
-            <div className="absolute inset-0 bg-[url('/effects/noise.png')] opacity-5 mix-blend-overlay"></div>
-
-            {/* Deep gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#020c1b] via-[#0a192f] to-[#112240]"></div>
+
+            {/* Light Rays */}
+            <div className="absolute top-0 left-1/4 w-96 h-[120%] bg-blue-500/10 rotate-[20deg] blur-[100px]"></div>
 
             {/* Twinkling Stars */}
             <div className="absolute inset-0 opacity-40">
@@ -160,33 +223,16 @@ function MidnightWaves() {
             </div>
 
             {/* Ocean Waves Effect (CSS) */}
-            <div className="absolute bottom-0 w-[200%] h-48 opacity-30 animate-wave-slow">
+            <div className="absolute bottom-0 w-[200%] h-48 opacity-30 animate-wave-slow pointer-events-none">
                 <svg viewBox="0 0 1440 320" className="w-full h-full fill-blue-500/20">
                     <path fillOpacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>
             </div>
-            <div className="absolute bottom-[-20px] left-[-50px] w-[210%] h-48 opacity-20 animate-wave-fast">
+            <div className="absolute bottom-[-20px] left-[-50px] w-[210%] h-48 opacity-20 animate-wave-fast pointer-events-none">
                 <svg viewBox="0 0 1440 320" className="w-full h-full fill-cyan-500/20">
                     <path fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>
             </div>
-        </motion.div>
-    );
-}
-
-// 🟣 CYBERPUNK GRID
-function CyberpunkGrid() {
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 perspective-grid"
-        >
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
-
-            {/* Effet vignettage violet plus doux */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-60"></div>
         </motion.div>
     );
 }
