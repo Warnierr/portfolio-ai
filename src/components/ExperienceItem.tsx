@@ -8,14 +8,14 @@ export default function ExperienceItem({ data }: { data: Experience }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.04] hover:border-white/10">
+        <div className="group relative rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 transition-all hover:bg-[var(--bg-elevated)] hover:border-[var(--border-strong)]">
 
             {/* Header Line */}
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                <h3 className="text-2xl font-serif text-white font-medium tracking-wide">
+                <h3 className="text-2xl font-serif text-[var(--text-primary)] font-medium tracking-wide">
                     {data.company}
                 </h3>
-                <span className="text-xs font-mono text-zinc-500 mt-1 md:mt-0">
+                <span className="text-xs font-mono text-[var(--text-muted)] mt-1 md:mt-0">
                     {data.period}
                 </span>
             </div>
@@ -30,7 +30,7 @@ export default function ExperienceItem({ data }: { data: Experience }) {
             {/* Achievements List */}
             <ul className="space-y-3 mb-6">
                 {data.achievements.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                    <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
                         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-500/80 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
                         <span className="leading-relaxed">{item}</span>
                     </li>
@@ -40,7 +40,7 @@ export default function ExperienceItem({ data }: { data: Experience }) {
             {/* AI Context Toggle */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center gap-2 text-xs font-medium tracking-wide transition-all ${isOpen ? "text-emerald-400" : "text-zinc-500 hover:text-emerald-400"
+                className={`flex items-center gap-2 text-xs font-medium tracking-wide transition-all ${isOpen ? "text-emerald-400" : "text-[var(--text-muted)] hover:text-emerald-400"
                     }`}
             >
                 <span className="text-base">✨</span>
@@ -63,27 +63,27 @@ export default function ExperienceItem({ data }: { data: Experience }) {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="mt-4 pt-4 border-t border-white/5">
-                            <div className="rounded-xl bg-black/40 border border-white/5 p-5 space-y-6 text-sm text-zinc-400">
+                        <div className="mt-4 pt-4 border-t border-[var(--border)]">
+                            <div className="rounded-xl bg-[var(--bg-secondary)] border border-[var(--border)] p-5 space-y-6 text-sm text-[var(--text-secondary)]">
 
                                 <div>
-                                    <h4 className="text-[10px] uppercase tracking-widest text-zinc-600 mb-1 font-semibold">Situation</h4>
-                                    <p className="leading-relaxed text-zinc-300">{data.aiContext.situation}</p>
+                                    <h4 className="text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-1 font-semibold">Situation</h4>
+                                    <p className="leading-relaxed text-[var(--text-primary)]">{data.aiContext.situation}</p>
                                 </div>
 
                                 <div>
-                                    <h4 className="text-[10px] uppercase tracking-widest text-zinc-600 mb-1 font-semibold">Approche</h4>
-                                    <p className="leading-relaxed text-zinc-300">{data.aiContext.approach}</p>
+                                    <h4 className="text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-1 font-semibold">Approche</h4>
+                                    <p className="leading-relaxed text-[var(--text-primary)]">{data.aiContext.approach}</p>
                                 </div>
 
                                 <div>
-                                    <h4 className="text-[10px] uppercase tracking-widest text-zinc-600 mb-1 font-semibold">Travail Technique</h4>
-                                    <p className="leading-relaxed text-zinc-300">{data.aiContext.technical}</p>
+                                    <h4 className="text-[10px] uppercase tracking-widest text-[var(--text-muted)] mb-1 font-semibold">Travail Technique</h4>
+                                    <p className="leading-relaxed text-[var(--text-primary)]">{data.aiContext.technical}</p>
                                 </div>
 
                                 <div className="pl-3 border-l-2 border-amber-500/30">
                                     <h4 className="text-[10px] uppercase tracking-widest text-amber-500/70 mb-1 font-semibold">Leçons Apprises</h4>
-                                    <p className="leading-relaxed text-zinc-300 italic">"{data.aiContext.lessons}"</p>
+                                    <p className="leading-relaxed text-[var(--text-primary)] italic">"{data.aiContext.lessons}"</p>
                                 </div>
 
                             </div>

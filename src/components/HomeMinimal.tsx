@@ -25,19 +25,19 @@ export default function HomeMinimal() {
 
     return (
         <>
-            <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-amber-500/30">
+            <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-amber-500/30">
 
                 {/* NAV BAR Compacte & Rapprochée */}
-                <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-black/60 border-b border-white/5">
+                <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-[var(--bg-secondary)]/60 border-b border-[var(--border)]">
                     <Link href="/" className="font-bold text-sm tracking-wide hover:text-emerald-400 transition-colors">
                         Kenshu Dev
                     </Link>
 
                     <div className="flex items-center gap-4 text-xs font-semibold tracking-wide uppercase">
-                        <Link href="/services" className="text-zinc-400 hover:text-white transition-colors">
+                        <Link href="/services" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
                             Services
                         </Link>
-                        <Link href="/projets" className="text-zinc-400 hover:text-white transition-colors">
+                        <Link href="/projets" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
                             Expériences
                         </Link>
                         <button
@@ -64,23 +64,23 @@ export default function HomeMinimal() {
                             </span>
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white leading-[1.1]">
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1]">
                             Raouf Warnier
                         </h1>
-                        <h2 className="text-xl md:text-2xl font-normal mb-8 text-zinc-400">
+                        <h2 className="text-xl md:text-2xl font-normal mb-8 text-[var(--text-secondary)]">
                             <span className="text-amber-100 font-medium">Data Engineer</span> & <span className="text-amber-100 font-medium">AI Product Builder</span>
                         </h2>
 
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setIsChatOpen(true)}
-                                className="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.3)]"
+                                className="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-[var(--accent-foreground)] transition-all hover:bg-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.3)]"
                             >
                                 <span>✨ Discuter avec mon IA</span>
                             </button>
                             <Link
                                 href="/contact"
-                                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 transition-all hover:bg-white/10 hover:text-white"
+                                className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-6 py-3 text-sm font-semibold text-[var(--text-secondary)] transition-all hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
                             >
                                 Me contacter
                             </Link>
@@ -97,34 +97,34 @@ export default function HomeMinimal() {
 
                     {/* SECTION EXPÉRIENCES (Images en bas) */}
                     <div className="mt-20">
-                        <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-6">Expériences Significatives</div>
+                        <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-6">Expériences Significatives</div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/30 hover:border-emerald-500/30 transition-all">
+                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-emerald-500/30 transition-all">
                                 <Image src="/projects/bnp-pipeline.png" alt="BNP Pipeline" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
-                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                                    <h4 className="text-sm font-bold text-white">Data Engineer Big Data</h4>
-                                    <p className="text-[10px] text-zinc-400">BNP Paribas</p>
+                                <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
+                                    <h4 className="text-sm font-bold text-[var(--text-primary)]">Data Engineer Big Data</h4>
+                                    <p className="text-[10px] text-[var(--text-muted)]">BNP Paribas</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/30 hover:border-orange-500/30 transition-all">
+                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-orange-500/30 transition-all">
                                 <Image src="/projects/orange-infra.png" alt="Orange Infrastructure" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
-                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                                    <h4 className="text-sm font-bold text-white">Cloud Infrastructure</h4>
-                                    <p className="text-[10px] text-zinc-400">Orange</p>
+                                <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
+                                    <h4 className="text-sm font-bold text-[var(--text-primary)]">Cloud Infrastructure</h4>
+                                    <p className="text-[10px] text-[var(--text-muted)]">Orange</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/30 hover:border-blue-500/30 transition-all">
+                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-blue-500/30 transition-all">
                                 <Image src="/projects/safran-data.png" alt="Safran Tech Lead" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
-                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                                    <h4 className="text-sm font-bold text-white">Tech Lead Data</h4>
-                                    <p className="text-[10px] text-zinc-400">Safran</p>
+                                <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
+                                    <h4 className="text-sm font-bold text-[var(--text-primary)]">Tech Lead Data</h4>
+                                    <p className="text-[10px] text-[var(--text-muted)]">Safran</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-white/5 bg-zinc-900/30 hover:border-green-500/30 transition-all">
+                            <Link href="/projets" className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] hover:border-green-500/30 transition-all">
                                 <Image src="/projects/acc-battery.png" alt="ACC Industry 4.0" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
-                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                                    <h4 className="text-sm font-bold text-white">Industrie 4.0 & Data</h4>
-                                    <p className="text-[10px] text-zinc-400">ACC</p>
+                                <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
+                                    <h4 className="text-sm font-bold text-[var(--text-primary)]">Industrie 4.0 & Data</h4>
+                                    <p className="text-[10px] text-[var(--text-muted)]">ACC</p>
                                 </div>
                             </Link>
                         </div>
@@ -133,7 +133,7 @@ export default function HomeMinimal() {
                 </div>
 
                 {/* FOOTER SIMPLE */}
-                <div className="text-center py-12 border-t border-white/5 bg-black text-zinc-600 text-xs">
+                <div className="text-center py-12 border-t border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-muted)] text-xs">
                     © 2026 Kenshu Dev — Data & AI Product Building
                 </div>
 
@@ -161,7 +161,7 @@ export default function HomeMinimal() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-6"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--bg-primary)]/80 backdrop-blur-md p-4 md:p-6"
                         onClick={() => setIsChatOpen(false)}
                     >
                         <motion.div
@@ -169,7 +169,7 @@ export default function HomeMinimal() {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl bg-[#0a0a0a] border border-white/10"
+                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl bg-[var(--bg-card)] border border-[var(--border)]"
                         >
                             <AskKenshuHome
                                 isOpen={isChatOpen}
