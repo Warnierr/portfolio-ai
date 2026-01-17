@@ -12,7 +12,22 @@ import { CURRENT_AVAILABILITY, AVAILABILITY_CONFIG } from "@/config/availability
 // --- COMPOSANT TITRE DYNAMIQUE ---
 const ThemeAwareTitle = () => {
     const { theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
     const [text, setText] = useState("Raouf Warnier");
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // SSR fallback ou chargement -> Render Default pour éviter Hydration Mismatch
+    if (!mounted) {
+        return (
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1]">
+                Raouf Warnier
+            </h1>
+        );
+    }
+
     const fullText = "Raouf Warnier";
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -41,31 +56,27 @@ const ThemeAwareTitle = () => {
 
     if (theme === 'matrix') {
         return (
-            <h1
-                onMouseEnter={handleMatrixHover}
-                className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#00ff41] leading-[1.1] cursor-default font-mono transition-none"
-            >
-                {text}
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#0F0] leading-[1.1] font-mono cursor-pointer hover:animate-pulse transition-all">
+                <span className="hidden md:inline">&gt; </span>
+                Raouf <span className="text-[#003300] bg-[#0F0] px-1 animate-pulse">Warnier</span>_
             </h1>
         );
     }
 
+    // ... existing cyberpunk logic ...
     if (theme === 'cyberpunk') {
         return (
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1] relative group cursor-default transition-all duration-300 hover:text-[var(--accent)] hover:italic select-none">
-                <span className="relative inline-block group-hover:hidden">Raouf Warnier</span>
-                <span className="hidden group-hover:inline-block relative animate-glitch-1 text-[var(--accent)]">Raouf Warnier</span>
-
-                {/* Calques Glitch (visibles seulement au hover) */}
-                <span className="absolute top-0 left-0 -z-10 text-cyan-500 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] group-hover:animate-glitch-2">Raouf Warnier</span>
-                <span className="absolute top-0 left-0 -z-10 text-red-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] group-hover:animate-glitch-3">Raouf Warnier</span>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[#fcee0a] leading-[1.1] cursor-pointer font-sans uppercase group relative hover:italic hover:scale-105 hover:skew-x-12 hover:text-cyan-400 transition-all duration-100">
+                <span className="absolute -inset-1 text-red-500 opacity-0 group-hover:opacity-100 animate-[glitch-1_0.2s_infinite] -z-10 translate-x-[2px]">Raouf Warnier</span>
+                <span className="absolute -inset-1 text-blue-500 opacity-0 group-hover:opacity-100 animate-[glitch-2_0.2s_infinite] -z-10 -translate-x-[2px] translate-y-[2px]">Raouf Warnier</span>
+                Raouf Warnier
             </h1>
         );
     }
 
     if (theme === 'midnight') {
         return (
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-blue-400 to-cyan-300 leading-[1.1] cursor-default transition-all duration-700 hover:tracking-wide hover:blur-[1px] hover:scale-105">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-blue-100 leading-[1.1] cursor-default hover:text-blue-300 transition-colors duration-700 hover:blur-[1px] hover:tracking-wide">
                 Raouf Warnier
             </h1>
         );
@@ -87,7 +98,7 @@ const ThemeAwareTitle = () => {
         );
     }
 
-    // Default
+    // Default (Dark/Others)
     return (
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-[var(--text-primary)] leading-[1.1]">
             Raouf Warnier
