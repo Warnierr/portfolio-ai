@@ -53,7 +53,7 @@ export default function ExperiencesPage() {
               Expériences Professionnelles
             </h1>
             <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
-              Chaque rôle inclut un <span className="text-emerald-400 font-semibold">contexte IA interrogeable</span> — la vraie histoire derrière les bullet points.
+              Chaque rôle inclut un <span className="text-[var(--text-accent)] font-semibold">contexte IA interrogeable</span> — la vraie histoire derrière les bullet points.
             </p>
           </div>
 

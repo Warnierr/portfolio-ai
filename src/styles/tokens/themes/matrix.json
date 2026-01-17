@@ -11,6 +11,7 @@
         "--text-secondary": "#00cc33",
         "--text-muted": "#008822",
         "--accent": "#00ff41",
+        "--text-accent": "#00cc33",
         "--accent-foreground": "#000000",
         "--border": "rgba(0, 255, 65, 0.3)",
         "--border-strong": "rgba(0, 255, 65, 0.6)",
