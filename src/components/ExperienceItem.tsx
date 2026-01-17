@@ -23,13 +23,13 @@ export default function ExperienceItem({ data }: { data: Experience }) {
     };
 
     const containerStyle = theme === 'cyberpunk'
-        ? 'border-pink-500/30 bg-black/90 shadow-[0_0_15px_rgba(236,72,153,0.1)] hover:border-pink-500 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)]'
+        ? 'border-pink-500/50 bg-black/80 shadow-[0_0_25px_rgba(236,72,153,0.25)] hover:border-pink-400 hover:shadow-[0_0_40px_rgba(236,72,153,0.5)] backdrop-blur-md'
         : theme === 'zen'
             ? 'border-[#d6cbb6]/40 bg-[#f4ebd0]/50 backdrop-blur-sm hover:bg-[#f4ebd0]/70 text-[#2c241b]'
             : 'border-[var(--border)] bg-[var(--bg-card)]/70 backdrop-blur-md hover:bg-[var(--bg-elevated)]/90';
 
     return (
-        <div className={`group relative rounded-2xl p-4 sm:p-6 transition-all border ${containerStyle}`} style={vignetteStyle}>
+        <div className={`group relative rounded-2xl p-4 sm:p-6 transition-all border ${containerStyle}`}>
 
             {/* Header Line */}
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">

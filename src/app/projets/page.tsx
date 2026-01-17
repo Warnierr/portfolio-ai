@@ -48,8 +48,7 @@ export default function ExperiencesPage() {
         <div className="mx-auto max-w-4xl px-6">
 
           {/* Header */}
-          <div className="mb-10 text-center space-y-4">
-            <span className="section-eyebrow">Parcours</span>
+          <div className="mb-10 text-center space-y-4 -mt-8 md:-mt-4">
             <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-[var(--text-primary)]">
               Expériences Professionnelles
             </h1>
