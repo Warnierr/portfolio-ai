@@ -1,25 +1,25 @@
 {
     "id": "cyberpunk",
     "label": "Cyberpunk 🟣",
-    "description": "Néon futuriste fuchsia/cyan",
+    "description": "Néon futuriste & Violet électrique",
     "tokens": {
-        "--bg-primary": "#0f0518",
-        "--bg-secondary": "#1a0524",
-        "--bg-card": "#2a0a38",
-        "--bg-elevated": "#1f0829",
-        "--text-primary": "#e879f9",
-        "--text-secondary": "#22d3ee",
-        "--text-muted": "#94a3b8",
-        "--accent": "#d946ef",
+        "--bg-primary": "#13001f",
+        "--bg-secondary": "#240046",
+        "--bg-card": "#3c096c",
+        "--bg-elevated": "#5a189a",
+        "--text-primary": "#e0aaff",
+        "--text-secondary": "#c77dff",
+        "--text-muted": "#9d4edd",
+        "--accent": "#ff00ff",
         "--accent-foreground": "#ffffff",
-        "--border": "rgba(217, 70, 239, 0.3)",
-        "--border-strong": "rgba(217, 70, 239, 0.5)",
-        "--shadow": "0 0 15px rgba(217, 70, 239, 0.3), 0 0 30px rgba(34, 211, 238, 0.1)",
+        "--border": "#7b2cbf",
+        "--border-strong": "#9d4edd",
+        "--shadow": "0 0 15px rgba(123, 44, 191, 0.4), 0 0 30px rgba(255, 0, 255, 0.2)",
         "--font-main": "'Outfit', sans-serif",
         "--font-mono": "'Monaco', monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "9.4:1",
-        "bg-card vs text-secondary": "6.7:1"
+        "bg-primary vs text-primary": "10:1",
+        "bg-card vs accent": "4.5:1"
     }
 }

@@ -1,20 +1,20 @@
 /* Auto-generated theme variables - DO NOT EDIT MANUALLY */
-/* Generated at: 2026-01-17T02:06:45.550Z */
+/* Generated at: 2026-01-17T02:08:26.044Z */
 
-/* Theme: Cyberpunk 🟣 - Néon futuriste fuchsia/cyan */
+/* Theme: Cyberpunk 🟣 - Néon futuriste & Violet électrique */
 [data-theme="cyberpunk"] {
-  --bg-primary: #0f0518;
-  --bg-secondary: #1a0524;
-  --bg-card: #2a0a38;
-  --bg-elevated: #1f0829;
-  --text-primary: #e879f9;
-  --text-secondary: #22d3ee;
-  --text-muted: #94a3b8;
-  --accent: #d946ef;
+  --bg-primary: #13001f;
+  --bg-secondary: #240046;
+  --bg-card: #3c096c;
+  --bg-elevated: #5a189a;
+  --text-primary: #e0aaff;
+  --text-secondary: #c77dff;
+  --text-muted: #9d4edd;
+  --accent: #ff00ff;
   --accent-foreground: #ffffff;
-  --border: rgba(217, 70, 239, 0.3);
-  --border-strong: rgba(217, 70, 239, 0.5);
-  --shadow: 0 0 15px rgba(217, 70, 239, 0.3), 0 0 30px rgba(34, 211, 238, 0.1);
+  --border: #7b2cbf;
+  --border-strong: #9d4edd;
+  --shadow: 0 0 15px rgba(123, 44, 191, 0.4), 0 0 30px rgba(255, 0, 255, 0.2);
   --font-main: 'Outfit', sans-serif;
   --font-mono: 'Monaco', monospace;
 }
@@ -73,20 +73,20 @@
   --font-mono: 'Courier New', monospace;
 }
 
-/* Theme: Midnight 🌌 - Bleu profond & Élégance */
+/* Theme: Midnight 🌊 - Océanique & Abysses */
 [data-theme="midnight"] {
-  --bg-primary: #020617;
-  --bg-secondary: #0f172a;
-  --bg-card: #1e293b;
-  --bg-elevated: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent: #38bdf8;
-  --accent-foreground: #0f172a;
-  --border: #1e293b;
-  --border-strong: #334155;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --bg-primary: #041C2C;
+  --bg-secondary: #0A2A3D;
+  --bg-card: #113A52;
+  --bg-elevated: #1A4D67;
+  --text-primary: #E0F7FA;
+  --text-secondary: #81D4FA;
+  --text-muted: #4FA3C8;
+  --accent: #00E5FF;
+  --accent-foreground: #001018;
+  --border: #235B77;
+  --border-strong: #4FA3C8;
+  --shadow: 0 4px 20px rgba(0, 229, 255, 0.15), 0 0 10px rgba(0, 229, 255, 0.1);
   --font-main: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

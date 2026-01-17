@@ -1,25 +1,25 @@
 {
     "id": "midnight",
-    "label": "Midnight 🌌",
-    "description": "Bleu profond & Élégance",
+    "label": "Midnight 🌊",
+    "description": "Océanique & Abysses",
     "tokens": {
-        "--bg-primary": "#020617",
-        "--bg-secondary": "#0f172a",
-        "--bg-card": "#1e293b",
-        "--bg-elevated": "#334155",
-        "--text-primary": "#f8fafc",
-        "--text-secondary": "#94a3b8",
-        "--text-muted": "#64748b",
-        "--accent": "#38bdf8",
-        "--accent-foreground": "#0f172a",
-        "--border": "#1e293b",
-        "--border-strong": "#334155",
-        "--shadow": "0 4px 6px -1px rgba(0, 0, 0, 0.5)",
+        "--bg-primary": "#041C2C",
+        "--bg-secondary": "#0A2A3D",
+        "--bg-card": "#113A52",
+        "--bg-elevated": "#1A4D67",
+        "--text-primary": "#E0F7FA",
+        "--text-secondary": "#81D4FA",
+        "--text-muted": "#4FA3C8",
+        "--accent": "#00E5FF",
+        "--accent-foreground": "#001018",
+        "--border": "#235B77",
+        "--border-strong": "#4FA3C8",
+        "--shadow": "0 4px 20px rgba(0, 229, 255, 0.15), 0 0 10px rgba(0, 229, 255, 0.1)",
         "--font-main": "var(--font-geist-sans)",
         "--font-mono": "var(--font-geist-mono)"
     },
     "contrast": {
-        "bg-primary vs text-primary": "16:1",
-        "bg-card vs accent": "5:1"
+        "bg-primary vs text-primary": "11:1",
+        "bg-card vs accent": "4.5:1"
     }
 }

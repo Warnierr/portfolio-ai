@@ -176,7 +176,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="dark"
-          themes={['dark', 'light', 'neon', 'matrix', 'cyberpunk', 'midnight', 'zen']}
+          themes={['dark', 'light', 'cyberpunk', 'midnight', 'neon', 'matrix', 'zen']}
           enableSystem={false}
           storageKey="kenshu-theme"
           disableTransitionOnChange={false}
