@@ -1,25 +1,25 @@
 {
     "id": "neon",
     "label": "Neon Dev 💻",
-    "description": "Terminal hacker avec effets glow",
+    "description": "Terminal Hacker Vert Néon",
     "tokens": {
-        "--bg-primary": "#0a0e27",
-        "--bg-secondary": "#1a1f3a",
-        "--bg-card": "#0f1629",
-        "--bg-elevated": "#141937",
+        "--bg-primary": "#000a0e",
+        "--bg-secondary": "#001419",
+        "--bg-card": "#00141f",
+        "--bg-elevated": "#001e2b",
         "--text-primary": "#00ff9f",
-        "--text-secondary": "#7dd3fc",
-        "--text-muted": "#64748b",
-        "--accent": "#ff00ff",
-        "--accent-foreground": "#ffffff",
-        "--border": "rgba(0, 255, 159, 0.3)",
-        "--border-strong": "rgba(0, 255, 159, 0.5)",
-        "--shadow": "0 0 10px rgba(0, 255, 159, 0.4), 0 0 20px rgba(0, 255, 159, 0.2)",
-        "--font-main": "'Monaco', 'Courier New', monospace",
-        "--font-mono": "'Monaco', 'Courier New', monospace"
+        "--text-secondary": "#00d9ff",
+        "--text-muted": "#009688",
+        "--accent": "#ff0099",
+        "--accent-foreground": "#000000",
+        "--border": "rgba(0, 255, 159, 0.4)",
+        "--border-strong": "rgba(0, 255, 159, 0.7)",
+        "--shadow": "0 0 15px rgba(0, 255, 159, 0.6), 0 0 30px rgba(0, 217, 255, 0.3), 0 0 45px rgba(0, 255, 159, 0.2)",
+        "--font-main": "'Fira Code', 'Monaco', 'Courier New', monospace",
+        "--font-mono": "'Fira Code', 'Monaco', 'Courier New', monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "14.2:1",
-        "bg-card vs text-secondary": "8.1:1"
+        "bg-primary vs text-primary": "16:1",
+        "bg-card vs text-secondary": "10:1"
     }
 }
