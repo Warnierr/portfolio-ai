@@ -583,6 +583,9 @@ Exemple :
                 }
 
                 // Log interaction (non-blocking)
+                // Log interaction (non-blocking)
+                // TODO: Re-enable logging with new Analytics system (Prisma Schema v2)
+                /*
                 try {
                     const { logInteraction } = await import("@/lib/db-utils");
                     await logInteraction(
@@ -592,6 +595,7 @@ Exemple :
                 } catch (e) {
                     console.warn("[Ask Kenshu API] Log error (ignored):", e);
                 }
+                */
 
                 controller.close();
             },

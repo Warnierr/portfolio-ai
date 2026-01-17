@@ -15,11 +15,12 @@
         "--border": "rgba(0, 255, 159, 0.4)",
         "--border-strong": "rgba(0, 255, 159, 0.7)",
         "--shadow": "0 0 15px rgba(0, 255, 159, 0.6), 0 0 30px rgba(0, 217, 255, 0.3), 0 0 45px rgba(0, 255, 159, 0.2)",
-        "--font-main": "'Fira Code', 'Monaco', 'Courier New', monospace",
-        "--font-mono": "'Fira Code', 'Monaco', 'Courier New', monospace"
+        "--font-main": "var(--font-fira-code)",
+        "--font-mono": "var(--font-fira-code)"
     },
     "contrast": {
         "bg-primary vs text-primary": "16:1",
         "bg-card vs text-secondary": "10:1"
     }
 }
+```

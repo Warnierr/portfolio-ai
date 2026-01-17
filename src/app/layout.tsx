@@ -2,7 +2,7 @@ import ConditionalHeader from "@/components/ConditionalHeader";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Merriweather, Outfit, Fira_Code } from "next/font/google";
 import PageTransition from "@/components/PageTransition";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import StructuredData from "@/components/StructuredData";
@@ -11,6 +11,7 @@ import ThemeSelector from "@/components/ThemeSelector";
 import EyeComfortControl from "@/components/EyeComfortControl";
 import "./globals.css";
 
+// Default fonts (Geist)
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,6 +20,27 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Zen theme font (Serif elegant)
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+});
+
+// Cyberpunk/Dark theme font (Modern sans-serif)
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700", "800"],
+});
+
+// Neon/Matrix theme font (Monospace hacker)
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -153,7 +175,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${outfit.variable} ${firaCode.variable} antialiased`}
         suppressHydrationWarning
       >
         {/* Google Analytics 4 */}

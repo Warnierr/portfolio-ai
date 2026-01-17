@@ -15,8 +15,8 @@
         "--border": "rgba(255, 255, 255, 0.1)",
         "--border-strong": "rgba(255, 255, 255, 0.2)",
         "--shadow": "0 4px 6px -1px rgba(0, 0, 0, 0.3)",
-        "--font-main": "var(--font-geist-sans)",
-        "--font-mono": "var(--font-geist-mono)"
+        "--font-main": "var(--font-outfit)",
+        "--font-mono": "var(--font-fira-code)"
     },
     "contrast": {
         "bg-primary vs text-primary": "21:1",

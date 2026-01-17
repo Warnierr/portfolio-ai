@@ -15,8 +15,8 @@
         "--border": "#d2c0a9",
         "--border-strong": "#bfa588",
         "--shadow": "0 2px 4px rgba(74, 60, 49, 0.08), 0 8px 24px rgba(74, 60, 49, 0.06)",
-        "--font-main": "'Merriweather', 'Georgia', serif",
-        "--font-mono": "'Fira Code', monospace"
+        "--font-main": "var(--font-merriweather)",
+        "--font-mono": "var(--font-geist-mono)"
     },
     "contrast": {
         "bg-primary vs text-primary": "10:1",
