@@ -158,7 +158,75 @@ body {
   transition-duration: 200ms;
 }
 
-/* Disable transitions on theme change for instant feedback */
 html[data-theme-transitioning="true"] * {
   transition: none !important;
+}
+
+/* ========================================
+   THEME-SPECIFIC TYPOGRAPHY & STYLING
+   ======================================== */
+
+/* ZEN THEME: Elegant, airy, serif headings */
+[data-theme='zen'] {
+  --font-main: var(--font-merriweather);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+[data-theme='zen'] h1,
+[data-theme='zen'] h2,
+[data-theme='zen'] h3 {
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* NEON THEME: Hacker aesthetic, monospace, uppercase */
+[data-theme='neon'] {
+  --font-main: var(--font-fira-code);
+  letter-spacing: -0.02em;
+}
+
+[data-theme='neon'] h1,
+[data-theme='neon'] h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+/* MATRIX THEME: Terminal style, full monospace */
+[data-theme='matrix'] * {
+  font-family: var(--font-fira-code) !important;
+}
+
+[data-theme='matrix'] h1,
+[data-theme='matrix'] h2 {
+  text-transform: lowercase;
+}
+
+[data-theme='matrix'] h1::before {
+  content: ">_ ";
+  opacity: 0.5;
+}
+
+/* CYBERPUNK THEME: Bold, futuristic, impactful */
+[data-theme='cyberpunk'] {
+  --font-main: var(--font-outfit);
+}
+
+[data-theme='cyberpunk'] h1,
+[data-theme='cyberpunk'] h2 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+/* MIDNIGHT THEME: Clean, modern, balanced */
+[data-theme='midnight'] {
+  --font-main: var(--font-outfit);
+}
+
+[data-theme='midnight'] h1 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }

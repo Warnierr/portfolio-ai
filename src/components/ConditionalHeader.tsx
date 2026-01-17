@@ -34,25 +34,24 @@ export default function ConditionalHeader() {
                     <Link href="/" className="font-bold text-sm tracking-wide hover:text-emerald-400 transition-colors">
                         Kenshu Dev
                     </Link>
-                    <div className="flex items-center gap-4">
-                        <nav className="hidden md:flex items-center gap-4 text-xs font-semibold tracking-wide uppercase">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
-                            <button
-                                onClick={() => setIsChatOpen(true)}
-                                className="px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all hover:scale-105"
+
+                    {/* Navigation Unifiée (Mobile & Desktop) - Sans Burger */}
+                    <div className="flex items-center gap-2 md:gap-4 text-[10px] md:text-xs font-semibold tracking-wide uppercase">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors px-2 py-2"
                             >
-                                Ask AI
-                            </button>
-                        </nav>
-                        <MobileMenu navItems={[...navItems, { label: "Ask AI", href: "#", isButton: true }]} onAskAI={() => setIsChatOpen(true)} />
+                                {item.label}
+                            </Link>
+                        ))}
+                        <button
+                            onClick={() => setIsChatOpen(true)}
+                            className="ml-2 px-3 py-1.5 md:px-4 md:py-2 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all active:scale-95"
+                        >
+                            Ask AI
+                        </button>
                     </div>
                 </div>
             </header>

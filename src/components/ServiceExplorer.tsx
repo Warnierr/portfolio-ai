@@ -104,54 +104,49 @@ export default function ServiceExplorer() {
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
 
             {/* MESSAGE MOBILE (Navigation) */}
-            <div className="lg:hidden px-4 pt-6 pb-3">
-                <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 px-2">
-                    Explorer les expertises
+            <div className="lg:hidden">
+                <div className="px-6 pt-6 pb-2">
+                    <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-4">
+                        Explorer les expertises
+                    </div>
                 </div>
-                {/* MENU MOBILE HORIZONTAL SCROLLANT AMÉLIORÉ */}
-                <div className="flex overflow-x-auto gap-2.5 pb-2 snap-x snap-mandatory no-scrollbar -mx-4 px-4 scroll-smooth">
+
+                {/* MENU MOBILE HORIZONTAL SCROLLANT - DESIGN COMPACT */}
+                <div className="flex overflow-x-auto gap-3 px-6 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth">
                     {SERVICES.map((s) => (
                         <motion.button
                             key={s.id}
                             onClick={() => setSelected(s)}
-                            whileTap={{ scale: 0.95 }}
-                            className={`snap-center shrink-0 min-w-[140px] max-w-[160px] p-3.5 rounded-2xl border-2 transition-all duration-300 flex flex-col justify-start relative overflow-hidden ${selected.id === s.id
-                                ? `bg-[var(--bg-elevated)] border-[var(--border-strong)] shadow-xl ${s.accent} scale-105`
-                                : "bg-[var(--bg-secondary)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border-strong)]"
+                            whileTap={{ scale: 0.98 }}
+                            className={`snap-center shrink-0 w-[160px] h-[110px] p-4 rounded-xl border transition-all duration-300 flex flex-col justify-between relative overflow-hidden group ${selected.id === s.id
+                                ? `bg-[var(--bg-elevated)] border-[var(--border-strong)] shadow-lg ${s.accent}`
+                                : "bg-[var(--bg-card)] border-[var(--border)] text-[var(--text-muted)] opacity-80"
                                 }`}
                         >
-                            {/* Badge Kenshu toujours visible si applicable */}
+                            {/* Gradient Background subtil si sélectionné */}
+                            {selected.id === s.id && (
+                                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-20`} />
+                            )}
+
+                            {/* Badge Kenshu (R&D) */}
                             {s.kenshuMode && (
-                                <span className={`text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full w-fit mb-2 font-bold uppercase tracking-wider ${selected.id === s.id ? 'opacity-100' : 'opacity-60'}`}>
-                                    R&D
-                                </span>
+                                <div className="absolute top-0 right-0 p-2">
+                                    <span className="block w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                                </div>
                             )}
-                            
-                            {/* Titre mis en avant */}
-                            <h3 className={`text-xs font-bold uppercase tracking-wide z-10 text-left leading-snug ${selected.id === s.id ? s.accent : ''}`}>
-                                {s.title}
-                            </h3>
-                            
-                            {/* Description courte visible */}
-                            <p className={`text-[10px] mt-1.5 line-clamp-2 leading-tight ${selected.id === s.id ? 'text-[var(--text-secondary)] opacity-80' : 'text-[var(--text-muted)] opacity-60'}`}>
-                                {s.desc}
-                            </p>
-                            
-                            {/* Glow animé en background */}
+
+                            <div className="relative z-10">
+                                {/* Titre */}
+                                <h3 className={`text-xs font-bold uppercase tracking-wider text-left leading-tight ${selected.id === s.id ? s.accent : 'group-hover:text-[var(--text-primary)] transition-colors'}`}>
+                                    {s.title}
+                                </h3>
+                            </div>
+
+                            {/* Barre de progression visuelle pour la sélection */}
                             {selected.id === s.id && (
-                                <motion.div 
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 0.6, scale: 1 }}
-                                    className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-gradient-to-br ${s.color} blur-2xl`} 
-                                />
-                            )}
-                            
-                            {/* Indicateur de sélection */}
-                            {selected.id === s.id && (
-                                <motion.div 
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-400 shadow-lg"
+                                <motion.div
+                                    layoutId="active-pill-mobile"
+                                    className={`h-0.5 w-8 rounded-full bg-current opacity-50 mt-2 self-start`}
                                 />
                             )}
                         </motion.button>

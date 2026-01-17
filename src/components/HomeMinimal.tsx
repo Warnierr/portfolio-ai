@@ -155,7 +155,7 @@ export default function HomeMinimal() {
                         onClick={() => setIsChatOpen(true)}
                         className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg hover:bg-emerald-400 hover:scale-105 transition-all"
                     >
-                        <span className="text-2xl">🤖</span>
+                        <span className="text-2xl">✨</span>
                     </motion.button>
                 )}
             </AnimatePresence>
