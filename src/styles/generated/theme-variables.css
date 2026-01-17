@@ -1,5 +1,5 @@
 /* Auto-generated theme variables - DO NOT EDIT MANUALLY */
-/* Generated at: 2026-01-17T02:08:26.044Z */
+/* Generated at: 2026-01-17T02:14:15.589Z */
 
 /* Theme: Cyberpunk 🟣 - Néon futuriste & Violet électrique */
 [data-theme="cyberpunk"] {
@@ -33,24 +33,6 @@
   --border: rgba(255, 255, 255, 0.1);
   --border-strong: rgba(255, 255, 255, 0.2);
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --font-main: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* Theme: Light ☀️ - Chaleureux & Naturel */
-[data-theme="light"] {
-  --bg-primary: #f7f6f3;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --bg-elevated: #edece9;
-  --text-primary: #37352f;
-  --text-secondary: #787774;
-  --text-muted: #9b9a97;
-  --accent: #d9730d;
-  --accent-foreground: #ffffff;
-  --border: #e1dfdd;
-  --border-strong: #d4d2cf;
-  --shadow: 0 4px 6px -1px rgba(217, 115, 13, 0.1), 0 2px 4px -1px rgba(217, 115, 13, 0.06);
   --font-main: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -109,21 +91,21 @@
   --font-mono: 'Monaco', 'Courier New', monospace;
 }
 
-/* Theme: Zen ✒️ - Minimaliste Japonais (Washi) */
+/* Theme: Zen 📜 - Papier d'Art & Encre (Anti-Lumière Bleue) */
 [data-theme="zen"] {
-  --bg-primary: #fcfcfc;
-  --bg-secondary: #f4f4f4;
-  --bg-card: #ffffff;
-  --bg-elevated: #ffffff;
-  --text-primary: #1a1a1a;
-  --text-secondary: #595959;
-  --text-muted: #8c8c8c;
-  --accent: #cc3300;
-  --accent-foreground: #ffffff;
-  --border: #e6e6e6;
-  --border-strong: #1a1a1a;
-  --shadow: none;
-  --font-main: Georgia, 'Times New Roman', Times, serif;
-  --font-mono: 'Courier New', Courier, monospace;
+  --bg-primary: #f2e8dc;
+  --bg-secondary: #e6d7c3;
+  --bg-card: #fbf7f0;
+  --bg-elevated: #efe5d5;
+  --text-primary: #4a3c31;
+  --text-secondary: #6d5a4b;
+  --text-muted: #96816d;
+  --accent: #a63c2f;
+  --accent-foreground: #fbf7f0;
+  --border: #d2c0a9;
+  --border-strong: #bfa588;
+  --shadow: 0 2px 4px rgba(74, 60, 49, 0.08), 0 8px 24px rgba(74, 60, 49, 0.06);
+  --font-main: 'Merriweather', 'Georgia', serif;
+  --font-mono: 'Fira Code', monospace;
 }
 

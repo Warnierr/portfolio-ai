@@ -7,12 +7,11 @@ import { AnimatePresence, motion } from "framer-motion";
 // Theme list matching our JSON definitions
 const THEMES = [
     { id: 'dark', label: 'Dark 🌑', description: 'Interface sombre standard' },
-    { id: 'light', label: 'Light ☀️', description: 'Chaleureux & Naturel' },
+    { id: 'zen', label: 'Zen 📜', description: 'Papier d\'Art (Yeux reposés)' },
     { id: 'cyberpunk', label: 'Cyberpunk 🟣', description: 'Néon futuriste & Violet électrique' },
     { id: 'midnight', label: 'Midnight 🌊', description: 'Océanique & Abysses' },
     { id: 'neon', label: 'Neon Dev 💻', description: 'Terminal hacker avec effets glow' },
     { id: 'matrix', label: 'Matrix 🟢', description: 'Terminal Hacker style' },
-    { id: 'zen', label: 'Zen ✒️', description: 'Minimaliste (Papier & Encre)' },
 ] as const;
 
 export default function ThemeSelector() {

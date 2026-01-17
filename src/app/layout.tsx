@@ -8,6 +8,7 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import StructuredData from "@/components/StructuredData";
 import { ThemeProvider } from "next-themes";
 import ThemeSelector from "@/components/ThemeSelector";
+import EyeComfortControl from "@/components/EyeComfortControl";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -176,12 +177,13 @@ export default function RootLayout({
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="dark"
-          themes={['dark', 'light', 'cyberpunk', 'midnight', 'neon', 'matrix', 'zen']}
+          themes={['dark', 'zen', 'cyberpunk', 'midnight', 'neon', 'matrix']}
           enableSystem={false}
           storageKey="kenshu-theme"
           disableTransitionOnChange={false}
         >
           <AnalyticsTracker />
+          <EyeComfortControl />
           <ThemeSelector />
           <ConditionalHeader />
 
