@@ -14,7 +14,7 @@ export interface Experience {
 export const experiences: Experience[] = [
     {
         company: "BNP Paribas",
-        role: "Lead Data Engineer Big Data",
+        role: "Data Engineer Big Data",
         period: "2023 — Présent",
         achievements: [
             "Architecture de pipelines ETL traitant 50TB+ de données bancaires",
@@ -30,7 +30,7 @@ export const experiences: Experience[] = [
     },
     {
         company: "Orange",
-        role: "DevOps / Big Data Engineer",
+        role: "Data Engineer DevOps",
         period: "2021 — 2023",
         achievements: [
             "Automatisation complète de l'infrastructure Big Data (Ansible)",

@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "testimonial-bnp-1",
     name: "Laurent D.",
-    role: "Lead Data Engineer",
+    role: "Data Engineer",
     company: "BNP Paribas",
     rating: 5,
     content:
