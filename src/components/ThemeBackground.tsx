@@ -55,8 +55,8 @@ function MatrixRain() {
         }
 
         const draw = () => {
-            // Fade effect (trail)
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+            // Fade effect (trail) - Darker mostly black background
+            ctx.fillStyle = 'rgba(2, 2, 5, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.font = `${fontSize}px monospace`;
@@ -64,15 +64,19 @@ function MatrixRain() {
             for (let i = 0; i < drops.length; i++) {
                 // Determine if we are on the edges (Sidebars)
                 const x = i * fontSize;
-                const isEdge = x < 100 || x > canvas.width - 100;
+                const isEdge = x < 120 || x > canvas.width - 120; // Sidebars slightly wider
 
-                // Color logic: Edges are brighter/greener, Center is darker/subtle
+                // Color logic: TERMINAL STYLE
+                // Edges: Bright Terminal Green
+                // Center: Very dark, subtle organic code
                 if (isEdge) {
-                    ctx.fillStyle = '#0F0';
-                    ctx.shadowBlur = 5;
-                    ctx.shadowColor = '#0F0';
+                    ctx.fillStyle = '#0F0'; // Neon Green
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = 'rgba(0, 255, 0, 0.8)';
                 } else {
-                    ctx.fillStyle = '#003300';
+                    // Center: Nuanced dark green, varying opacity
+                    const opacity = Math.random() * 0.5 + 0.1;
+                    ctx.fillStyle = `rgba(0, 60, 0, ${opacity})`;
                     ctx.shadowBlur = 0;
                 }
 
@@ -80,8 +84,7 @@ function MatrixRain() {
                 ctx.fillText(text, x, drops[i] * fontSize);
 
                 // Reset logic
-                // Edges flow faster and restart more often
-                const threshold = isEdge ? 0.975 : 0.995;
+                const threshold = isEdge ? 0.98 : 0.998; // Center flows VERY rarely reset to keep it clean
 
                 if (drops[i] * fontSize > canvas.height && Math.random() > threshold) {
                     drops[i] = 0;
@@ -126,69 +129,122 @@ function MatrixRain() {
 function MatrixDataBursts() {
     const [bursts, setBursts] = useState<{ id: number, x: number, y: number, text: string }[]>([]);
 
+    const addBurst = () => {
+        const texts = ["0x4F2A", "SYSTEM_CHECK", "CONNECTING...", "ENCRYPTED", "::ROOT_ACCESS::", "101101", "NULL_POINTER", "TRACE_COMPLETE", "WAKE_UP_NEO"];
+        const id = Date.now();
+        const text = texts[Math.floor(Math.random() * texts.length)];
+        const x = Math.random() * 80 + 10;
+        const y = Math.random() * 80 + 10;
+        setBursts(prev => [...prev.slice(-4), { id, x, y, text }]);
+
+        // Sound effect placeholder? 
+        // new Audio('/sounds/glitch.mp3').play().catch(() => {});
+
+        setTimeout(() => {
+            setBursts(prev => prev.filter(b => b.id !== id));
+        }, 2000);
+    };
+
     useEffect(() => {
-        const texts = ["0x4F2A", "SYSTEM_CHECK", "CONNECTING...", "ENCRYPTED", "::ROOT_ACCESS::", "101101", "NULL_POINTER", "TRACE_COMPLETE"];
-
         const interval = setInterval(() => {
-            if (Math.random() > 0.7) return; // Pas tout le temps
-
-            const id = Date.now();
-            const text = texts[Math.floor(Math.random() * texts.length)];
-            const x = Math.random() * 80 + 10; // 10% - 90%
-            const y = Math.random() * 80 + 10;
-
-            setBursts(prev => [...prev.slice(-4), { id, x, y, text }]); // Max 5 bursts simultanés
-
-            // Auto cleanup local
-            setTimeout(() => {
-                setBursts(prev => prev.filter(b => b.id !== id));
-            }, 2000);
-
+            if (Math.random() > 0.7) return;
+            addBurst(); // Auto trigger
         }, 1500);
-
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <AnimatePresence>
-                {bursts.map(b => (
-                    <motion.div
-                        key={b.id}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: [0, 0.2, 0], scale: 1 }} // Très subtil (max 0.2 opacity)
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1.5, ease: "easeInOut" }}
-                        className="absolute font-mono text-xs text-emerald-500/40 tracking-widest whitespace-nowrap"
-                        style={{ left: `${b.x}%`, top: `${b.y}%` }}
-                    >
-                        {b.text}
-                    </motion.div>
-                ))}
-            </AnimatePresence>
-        </div>
+        <>
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <AnimatePresence>
+                    {bursts.map(b => (
+                        <motion.div
+                            key={b.id}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: [0, 1, 0], scale: 1.2 }} // Plus visible pour le test
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
+                            className="absolute font-mono text-sm font-bold text-[#0F0] tracking-widest whitespace-nowrap bg-black/50 px-2 py-1 border border-[#0F0]/30 shadow-[0_0_10px_rgba(0,255,0,0.3)]"
+                            style={{ left: `${b.x}%`, top: `${b.y}%` }}
+                        >
+                            {b.text}
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </div>
+
+            {/* DEV TRIGGER BUTTON */}
+            <button
+                onClick={addBurst}
+                className="fixed bottom-20 left-6 z-[100] bg-black/80 border border-[#0F0] text-[#0F0] px-3 py-1 text-[10px] font-mono font-bold rounded hover:bg-[#0F0] hover:text-black transition-colors cursor-pointer active:scale-95"
+            >
+                [TEST_EVENT]
+            </button>
+        </>
     );
 }
 
-// 🟣 CYBERPUNK GRID
+// 🌆 CYBERPUNK GRID & GLITCH
 function CyberpunkGrid() {
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_2px,transparent_2px),linear-gradient(90deg,rgba(18,16,16,0)_2px,transparent_2px)] bg-[size:40px_40px] [background-position:center] [mask-image:linear-gradient(to_bottom,transparent,black)]"
-        >
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+    const [glitchActive, setGlitchActive] = useState(false);
 
-            {/* Vignette douce */}
-            <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[var(--bg-primary)] opacity-60"></div>
-        </motion.div>
+    const triggerGlitch = () => {
+        setGlitchActive(true);
+        // Rapid strobe effect
+        setTimeout(() => setGlitchActive(false), 50);
+        setTimeout(() => setGlitchActive(true), 100);
+        setTimeout(() => setGlitchActive(false), 200);
+    };
+
+    return (
+        <div className="absolute inset-0 bg-[#050510] overflow-hidden">
+            {/* GLITCH OVERLAY EVENT */}
+            {glitchActive && (
+                <>
+                    <div className="fixed inset-0 bg-red-600 mix-blend-exclusion opacity-30 z-50 pointer-events-none"></div>
+                    <div className="fixed inset-0 bg-blue-600 mix-blend-difference opacity-30 translate-x-2 z-50 pointer-events-none"></div>
+                </>
+            )}
+
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
+
+            {/* Moving Grid */}
+            <div className="absolute inset-0 perspective-[500px]">
+                <div className="absolute bottom-0 left-0 right-0 h-[60vh] bg-[linear-gradient(0deg,transparent_24%,rgba(236,72,153,.3)_25%,rgba(236,72,153,.3)_26%,transparent_27%,transparent_74%,rgba(236,72,153,.3)_75%,rgba(236,72,153,.3)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(236,72,153,.3)_25%,rgba(236,72,153,.3)_26%,transparent_27%,transparent_74%,rgba(236,72,153,.3)_75%,rgba(236,72,153,.3)_76%,transparent_77%,transparent)] bg-[length:50px_50px] rotate-x-[60deg] origin-bottom animate-grid-flow shadow-[0_0_80px_rgba(236,72,153,0.4)]"></div>
+            </div>
+
+            <div className="absolute top-0 left-0 right-0 h-full bg-gradient-to-b from-[#050510] via-transparent to-[#2a0e22] opacity-90 pointer-events-none"></div>
+
+            {/* TEST EVENT BTN */}
+            <button
+                onClick={triggerGlitch}
+                className="fixed bottom-20 left-6 z-[100] bg-yellow-400 text-black border-2 border-black px-3 py-1 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-red-600 hover:border-red-600 transition-all cursor-pointer shadow-[4px_4px_0px_#000]"
+            >
+                [BREACH_SYSTEM]
+            </button>
+        </div>
     );
 }
 
 // 🌊 MIDNIGHT WAVE & STARS
 function MidnightWaves() {
+    const [shootingStars, setShootingStars] = useState<{ id: number, top: number, delay: number }[]>([]);
+
+    const triggerShootingStar = () => {
+        const id = Date.now();
+        const top = Math.random() * 40; // Starts in top 40%
+        setShootingStars(prev => [...prev, { id, top, delay: 0 }]);
+        setTimeout(() => setShootingStars(prev => prev.filter(s => s.id !== id)), 3000);
+    };
+
+    useEffect(() => {
+        // Auto trigger sometimes
+        const interval = setInterval(() => {
+            if (Math.random() > 0.8) triggerShootingStar();
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -215,12 +271,27 @@ function MidnightWaves() {
                         }}
                         style={{
                             left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 60}%`, // Stars mostly in upper part
+                            top: `${Math.random() * 60}%`,
                         }}
                         className="absolute w-1 h-1 bg-white rounded-full shadow-[0_0_5px_white]"
                     />
                 ))}
             </div>
+
+            {/* Shooting Stars */}
+            <AnimatePresence>
+                {shootingStars.map(star => (
+                    <motion.div
+                        key={star.id}
+                        initial={{ x: '120vw', y: `${star.top}vh`, opacity: 0, scale: 0.5 }}
+                        animate={{ x: '-20vw', y: `${star.top + 40}vh`, opacity: [0, 1, 1, 0], scale: 1 }}
+                        transition={{ duration: 2, ease: "easeOut" }}
+                        className="absolute w-[300px] h-[2px] bg-gradient-to-l from-transparent via-cyan-200 to-transparent shadow-[0_0_10px_rgba(165,243,252,0.8)] -rotate-[15deg] z-0"
+                    >
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full blur-[2px] shadow-[0_0_15px_white]" />
+                    </motion.div>
+                ))}
+            </AnimatePresence>
 
             {/* Ocean Waves Effect (CSS) */}
             <div className="absolute bottom-0 w-[200%] h-48 opacity-30 animate-wave-slow pointer-events-none">
@@ -233,36 +304,76 @@ function MidnightWaves() {
                     <path fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>
             </div>
+
+            {/* TEST EVENT BTN */}
+            <button
+                onClick={triggerShootingStar}
+                className="fixed bottom-20 left-6 z-[100] bg-blue-900/50 border border-blue-400/30 text-blue-200 px-3 py-1 text-[10px] font-bold rounded backdrop-blur hover:bg-blue-500/30 hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+            >
+                [EVENT: SHOOTING_STAR]
+            </button>
         </motion.div>
     );
 }
 
-// 🟤 ZEN AMBIENT (LIVING PARCHMENT)
+// 🎋 ZEN AMBIENT (Paper texture + Gentle Clouds)
 function ZenAmbient() {
+    const [inkDrop, setInkDrop] = useState(false);
+
+    const triggerInk = () => {
+        setInkDrop(true);
+        setTimeout(() => setInkDrop(false), 4000);
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-[#fdfbf7]" // Base paper color
+            className="absolute inset-0 bg-[#f4ebd0] overflow-hidden"
         >
-            {/* STRONG Parchment Texture */}
-            <div className="absolute inset-0 opacity-[0.4] mix-blend-multiply pointer-events-none"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                    filter: 'contrast(120%) brightness(95%) sepia(20%)'
-                }}
-            ></div>
+            {/* Ink Drop Event */}
+            <AnimatePresence>
+                {inkDrop && (
+                    <motion.div
+                        initial={{ scale: 0, opacity: 0.8 }}
+                        animate={{ scale: 25, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 4, ease: "easeOut" }}
+                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-[#2c241b] rounded-full blur-2xl pointer-events-none mix-blend-multiply opacity-20"
+                    />
+                )}
+            </AnimatePresence>
 
-            {/* Subtle fiber overlay */}
-            <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]"></div>
+            {/* Paper Texture (SVG Noise) */}
+            <svg className="absolute inset-0 w-full h-full opacity-60 pointer-events-none mix-blend-multiply">
+                <filter id="noise">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+                </filter>
+                <rect width="100%" height="100%" filter="url(#noise)" />
+            </svg>
 
-            {/* Warm natural gradient overlay - Breathing */}
+            {/* Fiber overlay for Washi paper look */}
+            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+
+            {/* Subtle Gradient Breaths */}
             <motion.div
                 animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 bg-gradient-to-br from-[#e6dcc3] via-transparent to-[#d2c0a9] mix-blend-multiply pointer-events-none"
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-radial from-white via-transparent to-[#e6dbc0] opacity-50"
             />
+
+            {/* Ink wash clouds */}
+            <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vh] bg-[#dcd0b0] rounded-full blur-[100px] opacity-40 animate-pulse"></div>
+            <div className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vh] bg-[#e8deca] rounded-full blur-[120px] opacity-40"></div>
+
+            {/* TEST EVENT BTN */}
+            <button
+                onClick={triggerInk}
+                className="fixed bottom-20 left-6 z-[100] bg-[#2c241b]/10 border border-[#2c241b]/30 text-[#2c241b] px-3 py-1 text-[10px] font-serif italic rounded hover:bg-[#2c241b] hover:text-[#f4ebd0] transition-all cursor-pointer"
+            >
+                ~ Ink Drop ~
+            </button>
         </motion.div>
     );
 }
