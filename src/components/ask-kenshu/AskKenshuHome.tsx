@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import confetti from "canvas-confetti";
 import ProfileSelector from "./ProfileSelector";
 import { AI_CONFIG } from "@/lib/ai-config";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "next-themes";
 
 type CardKey = "web" | "apps" | "automation" | "data";
 
