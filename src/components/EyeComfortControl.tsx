@@ -43,22 +43,45 @@ export default function EyeComfortControl() {
             {theme === 'zen' && (
                 <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-2 group">
                     <div className="bg-[#fbf7f0] border border-[#d2c0a9] p-3 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 pointer-events-none group-hover:pointer-events-auto">
-                        <div className="flex flex-col gap-2 w-48">
+                        <div className="flex flex-col gap-3 w-48">
                             <label className="text-xs font-serif font-bold text-[#6d5a4b] flex justify-between">
-                                <span>Température (Yeux)</span>
-                                <span>{Math.round(intensity * 100)}%</span>
+                                <span>Filtre Lumière Bleue</span>
+                                <span className="text-[#8b2f2f]">{Math.round(intensity * 100)}%</span>
                             </label>
-                            <input
-                                type="range"
-                                min="0"
-                                max="0.5"
-                                step="0.05"
-                                value={intensity}
-                                onChange={(e) => setIntensity(parseFloat(e.target.value))}
-                                className="w-full accent-[#a63c2f] h-1 bg-[#e6d7c3] rounded-lg appearance-none cursor-pointer"
-                            />
-                            <p className="text-[10px] text-[#96816d] italic">
-                                Filtre la lumière bleue pour protéger la mélatonine.
+
+                            {/* Preset Buttons */}
+                            <div className="grid grid-cols-3 gap-2">
+                                <button
+                                    onClick={() => setIntensity(0.08)}
+                                    className={`px-2 py-1.5 text-[10px] font-bold rounded border transition-all ${Math.abs(intensity - 0.08) < 0.01
+                                            ? 'bg-[#8b2f2f] text-white border-[#8b2f2f]'
+                                            : 'bg-white text-[#6d5a4b] border-[#d2c0a9] hover:border-[#8b2f2f]'
+                                        }`}
+                                >
+                                    Doux
+                                </button>
+                                <button
+                                    onClick={() => setIntensity(0.15)}
+                                    className={`px-2 py-1.5 text-[10px] font-bold rounded border transition-all ${Math.abs(intensity - 0.15) < 0.01
+                                            ? 'bg-[#8b2f2f] text-white border-[#8b2f2f]'
+                                            : 'bg-white text-[#6d5a4b] border-[#d2c0a9] hover:border-[#8b2f2f]'
+                                        }`}
+                                >
+                                    Moyen
+                                </button>
+                                <button
+                                    onClick={() => setIntensity(0.25)}
+                                    className={`px-2 py-1.5 text-[10px] font-bold rounded border transition-all ${Math.abs(intensity - 0.25) < 0.01
+                                            ? 'bg-[#8b2f2f] text-white border-[#8b2f2f]'
+                                            : 'bg-white text-[#6d5a4b] border-[#d2c0a9] hover:border-[#8b2f2f]'
+                                        }`}
+                                >
+                                    Fort
+                                </button>
+                            </div>
+
+                            <p className="text-[10px] text-[#96816d] italic leading-tight">
+                                Protège ta mélatonine en filtrant la lumière bleue.
                             </p>
                         </div>
                     </div>

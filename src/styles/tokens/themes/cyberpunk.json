@@ -1,25 +1,25 @@
 {
     "id": "cyberpunk",
     "label": "Cyberpunk 🟣",
-    "description": "Néon futuriste & Violet électrique",
+    "description": "Néon Rose & Violet Électrique",
     "tokens": {
-        "--bg-primary": "#13001f",
-        "--bg-secondary": "#240046",
-        "--bg-card": "#3c096c",
-        "--bg-elevated": "#5a189a",
-        "--text-primary": "#e0aaff",
+        "--bg-primary": "#0a0014",
+        "--bg-secondary": "#1a0524",
+        "--bg-card": "#2a0a38",
+        "--bg-elevated": "#3d1354",
+        "--text-primary": "#e879f9",
         "--text-secondary": "#c77dff",
         "--text-muted": "#9d4edd",
-        "--accent": "#ff00ff",
+        "--accent": "#ff006e",
         "--accent-foreground": "#ffffff",
-        "--border": "#7b2cbf",
-        "--border-strong": "#9d4edd",
-        "--shadow": "0 0 15px rgba(123, 44, 191, 0.4), 0 0 30px rgba(255, 0, 255, 0.2)",
+        "--border": "rgba(232, 121, 249, 0.3)",
+        "--border-strong": "rgba(255, 0, 110, 0.6)",
+        "--shadow": "0 0 20px rgba(232, 121, 249, 0.4), 0 0 40px rgba(255, 0, 110, 0.2)",
         "--font-main": "'Outfit', sans-serif",
         "--font-mono": "'Monaco', monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "10:1",
-        "bg-card vs accent": "4.5:1"
+        "bg-primary vs text-primary": "11:1",
+        "bg-card vs accent": "5:1"
     }
 }

@@ -10,7 +10,7 @@
         "--text-primary": "#4a3c31",
         "--text-secondary": "#6d5a4b",
         "--text-muted": "#96816d",
-        "--accent": "#a63c2f",
+        "--accent": "#8b2f2f",
         "--accent-foreground": "#fbf7f0",
         "--border": "#d2c0a9",
         "--border-strong": "#bfa588",
