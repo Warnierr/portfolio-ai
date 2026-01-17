@@ -1,26 +1,27 @@
 {
     "id": "zen",
     "label": "Zen 📖",
-    "description": "Élégance littéraire classique",
+    "description": "Reading elegance - Amber Haze 2026",
     "tokens": {
-        "--bg-primary": "#fefdfb",
-        "--bg-secondary": "#f8f6f2",
+        "--bg-primary": "#fffbf5",
+        "--bg-secondary": "#faf6ed",
         "--bg-card": "#ffffff",
-        "--bg-elevated": "#f5f3ee",
-        "--text-primary": "#1a1512",
-        "--text-secondary": "#4a4137",
-        "--text-muted": "#7d7165",
-        "--accent": "#8b5a3c",
-        "--text-accent": "#6d4428",
-        "--accent-foreground": "#fefdfb",
-        "--border": "#e6dfd6",
-        "--border-strong": "#cdc3b5",
-        "--shadow": "0 1px 3px rgba(26, 21, 18, 0.04), 0 4px 12px rgba(26, 21, 18, 0.08)",
-        "--font-main": "'Merriweather', 'Georgia', serif",
-        "--font-mono": "'Courier New', monospace"
+        "--bg-elevated": "#f8f3e8",
+        "--text-primary": "#2d2520",
+        "--text-secondary": "#5a4a3c",
+        "--text-muted": "#8a7866",
+        "--accent": "#c17a3f",
+        "--text-accent": "#9d5e2f",
+        "--accent-foreground": "#fffbf5",
+        "--border": "#e8dcc8",
+        "--border-strong": "#d4c5ad",
+        "--shadow": "0 1px 2px rgba(45, 37, 32, 0.04), 0 4px 16px rgba(45, 37, 32, 0.06)",
+        "--font-main": "'Merriweather', 'Lora', 'Georgia', serif",
+        "--font-mono": "'Courier Prime', 'Courier New', monospace"
     },
     "contrast": {
-        "bg-primary vs text-primary": "16.2:1",
-        "bg-card vs text-secondary": "8.4:1"
+        "bg-primary vs text-primary": "17.8:1",
+        "bg-card vs text-secondary": "9.2:1",
+        "note": "Optimized for prolonged reading comfort with warm Amber Haze neutral"
     }
 }

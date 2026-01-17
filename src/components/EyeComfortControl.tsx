@@ -36,21 +36,21 @@ export default function EyeComfortControl() {
     // Auto-activate filter for Zen theme (but respect saved settings)
     useEffect(() => {
         if (theme === 'zen' && config.intensity === 0) {
-            setConfig({ color: '255, 179, 71', intensity: 0.15, mode: 'warm' });
+            setConfig({ color: '245, 190, 110', intensity: 0.16, mode: 'warm' });
             setIsVisible(true);
         }
     }, [theme, config.intensity]);
 
     const handlePreset = (mode: 'soft' | 'warm' | 'intense') => {
         switch (mode) {
-            case 'soft': // Bleu Lin (Doux, frais)
-                setConfig({ color: '168, 192, 255', intensity: 0.2, mode: 'soft' });
+            case 'soft': // Bleu Lin Clair (Doux, frais, apaisant)
+                setConfig({ color: '200, 215, 240', intensity: 0.18, mode: 'soft' });
                 break;
-            case 'warm': // Beige Doré (Moyen, Chaleureux) - Default
-                setConfig({ color: '255, 179, 71', intensity: 0.15, mode: 'warm' });
+            case 'warm': // Ambre Chaud (Lecture prolongée, confort)
+                setConfig({ color: '245, 190, 110', intensity: 0.16, mode: 'warm' });
                 break;
-            case 'intense': // Bordeaux (Fort, Soir)
-                setConfig({ color: '139, 47, 47', intensity: 0.25, mode: 'intense' });
+            case 'intense': // Bordeaux Raffiné (Soirée, faible lumière)
+                setConfig({ color: '150, 65, 65', intensity: 0.22, mode: 'intense' });
                 break;
         }
     };
