@@ -27,20 +27,20 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
               type="button"
               onClick={() => setActiveFilter(filter)}
               className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[0.3em] transition-all duration-300 ${activeFilter === filter
-                  ? "border-white bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-                  : "border-white/20 text-zinc-400 hover:text-white hover:border-white/40"
+                ? "border-[var(--text-primary)] bg-[var(--bg-elevated)] text-[var(--text-primary)] shadow-[var(--shadow)]"
+                : "border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]"
                 }`}
             >
               {filter}
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3 text-xs text-zinc-500">
+        <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
           <span>{filteredEntries.length} article{filteredEntries.length > 1 ? "s" : ""}</span>
           <a
             href="#"
             onClick={(e) => e.preventDefault()}
-            className="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-zinc-400 transition hover:border-white/20 hover:text-white"
+            className="flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[var(--text-muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
             title="Flux RSS (bientôt disponible)"
           >
             <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -64,13 +64,13 @@ export default function NewsFeed({ entries }: { entries: NewsEntry[] }) {
                 delay: index * 0.05,
                 layout: { duration: 0.3 },
               }}
-              className="glass-card p-5 text-sm text-zinc-200"
+              className="glass-card p-5 text-sm text-[var(--text-secondary)]"
             >
-              <div className="flex items-center justify-between text-xs text-zinc-400">
+              <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">
                 <span>{entry.date}</span>
                 <span>{entry.tag}</span>
               </div>
-              <p className="mt-3 text-lg font-semibold text-white">{entry.title}</p>
+              <p className="mt-3 text-lg font-semibold text-[var(--text-primary)]">{entry.title}</p>
               <p>{entry.content}</p>
             </motion.div>
           ))}
