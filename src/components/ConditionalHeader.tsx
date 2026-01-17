@@ -30,7 +30,7 @@ export default function ConditionalHeader() {
     return (
         <>
             <header className="fixed top-0 w-full z-50 border-b border-[var(--border)] bg-[var(--bg-secondary)]/60 backdrop-blur-xl">
-                <div className="mx-auto flex items-center justify-between px-6 py-4 text-[var(--text-primary)]">
+                <div className="mx-auto flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4 text-[var(--text-primary)]">
                     <Link href="/" className="font-bold text-sm tracking-wide hover:text-emerald-400 transition-colors">
                         Kenshu Dev
                     </Link>

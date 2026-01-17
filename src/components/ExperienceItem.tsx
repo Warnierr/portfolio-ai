@@ -29,7 +29,7 @@ export default function ExperienceItem({ data }: { data: Experience }) {
             : 'border-[var(--border)] bg-[var(--bg-card)]/70 backdrop-blur-md hover:bg-[var(--bg-elevated)]/90';
 
     return (
-        <div className={`group relative rounded-2xl p-6 transition-all border ${containerStyle}`} style={vignetteStyle}>
+        <div className={`group relative rounded-2xl p-4 sm:p-6 transition-all border ${containerStyle}`} style={vignetteStyle}>
 
             {/* Header Line */}
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">

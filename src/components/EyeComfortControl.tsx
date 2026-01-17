@@ -88,7 +88,7 @@ export default function EyeComfortControl() {
                         )}
                     </AnimatePresence>
 
-                    <div className="fixed bottom-24 left-6 z-50 flex flex-col items-start gap-2 group">
+                    <div className="fixed bottom-20 left-4 sm:bottom-24 sm:left-6 z-50 flex flex-col items-start gap-2 group">
                         {/* Mobile Panel (onClick toggle) */}
                         <AnimatePresence>
                             {isPanelOpen && (

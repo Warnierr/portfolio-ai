@@ -31,7 +31,7 @@ export default function ThemeSelector() {
     }, []);
 
     return (
-        <div className="fixed bottom-6 left-6 z-[90]" ref={menuRef}>
+        <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[90]" ref={menuRef}>
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
