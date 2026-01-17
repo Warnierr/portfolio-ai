@@ -29,8 +29,8 @@ export default function ConditionalHeader() {
 
     return (
         <>
-            <header className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/60 backdrop-blur-xl">
-                <div className="mx-auto flex items-center justify-between px-6 py-4 text-white">
+            <header className="fixed top-0 w-full z-50 border-b border-[var(--border)] bg-[var(--bg-secondary)]/60 backdrop-blur-xl">
+                <div className="mx-auto flex items-center justify-between px-6 py-4 text-[var(--text-primary)]">
                     <Link href="/" className="font-bold text-sm tracking-wide hover:text-emerald-400 transition-colors">
                         Kenshu Dev
                     </Link>
@@ -40,7 +40,7 @@ export default function ConditionalHeader() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className="text-zinc-400 hover:text-white transition-colors"
+                                    className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                                 >
                                     {item.label}
                                 </Link>
@@ -64,7 +64,7 @@ export default function ConditionalHeader() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-6"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--bg-primary)]/80 backdrop-blur-md p-4 md:p-6"
                         onClick={() => setIsChatOpen(false)}
                     >
                         <motion.div
@@ -72,7 +72,7 @@ export default function ConditionalHeader() {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl bg-[#0a0a0a] border border-white/10"
+                            className="w-full max-w-2xl h-[85vh] md:h-[800px] overflow-hidden rounded-3xl shadow-2xl bg-[var(--bg-card)] border border-[var(--border)]"
                         >
                             <AskKenshuHome
                                 isOpen={isChatOpen}

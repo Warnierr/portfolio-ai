@@ -100,12 +100,12 @@ export default function ServiceExplorer() {
     const [selected, setSelected] = useState(SERVICES[2]); // Data selected by default
 
     return (
-        <div className="w-full bg-black/50 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm relative flex flex-col lg:flex-row min-h-[600px] lg:min-h-[500px]">
+        <div className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl overflow-hidden backdrop-blur-sm relative flex flex-col lg:flex-row min-h-[600px] lg:min-h-[500px]">
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
 
             {/* MESSAGE MOBILE (Navigation) */}
             <div className="lg:hidden px-6 pt-6 pb-2">
-                <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">
+                <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-2">
                     Explorer les expertises
                 </div>
                 {/* MENU MOBILE HORIZONTAL SCROLLANT */}
@@ -115,8 +115,8 @@ export default function ServiceExplorer() {
                             key={s.id}
                             onClick={() => setSelected(s)}
                             className={`snap-center shrink-0 w-40 p-3 rounded-xl border transition-all duration-300 flex flex-col justify-between h-24 relative overflow-hidden ${selected.id === s.id
-                                    ? `bg-white/10 border-white/20 shadow-lg ${s.accent}`
-                                    : "bg-black/40 border-white/5 text-zinc-500"
+                                ? `bg-[var(--bg-elevated)] border-[var(--border-strong)] shadow-lg ${s.accent}`
+                                : "bg-[var(--bg-secondary)] border-[var(--border)] text-[var(--text-muted)]"
                                 }`}
                         >
                             <span className="text-[10px] font-bold uppercase tracking-wider z-10 text-left leading-tight">
@@ -137,8 +137,8 @@ export default function ServiceExplorer() {
             </div>
 
             {/* LEFT MENU (DESKTOP ONLY) */}
-            <div className="hidden lg:flex lg:col-span-4 lg:w-1/3 border-r border-white/5 p-4 flex-col gap-2 relative z-10 bg-black/20">
-                <div className="px-4 py-2 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">
+            <div className="hidden lg:flex lg:col-span-4 lg:w-1/3 border-r border-[var(--border)] p-4 flex-col gap-2 relative z-10 bg-[var(--bg-secondary)]">
+                <div className="px-4 py-2 text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-2">
                     Domaines d'expertise
                 </div>
                 {SERVICES.map((s) => (
@@ -146,14 +146,14 @@ export default function ServiceExplorer() {
                         key={s.id}
                         onClick={() => setSelected(s)}
                         className={`text-left p-4 rounded-xl transition-all duration-300 border relative overflow-hidden group ${selected.id === s.id
-                                ? `bg-white/10 border-white/10 ${s.accent}`
-                                : "hover:bg-white/5 border-transparent text-zinc-400 hover:text-white"
+                            ? `bg-[var(--bg-elevated)] border-[var(--border-strong)] ${s.accent}`
+                            : "hover:bg-[var(--bg-elevated)] border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                             }`}
                     >
                         <div className="flex justify-between items-center">
                             <h3 className="font-bold text-sm tracking-wide uppercase">{s.title}</h3>
                             {s.kenshuMode && (
-                                <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute right-4 text-[10px] uppercase tracking-widest text-zinc-500 font-bold">
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute right-4 text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold">
                                     Kenshu
                                 </span>
                             )}
@@ -178,7 +178,7 @@ export default function ServiceExplorer() {
                         <div className={`absolute -inset-10 opacity-20 bg-gradient-to-br ${selected.color} blur-3xl rounded-full pointer-events-none transition-colors duration-700`} />
 
                         {/* Container Image avec ratio aspect géré proprement */}
-                        <div className="relative w-full aspect-video md:h-64 mb-6 md:mb-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
+                        <div className="relative w-full aspect-video md:h-64 mb-6 md:mb-8 rounded-2xl overflow-hidden border border-[var(--border)] shadow-2xl group">
                             <Image
                                 src={selected.image}
                                 alt={selected.title}
@@ -193,23 +193,23 @@ export default function ServiceExplorer() {
                             {/* Titre sur l'image en mobile pour l'effet Wow */}
                             <div className="absolute bottom-4 left-4 md:hidden">
                                 <h2 className={`text-xl font-bold ${selected.accent}`}>{selected.title}</h2>
-                                <p className="text-xs text-zinc-300">{selected.desc}</p>
+                                <p className="text-xs text-[var(--text-secondary)]">{selected.desc}</p>
                             </div>
 
                             {selected.kenshuMode && (
-                                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2">
+                                <div className="absolute top-4 right-4 bg-[var(--bg-secondary)]/60 backdrop-blur-md border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white">Mode Kenshu</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-primary)]">Mode Kenshu</span>
                                 </div>
                             )}
                         </div>
 
                         <div className="mb-4 flex items-center gap-2 px-1">
-                            <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+                            <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest">
                                 Possibilités & Estimations
                             </span>
                             {selected.kenshuMode && (
-                                <span className="text-[10px] text-zinc-600 bg-zinc-900 border border-white/5 px-2 py-0.5 rounded-full">
+                                <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-secondary)] border border-[var(--border)] px-2 py-0.5 rounded-full">
                                     R&D
                                 </span>
                             )}
@@ -222,15 +222,15 @@ export default function ServiceExplorer() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.05 + 0.2 }}
-                                    className="p-4 rounded-xl border border-white/5 bg-black/40 hover:bg-white/5 hover:border-white/10 transition-all group/card cursor-default"
+                                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-elevated)] hover:border-[var(--border-strong)] transition-all group/card cursor-default"
                                 >
                                     <div className="flex justify-between items-start mb-2">
-                                        <h4 className="font-bold text-white text-sm group-hover/card:text-emerald-300 transition-colors">{branch.title}</h4>
-                                        <span className={`text-[10px] px-2 py-1 rounded-full border border-white/10 bg-white/5 whitespace-nowrap ${selected.accent}`}>
+                                        <h4 className="font-bold text-[var(--text-primary)] text-sm group-hover/card:text-emerald-300 transition-colors">{branch.title}</h4>
+                                        <span className={`text-[10px] px-2 py-1 rounded-full border border-[var(--border)] bg-[var(--bg-card)] whitespace-nowrap ${selected.accent}`}>
                                             {branch.time}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-zinc-500 leading-relaxed">{branch.desc}</p>
+                                    <p className="text-xs text-[var(--text-muted)] leading-relaxed">{branch.desc}</p>
                                 </motion.div>
                             ))}
                         </div>

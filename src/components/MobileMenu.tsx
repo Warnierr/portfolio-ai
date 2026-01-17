@@ -29,15 +29,15 @@ export default function MobileMenu({ navItems, onAskAI }: MobileMenuProps) {
       >
         <motion.span
           animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 8 : 0 }}
-          className="h-0.5 w-6 bg-white transition-all"
+          className="h-0.5 w-6 bg-[var(--text-primary)] transition-all"
         />
         <motion.span
           animate={{ opacity: isOpen ? 0 : 1 }}
-          className="h-0.5 w-6 bg-white transition-all"
+          className="h-0.5 w-6 bg-[var(--text-primary)] transition-all"
         />
         <motion.span
           animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -8 : 0 }}
-          className="h-0.5 w-6 bg-white transition-all"
+          className="h-0.5 w-6 bg-[var(--text-primary)] transition-all"
         />
       </button>
 
@@ -51,7 +51,7 @@ export default function MobileMenu({ navItems, onAskAI }: MobileMenuProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 top-[60px] z-40 bg-black/80 backdrop-blur-sm"
+              className="fixed inset-0 top-[60px] z-40 bg-[var(--bg-primary)]/80 backdrop-blur-sm"
             />
 
             {/* Menu Panel */}
@@ -60,7 +60,7 @@ export default function MobileMenu({ navItems, onAskAI }: MobileMenuProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-[60px] z-50 h-[calc(100vh-60px)] w-[280px] border-l border-white/10 bg-black/95 backdrop-blur-xl"
+              className="fixed right-0 top-[60px] z-50 h-[calc(100vh-60px)] w-[280px] border-l border-[var(--border)] bg-[var(--bg-card)] backdrop-blur-xl"
             >
               <nav className="flex flex-col gap-2 p-6">
                 {navItems.map((item) => (
@@ -80,7 +80,7 @@ export default function MobileMenu({ navItems, onAskAI }: MobileMenuProps) {
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="group flex items-center justify-between rounded-lg px-4 py-3 text-zinc-300 transition hover:bg-white/5 hover:text-white"
+                      className="group flex items-center justify-between rounded-lg px-4 py-3 text-[var(--text-secondary)] transition hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
                     >
                       <span>{item.label}</span>
                       {item.badge && (
