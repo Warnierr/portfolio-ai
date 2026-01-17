@@ -119,8 +119,10 @@ export default function HomeMinimal() {
     const { theme } = useTheme(); // FIX: theme is now accessible for the cards below
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [showFloatingButton, setShowFloatingButton] = useState(false);
+    const [mounted, setMounted] = useState(false); // Fix hydration mismatch
 
     useEffect(() => {
+        setMounted(true); // Component is mounted, safe to use theme
         const handleScroll = () => {
             setShowFloatingButton(window.scrollY > 400);
         };
@@ -191,28 +193,28 @@ export default function HomeMinimal() {
                     <div className="mt-20">
                         <div className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest mb-6">Expériences Significatives</div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-emerald-500/30'}`}>
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${(mounted && theme === 'cyberpunk') ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-emerald-500/30'}`}>
                                 <Image src="/projects/bnp-pipeline.png" alt="BNP Pipeline" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Data Engineer Big Data</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">BNP Paribas</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-orange-500/30'}`}>
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${(mounted && theme === 'cyberpunk') ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-orange-500/30'}`}>
                                 <Image src="/projects/orange-infra.png" alt="Orange Infrastructure" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Cloud Infrastructure</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">Orange</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-blue-500/30'}`}>
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${(mounted && theme === 'cyberpunk') ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-blue-500/30'}`}>
                                 <Image src="/projects/safran-data.png" alt="Safran Tech Lead" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Tech Lead Data</h4>
                                     <p className="text-[10px] text-[var(--text-muted)]">Safran</p>
                                 </div>
                             </Link>
-                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${theme === 'cyberpunk' ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-green-500/30'}`}>
+                            <Link href="/projets" className={`group relative overflow-hidden rounded-2xl border bg-[var(--bg-card)] transition-all ${(mounted && theme === 'cyberpunk') ? 'cyber-glitch-hover border-transparent' : 'border-[var(--border)] hover:border-green-500/30'}`}>
                                 <Image src="/projects/acc-battery.png" alt="ACC Industry 4.0" width={300} height={200} className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all" />
                                 <div className="absolute bottom-0 left-0 right-0 p-3" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }}>
                                     <h4 className="text-sm font-bold text-[var(--text-primary)]">Industrie 4.0 & Data</h4>
