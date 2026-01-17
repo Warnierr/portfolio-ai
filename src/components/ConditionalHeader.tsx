@@ -21,11 +21,7 @@ const navItems: NavItem[] = [
 
 export default function ConditionalHeader() {
     const pathname = usePathname();
-    const isHomePage = pathname === "/";
     const [isChatOpen, setIsChatOpen] = useState(false);
-
-    // Ne pas afficher le header sur la homepage (elle a sa propre navigation)
-    if (isHomePage) return null;
 
     return (
         <>

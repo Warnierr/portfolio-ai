@@ -46,6 +46,14 @@ const firaCode = Fira_Code({
   weight: ["400", "500", "700"],
 });
 
+// Viewport configuration for mobile (prevents zoom issues)
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export const metadata: Metadata = {
   title: "Raouf Warnier | Data Engineering - AI Product Builder - DevOps | Freelance",
   description:
@@ -178,7 +186,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${outfit.variable} ${firaCode.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${outfit.variable} ${firaCode.variable} antialiased overflow-x-hidden w-full`}
         suppressHydrationWarning
       >
         {/* Google Analytics 4 */}

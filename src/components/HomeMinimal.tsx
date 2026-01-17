@@ -135,29 +135,7 @@ export default function HomeMinimal() {
         <>
             <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans selection:bg-amber-500/30">
 
-                {/* NAV BAR Compacte & Rapprochée */}
-                <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-[var(--bg-secondary)]/60 border-b border-[var(--border)]">
-                    <Link href="/" className="font-bold text-sm tracking-wide hover:text-emerald-400 transition-colors">
-                        Kenshu Dev
-                    </Link>
-
-                    <div className="flex items-center gap-4 text-xs font-semibold tracking-wide uppercase">
-                        <Link href="/services" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-                            Services
-                        </Link>
-                        <Link href="/projets" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-                            Expériences
-                        </Link>
-                        <button
-                            onClick={() => setIsChatOpen(true)}
-                            className="px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all hover:scale-105"
-                        >
-                            Ask AI
-                        </button>
-                    </div>
-                </nav>
-
-                <div className="pt-28 pb-20 px-4 md:px-6 mx-auto max-w-5xl">
+                <div className="pt-32 pb-20 px-4 md:px-6 mx-auto max-w-5xl">
 
                     {/* HERO SECTION */}
                     <div className="mb-20">
