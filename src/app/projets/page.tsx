@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 export default function ExperiencesPage() {
   return (
     <PageContainer>
-      <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] py-20">
+      <div className="min-h-screen bg-transparent text-[var(--text-primary)] py-20">
         <div className="mx-auto max-w-4xl px-6">
 
           {/* Header */}
@@ -65,7 +65,7 @@ export default function ExperiencesPage() {
           </div>
 
           {/* CTA Contact */}
-          <div className="mt-20 text-center p-10 rounded-3xl border border-[var(--border)] bg-[var(--bg-card)]">
+          <div className="mt-20 text-center p-10 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
             <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
               Vous avez un projet similaire ?
             </h3>

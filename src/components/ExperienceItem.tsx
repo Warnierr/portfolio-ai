@@ -3,26 +3,41 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Experience } from "@/data/experiences";
+import { useTheme } from "next-themes";
 
 export default function ExperienceItem({ data }: { data: Experience }) {
     const [isOpen, setIsOpen] = useState(false);
+    const { theme } = useTheme();
+
+    // Theme-specific styling logic
+    const accentClass = theme === 'zen' ? 'text-[#5c4935] font-bold tracking-widest' : // Darker brown for Zen
+        theme === 'neon' ? 'text-[#39ff14] drop-shadow-[0_0_5px_rgba(57,255,20,0.5)]' :
+            theme === 'cyberpunk' ? 'text-[#ff00ff] font-bold drop-shadow-[0_0_2px_#00ffff]' :
+                theme === 'matrix' ? 'text-[#0F0] font-mono' :
+                    'text-amber-200/90';
+
+    const containerStyle = theme === 'cyberpunk'
+        ? 'border-pink-500/30 bg-black/80 shadow-[0_0_15px_rgba(236,72,153,0.1)] hover:border-pink-500 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)]'
+        : theme === 'zen'
+            ? 'border-[#d6cbb6] bg-[#f4ebd0]/40 backdrop-blur-sm hover:bg-[#f4ebd0]/60 text-[#2c241b]'
+            : 'border-[var(--border)] bg-[var(--bg-card)]/60 backdrop-blur-md hover:bg-[var(--bg-elevated)]/80';
 
     return (
-        <div className="group relative rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 transition-all hover:bg-[var(--bg-elevated)] hover:border-[var(--border-strong)]">
+        <div className={`group relative rounded-2xl p-6 transition-all border ${containerStyle}`}>
 
             {/* Header Line */}
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                <h3 className="text-2xl font-serif text-[var(--text-primary)] font-medium tracking-wide">
+                <h3 className={`text-2xl font-medium tracking-wide ${theme === 'zen' ? 'font-serif font-bold' : ''}`}>
                     {data.company}
                 </h3>
-                <span className="text-xs font-mono text-[var(--text-muted)] mt-1 md:mt-0">
+                <span className={`text-xs mt-1 md:mt-0 ${theme === 'matrix' ? 'font-mono' : ''} text-[var(--text-muted)]`}>
                     {data.period}
                 </span>
             </div>
 
             {/* Role */}
             <div className="mb-6">
-                <span className="text-amber-200/90 font-medium text-sm tracking-wide uppercase">
+                <span className={`${accentClass} text-sm tracking-wide uppercase`}>
                     {data.role}
                 </span>
             </div>

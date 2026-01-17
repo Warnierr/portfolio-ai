@@ -11,6 +11,7 @@ import ThemeSelector from "@/components/ThemeSelector";
 import EyeComfortControl from "@/components/EyeComfortControl";
 import ThemeBackground from "@/components/ThemeBackground";
 import ConsentWidget from "@/features/analytics/components/ConsentWidget";
+import FloatingWords from "@/components/FloatingWords";
 import "./globals.css";
 
 // Default fonts (Geist)
@@ -208,6 +209,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <ThemeBackground />
+          <FloatingWords />
           <ConsentWidget />
           <AnalyticsTracker />
           <EyeComfortControl />
