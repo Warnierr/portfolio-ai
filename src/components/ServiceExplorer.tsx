@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -98,6 +98,26 @@ const SERVICES = [
 
 export default function ServiceExplorer() {
     const [selected, setSelected] = useState(SERVICES[2]); // Data selected by default
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [hasAutoScrolled, setHasAutoScrolled] = useState(false);
+
+    // Auto-scroll to center Data Engineer on mobile mount
+    useEffect(() => {
+        if (!hasAutoScrolled && scrollRef.current) {
+            // Index 2 is Data Engineer
+            // Card width (160) + gap (12)
+            const itemWidth = 160;
+            const gap = 12;
+            const index = 2;
+
+            // Calculate center position
+            const containerWidth = scrollRef.current.clientWidth;
+            const scrollPos = ((itemWidth + gap) * index) - (containerWidth / 2) + (itemWidth / 2);
+
+            scrollRef.current.scrollTo({ left: scrollPos, behavior: 'smooth' });
+            setHasAutoScrolled(true);
+        }
+    }, [hasAutoScrolled]);
 
     return (
         <div className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl overflow-hidden backdrop-blur-sm relative flex flex-col lg:flex-row min-h-[600px] lg:min-h-[500px]">
@@ -112,7 +132,10 @@ export default function ServiceExplorer() {
                 </div>
 
                 {/* MENU MOBILE HORIZONTAL SCROLLANT - DESIGN COMPACT */}
-                <div className="flex overflow-x-auto gap-3 px-6 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth">
+                <div
+                    ref={scrollRef}
+                    className="flex overflow-x-auto gap-3 px-6 pb-6 snap-x snap-mandatory no-scrollbar scroll-smooth"
+                >
                     {SERVICES.map((s) => (
                         <motion.button
                             key={s.id}
