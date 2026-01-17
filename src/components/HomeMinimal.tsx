@@ -68,7 +68,13 @@ export default function HomeMinimal() {
                             Raouf Warnier
                         </h1>
                         <h2 className="text-xl md:text-2xl font-normal mb-8 text-[var(--text-secondary)]">
-                            <span className="text-amber-100 font-medium">Data Engineer</span> & <span className="text-amber-100 font-medium">AI Product Builder</span>
+                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-amber-300 [html[data-theme='dark']_&]:via-yellow-400 [html[data-theme='dark']_&]:to-amber-300 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#8b2f2f] [html[data-theme='zen']_&]:font-bold font-medium">
+                                Data Engineer
+                            </span>
+                            {' & '}
+                            <span className="[html[data-theme='dark']_&]:bg-gradient-to-r [html[data-theme='dark']_&]:from-amber-300 [html[data-theme='dark']_&]:via-yellow-400 [html[data-theme='dark']_&]:to-amber-300 [html[data-theme='dark']_&]:bg-clip-text [html[data-theme='dark']_&]:text-transparent [html[data-theme='zen']_&]:text-[#8b2f2f] [html[data-theme='zen']_&]:font-bold font-medium">
+                                AI Product Builder
+                            </span>
                         </h2>
 
                         <div className="flex gap-4">
