@@ -13,10 +13,10 @@ const SERVICES = [
         accent: "text-emerald-400",
         kenshuMode: false,
         branches: [
-            { title: "Landing Page", time: "3-5 jours", desc: "Conversion élevée, Design unique" },
-            { title: "Site Vitrine", time: "1-2 semaines", desc: "Présentation entreprise, CMS" },
-            { title: "E-commerce", time: "3-6 semaines", desc: "Shopify ou Custom, Paiement" },
-            { title: "Plateforme SaaS", time: "1-3 mois", desc: "Dashboard, Auth, Souscription" }
+            { title: "Landing Page", complexity: "Simple", desc: "Conversion élevée, Design unique" },
+            { title: "Site Vitrine", complexity: "Moyen", desc: "Présentation entreprise, CMS" },
+            { title: "E-commerce", complexity: "Avancé", desc: "Shopify ou Custom, Paiement" },
+            { title: "Plateforme SaaS", complexity: "Avancé", desc: "Dashboard, Auth, Souscription" }
         ]
     },
     {
@@ -28,10 +28,10 @@ const SERVICES = [
         accent: "text-blue-400",
         kenshuMode: false,
         branches: [
-            { title: "MVP Startup", time: "3-6 semaines", desc: "Lancement rapide, features clés" },
-            { title: "Outil Interne", time: "2-4 semaines", desc: "Gestion stock, RH, Admin" },
-            { title: "App Mobile", time: "1-3 mois", desc: "iOS & Android (React Native)" },
-            { title: "PWA", time: "2-4 semaines", desc: "App web installable" }
+            { title: "MVP Startup", complexity: "Moyen", desc: "Lancement rapide, features clés" },
+            { title: "Outil Interne", complexity: "Moyen", desc: "Gestion stock, RH, Admin" },
+            { title: "App Mobile", complexity: "Avancé", desc: "iOS & Android (React Native)" },
+            { title: "PWA", complexity: "Moyen", desc: "App web installable" }
         ]
     },
     {
@@ -43,10 +43,10 @@ const SERVICES = [
         accent: "text-orange-400",
         kenshuMode: false,
         branches: [
-            { title: "Pipeline ETL", time: "1-3 semaines", desc: "Airflow, dbt, Snowflake" },
-            { title: "Migration Cloud", time: "1-6 mois", desc: "Vers AWS, Azure, GCP" },
-            { title: "Audit Infra", time: "3-7 jours", desc: "Sécurité, Coûts, Perf" },
-            { title: "Déploiement CI/CD", time: "3-10 jours", desc: "GitHub Actions, Docker" }
+            { title: "Pipeline ETL", complexity: "Moyen", desc: "Airflow, dbt, Snowflake" },
+            { title: "Migration Cloud", complexity: "Avancé", desc: "Vers AWS, Azure, GCP" },
+            { title: "Audit Infra", complexity: "Simple", desc: "Sécurité, Coûts, Perf" },
+            { title: "Déploiement CI/CD", complexity: "Moyen", desc: "GitHub Actions, Docker" }
         ]
     },
     {
@@ -58,10 +58,10 @@ const SERVICES = [
         accent: "text-purple-400",
         kenshuMode: true,
         branches: [
-            { title: "Workflow CRM", time: "2-5 jours", desc: "Synchro emails, leads, Slack" },
-            { title: "Contenu IA", time: "1-3 jours", desc: "Génération automatique posts/blog" },
-            { title: "Facturation", time: "3-7 jours", desc: "Devis, relances automatiques" },
-            { title: "Scraping", time: "2-5 jours", desc: "Extraction données web" }
+            { title: "Workflow CRM", complexity: "Simple", desc: "Synchro emails, leads, Slack" },
+            { title: "Contenu IA", complexity: "Simple", desc: "Génération automatique posts/blog" },
+            { title: "Facturation", complexity: "Moyen", desc: "Devis, relances automatiques" },
+            { title: "Scraping", complexity: "Simple", desc: "Extraction données web" }
         ]
     },
     {
@@ -73,10 +73,10 @@ const SERVICES = [
         accent: "text-red-400",
         kenshuMode: true,
         branches: [
-            { title: "Audit de Conformité", time: "1-2 semaines", desc: "Analyse écarts / AI Act" },
-            { title: "Sécurisation LLM", time: "3-5 jours", desc: "Guardrails, Prompt Injection" },
-            { title: "Gouvernance Data", time: "2-4 semaines", desc: "Cartographie, Rôles, Process" },
-            { title: "Formation Équipes", time: "1-2 jours", desc: "Sensibilisation Risques & Bonnes Pratiques" }
+            { title: "Audit de Conformité", complexity: "Moyen", desc: "Analyse écarts / AI Act" },
+            { title: "Sécurisation LLM", complexity: "Moyen", desc: "Guardrails, Prompt Injection" },
+            { title: "Gouvernance Data", complexity: "Avancé", desc: "Cartographie, Rôles, Process" },
+            { title: "Formation Équipes", complexity: "Simple", desc: "Sensibilisation Risques & Bonnes Pratiques" }
         ]
     },
     {
@@ -88,10 +88,10 @@ const SERVICES = [
         accent: "text-cyan-400",
         kenshuMode: true,
         branches: [
-            { title: "RAG Documentaire", time: "1-3 semaines", desc: "Chattez avec vos PDF, Notion, Docs" },
-            { title: "Serveurs MCP", time: "3-5 jours", desc: "Connectez Claude Desktop à vos outils" },
-            { title: "Chatbots Custom", time: "2-4 semaines", desc: "Support client, Assistant interne, RH" },
-            { title: "Agents Autonomes", time: "Sur mesure", desc: "Automatisation complexe multi-étapes" }
+            { title: "RAG Documentaire", complexity: "Moyen", desc: "Chattez avec vos PDF, Notion, Docs" },
+            { title: "Serveurs MCP", complexity: "Simple", desc: "Connectez Claude Desktop à vos outils" },
+            { title: "Chatbots Custom", complexity: "Moyen", desc: "Support client, Assistant interne, RH" },
+            { title: "Agents Autonomes", complexity: "Avancé", desc: "Automatisation complexe multi-étapes" }
         ]
     }
 ];
@@ -247,7 +247,7 @@ export default function ServiceExplorer() {
 
                         <div className="mb-4 flex items-center gap-2 px-1">
                             <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest">
-                                Possibilités & Estimations
+                                Possibilités
                             </span>
                             {selected.kenshuMode && (
                                 <span className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-secondary)] border border-[var(--border)] px-2 py-0.5 rounded-full">
@@ -257,23 +257,30 @@ export default function ServiceExplorer() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 overflow-y-auto max-h-[400px] md:max-h-none pr-1 custom-scrollbar">
-                            {selected.branches.map((branch, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.05 + 0.2 }}
-                                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-elevated)] hover:border-[var(--border-strong)] transition-all group/card cursor-default"
-                                >
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h4 className="font-bold text-[var(--text-primary)] text-sm group-hover/card:text-emerald-300 transition-colors">{branch.title}</h4>
-                                        <span className={`text-[10px] px-2 py-1 rounded-full border border-[var(--border)] bg-[var(--bg-card)] whitespace-nowrap ${selected.accent}`}>
-                                            {branch.time}
-                                        </span>
-                                    </div>
-                                    <p className="text-xs text-[var(--text-muted)] leading-relaxed">{branch.desc}</p>
-                                </motion.div>
-                            ))}
+                            {selected.branches.map((branch, i) => {
+                                const complexityColors = {
+                                    "Simple": "text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
+                                    "Moyen": "text-amber-400 border-amber-500/30 bg-amber-500/10",
+                                    "Avancé": "text-purple-400 border-purple-500/30 bg-purple-500/10"
+                                };
+                                return (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 + 0.2 }}
+                                        className="p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] hover:bg-[var(--bg-elevated)] hover:border-[var(--border-strong)] transition-all group/card cursor-default"
+                                    >
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h4 className="font-bold text-[var(--text-primary)] text-sm group-hover/card:text-emerald-300 transition-colors">{branch.title}</h4>
+                                            <span className={`text-[10px] px-2 py-1 rounded-full border font-semibold whitespace-nowrap ${complexityColors[branch.complexity as keyof typeof complexityColors]}`}>
+                                                {branch.complexity}
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">{branch.desc}</p>
+                                    </motion.div>
+                                );
+                            })}
                         </div>
                     </motion.div>
                 </AnimatePresence>
