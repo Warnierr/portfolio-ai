@@ -116,6 +116,25 @@ export const metadata: Metadata = {
     "ai act readiness 2026",
     "audit systèmes ia",
 
+    // Branding Kenshu ✨ NOUVEAU
+    "Kenshu Dev",
+    "Kenshu freelance",
+    "Kenshu data engineer",
+    "Kenshu AI engineer",
+    "Kenshu portfolio",
+    "philosophie Kenshu",
+    "Kenshu apprentissage continu",
+
+    // Niveaux de complexité ✨ NOUVEAU
+    "projet data simple",
+    "projet data moyen",
+    "projet data avancé",
+    "landing page simple freelance",
+    "pipeline etl complexité",
+    "développement web simple moyen avancé",
+    "estimation complexité projet data",
+    "niveau projet data engineer",
+
     // Nom
     "Raouf Warnier",
   ],
