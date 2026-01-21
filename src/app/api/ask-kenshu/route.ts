@@ -2,6 +2,14 @@ import { caseStudies } from "@/data/projects";
 import { AI_CONFIG } from "@/lib/ai-config";
 import { KENSHU_FULL_CONTEXT } from "@/lib/ai-prompts/kenshu-context";
 import { AI_BEHAVIOR_INSTRUCTIONS, THEME_PERSONAS } from "@/lib/ai-prompts/kenshu-instructions";
+import {
+    RequestSchema,
+    detectPromptInjection,
+    sanitizeContent,
+    checkSimpleRateLimit,
+    getIP,
+    securityLog
+} from "@/lib/security";
 
 function generateWelcomeMessage(): string {
     return `Bonjour ! 👋 Je suis **Kenshu IA**, l'assistant intelligent de Raouf Warnier.
@@ -44,7 +52,7 @@ ${AI_BEHAVIOR_INSTRUCTIONS}
 `;
 
 
-const MAX_REQUESTS = 10000;
+const MAX_REQUESTS = 500; // Réduit de 10000 → 500 pour sécurité
 const COOKIE_NAME = "chat_requests";
 const COOKIE_MAX_AGE = 60 * 60 * 24; // 24 hours
 
@@ -58,17 +66,36 @@ function getRequestCount(req: Request): number {
 }
 
 export async function POST(req: Request) {
+    // 1. Security: Extract IP for rate limiting
+    const ip = getIP(req);
+
+    // 2. Security: Simple IP-based rate limiting (in-memory)
+    const rateLimitCheck = checkSimpleRateLimit(ip);
+    if (!rateLimitCheck.allowed) {
+        securityLog('RATE_LIMIT_EXCEEDED', { ip, retryAfter: rateLimitCheck.retryAfter });
+        return new Response(JSON.stringify({
+            error: 'rate_limit_exceeded',
+            message: `Trop de requêtes. Veuillez patienter ${rateLimitCheck.retryAfter} secondes.`,
+            retryAfter: rateLimitCheck.retryAfter,
+        }), {
+            status: 429,
+            headers: {
+                'Content-Type': 'application/json',
+                'Retry-After': String(rateLimitCheck.retryAfter),
+                'X-RateLimit-Limit': '10',
+                'X-RateLimit-Window': '60',
+            },
+        });
+    }
+
     const apiKey = process.env.OPENROUTER_API_KEY;
 
-    console.log("[Ask Kenshu API] Request received, API key present:", !!apiKey);
-
-    // Rate limiting check
+    // 3. Security: Cookie-based rate limiting (backup)
     const currentCount = getRequestCount(req);
     const remaining = MAX_REQUESTS - currentCount;
 
-    console.log(`[Ask Kenshu API] Request count: ${currentCount}/${MAX_REQUESTS}`);
-
     if (remaining <= 0) {
+        securityLog('COOKIE_LIMIT_EXCEEDED', { ip });
         return new Response(
             JSON.stringify({
                 error: "limit_reached",
@@ -86,15 +113,56 @@ export async function POST(req: Request) {
     }
 
     if (!apiKey || apiKey.includes("%")) {
-        console.error("[Ask Kenshu API] ERROR: OPENROUTER_API_KEY is missing or invalid!");
+        securityLog('API_KEY_MISSING', { ip });
         return new Response("Erreur de configuration : clé API manquante. Contactez Raouf directement.", {
             status: 500,
         });
     }
 
     try {
-        const body = await req.json();
-        const { messages, theme } = body;
+        // 4. Security: Parse and validate input
+        const rawBody = await req.json();
+
+        // Validate with Zod schema
+        const validationResult = RequestSchema.safeParse(rawBody);
+        if (!validationResult.success) {
+            securityLog('VALIDATION_FAILED', {
+                ip,
+                errors: validationResult.error.issues.map(i => i.message)
+            });
+            return new Response(JSON.stringify({
+                error: 'invalid_input',
+                message: 'Format de requête invalide',
+                details: validationResult.error.issues[0].message,
+            }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+        const { messages, theme } = validationResult.data;
+
+        // 5. Security: Check for prompt injection attempts
+        const lastUserMessage = messages[messages.length - 1];
+        if (lastUserMessage.role === 'user' && detectPromptInjection(lastUserMessage.content)) {
+            securityLog('PROMPT_INJECTION_DETECTED', {
+                ip,
+                contentPreview: lastUserMessage.content.substring(0, 100)
+            });
+            return new Response(JSON.stringify({
+                error: 'invalid_request',
+                message: 'Votre message contient du contenu non autorisé.',
+            }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+        // 6. Security: Sanitize content
+        const sanitizedMessages = messages.map(msg => ({
+            ...msg,
+            content: sanitizeContent(msg.content),
+        }));
 
         // Dynamic Persona based on Theme 🤖
         let systemInstruction = SYSTEM_PROMPT;
@@ -108,11 +176,8 @@ export async function POST(req: Request) {
             systemInstruction += THEME_PERSONAS.zen;
         }
 
-        console.log("[Ask Kenshu API] Request body length:", JSON.stringify(body).length);
-        console.log("[Ask Kenshu API] Messages count:", messages?.length || 0);
-
         // Check if this is the first message (empty conversation)
-        const isFirstInteraction = !messages || messages.length === 0;
+        const isFirstInteraction = !sanitizedMessages || sanitizedMessages.length === 0;
 
         if (isFirstInteraction) {
             console.log("[Ask Kenshu API] First interaction detected - sending welcome message");
@@ -160,7 +225,7 @@ export async function POST(req: Request) {
                         model: model,
                         messages: [
                             { role: "system", content: systemInstruction },
-                            ...messages,
+                            ...sanitizedMessages,
                         ],
                         stream: true,
                         temperature: 0.7,
@@ -200,7 +265,7 @@ export async function POST(req: Request) {
             // FALLBACK SYSTEM: Return a static response instead of 500 error
             console.log("[Ask Kenshu API] Using Fallback Response due to API Error");
 
-            const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
+            const lastUserMessage = sanitizedMessages[sanitizedMessages.length - 1]?.content.toLowerCase() || "";
             let fallbackContent = "Je rencontre actuellement une petite surcharge cognitive (IA indisponible momentanément). 😅\n\nNéanmoins, je peux vous guider vers les sections principales.\n\nClique ici pour aller :\n\n👉 **[Voir les projets](/projets)**\n\n👉 **[Découvrir les services](/services)**\n\n👉 **[Me contacter](/contact)**";
 
             if (lastUserMessage.includes("projet") || lastUserMessage.includes("réalis") || lastUserMessage.includes("portfol")) {
